@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Customize Font Family -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              poppins: ['Poppins', 'sans-serif'],
+            },
+          },
+        },
+      }
+    </script>
+  </head>
+  <body class="font-poppins bg-white">
+    <div class="flex h-screen w-screen">
+      <!-- Sidebar -->
+<div class="flex flex-col w-[19%] bg-stone-300 py-14">
+  <img src="assets/logosanoh.svg" class="object-contain self-center w-32">
+
+  <div class="flex flex-col mt-10 w-full text-blue-950">
+      <button class="flex gap-4 items-center p-4 w-full opacity-50 hover:opacity-100 transition-opacity hover:bg-blue-100 rounded">
+          <img src="assets/icon_home.svg" alt="Dashboard" class="w-6 h-6">
+          <div class="self-stretch my-auto">Dashboard</div>
+      </button>
+      <button class="flex gap-4 items-center p-4 w-full opacity-50 hover:opacity-100 transition-opacity hover:bg-blue-100 rounded">
+          <img src="assets/icon_po.svg" alt="Purchase Order">
+          <div class="self-stretch my-auto">Purchase Order</div>
+      </button>
+      <button class="flex gap-4 items-center p-4 w-full opacity-50 hover:opacity-100 transition-opacity hover:bg-blue-100 rounded">
+          <img src="assets/icon_dn.svg" alt="Delivery Note">
+          <div class="self-stretch my-auto">Delivery Note</div>
+      </button>
+      <button class="flex gap-4 items-center p-4 w-full opacity-50 hover:opacity-100 transition-opacity hover:bg-blue-100 rounded">
+          <img src="assets/icon_history.svg" alt="History Purchase Order">
+          <div class="self-stretch my-auto">History Purchase Order</div>
+      </button>
+      <button class="flex gap-4 items-center p-4 w-full opacity-50 hover:opacity-100 transition-opacity hover:bg-blue-100 rounded">
+          <img src="assets/icon_history.svg" alt="History Delivery Note">
+          <div class="self-stretch my-auto">History Delivery Note</div>
+      </button>
+      <button class="flex gap-4 items-center p-4 w-full opacity-50 hover:opacity-100 transition-opacity hover:bg-blue-100 rounded">
+          <img src="assets/icon_listing.svg" alt="Listing Report">
+          <div class="self-stretch my-auto">Listing Report</div>
+      </button>
+  </div>
+
+  <div class="mt-auto flex flex-col w-full">
+        <div class="flex gap-4 items-center p-4 w-full text-blue-950 bg-blue-950 bg-opacity-10 rounded">
+          <img src="assets/icon_people.svg" class="object-contain shrink-0 w-5 aspect-square" />
+          <div class="self-stretch my-auto">PT Kawasaki</div>
+      </div>
+      <button onclick="location.href='your-logout-page.html'" class="flex gap-4 items-center p-4 w-full text-red-600 bg-red-600 bg-opacity-10 hover:bg-red-200 rounded">
+          <img src="assets/icon_logout.svg" class="object-contain shrink-0 w-5 aspect-square" />
+          <div class="self-stretch my-auto">Logout</div>
+      </button>
+  </div>
+</div>
+
+      <!-- Main Content -->
+      <div class="flex flex-col flex-1 p-5">
+        <!-- Header -->
+        <div class="text-2xl font-semibold text-black">Purchase Order (PO)</div>
+        <div class="flex gap-5 items-center mt-7 text-neutral-500">
+          <div class="flex gap-5 items-center px-6 py-4 bg-neutral-100 rounded w-[329px]">
+            <div>Find purchase order here</div>
+            <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/7b95e04f2fbbd53aa1107331d2260c2bc446024d2e4561e560a08bc3196e7c7d?apiKey=6492ece74d914282abd8ef542b454fdc" class="object-contain w-4 aspect-square"/>
+          </div>
+          <div class="flex gap-5 items-center px-6 py-4 bg-neutral-100 rounded w-[187px]">
+            <div>Sort By</div>
+            <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/3e162fc95c530d37d9c2cf15d9e716be3416eb21bc246a3e1059389941210e78?apiKey=6492ece74d914282abd8ef542b454fdc" class="object-contain w-5 aspect-square"/>
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="flex flex-col mt-7 text-sm font-medium">
+          <div class="flex flex-col bg-white">
+            <div class="flex items-start text-base font-bold text-black">
+              <div class="flex-1 px-3 py-4">No. PO</div>
+              <div class="flex-1 px-3 py-4">PO Date</div>
+              <div class="flex-1 px-3 py-4">Plan Delivery</div>
+              <div class="flex-1 px-3 py-4">PO Revision No.</div>
+              <div class="flex-1 px-3 py-4">Revision Date</div>
+              <div class="flex-1 px-3 py-4">Status</div>
+              <div class="flex-1 px-3 py-4">Response</div>
+            </div>
+            <div class="flex items-start text-black bg-neutral-100">
+              <div class="flex-1 px-3 py-4">24100001</div>
+              <div class="flex-1 px-3 py-4 text-center">2024-07-29</div>
+              <div class="flex-1 px-3 py-4">2024-08-01</div>
+              <div class="flex-1 px-3 py-4">Rev 02</div>
+              <div class="flex-1 px-3 py-4"></div>
+              <div class="flex-1 px-3 py-4">In Process</div>
+              <div class="flex flex-1 gap-4 justify-center items-center p-3 text-xs text-center">
+                <div class="px-2 py-2 bg-green-400 rounded">Accept</div>
+                <div class="px-2 py-2 bg-red-500 text-white rounded">Decline</div>
+              </div>
+            </div>
+            <div class="flex items-start text-black bg-neutral-50">
+              <div class="flex-1 px-3 py-4">24100002</div>
+              <div class="flex-1 px-3 py-4 text-center">2024-07-29</div>
+              <div class="flex-1 px-3 py-4">2024-08-01</div>
+              <div class="flex-1 px-3 py-4">Rev 02</div>
+              <div class="flex-1 px-3 py-4"></div>
+              <div class="flex-1 px-3 py-4">In Process</div>
+              <div class="flex flex-1 gap-4 justify-center items-center p-3 text-xs text-center">
+                <div class="px-2 py-2 bg-green-400 rounded">Accept</div>
+                <div class="px-2 py-2 bg-red-500 text-white rounded">Decline</div>
+              </div>
+            </div>
+            <div class="flex items-start text-black bg-neutral-100">
+              <div class="flex-1 px-3 py-4">24100003</div>
+              <div class="flex-1 px-3 py-4 text-center">2024-07-29</div>
+              <div class="flex-1 px-3 py-4">2024-08-01</div>
+              <div class="flex-1 px-3 py-4">Rev 02</div>
+              <div class="flex-1 px-3 py-4"></div>
+              <div class="flex-1 px-3 py-4">Opened</div>
+              <div class="flex flex-1 gap-4 justify-center items-center p-3 text-xs text-center">
+                <div class="px-2 py-2 bg-green-400 rounded">Accept</div>
+                <div class="px-2 py-2 bg-red-500 text-white rounded">Decline</div>
+              </div>
+            </div>
+            <div class="flex items-start text-black bg-neutral-50">
+              <div class="flex-1 px-3 py-4">24100005</div>
+              <div class="flex-1 px-3 py-4 text-center">2024-07-29</div>
+              <div class="flex-1 px-3 py-4">2024-08-01</div>
+              <div class="flex-1 px-3 py-4">Rev 02</div>
+              <div class="flex-1 px-3 py-4"></div>
+              <div class="flex-1 px-3 py-4">Opened</div>
+              <div class="flex flex-1 gap-4 justify-center items-center p-3 text-xs text-center">
+                <div class="px-2 py-2 bg-green-400 rounded">Accept</div>
+                <div class="px-2 py-2 bg-red-500 text-white rounded">Decline</div>
+              </div>
+            </div>
+            <div class="flex items-start text-black bg-lime-200">
+              <div class="flex-1 px-3 py-4">24100007</div>
+              <div class="flex-1 px-3 py-4 text-center">2024-07-29</div>
+              <div class="flex-1 px-3 py-4">2024-08-01</div>
+              <div class="flex-1 px-3 py-4">Rev 02</div>
+              <div class="flex-1 px-3 py-4"></div>
+              <div class="flex-1 px-3 py-4">Opened</div>
+              <div class="flex-1 px-3 py-4 bg-lime-200">Accepted</div>
+            </div>
+            <div class="flex items-start text-black bg-red-300">
+              <div class="flex-1 px-3 py-4">24100006</div>
+              <div class="flex-1 px-3 py-4 text-center">2024-07-29</div>
+              <div class="flex-1 px-3 py-4">2024-08-01</div>
+              <div class="flex-1 px-3 py-4">Rev 02</div>
+              <div class="flex-1 px-3 py-4"></div>
+              <div class="flex-1 px-3 py-4">Opened</div>
+              <div class="flex-1 px-3 py-4 bg-red-300">Declined</div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </body>
+</html>
+
+
