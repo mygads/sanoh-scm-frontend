@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <script>
@@ -181,11 +181,11 @@
 <script>
   // Dummy data
   const data = [
-    { noPO: '24100001', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'In Process', response: '' },
-    { noPO: '24100002', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'In Process', response: '' },
-    { noPO: '24100003', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
-    { noPO: '24100004', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Declined', response: '' },
-    { noPO: '24100005', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
+    { noPO: '24100001', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'In Process', response: 'Accepted' },
+    { noPO: '24100002', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'In Process', response: 'Accepted' },
+    { noPO: '24100003', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: 'Accepted' },
+    { noPO: '24100004', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Declined', response: 'Declined' },
+    { noPO: '24100005', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: 'Declined' },
     { noPO: '24100006', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'In Process', response: '' },
     { noPO: '24100007', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
     { noPO: '24100008', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Declined', response: '' },
@@ -193,26 +193,6 @@
     { noPO: '24100010', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
     { noPO: '24100011', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
     { noPO: '24100012', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
-    { noPO: '24100002', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'In Process', response: '' },
-    { noPO: '24100003', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
-    { noPO: '24100004', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Declined', response: '' },
-    { noPO: '24100005', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
-    { noPO: '24100006', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'In Process', response: '' },
-    { noPO: '24100007', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
-    { noPO: '24100008', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Declined', response: '' },
-    { noPO: '24100009', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'In Process', response: '' },
-    { noPO: '24100010', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
-    { noPO: '24100011', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
-    { noPO: '24100002', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'In Process', response: '' },
-    { noPO: '24100003', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
-    { noPO: '24100004', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Declined', response: '' },
-    { noPO: '24100005', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
-    { noPO: '24100006', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'In Process', response: '' },
-    { noPO: '24100007', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
-    { noPO: '24100008', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Declined', response: '' },
-    { noPO: '24100009', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'In Process', response: '' },
-    { noPO: '24100010', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
-    { noPO: '24100011', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
   ];
 
   const rowsPerPage = 10;
@@ -227,7 +207,7 @@
     const end = start + rowsPerPage;
     const paginatedData = filteredData.slice(start, end);
 
-    paginatedData.forEach(row => {
+    paginatedData.forEach((row, index) => {
       const tableRow = document.createElement('tr');
       tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
       tableRow.innerHTML = `
@@ -237,10 +217,18 @@
         <td class="px-4 py-4 text-center">${row.poRevision}</td>
         <td class="px-4 py-4 text-center">${row.revisionDate}</td>
         <td class="px-4 py-4 text-center">${row.status}</td>
-        <td class="px-4 py-4 text-center">
+        <td class="px-4 py-4 text-center ${row.response === 'Accepted' ? 'bg-green-200' : row.response === 'Declined' ? 'bg-red-200' : ''}">
           <div class="flex gap-2 justify-center">
-            <button class="px-3 py-2 bg-green-400 text-white rounded">Accept</button>
-            <button class="px-3 py-2 bg-red-500 text-white rounded">Decline</button>
+            ${row.response ? `
+              <span class="${row.response === 'Accepted' ? 'text-green-600' : 'text-red-600'}">${row.response}</span>
+              <button class="px-3 py-2 bg-gray-400 text-white rounded" onclick="resetResponse(${start + index})">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v6h6M20 20v-6h-6M4 20v-6h6M20 4v6h-6" />
+                </svg>
+              </button>` : `
+              <button class="px-3 py-2 bg-green-400 text-white rounded" onclick="updateResponse(${start + index}, 'Accepted')">Accept</button>
+              <button class="px-3 py-2 bg-red-500 text-white rounded" onclick="updateResponse(${start + index}, 'Declined')">Decline</button>
+            `}
           </div>
         </td>
       `;
@@ -302,6 +290,16 @@
       }
     });
     paginationContainer.appendChild(nextButton);
+  }
+
+  function updateResponse(index, response) {
+    data[index].response = response;
+    displayTableData(currentPage);
+  }
+
+  function resetResponse(index) {
+    data[index].response = '';
+    displayTableData(currentPage);
   }
 
   function searchTable() {
