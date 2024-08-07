@@ -35,7 +35,6 @@
       <div class="flex flex-col mt-12 w-full text-blue-950">
         <button
           class="relative flex gap-4 items-center px-6 py-4 w-full opacity-50 hover:opacity-100 transition-opacity hover:bg-blue-900 hover:bg-opacity-10 rounded hover-stroke text-[20px] hover:font-semibold">
-          <!-- Ukuran ikon diatur oleh kelas w-8 h-8 -->
           <img src="assets/icon_home.svg" alt="Dashboard" class="w-8 h-8">
           <div class="self-stretch my-auto">Dashboard</div>
         </button>
@@ -87,14 +86,13 @@
 
 
     <!-- Main Content -->
-    <div class="flex flex-col flex-1 p-12 ">
+    <div class="flex flex-col flex-1 p-12">
       <!-- Header -->
       <div class="text-3xl font-semibold text-black">Purchase Order (PO)</div>
       <div class="flex gap-5 items-center mt-7 text-neutral-500">
         <!-- Search Bar -->
         <div class="flex items-center px-6 py-4 bg-neutral-100 rounded w-[329px] ml-auto">
-          <input type="text" placeholder="Search purchase order here"
-            class="flex-1 bg-neutral-100 outline-none text-base">
+          <input id="search-input" type="text" placeholder="Search purchase order here" class="flex-1 bg-neutral-100 outline-none text-base">
           <img src="assets/icon_search.svg" alt="Search Icon" class="w-5 h-5 ml-3">
         </div>
       </div>
@@ -162,227 +160,177 @@
                 <th scope="col" class="px-4 py-3 text-center border-b">Response</th>
               </tr>
             </thead>
-            <tbody>
-              <tr class="odd:bg-white even:bg-gray-50 border-b dark:border-gray-100">
-                <td class="px-4 py-4 text-center font-medium text-gray-900">24100001</td>
-                <td class="px-4 py-4 text-center">2024-07-29</td>
-                <td class="px-4 py-4 text-center">2024-08-01</td>
-                <td class="px-4 py-4 text-center">Rev 02</td>
-                <td class="px-4 py-4 text-center"></td>
-                <td class="px-4 py-4 text-center">In Process</td>
-                <td class="px-4 py-4 text-center">
-                  <div class="flex gap-2 justify-center">
-                    <button class="px-3 py-2 bg-green-400 text-white rounded">Accept</button>
-                    <button class="px-3 py-2 bg-red-500 text-white rounded">Decline</button>
-                  </div>
-                </td>
-              </tr>
-              <tr class="odd:bg-white even:bg-gray-50 border-b dark:border-gray-100">
-                <td class="px-4 py-4 text-center font-medium text-gray-900">24100002</td>
-                <td class="px-4 py-4 text-center">2024-07-29</td>
-                <td class="px-4 py-4 text-center">2024-08-01</td>
-                <td class="px-4 py-4 text-center">Rev 02</td>
-                <td class="px-4 py-4 text-center"></td>
-                <td class="px-4 py-4 text-center">In Process</td>
-                <td class="px-4 py-4 text-center">
-                  <div class="flex gap-2 justify-center">
-                    <button class="px-3 py-2 bg-green-400 text-white rounded">Accept</button>
-                    <button class="px-3 py-2 bg-red-500 text-white rounded">Decline</button>
-                  </div>
-                </td>
-              </tr>
-              <tr class="odd:bg-white even:bg-gray-50 border-b dark:border-gray-100">
-                <td class="px-4 py-4 text-center font-medium text-gray-900">24100003</td>
-                <td class="px-4 py-4 text-center">2024-07-29</td>
-                <td class="px-4 py-4 text-center">2024-08-01</td>
-                <td class="px-4 py-4 text-center">Rev 02</td>
-                <td class="px-4 py-4 text-center"></td>
-                <td class="px-4 py-4 text-center">Opened</td>
-                <td class="px-4 py-4 text-center">
-                  <div class="flex gap-2 justify-center">
-                    <button class="px-3 py-2 bg-green-400 text-white rounded">Accept</button>
-                    <button class="px-3 py-2 bg-red-500 text-white rounded">Decline</button>
-                  </div>
-                </td>
-              </tr>
-              <tr class="odd:bg-white even:bg-gray-50 border-b dark:border-gray-100">
-                <td class="px-4 py-4 text-center font-medium text-gray-900">24100005</td>
-                <td class="px-4 py-4 text-center">2024-07-29</td>
-                <td class="px-4 py-4 text-center">2024-08-01</td>
-                <td class="px-4 py-4 text-center">Rev 02</td>
-                <td class="px-4 py-4 text-center"></td>
-                <td class="px-4 py-4 text-center">Opened</td>
-                <td class="px-4 py-4 text-center">
-                  <div class="flex gap-2 justify-center">
-                    <button class="px-3 py-2 bg-green-400 text-white rounded">Accept</button>
-                    <button class="px-3 py-2 bg-red-500 text-white rounded">Decline</button>
-                  </div>
-                </td>
-              </tr>
-              <tr class="odd:bg-white even:bg-gray-50">
-                <td class="px-4 py-4 bg-green-300 text-center text-center font-medium text-gray-900">24100007</td>
-                <td class="px-4 py-4 bg-green-300 text-center text-center">2024-07-29</td>
-                <td class="px-4 py-4 bg-green-300 text-center text-center">2024-08-01</td>
-                <td class="px-4 py-4 bg-green-300 text-center text-center">Rev 02</td>
-                <td class="px-4 py-4 bg-green-300 text-center text-center"></td>
-                <td class="px-4 py-4 bg-green-300 text-center text-center">Opened</td>
-                <td class="px-4 py-4 bg-green-300 text-center">Accepted</td>
-              </tr>
-              <tr class="odd:bg-white even:bg-gray-50">
-                <td class="px-4 py-4 bg-red-300 text-center font-medium text-gray-900">24100004</td>
-                <td class="px-4 py-4 bg-red-300 text-center">2024-07-29</td>
-                <td class="px-4 py-4 bg-red-300 text-center">2024-08-01</td>
-                <td class="px-4 py-4 bg-red-300 text-center">Rev 02</td>
-                <td class="px-4 py-4 bg-red-300 text-center"></td>
-                <td class="px-4 py-4 bg-red-300 text-center">Opened</td>
-                <td class="px-4 py-4 bg-red-300 text-center">Declined</td>
-              </tr>
-              <tr class="odd:bg-white even:bg-gray-50">
-                <td class="px-4 py-4 bg-green-300 text-center text-center font-medium text-gray-900">24100007</td>
-                <td class="px-4 py-4 bg-green-300 text-center text-center">2024-07-30</td>
-                <td class="px-4 py-4 bg-green-300 text-center text-center">2024-08-01</td>
-                <td class="px-4 py-4 bg-green-300 text-center text-center">Rev 02</td>
-                <td class="px-4 py-4 bg-green-300 text-center text-center"></td>
-                <td class="px-4 py-4 bg-green-300 text-center text-center">Opened</td>
-                <td class="px-4 py-4 bg-green-300 text-center text-center">Accepted</td>
-              </tr>
-              <tr class="odd:bg-white even:bg-gray-50">
-                <td class="px-4 py-4 bg-red-300 text-center font-medium text-gray-900">24100004</td>
-                <td class="px-4 py-4 bg-red-300 text-center">2024-07-28</td>
-                <td class="px-4 py-4 bg-red-300 text-center">2024-08-01</td>
-                <td class="px-4 py-4 bg-red-300 text-center">Rev 02</td>
-                <td class="px-4 py-4 bg-red-300 text-center"></td>
-                <td class="px-4 py-4 bg-red-300 text-center">Opened</td>
-                <td class="px-4 py-4 bg-red-300 text-center">Declined</td>
-              </tr>
-              <tr class="odd:bg-white even:bg-gray-50 border-b dark:border-gray-100">
-                <td class="px-4 py-4 text-center font-medium text-gray-900">24100005</td>
-                <td class="px-4 py-4 text-center">2024-07-30</td>
-                <td class="px-4 py-4 text-center">2024-08-01</td>
-                <td class="px-4 py-4 text-center">Rev 02</td>
-                <td class="px-4 py-4 text-center"></td>
-                <td class="px-4 py-4 text-center">Opened</td>
-                <td class="px-4 py-4 text-center">
-                  <div class="flex gap-2 justify-center">
-                    <button class="px-3 py-2 bg-green-400 text-white rounded">Accept</button>
-                    <button class="px-3 py-2 bg-red-500 text-white rounded">Decline</button>
-                  </div>
-                </td>
-              </tr>
-              <tr class="odd:bg-white even:bg-gray-50 border-b dark:border-gray-100">
-                <td class="px-4 py-4 text-center font-medium text-gray-900">24100005</td>
-                <td class="px-4 py-4 text-center">2024-07-30</td>
-                <td class="px-4 py-4 text-center">2024-08-01</td>
-                <td class="px-4 py-4 text-center">Rev 02</td>
-                <td class="px-4 py-4 text-center"></td>
-                <td class="px-4 py-4 text-center">Opened</td>
-                <td class="px-4 py-4 text-center">
-                  <div class="flex gap-2 justify-center">
-                    <button class="px-3 py-2 bg-green-400 text-white rounded">Accept</button>
-                    <button class="px-3 py-2 bg-red-500 text-white rounded">Decline</button>
-                  </div>
-                </td>
-              </tr>
-              <tr class="odd:bg-white even:bg-gray-50 border-b dark:border-gray-100">
-                <td class="px-4 py-4 text-center font-medium text-gray-900">24100005</td>
-                <td class="px-4 py-4 text-center">2024-07-29</td>
-                <td class="px-4 py-4 text-center">2024-08-01</td>
-                <td class="px-4 py-4 text-center">Rev 02</td>
-                <td class="px-4 py-4 text-center"></td>
-                <td class="px-4 py-4 text-center">Opened</td>
-                <td class="px-4 py-4 text-center">
-                  <div class="flex gap-2 justify-center">
-                    <button class="px-3 py-2 bg-green-400 text-white rounded">Accept</button>
-                    <button class="px-3 py-2 bg-red-500 text-white rounded">Decline</button>
-                  </div>
-                </td>
-              </tr>
-              <tr class="odd:bg-white even:bg-gray-50 border-b dark:border-gray-100">
-                <td class="px-4 py-4 text-center font-medium text-gray-900">24100005</td>
-                <td class="px-4 py-4 text-center">2024-07-29</td>
-                <td class="px-4 py-4 text-center">2024-08-01</td>
-                <td class="px-4 py-4 text-center">Rev 02</td>
-                <td class="px-4 py-4 text-center"></td>
-                <td class="px-4 py-4 text-center">Opened</td>
-                <td class="px-4 py-4 text-center">
-                  <div class="flex gap-2 justify-center">
-                    <button class="px-3 py-2 bg-green-400 text-white rounded">Accept</button>
-                    <button class="px-3 py-2 bg-red-500 text-white rounded">Decline</button>
-                  </div>
-                </td>
-              </tr>
+            <tbody id="table-body">
+              <!-- Data rows will be inserted here by JavaScript -->
             </tbody>
           </table>
         </div>
       </div>
 
-
       <!-- Pagination -->
       <div class="flex justify-end my-6">
-        <nav class="flex gap-4 items-center">
-          <!-- Previous Button -->
-          <button class="px-4 py-4 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300" aria-label="Previous Page">
-            <svg class="w-4 h-4 text-gray-800 dark:text-blue-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor" viewBox="0 0 10 16">
-              <path
-                d="M8.766.566A2 2 0 0 0 6.586 1L1 6.586a2 2 0 0 0 0 2.828L6.586 15A2 2 0 0 0 10 13.586V2.414A2 2 0 0 0 8.766.566Z" />
-            </svg>
-          </button>
-
-          <!-- Page Numbers -->
-          <button class="px-6 py-4 text-white bg-blue-500 rounded-md hover:bg-blue-600">1</button>
-          <button class="px-6 py-4 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300">2</button>
-          <button class="px-6 py-4 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300">3</button>
-
-          <!-- Next Button -->
-          <button class="px-4 py-4 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300" aria-label="Next Page">
-            <svg class="w-4 h-4 text-gray-800 dark:text-blue-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor" viewBox="0 0 10 16">
-              <path d="M3.414 1A2 2 0 0 0 0 2.414v11.172A2 2 0 0 0 3.414 15L9 9.414a2 2 0 0 0 0-2.828L3.414 1Z" />
-            </svg>
-          </button>
+        <nav class="flex gap-4 items-center pagination">
+          <!-- Pagination buttons will be inserted here by JavaScript -->
         </nav>
       </div>
-
     </div>
   </div>
 </body>
 
-<!-- Add the script to handle table sorting -->
+<!-- Add the script to handle table sorting and pagination -->
 <script>
-  function sortTable(n) {
-    const table = document.querySelector("table");
-    let rows = Array.from(table.rows).slice(1);
-    const isAsc = table.querySelectorAll("th")[n].classList.toggle("asc");
-    rows.sort((rowA, rowB) => {
-      const cellA = rowA.cells[n].textContent.trim();
-      const cellB = rowB.cells[n].textContent.trim();
-      if (cellA < cellB) {
-        return isAsc ? -1 : 1;
-      } else if (cellA > cellB) {
-        return isAsc ? 1 : -1;
-      } else {
-        return 0;
+  // Dummy data
+  const data = [
+    { noPO: '24100001', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'In Process', response: '' },
+    { noPO: '24100002', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'In Process', response: '' },
+    { noPO: '24100003', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
+    { noPO: '24100004', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Declined', response: '' },
+    { noPO: '24100005', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
+    { noPO: '24100006', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'In Process', response: '' },
+    { noPO: '24100007', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
+    { noPO: '24100008', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Declined', response: '' },
+    { noPO: '24100009', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'In Process', response: '' },
+    { noPO: '24100010', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
+    { noPO: '24100011', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
+    { noPO: '24100012', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
+    { noPO: '24100002', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'In Process', response: '' },
+    { noPO: '24100003', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
+    { noPO: '24100004', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Declined', response: '' },
+    { noPO: '24100005', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
+    { noPO: '24100006', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'In Process', response: '' },
+    { noPO: '24100007', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
+    { noPO: '24100008', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Declined', response: '' },
+    { noPO: '24100009', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'In Process', response: '' },
+    { noPO: '24100010', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
+    { noPO: '24100011', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
+    { noPO: '24100002', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'In Process', response: '' },
+    { noPO: '24100003', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
+    { noPO: '24100004', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Declined', response: '' },
+    { noPO: '24100005', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
+    { noPO: '24100006', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'In Process', response: '' },
+    { noPO: '24100007', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
+    { noPO: '24100008', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Declined', response: '' },
+    { noPO: '24100009', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'In Process', response: '' },
+    { noPO: '24100010', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
+    { noPO: '24100011', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
+  ];
+
+  const rowsPerPage = 10;
+  let currentPage = 1;
+  let filteredData = data; // Initialize filteredData with all data
+
+  function displayTableData(page) {
+    const tableBody = document.getElementById('table-body');
+    tableBody.innerHTML = '';
+
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+    const paginatedData = filteredData.slice(start, end);
+
+    paginatedData.forEach(row => {
+      const tableRow = document.createElement('tr');
+      tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
+      tableRow.innerHTML = `
+        <td class="px-4 py-4 text-center font-medium text-gray-900">${row.noPO}</td>
+        <td class="px-4 py-4 text-center">${row.poDate}</td>
+        <td class="px-4 py-4 text-center">${row.planDelivery}</td>
+        <td class="px-4 py-4 text-center">${row.poRevision}</td>
+        <td class="px-4 py-4 text-center">${row.revisionDate}</td>
+        <td class="px-4 py-4 text-center">${row.status}</td>
+        <td class="px-4 py-4 text-center">
+          <div class="flex gap-2 justify-center">
+            <button class="px-3 py-2 bg-green-400 text-white rounded">Accept</button>
+            <button class="px-3 py-2 bg-red-500 text-white rounded">Decline</button>
+          </div>
+        </td>
+      `;
+      tableBody.appendChild(tableRow);
+    });
+  }
+
+  function updatePagination() {
+    const paginationContainer = document.querySelector('.pagination');
+    paginationContainer.innerHTML = '';
+
+    const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+
+    // Previous button
+    const prevButton = document.createElement('button');
+    prevButton.className = 'px-4 py-4 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
+    prevButton.innerHTML = `
+      <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
+        <path d="M8.766.566A2 2 0 0 0 6.586 1L1 6.586a2 2 0 0 0 0 2.828L6.586 15A2 2 0 0 0 10 13.586V2.414A2 2 0 0 0 8.766.566Z" />
+      </svg>
+    `;
+    prevButton.disabled = currentPage === 1;
+    prevButton.addEventListener('click', () => {
+      if (currentPage > 1) {
+        currentPage--;
+        displayTableData(currentPage);
+        updatePagination();
       }
     });
-    rows.forEach(row => table.tBodies[0].appendChild(row));
-  }
-</script>
+    paginationContainer.appendChild(prevButton);
 
-<script>
+    // Page numbers
+    for (let i = 1; i <= totalPages; i++) {
+      const pageButton = document.createElement('button');
+      pageButton.className = `px-6 py-4 ${i === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-900'} rounded-md hover:bg-gray-300`;
+      pageButton.textContent = i;
+      pageButton.addEventListener('click', () => {
+        currentPage = i;
+        displayTableData(currentPage);
+        updatePagination();
+      });
+      paginationContainer.appendChild(pageButton);
+    }
+
+    // Next button
+    const nextButton = document.createElement('button');
+    nextButton.className = 'px-4 py-4 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
+    nextButton.innerHTML = `
+      <svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
+        <path d="M1.234 15.434A2 2 0 0 0 3.414 15L9 9.414a2 2 0 0 0 0-2.828L3.414 1A2 2 0 0 0 1 2.414v11.172a2 2 0 0 0 1.234 1.848Z" />
+      </svg>
+    `;
+    nextButton.disabled = currentPage === totalPages;
+    nextButton.addEventListener('click', () => {
+      if (currentPage < totalPages) {
+        currentPage++;
+        displayTableData(currentPage);
+        updatePagination();
+      }
+    });
+    paginationContainer.appendChild(nextButton);
+  }
+
+  function searchTable() {
+    const searchInput = document.getElementById('search-input').value.toLowerCase();
+    filteredData = data.filter(row => row.noPO.toLowerCase().includes(searchInput));
+    currentPage = 1;
+    displayTableData(currentPage);
+    updatePagination();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('search-input').addEventListener('input', searchTable);
+    displayTableData(currentPage);
+    updatePagination();
+  });
+
   // Function to sort table based on column index
   function sortTable(columnIndex) {
-    const table = document.querySelector("table");
-    const tbody = table.querySelector("tbody");
-    const rows = Array.from(tbody.querySelectorAll("tr"));
-    const isAscending = table.querySelectorAll("th")[columnIndex].classList.toggle("asc");
-    table.querySelectorAll("th").forEach((th, index) => {
-      if (index !== columnIndex) th.classList.remove("asc", "desc");
+    const table = document.querySelector('table');
+    const tbody = table.querySelector('tbody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    const isAscending = table.querySelectorAll('th')[columnIndex].classList.toggle('asc');
+    table.querySelectorAll('th').forEach((th, index) => {
+      if (index !== columnIndex) th.classList.remove('asc', 'desc');
     });
 
     rows.sort((a, b) => {
-      const cellA = a.querySelectorAll("td")[columnIndex].textContent.trim();
-      const cellB = b.querySelectorAll("td")[columnIndex].textContent.trim();
+      const cellA = a.querySelectorAll('td')[columnIndex].textContent.trim();
+      const cellB = b.querySelectorAll('td')[columnIndex].textContent.trim();
 
       if (columnIndex === 4) { // For Revision Date, handle date sorting
         return new Date(cellA) - new Date(cellB);
@@ -395,58 +343,9 @@
       rows.reverse();
     }
 
-    tbody.innerHTML = "";
+    tbody.innerHTML = '';
     tbody.append(...rows);
   }
-
-  // Pagination script
-  function updatePagination(currentPage, totalPages) {
-    const paginationContainer = document.querySelector(".pagination");
-    paginationContainer.innerHTML = "";
-
-    // Previous button
-    const prevButton = document.createElement("button");
-    prevButton.className = "px-4 py-2 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300";
-    prevButton.innerHTML = `<svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16"><path d="M8.766.566A2 2 0 0 0 6.586 1L1 6.586a2 2 0 0 0 0 2.828L6.586 15A2 2 0 0 0 10 13.586V2.414A2 2 0 0 0 8.766.566Z"/></svg>`;
-    prevButton.disabled = currentPage === 1;
-    prevButton.addEventListener("click", () => {
-      if (currentPage > 1) {
-        updatePagination(currentPage - 1, totalPages);
-        // Load new page content here
-      }
-    });
-    paginationContainer.appendChild(prevButton);
-
-    // Page numbers
-    for (let i = 1; i <= totalPages; i++) {
-      const pageButton = document.createElement("button");
-      pageButton.className = `px-4 py-2 ${i === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-900'} rounded-md hover:bg-gray-300`;
-      pageButton.textContent = i;
-      pageButton.addEventListener("click", () => {
-        updatePagination(i, totalPages);
-        // Load new page content here
-      });
-      paginationContainer.appendChild(pageButton);
-    }
-
-    // Next button
-    const nextButton = document.createElement("button");
-    nextButton.className = "px-4 py-2 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300";
-    nextButton.innerHTML = `<svg class="w-4 h-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16"><path d="M1.234 15.434A2 2 0 0 0 3.414 15L9 9.414a2 2 0 0 0 0-2.828L3.414 1A2 2 0 0 0 1 2.414v11.172a2 2 0 0 0 1.234 1.848Z"/></svg>`;
-    nextButton.disabled = currentPage === totalPages;
-    nextButton.addEventListener("click", () => {
-      if (currentPage < totalPages) {
-        updatePagination(currentPage + 1, totalPages);
-        // Load new page content here
-      }
-    });
-    paginationContainer.appendChild(nextButton);
-  }
-
-  // Initial call to set up pagination
-  document.addEventListener("DOMContentLoaded", () => {
-    updatePagination(1, 5); // Example with 5 total pages
-  });
 </script>
 
 </html>
