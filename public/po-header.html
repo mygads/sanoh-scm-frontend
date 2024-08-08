@@ -195,9 +195,20 @@
     { noPO: '24100012', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
   ];
 
-  const rowsPerPage = 10;
+  let rowsPerPage = 10;
   let currentPage = 1;
   let filteredData = data; // Initialize filteredData with all data
+
+  // Adjust rows per page based on screen size
+  function adjustRowsPerPage() {
+    if (window.innerWidth <= 1280) {
+        rowsPerPage = 5;
+      } else if (window.innerWidth <= 1600) {
+        rowsPerPage = 7;
+      } else {
+        rowsPerPage = 10;
+      }
+  }
 
   function displayTableData(page) {
     const tableBody = document.getElementById('table-body');
@@ -311,6 +322,13 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
+    adjustRowsPerPage(); // Set rows per page based on initial screen size
+    window.addEventListener('resize', () => {
+      adjustRowsPerPage(); // Adjust rows per page on screen resize
+      displayTableData(currentPage); // Re-render table data
+      updatePagination(); // Re-render pagination
+    });
+
     document.getElementById('search-input').addEventListener('input', searchTable);
     displayTableData(currentPage);
     updatePagination();
