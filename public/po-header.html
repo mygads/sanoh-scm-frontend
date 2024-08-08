@@ -12,6 +12,41 @@
     href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    .active {
+      opacity: 100 !important;
+      background-color: rgba(2, 19, 70, 0.1) !important;
+      font-weight: 600 !important;
+    }
+
+    .active {
+      opacity: 100 !important;
+      background-color: rgba(2, 19, 70, 0.1) !important;
+      font-weight: 600 !important;
+    }
+
+    @media (max-width: 1080px) {
+      .sidebar {
+        width: 250px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .sidebar {
+        width: 200px;
+      }
+    }
+
+    .sidebar-btn {
+      @apply flex gap-4 items-center px-6 py-4 opacity-50 transition-opacity rounded text-[20px];
+    }
+
+    .sidebar {
+      @apply flex flex-col bg-stone-300 py-14;
+    }
+    
+  </style>
   <script>
     tailwind.config = {
       theme: {
@@ -22,67 +57,55 @@
         },
       },
     }
+
   </script>
 </head>
 
 <body class="font-poppins bg-white">
-  <div class="flex h-screen w-screen">
+  <div class="flex h-screen">
 
-    <!-- Sidebar -->
-    <div class="flex flex-col w-[20%] bg-stone-300 py-14">
-      <img src="assets/logosanoh.svg" class="object-contain self-center w-48">
+   <!-- Sidebar -->
+   <div class="sidebar flex flex-col bg-stone-300 py-14">
+    <img src="assets/logosanoh.svg" class="object-contain self-center w-48">
 
-      <div class="flex flex-col mt-12 w-full text-blue-950">
-        <button
-          class="relative flex gap-4 items-center px-6 py-4 w-full opacity-50 hover:opacity-100 transition-opacity hover:bg-blue-900 hover:bg-opacity-10 rounded hover-stroke text-[20px] hover:font-semibold">
-          <img src="assets/icon_home.svg" alt="Dashboard" class="w-8 h-8">
-          <div class="self-stretch my-auto">Dashboard</div>
-        </button>
-        <div class="flex flex-col w-[20%] bg-stone-300 py-2"></div>
-        <button
-          class="relative flex gap-4 items-center px-6 py-4 w-full opacity-50 hover:opacity-100 transition-opacity hover:bg-blue-900 hover:bg-opacity-10 rounded hover-stroke text-[20px] hover:font-semibold">
-          <img src="assets/icon_po.svg" alt="Purchase Order" class="w-8 h-8">
-          <div class="self-stretch my-auto">Purchase Order</div>
-        </button>
-        <div class="flex flex-col w-[20%] bg-stone-300 py-2"></div>
-        <button
-          class="relative flex gap-4 items-center px-6 py-4 w-full opacity-50 hover:opacity-100 transition-opacity hover:bg-blue-900 hover:bg-opacity-10 rounded hover-stroke text-[20px] hover:font-semibold">
-          <img src="assets/icon_dn.svg" alt="Delivery Note" class="w-8 h-8">
-          <div class="self-stretch my-auto">Delivery Note</div>
-        </button>
-        <div class="flex flex-col w-[20%] bg-stone-300 py-2"></div>
-        <button
-          class="relative flex gap-4 items-center px-6 py-4 w-full opacity-50 hover:opacity-100 transition-opacity hover:bg-blue-900 hover:bg-opacity-10 rounded hover-stroke text-[20px] hover:font-semibold">
-          <img src="assets/icon_history.svg" alt="History Purchase Order" class="w-8 h-8">
-          <div class="self-stretch my-auto">History Purchase Order</div>
-        </button>
-        <div class="flex flex-col w-[20%] bg-stone-300 py-2"></div>
-        <button
-          class="relative flex gap-4 items-center px-6 py-4 w-full opacity-50 hover:opacity-100 transition-opacity hover:bg-blue-900 hover:bg-opacity-10 rounded hover-stroke text-[20px] hover:font-semibold">
-          <img src="assets/icon_history.svg" alt="History Delivery Note" class="w-8 h-8">
-          <div class="self-stretch my-auto">History Delivery Note</div>
-        </button>
-        <div class="flex flex-col w-[20%] bg-stone-300 py-2"></div>
-        <button
-          class="relative flex gap-4 items-center px-6 py-4 w-full opacity-50 hover:opacity-100 transition-opacity hover:bg-blue-900 hover:bg-opacity-10 rounded hover-stroke text-[20px] hover:font-semibold">
-          <img src="assets/icon_listing.svg" alt="Listing Report" class="w-8 h-8">
-          <div class="self-stretch my-auto">Listing Report</div>
-        </button>
-      </div>
-
-      <div class="mt-auto flex flex-col w-full">
-        <div
-          class="flex gap-4 items-center px-6 py-4 w-full text-blue-950 bg-blue-950 bg-opacity-10 rounded text-[20px]">
-          <img src="assets/icon_people.svg" class="object-contain shrink-0 w-8 aspect-square">
-          <div class="self-stretch my-auto">PT Kawasaki</div>
-        </div>
-        <button onclick="location.href='your-logout-page.html'"
-          class="flex gap-4 items-center px-6 py-4 w-full text-red-600 bg-red-600 bg-opacity-10 hover:bg-red-200 rounded text-[20px] hover:font-semibold">
-          <img src="assets/icon_logout.svg" class="object-contain shrink-0 w-8 aspect-square">
-          <div class="self-stretch my-auto">Logout</div>
-        </button>
-      </div>
+    <div class="flex flex-col mt-12 w-full text-blue-950">
+      <button id="dashboard" class="sidebar-btn relative flex gap-4 items-center px-6 py-4 opacity-50 transition-opacity rounded text-[20px]">
+        <img src="assets/icon_home.svg" alt="Dashboard" class="w-8 h-8">
+        <div class="self-stretch my-auto">Dashboard</div>
+      </button>
+      <button id="purchase-order" class="sidebar-btn relative flex gap-4 items-center px-6 py-4 opacity-50 transition-opacity rounded text-[20px] active">
+        <img src="assets/icon_po.svg" alt="Purchase Order" class="w-8 h-8">
+        <div class="self-stretch my-auto">Purchase Order</div>
+      </button>
+      <button id="delivery-note" class="sidebar-btn relative flex gap-4 items-center px-6 py-4 opacity-50 transition-opacity rounded text-[20px]">
+        <img src="assets/icon_dn.svg" alt="Delivery Note" class="w-8 h-8">
+        <div class="self-stretch my-auto">Delivery Note</div>
+      </button>
+      <button id="history-po" class="sidebar-btn relative flex gap-4 items-center px-6 py-4 opacity-50 transition-opacity rounded text-[20px]">
+        <img src="assets/icon_history.svg" alt="History Purchase Order" class="w-8 h-8">
+        <div class="self-stretch my-auto">History Purchase Order</div>
+      </button>
+      <button id="history-dn" class="sidebar-btn relative flex gap-4 items-center px-6 py-4 opacity-50 transition-opacity rounded text-[20px]">
+        <img src="assets/icon_history.svg" alt="History Delivery Note" class="w-8 h-8">
+        <div class="self-stretch my-auto">History Delivery Note</div>
+      </button>
+      <button id="listing-report" class="sidebar-btn relative flex gap-4 items-center px-6 py-4 opacity-50 transition-opacity rounded text-[20px]">
+        <img src="assets/icon_listing.svg" alt="Listing Report" class="w-8 h-8">
+        <div class="self-stretch my-auto">Listing Report</div>
+      </button>
     </div>
+
+    <div class="mt-auto flex flex-col w-full">
+      <div class="flex gap-4 items-center px-6 py-4 w-full text-blue-950 bg-blue-950 bg-opacity-10 rounded text-[20px]">
+        <img src="assets/icon_people.svg" class="object-contain shrink-0 w-8 aspect-square">
+        <div class="self-stretch my-auto">PT Kawasaki</div>
+      </div>
+      <button onclick="location.href='your-logout-page.html'" class="flex gap-4 items-center px-6 py-4 w-full text-red-600 bg-red-600 bg-opacity-10 hover:bg-red-200 rounded text-[20px] hover:font-semibold">
+        <img src="assets/icon_logout.svg" class="object-contain shrink-0 w-8 aspect-square">
+        <div class="self-stretch my-auto">Logout</div>
+      </button>
+    </div>
+  </div>
 
 
     <!-- Main Content -->
@@ -344,6 +367,19 @@
     tbody.innerHTML = '';
     tbody.append(...rows);
   }
+
+    // Select all sidebar buttons
+    const buttons = document.querySelectorAll('.sidebar-btn');
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        // Remove active class from all buttons
+        buttons.forEach(btn => btn.classList.remove('active'));
+        // Add active class to the clicked button
+         button.classList.add('active'); 
+      });
+    });
+    
 </script>
 
 </html>
