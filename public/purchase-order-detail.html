@@ -8,21 +8,10 @@
   <!-- Customize Font Family -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
+  <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            poppins: ['Poppins', 'sans-serif'],
-          },
-        },
-      },
-    }
-  </script>
+  <script src="script.js"></script>
 </head>
 
 <body class="font-poppins bg-white">
@@ -106,54 +95,103 @@
         </nav>
       </aside>
 
+      <main class="flex flex-col ml-5 w-[80%] mb-[100%] mt-[3%]  max-md:ml-0 max-md:w-full">
 
-      <main class="flex flex-col ml-5 w-[80%] max-md:ml-0 max-md:w-full">
         <section class="flex flex-col self-stretch py-px my-auto w-full max-md:mt-10 max-md:max-w-full">
+
           <header class="flex gap-3 items-center self-start text-2xl font-semibold text-black">
-            <img loading="lazy" src="assets/icon_back.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-7 cursor-pointer pointer-events-auto aspect-square" />
-            <h1 class="self-stretch my-auto">Purchase Order (PO) Detail</h1>
+            <img loading="lazy" src="assets/icon_back.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-5 2xl:w-7 cursor-pointer pointer-events-auto aspect-square" />
+            <h1 class="self-stretch my-auto text-[80%] 2xl:text-[120%]">Purchase Order (PO) Detail</h1>
           </header>
-          <div class="flex flex-col mt-6 w-full text-base font-medium max-md:max-w-full">
+
+          <div class="flex flex-col mt-4 2xl:mt-6 w-full 2xl:text-base text-xs font-medium max-md:max-w-full">
+
             <div class="flex flex-wrap gap-10 justify-between items-center w-full max-md:max-w-full">
-              <div class="flex gap-6 items-center self-stretch my-auto text-black min-w-[240px]">
-                <label for="poNumber" class="self-stretch my-auto">No. PO</label>
-                <input id="poNumber" type="text" value="202408043" readonly class="flex-1 shrink gap-4 self-stretch px-6 py-3 my-auto text-center whitespace-nowrap rounded bg-stone-300 min-h-[48px] w-[174px] max-md:px-5" />
+
+              <!-- No PO -->
+              <div class="flex gap-3 2xl:gap-6 items-center self-stretch my-auto text-black min-w-[10%]">
+                <div class="self-stretch my-auto ">No. PO</div>
+                <div id="poNumber" type="text" class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap rounded bg-stone-300 min-h-[10%] w-[8%] max-md:px-5" >2024080431231 </div>
               </div>
-              <div class="flex flex-wrap gap-6 items-center self-stretch my-auto min-w-[240px] text-neutral-500 max-md:max-w-full">
-                <div class="flex gap-6 justify-between items-center self-stretch px-6 py-4 my-auto rounded border border-solid border-neutral-300 min-w-[240px] w-[329px] max-md:px-5">
-                  <input type="text" placeholder="Find part number / part name" aria-label="Find part number or part name" class="self-stretch my-auto bg-transparent border-none outline-none" />
-                  <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/7b95e04f2fbbd53aa1107331d2260c2bc446024d2e4561e560a08bc3196e7c7d?apiKey=d251d8aff05c4a6eb48179f11fed5381&&apiKey=d251d8aff05c4a6eb48179f11fed5381" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
-                </div>
-                <div class="flex gap-10 justify-between items-center self-stretch px-6 py-4 my-auto rounded border border-solid border-neutral-300 w-[187px] max-md:px-5">
-                  <span class="self-stretch my-auto">Sort By</span>
-                  <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/3e162fc95c530d37d9c2cf15d9e716be3416eb21bc246a3e1059389941210e78?apiKey=d251d8aff05c4a6eb48179f11fed5381&&apiKey=d251d8aff05c4a6eb48179f11fed5381" alt="" class="object-contain shrink-0 self-stretch my-auto w-5 aspect-square" />
+
+              <!-- Search Bar -->
+              <div class="flex flex-wrap items-center self-stretch my-auto min-w-[10%] text-neutral-500 max-md:max-w-full">
+                <div class="flex items-center px-4 2xl:px-6 py-3 2xl:py-4 bg-neutral-100 rounded w-full ml-auto">
+                  <input id="search-input" type="text" placeholder="Search part number or name" class="flex-1 bg-neutral-100 outline-none 2xl:text-base">
+                  <img src="assets/icon_search.svg" alt="Search Icon" class="w-4 2xl:w-5 h-4 2xl:h-5 ml-3">
                 </div>
               </div>
+
             </div>
+
             <div class="flex flex-wrap gap-10 justify-between items-center mt-6 w-full max-md:max-w-full">
-              <div class="flex flex-wrap gap-4 items-center self-stretch my-auto text-black whitespace-nowrap min-w-[240px] w-[524px] max-md:max-w-full">
-                <label for="noteInput" class="self-stretch my-auto w-[61px]">Note</label>
-                <input id="noteInput" type="text" class="flex shrink-0 gap-1 self-stretch py-4 my-auto rounded border border-solid border-neutral-300 h-[52px] w-[174px]" />
+              
+              <!-- Note -->
+              <div class="flex flex-wrap gap-4 items-center self-stretch my-auto text-black whitespace-nowrap w-[50%] max-md:max-w-full">
+                <div class="self-stretch my-auto w-[8%]">Note</div>
+                <div id="noteInput" type="text" class="flex shrink-0 gap-1 self-stretch py-4 px-4 my-auto text-left rounded border border-solid border-neutral-300 h-[52px] w-[80%]"> 1231231231 </div>
               </div>
               <div class="flex gap-6 items-center self-stretch my-auto text-white min-w-[240px]">
                 <a href="export-csv.html" class="flex gap-4 items-center self-stretch px-6 py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto min-h-[48px] w-[174px] max-md:px-5">
-                  <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/6b1670873739f999bf90598e04bf87ce7d67a1a88dfd345dd11f1e6a24c634fb?apiKey=d251d8aff05c4a6eb48179f11fed5381&&apiKey=d251d8aff05c4a6eb48179f11fed5381" alt="" class="object-contain shrink-0 self-stretch my-auto w-5 aspect-square" />
+                  <img loading="lazy" src="assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-5 aspect-square" />
                   <span class="flex-1 shrink self-stretch my-auto basis-0">Export CSV</span>
                 </a>
                 <a href="print-po.html" class="flex gap-4 items-center self-stretch px-6 py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto min-h-[48px] w-[151px] max-md:px-5">
-                  <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/6b1670873739f999bf90598e04bf87ce7d67a1a88dfd345dd11f1e6a24c634fb?apiKey=d251d8aff05c4a6eb48179f11fed5381&&apiKey=d251d8aff05c4a6eb48179f11fed5381" alt="" class="object-contain shrink-0 self-stretch my-auto w-5 aspect-square" />
+                  <img loading="lazy" src="assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-5 aspect-square" />
                   <span class="flex-1 shrink self-stretch my-auto basis-0">Print PO</span>
                 </a>
               </div>
             </div>
-            <div class="flex flex-col mt-6 w-full text-sm text-black max-md:max-w-full">
-              <table class="w-full bg-white border border-solid border-neutral-300 max-md:max-w-full">
-                
-              </table>
-            </div>
+
           </div>
           
         </section>
+
+        <div class="flex flex-col mt-8 text-base">
+          <div class="relative overflow-x-auto shadow-md sm:rounded-lg border border-gray-300">
+            <table class="w-full text-base text-left text-gray-700 dark:text-gray-700">
+              <thead class="text-lg text-gray-700">
+                <tr>
+                  <th scope="col" class="px-4 py-3 text-center border-b cursor-pointer" onclick="sortTable(0)">
+                    No
+                    <img loading="lazy" src="assets/icon_sort.svg" alt="" class="w-3 h-3 inline-block text-gray-600" />
+                    <span class="sort-indicator"></span>
+                  </th>
+                  <th scope="col" class="px-4 py-3 text-center border-b cursor-pointer" onclick="sortTable(1)">
+                    Part Number
+                    <img loading="lazy" src="assets/icon_sort.svg" alt="" class="w-3 h-3 inline-block text-gray-600" />
+                    <span class="sort-indicator"></span>
+                  </th>
+                  <th scope="col" class="px-4 py-3 text-center border-b cursor-pointer" onclick="sortTable(2)">
+                    Part Name
+                    <img loading="lazy" src="assets/icon_sort.svg" alt="" class="w-3 h-3 inline-block text-gray-600" />
+                    <span class="sort-indicator"></span>
+                  </th>
+                  <th scope="col" class="px-4 py-3 text-center border-b cursor-pointer" onclick="sortTable(3)">
+                    UoM
+                    <img loading="lazy" src="assets/icon_sort.svg" alt="" class="w-3 h-3 inline-block text-gray-600" />
+                    <span class="sort-indicator"></span>
+                  </th>
+                  <th scope="col" class="px-4 py-3 text-center border-b cursor-pointer" onclick="sortTable(4)">
+                    QTY
+                    <img loading="lazy" src="assets/icon_sort.svg" alt="" class="w-3 h-3 inline-block text-gray-600" />
+                    <span class="sort-indicator"></span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="table-body">
+                <!-- Data rows will be inserted here by JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+  
+        <!-- Pagination -->
+        <div class="flex justify-end my-6">
+          <nav class="flex gap-4 items-center pagination">
+            <!-- Pagination buttons will be inserted here by JavaScript -->
+          </nav>
+        </div>
       </main>
     </div>
   </section>
@@ -163,18 +201,19 @@
 <script>
   // Dummy data
   const data = [
-    { noPO: '24100001', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'In Process', response: 'Accepted' },
-    { noPO: '24100002', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'In Process', response: 'Accepted' },
-    { noPO: '24100003', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: 'Accepted' },
-    { noPO: '24100004', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Declined', response: 'Declined' },
-    { noPO: '24100005', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: 'Declined' },
-    { noPO: '24100006', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'In Process', response: '' },
-    { noPO: '24100007', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
-    { noPO: '24100008', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Declined', response: '' },
-    { noPO: '24100009', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'In Process', response: '' },
-    { noPO: '24100010', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
-    { noPO: '24100011', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
-    { noPO: '24100012', poDate: '2024-07-29', planDelivery: '2024-08-01', poRevision: 'Rev 02', revisionDate: '', status: 'Opened', response: '' },
+    { no: '1', partNumber: '24100001', partName: 'a1', UoM: 'Rev 02', QTY: '500'},
+    { no: '2', partNumber: '24100002', partName: '2024-08-01', UoM: 'Rev 02', QTY: '400', status: 'In Process', response: 'Accepted' },
+    { no: '3', partNumber: '24100003', partName: '2024-08-01', UoM: 'Rev 02', QTY: '400', status: 'Opened', response: 'Accepted' },
+    { no: '4', partNumber: '24100004', partName: '2024-08-01', UoM: 'Rev 02', QTY: '400', status: 'Declined', response: 'Declined' },
+    { no: '2', partNumber: '24100002', partName: '2024-08-01', UoM: 'Rev 02', QTY: '400', status: 'In Process', response: 'Accepted' },
+    { no: '3', partNumber: '24100003', partName: '2024-08-01', UoM: 'Rev 02', QTY: '400', status: 'Opened', response: 'Accepted' },
+    { no: '4', partNumber: '24100004', partName: '2024-08-01', UoM: 'Rev 02', QTY: '400', status: 'Declined', response: 'Declined' },
+    { no: '2', partNumber: '24100002', partName: '2024-08-01', UoM: 'Rev 02', QTY: '400', status: 'In Process', response: 'Accepted' },
+    { no: '3', partNumber: '24100003', partName: '2024-08-01', UoM: 'Rev 02', QTY: '400', status: 'Opened', response: 'Accepted' },
+    { no: '4', partNumber: '24100004', partName: '2024-08-01', UoM: 'Rev 02', QTY: '400', status: 'Declined', response: 'Declined' },
+    { no: '2', partNumber: '24100002', partName: '2024-08-01', UoM: 'Rev 02', QTY: '400', status: 'In Process', response: 'Accepted' },
+    { no: '3', partNumber: '24100003', partName: '2024-08-01', UoM: 'Rev 02', QTY: '400', status: 'Opened', response: 'Accepted' },
+    { no: '4', partNumber: '24100004', partName: '2024-08-01', UoM: 'Rev 02', QTY: '400', status: 'Declined', response: 'Declined' },
   ];
 
   let rowsPerPage = 10;
@@ -204,24 +243,11 @@
       const tableRow = document.createElement('tr');
       tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
       tableRow.innerHTML = `
-        <td class="px-4 py-4 text-center font-medium text-gray-900">${row.noPO}</td>
-        <td class="px-4 py-4 text-center">${row.poDate}</td>
-        <td class="px-4 py-4 text-center">${row.planDelivery}</td>
-        <td class="px-4 py-4 text-center">${row.poRevision}</td>
-        <td class="px-4 py-4 text-center">${row.revisionDate}</td>
-        <td class="px-4 py-4 text-center">${row.status}</td>
-        <td class="px-4 py-4 text-center ${row.response === 'Accepted' ? 'bg-green-200' : row.response === 'Declined' ? 'bg-red-200' : ''}">
-          <div class="flex gap-2 justify-center">
-            ${row.response ? `
-              <span class="${row.response === 'Accepted' ? 'text-green-600' : 'text-red-600'}">${row.response}</span>
-              <button class="" onclick="resetResponse(${start + index})">
-                <img src="assets/refresh.svg" alt="Refresh Icon" class="h-5 w-5">
-              </button>` : `
-              <button class="px-3 py-2 bg-green-400 text-white rounded" onclick="updateResponse(${start + index}, 'Accepted')">Accept</button>
-              <button class="px-3 py-2 bg-red-500 text-white rounded" onclick="updateResponse(${start + index}, 'Declined')">Decline</button>
-            `}
-          </div>
-        </td>
+        <td class="px-4 py-4 text-center font-medium text-gray-900">${row.no}</td>
+        <td class="px-4 py-4 text-center">${row.partNumber}</td>
+        <td class="px-4 py-4 text-center">${row.partName}</td>
+        <td class="px-4 py-4 text-center">${row.UoM}</td>
+        <td class="px-4 py-4 text-center">${row.QTY}</td>
       `;
       tableBody.appendChild(tableRow);
     });
@@ -283,23 +309,17 @@
     paginationContainer.appendChild(nextButton);
   }
 
-  function updateResponse(index, response) {
-    data[index].response = response;
-    displayTableData(currentPage);
-  }
-
-  function resetResponse(index) {
-    data[index].response = '';
-    displayTableData(currentPage);
-  }
-
   function searchTable() {
     const searchInput = document.getElementById('search-input').value.toLowerCase();
-    filteredData = data.filter(row => row.noPO.toLowerCase().includes(searchInput));
+    filteredData = data.filter(row => 
+        row.partNumber.toLowerCase().includes(searchInput) || 
+        row.partName.toLowerCase().includes(searchInput)
+    );
     currentPage = 1;
     displayTableData(currentPage);
     updatePagination();
   }
+
 
   document.addEventListener('DOMContentLoaded', () => {
     adjustRowsPerPage(); // Set rows per page based on initial screen size
