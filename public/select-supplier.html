@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,15 +32,12 @@
     }
   </script>
 </head>
-
 <body class="font-poppins flex min-h-screen">
-
   <!-- nav-side bar -->
   <aside class="flex flex-col w-[20%] max-md:ml-0 max-md:w-full">
     <nav class="flex flex-col grow py-9 2xl:py-14 w-full h-screen text-base font-medium border-r border-solid bg-stone-300 border-r-neutral-400 max-md:mt-9">
       <!-- Logo Sanoh -->
       <img loading="lazy" src="assets/logosanoh.svg" class="object-contain self-center w-30 2xl:w-48 max-w-full cursor-pointer pointer-events-auto aspect-[2.79]" />
-
       <!-- Menu Items -->
       <ul class="flex flex-col mt-7 2xl:mt-10 w-full text-gray-500">
         <!-- Dashboard (Visible) -->
@@ -54,7 +50,6 @@
         <!-- Other Menu Items -->
         <!-- ... -->
       </ul>
-
       <!-- User and Logout Section at the Bottom -->
       <div class="mt-auto flex flex-col w-full">
         <!-- User Info -->
@@ -70,16 +65,12 @@
       </div>
     </nav>
   </aside>
-
   <main class="flex flex-col w-[80%] xl:px-10 2xl:px-14 xl:py-14 2xl:py-20">
     <article class="flex flex-col items-start w-full text-base">
       <h1 class="xl:text-xl 2xl:text-2xl font-semibold text-black">Select Supplier</h1>
-      
       <form id="supplierForm" class="flex flex-col w-full text-neutral-500">
         <div class="flex flex-col xl:w-[500px] 2xl:w-[600px]">
-          <label for="Supplier" class="block xl:mb-2 2xl:mb-4 xl:text-base 2xl:text-lg text-neutral-500 dark:text-white">
-            Cari Supplier
-          </label>
+          <label for="Supplier" class="block xl:mb-2 2xl:mb-4 xl:text-base 2xl:text-lg text-neutral-500 dark:text-white">Cari Supplier</label>
           <select id="Supplier" class="scrollable-select bg-transparent border border-neutral-300 rounded-lg block w-full p-4 2xl:p-7 text-neutral-500 dark:focus:ring-blue-600 dark:focus:border-blue-600 text-sm 2xl:text-lg">
             <option selected value="">Cari Supplier</option>
             <!-- Options akan diisi secara dinamis melalui JavaScript -->
@@ -88,7 +79,6 @@
         <div class="flex gap-2 items-center xl:mt-6 2xl:mt-8 justify-end text-white whitespace-nowrap xl:h-[50px] 2xl:h-[100px] xl:w-[500px] 2xl:w-[600px]">
           <button type="button" id="submitBtn" class="gap-2 xl:px-5 xl:py-3 2xl:px-8 2xl:py-4 rounded bg-zinc-400 xl:text-sm 2xl:text-lg hover:bg-blue-600" active>Submit</button>
         </div>
-        
       </form>
     </article>
   </main>
@@ -100,7 +90,6 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Array Data Dummy Supplier dengan kode
       const suppliers = [
         { id: '1', name: 'Supplier A', code: 'A123' },
         { id: '2', name: 'Supplier B', code: 'B456' },
@@ -114,7 +103,6 @@
         { id: '10', name: 'Supplier J', code: 'J192' },
       ];
 
-      // Menyisipkan options ke dalam elemen select
       const supplierSelect = document.getElementById('Supplier');
       const submitBtn = document.getElementById('submitBtn');
 
@@ -125,35 +113,32 @@
         supplierSelect.appendChild(option);
       });
 
-      // Mengaktifkan Select2 untuk elemen select dengan ID 'Supplier'
       $(supplierSelect).select2({
         placeholder: 'Cari Supplier',
         allowClear: true
       });
 
-      // Event listener untuk mengaktifkan tombol submit dan mengubah warna
       supplierSelect.addEventListener('change', () => {
-        console.log('Supplier selected:', supplierSelect.value); // Debugging log
         if (supplierSelect.value) {
-          submitBtn.active = false; // Enable button
-          submitBtn.classList.remove('bg-zinc-400', 'hover:bg-zinc-500'); // Remove default classes
-          submitBtn.classList.add('bg-blue-600', 'hover:bg-blue-700'); // Add active classes
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('bg-zinc-400', 'hover:bg-zinc-500');
+          submitBtn.classList.add('bg-blue-600', 'hover:bg-blue-700');
         } else {
-          submitBtn.active = true; // Disable button
-          submitBtn.classList.remove('bg-blue-600', 'hover:bg-blue-700'); // Remove active classes
-          submitBtn.classList.add('bg-zinc-400', 'hover:bg-zinc-500'); // Add default classes
+          submitBtn.disabled = true;
+          submitBtn.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+          submitBtn.classList.add('bg-zinc-400', 'hover:bg-zinc-500');
         }
       });
 
-      // Event listener untuk menangani klik pada tombol submit
       submitBtn.addEventListener('click', () => {
-        if (!submitBtn.active) {
-          window.location.href = '/dashboard-warehouse-main.html'; // Redirect ke halaman dashboard
+        const selectedSupplierId = supplierSelect.value;
+        if (selectedSupplierId) {
+          // Store selected supplier ID in localStorage
+          localStorage.setItem('selectedSupplierId', selectedSupplierId);
+          window.location.href = '/dashboard-warehouse-main.html';
         }
       });
     });
   </script>
-
 </body>
-
 </html>
