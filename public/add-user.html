@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body class="font-poppins bg-white">
+  <section class="overflow-hidden w-screen h-screen bg-white ]">
+    <div class="flex">
+
+      <!-- nav-side bar -->
+      <aside class="flex flex-col w-[20%] h-screen">
+        <nav
+          class="flex flex-col grow py-9 2xl:py-14 w-full text-base font-medium border-r border-solid bg-stone-300 border-r-neutral-400">
+
+          <!-- Logo Sanoh -->
+          <img loading="lazy" src="assets/logosanoh.svg"
+            class="object-contain self-center w-30 2xl:w-48 max-w-full cursor-pointer pointer-events-auto aspect-[2.79]" />
+
+          <!-- Menu Items -->
+          <ul class="flex flex-col mt-7 2xl:mt-10 w-full text-gray-500">
+
+            <!-- Manage Account (visible) -->
+            <li id="manage-account">
+              <a href="index.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 w-full whitespace-nowrap cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 active">
+                <img loading="lazy" src="assets/icon_home_default.svg" alt=""
+                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square icon-home-active" />
+                <span class="self-stretch my-auto text-sm 2xl:text-xl">Manage Account</span>
+              </a>
+            </li>
+
+            <!-- Hidden Menu Items -->
+            <li class="hidden">
+              <a href="purchase-order.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+                <img loading="lazy" src="../assets/icon_po_default.svg" alt=""
+                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-[0.89] fill-blue-950 icon-po-active" />
+                <span class="self-stretch my-auto text-sm 2xl:text-xl">Purchase Order</span>
+              </a>
+            </li>
+
+            <li class="hidden">
+              <a href="delivery-note.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+                <img loading="lazy" src="../assets/icon_dn_default.svg" alt=""
+                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
+                <span class="self-stretch my-auto text-sm 2xl:text-xl">Delivery Note</span>
+              </a>
+            </li>
+
+            <li class="hidden">
+              <a href="history-purchase-order.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+                <img loading="lazy" src="../assets/icon_history_default.svg" alt=""
+                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
+                <span class="self-stretch my-auto text-sm 2xl:text-xl">History Purchase Order</span>
+              </a>
+            </li>
+
+            <li class="hidden">
+              <a href="history-delivery-note.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+                <img loading="lazy" src="../assets/icon_history_default.svg" alt=""
+                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
+                <span class="self-stretch my-auto text-sm 2xl:text-xl">History Delivery Note</span>
+              </a>
+            </li>
+
+            <li class="hidden">
+              <a href="listing-report"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+                <img loading="lazy" src="../assets/icon_listing_default.svg" alt=""
+                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
+                <span class="self-stretch my-auto text-sm 2xl:text-xl">Listing Report</span>
+              </a>
+            </li>
+          </ul>
+
+          <!-- User and Logout Section at the Bottom -->
+          <div class="mt-auto flex flex-col w-full">
+
+            <!-- User Info -->
+            <div class="flex gap-4 items-center p-2 2xl:p-4 w-full bg-blue-950 bg-opacity-10 text-blue-950">
+              <img loading="lazy" src="assets/icon_people.svg" alt=""
+                class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
+              <span class="self-stretch my-auto text-sm 2xl:text-xl">Admin (Heru)</span>
+            </div>
+
+            <!-- Logout Button -->
+            <a href="../index.html"
+              class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
+              <img loading="lazy" src="assets/icon_logout.svg" alt=""
+                class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square logout-icon hover:icon_logout_white.svg" />
+              <span class="self-stretch my-auto text-sm 2xl:text-xl">Logout</span>
+            </a>
+          </div>
+        </nav>
+      </aside>
+
+
+      <!-- Main Content -->
+      <main class="flex flex-col w-[80%] mb-[100%] mt-[3%] mx-auto px-6 2xl:px-10">
+
+        <section class="flex flex-col self-stretch py-px my-auto w-full">
+          <header class="flex gap-3 items-center self-start text-2xl font-semibold text-black">
+            <img loading="lazy" src="assets/icon_back.svg" alt=""
+              class="object-contain shrink-0 self-stretch my-auto w-5 2xl:w-7 cursor-pointer pointer-events-auto aspect-square" />
+            <h1 class="self-stretch my-auto text-[80%] 2xl:text-[120%]">Add User</h1>
+          </header>
+          <div class="flex flex-col mt-4 2xl:mt-6 w-full 2xl:text-base text-xs font-medium">
+            <div class="flex flex-wrap gap-10 justify-between items-center w-full">
+            </div>
+          </div>
+        </section>
+
+        <!-- Forms -->
+        <form class="flex flex-col space-y-6 mb-6">
+          <div class="flex items-center gap-4 mb-6">
+            <label for="user_id" class="text-base font-medium dark:text-black w-[15%]">User ID</label>
+            <input type="text" id="user_id"
+              class="bg-white border border-neutral-300 text-black text-sm rounded-lg block p-3 dark:text-black"
+              placeholder="User ID" required />
+          </div>
+
+          <div class="flex items-center gap-4 mb-6">
+            <label for="supplier_id" class="text-base font-medium dark:text-black w-[15%]">Supplier ID</label>
+            <input type="text" id="supplier_id"
+              class="bg-white border border-neutral-300 text-black text-sm rounded-lg block p-3 dark:text-black"
+              placeholder="Supplier ID" required />
+          </div>
+
+          <div class="flex gap-6 mb-6">
+            <div class="flex-1 flex items-center gap-4">
+              <label for="first_name" class="text-base font-medium dark:text-black w-[32%]">Name</label>
+              <input type="text" id="first_name"
+                class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[70%] p-3 dark:text-black"
+                placeholder="Name" required />
+            </div>
+            <div class="flex-1 flex items-center gap-4">
+              <label for="last_name" class="text-base font-medium dark:text-black w-[10%]">Role</label>
+              <input type="text" id="last_name"
+                class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-1/2 p-3 dark:text-black"
+                placeholder="Role" required />
+            </div>
+          </div>
+
+          <div class="flex items-center gap-4 mb-6">
+            <label for="username" class="text-base font-medium dark:text-black w-[15%]">Username</label>
+            <input type="text" id="username"
+              class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[32%] p-3 dark:text-black"
+              placeholder="Username" required />
+          </div>
+
+          <div class="flex items-center gap-4 mb-6">
+            <label for="email" class="text-base font-medium dark:text-black w-[15%]">Email</label>
+            <input type="email" id="email"
+              class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[32%] p-3 dark:text-black"
+              placeholder="example@example.com" required />
+          </div>
+
+          <div class="flex items-center gap-4 mb-6">
+            <label for="password" class="text-base font-medium dark:text-black w-[15%]">Password</label>
+            <input type="password" id="password"
+              class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[32%] p-3 dark:text-black"
+              placeholder="Password" required />
+          </div>
+
+          <div class="flex justify-end">
+            <button type="submit"
+              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+          </div>
+        </form>
+      </main>
+    </div>
+  </section>
+</body>
+
+<script src="script.js"></script>
+
+</html>

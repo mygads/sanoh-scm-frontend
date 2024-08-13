@@ -152,3 +152,7 @@ a:hover .logout-icon {
   --tw-text-opacity: 1;
   color: rgb(23 37 84 / var(--tw-text-opacity)) /* #172554 */;
 }
+
+.icon-edit {
+  color: blue; 
+}

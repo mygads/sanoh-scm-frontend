@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body class="font-poppins bg-white">
+  <section class="overflow-hidden w-screen h-screen bg-white ]">
+    <div class="flex">
+
+      <!-- nav-side bar -->
+      <aside class="flex flex-col w-[20%] h-screen">
+        <nav
+          class="flex flex-col grow py-9 2xl:py-14 w-full text-base font-medium border-r border-solid bg-stone-300 border-r-neutral-400">
+
+          <!-- Logo Sanoh -->
+          <img loading="lazy" src="assets/logosanoh.svg"
+            class="object-contain self-center w-30 2xl:w-48 max-w-full cursor-pointer pointer-events-auto aspect-[2.79]" />
+
+          <!-- Menu Items -->
+          <ul class="flex flex-col mt-7 2xl:mt-10 w-full text-gray-500">
+
+            <!-- Manage Account (visible) -->
+            <li id="manage-account">
+              <a href="index.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 w-full whitespace-nowrap cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 active">
+                <img loading="lazy" src="assets/icon_home_default.svg" alt=""
+                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square icon-home-active" />
+                <span class="self-stretch my-auto text-sm 2xl:text-xl">Manage Account</span>
+              </a>
+            </li>
+
+            <!-- Hidden Menu Items -->
+            <li class="hidden">
+              <a href="purchase-order.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+                <img loading="lazy" src="../assets/icon_po_default.svg" alt=""
+                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-[0.89] fill-blue-950 icon-po-active" />
+                <span class="self-stretch my-auto text-sm 2xl:text-xl">Purchase Order</span>
+              </a>
+            </li>
+
+            <li class="hidden">
+              <a href="delivery-note.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+                <img loading="lazy" src="../assets/icon_dn_default.svg" alt=""
+                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
+                <span class="self-stretch my-auto text-sm 2xl:text-xl">Delivery Note</span>
+              </a>
+            </li>
+
+            <li class="hidden">
+              <a href="history-purchase-order.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+                <img loading="lazy" src="../assets/icon_history_default.svg" alt=""
+                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
+                <span class="self-stretch my-auto text-sm 2xl:text-xl">History Purchase Order</span>
+              </a>
+            </li>
+
+            <li class="hidden">
+              <a href="history-delivery-note.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+                <img loading="lazy" src="../assets/icon_history_default.svg" alt=""
+                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
+                <span class="self-stretch my-auto text-sm 2xl:text-xl">History Delivery Note</span>
+              </a>
+            </li>
+
+            <li class="hidden">
+              <a href="listing-report"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+                <img loading="lazy" src="../assets/icon_listing_default.svg" alt=""
+                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
+                <span class="self-stretch my-auto text-sm 2xl:text-xl">Listing Report</span>
+              </a>
+            </li>
+          </ul>
+
+          <!-- User and Logout Section at the Bottom -->
+          <div class="mt-auto flex flex-col w-full">
+
+            <!-- User Info -->
+            <div class="flex gap-4 items-center p-2 2xl:p-4 w-full bg-blue-950 bg-opacity-10 text-blue-950">
+              <img loading="lazy" src="assets/icon_people.svg" alt=""
+                class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
+              <span class="self-stretch my-auto text-sm 2xl:text-xl">Admin (Heru)</span>
+            </div>
+
+            <!-- Logout Button -->
+            <a href="../index.html"
+              class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
+              <img loading="lazy" src="assets/icon_logout.svg" alt=""
+                class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square logout-icon hover:icon_logout_white.svg" />
+              <span class="self-stretch my-auto text-sm 2xl:text-xl">Logout</span>
+            </a>
+          </div>
+        </nav>
+      </aside>
+
+
+      <!-- Main Content -->
+      <main class="flex flex-col w-[80%] mb-[100%] mt-[3%] mx-auto px-6 2xl:px-10">
+
+        <section class="flex flex-col self-stretch py-px my-auto w-full">
+
+          <header class="flex gap-3 items-center self-start text-2xl font-semibold text-black">
+            <h1 class="self-stretch my-auto text-[80%] 2xl:text-[120%]">Users Dashboard</h1>
+          </header>
+
+          <div class="flex flex-col mt-4 2xl:mt-6 w-full 2xl:text-base text-xs font-medium">
+
+            <div class="flex flex-wrap gap-10 justify-between items-center w-full">
+
+            </div>
+
+            <div class="flex flex-wrap gap-4 justify-between items-center mt-4 2xl:mt-6 w-full">
+
+              <!-- Search Bar -->
+              <div class="flex items-center text-neutral-500 ml-auto">
+                <div class="flex px-4 2xl:px-8 py-2 2xl:py-4 bg-neutral-100 rounded w-full max-w-xs">
+                  <input id="search-input" type="text" placeholder="Find user ID / name here"
+                    class="flex-1 bg-neutral-100 outline-none 2xl:text-base">
+                  <img src="assets/icon_search.svg" alt="Search Icon" class="w-3 2xl:w-4 h-4 2xl:h-10 ml-3 ">
+                </div>
+              </div>
+
+              <!-- Add User Button -->
+              <div class="flex gap-3 2xl:gap-6 items-center text-white 2xl:min-w-[20px] text-[10px] 2xl:text-lg">
+                <a href="add-user.html"
+                  class="flex gap-2 2xl:gap-4 items-center px-6 2xl:px-9 py-2 2xl:py-3 bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5">
+                  <span class="flex-1 shrink self-stretch my-auto basis-0">Add User +</span>
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- table -->
+        <div class="flex flex-col mt-5 2xl:mt-8">
+          <div class="relative overflow-x-auto shadow-md rounded-lg border border-gray-300">
+            <table class="w-full text-[11px] 2xl:text-base text-left text-gray-700 dark:text-gray-700">
+              <thead class="text-[14px] 2xl:text-[20px] text-gray-700">
+                <tr>
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                    onclick="sortTable(0)">
+                    ID User
+                    <img loading="lazy" src="assets/icon_sort.svg" alt=""
+                      class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <span class="sort-indicator"></span>
+                  </th>
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                    onclick="sortTable(1)">
+                    Supplier ID
+                    <img loading="lazy" src="assets/icon_sort.svg" alt=""
+                      class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <span class="sort-indicator"></span>
+                  </th>
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                    onclick="sortTable(2)">
+                    Username
+                    <img loading="lazy" src="assets/icon_sort.svg" alt=""
+                      class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <span class="sort-indicator"></span>
+                  </th>
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                    onclick="sortTable(3)">
+                    Role
+                    <img loading="lazy" src="assets/icon_sort.svg" alt=""
+                      class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <span class="sort-indicator"></span>
+                  </th>
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                    onclick="sortTable(4)">
+                    Status
+                    <img loading="lazy" src="assets/icon_sort.svg" alt=""
+                      class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <span class="sort-indicator"></span>
+                  </th>
+                  <th scope="col" class="px-0 2xl:py-4 py-0 text-center border-b border-b-gray-400 cursor-pointer"
+                    onclick="sortTable(5)">
+                    Action
+                    <img loading="lazy" src="assets/icon_sort.svg" alt=""
+                      class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <span class="sort-indicator"></span>
+                  </th>
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                    onclick="sortTable(6)">
+                    Edit
+                    
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="table-body">
+                <!-- Data rows will be inserted here by JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+
+        <!-- Pagination -->
+        <div class="flex justify-end my-6">
+          <div class="flex gap-2 2xl:gap-4 items-center pagination">
+            <!-- Pagination buttons will be inserted here by JavaScript -->
+          </div>
+        </div>
+      </main>
+
+    </div>
+  </section>
+</body>
+
+<!-- Add the script to handle table sorting and pagination -->
+<script>
+  // Dummy data
+  const data = [
+    { UserID: '1', SupplierID: 'ADMN-1111', Username: 'heruseti4wan', Name: 'HERU SETIAWAN', Role: 'Super Admin', Status: 'Active', Action: ' ', Edit: ' ' },
+    { UserID: '2', SupplierID: 'GDNG-1111', Username: 'syahwadania', Name: 'KRISNIA SYAHWADANI', Role: 'Admin Warehouse', Status: 'Active', Action: ' ', Edit: ' ' },
+    { UserID: '3', SupplierID: 'GDNG-1112', Username: 'sambahalawo', Name: 'YOGA ADI SAPUTRA', Role: 'Admin Warehouse', Status: 'Active', Action: ' ', Edit: ' ' },
+    { UserID: '4', SupplierID: 'SIMT-1111', Username: 'wardanimuh0337', Name: 'PT Mitsubishi', Role: 'Supplier', Status: 'Active', Action: ' ', Edit: ' ' },
+    { UserID: '2', SupplierID: 'SIMT-1112', Username: 'adisaputr44', Name: 'PT Honda', Role: 'Supplier', Status: 'Active', Action: ' ', Edit: ' ' },
+    { UserID: '3', SupplierID: 'SIMT-1113', Username: 'delitanoor995', Name: 'PT Telkom Indonesia', Role: 'Supplier', Status: 'Active', Action: ' ', Edit: ' ' },
+    { UserID: '4', SupplierID: 'SIMT-1114', Username: 'wdyapramestika', Name: 'PT Telkom Indonesia', Role: 'Supplier', Status: 'Deactive', Action: ' ', Edit: ' ' },
+    { UserID: '2', SupplierID: 'SIMT-1115', Username: 'rendrakbar21', Name: 'PT Telkom Indonesia', Role: 'Supplier', Status: 'Active', Action: ' ', Edit: ' ' },
+    { UserID: '3', SupplierID: 'SIMT-1116', Username: 'fateeh7700', Name: 'PT Telkom Indonesia', Role: 'Supplier', Status: 'Active', Action: ' ', Edit: ' ' },
+    { UserID: '2', SupplierID: 'SIMT-1117', Username: 'ghinavita', Name: 'PT Transtrack', Role: 'Supplier', Status: 'Active', Action: ' ', Edit: ' ' },
+    { UserID: '3', SupplierID: 'SIMT-1118', Username: 'ndhifar', Name: 'PT Transtrack', Role: 'Supplier', Status: 'Active', Action: ' ', Edit: ' ' },
+    { UserID: '4', SupplierID: 'SIMT-1119', Username: 'dhafarmdn', Name: 'PT Techno Infinity', Role: 'Declined', Status: 'Deactive', Action: ' ', Edit: ' ' },
+    { UserID: '2', SupplierID: 'SIMT-1120', Username: 'gdastu08', Name: 'PT Techno Infinity', Role: 'Supplier', Status: 'Active', Action: ' ', Edit: ' ' },
+    { UserID: '3', SupplierID: 'SIMT-1121', Username: 'yogabrindawan', Name: 'PT Techno Infinity', Role: 'Supplier', Status: 'Active', Action: ' ', Edit: ' ' },
+    { UserID: '4', SupplierID: 'SIMT-1122', Username: 'ramadzzan', Name: 'PT Techno Infinity', Role: 'Supplier', Status: 'Deactive', Action: ' ', Edit: ' ' },
+    { UserID: '2', SupplierID: 'SIMT-1123', Username: 'rizkyanshari', Name: 'PT Cyber Army', Role: 'Supplier', Status: 'Active', Action: ' ', Edit: ' ' },
+    { UserID: '2', SupplierID: 'SIMT-1124', Username: 'amreee1945', Name: 'PT Cyber Army', Role: 'Supplier', Status: 'Active', Action: ' ', Edit: ' ' },
+    { UserID: '3', SupplierID: 'SIMT-1125', Username: 'eliyarooy', Name: 'PT KCIC Halim', Role: 'Supplier', Status: 'Active', Action: ' ', Edit: ' ' },
+  ];
+
+  let rowsPerPage = 10;
+  let currentPage = 1;
+  let filteredData = data; // Initialize filteredData with all data
+
+  // Adjust rows per page based on screen size
+  function adjustRowsPerPage() {
+    if (window.innerWidth <= 1280) {
+      rowsPerPage = 7;
+    } else if (window.innerWidth <= 1600) {
+      rowsPerPage = 9;
+    } else {
+      rowsPerPage = 10;
+    }
+  }
+
+  function displayTableData(page) {
+    const tableBody = document.getElementById('table-body');
+    tableBody.innerHTML = '';
+
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+    const paginatedData = filteredData.slice(start, end);
+
+    paginatedData.forEach((row, index) => {
+      const tableRow = document.createElement('tr');
+      tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
+      tableRow.innerHTML = `
+        <td class="px-2 py-4 text-center font-medium text-gray-900">${row.UserID}</td>
+        <td class="px-2 py-4 text-center font-medium text-gray-900">${row.SupplierID}</td>
+        <td class="px-2 py-4 text-center">${row.Username}</td>
+        <td class="px-2 py-4 text-center">${row.Role}</td>
+        <td class="px-2 py-4 text-center">${row.Status}</td>
+
+        <td class="px-2 py-3 text-center border-b">
+         <label class="inline-flex items-center cursor-pointer">
+          <input type="checkbox" value="" class="sr-only peer" onchange="updateStatus(this)">
+            <div class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring- peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+              <span class="ms- text-sm font-medium text-gray-900 dark:text-gray-300"></span>
+         </label>
+        </td>
+
+        <td class="px-2 py-4 text-center">
+          <a href="edit-user.html" class="flex justify-center items-center p-1 rounded hover:bg-blue-200">
+            <img src="assets/icon_edit.svg" alt="Edit" class="w-4 h-4 cursor-pointer icon-edit" />
+          </a>
+        </td>
+      `;
+      tableBody.appendChild(tableRow);
+    });
+
+    // Initialize toggle status
+    initializeTable();
+  }
+
+
+  function searchTable() {
+    const searchInput = document.getElementById('search-input').value.toLowerCase();
+    filteredData = data.filter(row =>
+      row.UserID.toLowerCase().includes(searchInput) ||
+      row.Username.toLowerCase().includes(searchInput)
+    );
+    currentPage = 1;
+    displayTableData(currentPage);
+    updatePagination();
+  }
+
+
+  // Function to sort table based on column index
+  function sortTable(columnIndex) {
+    const table = document.querySelector('table');
+    const tbody = table.querySelector('tbody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    const isAscending = table.querySelectorAll('th')[columnIndex].classList.toggle('asc');
+    table.querySelectorAll('th').forEach((th, index) => {
+      if (index !== columnIndex) th.classList.remove('asc', 'desc');
+    });
+
+    rows.sort((a, b) => {
+      const cellA = a.querySelectorAll('td')[columnIndex].textContent.trim();
+      const cellB = b.querySelectorAll('td')[columnIndex].textContent.trim();
+
+      return cellA.localeCompare(cellB, undefined, { numeric: true, sensitivity: 'base' });
+    });
+
+    if (!isAscending) {
+      rows.reverse();
+    }
+
+    tbody.innerHTML = '';
+    tbody.append(...rows);
+  }
+
+  // Function to update the status and store it in localStorage
+  function updateStatus(toggle) {
+    const userId = toggle.getAttribute('data-user-id');
+    const status = toggle.checked ? 'Active' : 'Deactive';
+    localStorage.setItem(`user-status-${userId}`, status);
+
+    // Update status in the row
+    const row = toggle.closest('tr');
+    const statusCell = row.querySelector('td:nth-child(5)');
+    statusCell.textContent = status;
+  }
+
+  // Function to initialize the table with the saved statuses from localStorage
+  function initializeTable() {
+    const toggles = document.querySelectorAll('input[type="checkbox"]');
+    toggles.forEach(toggle => {
+      const userId = toggle.getAttribute('data-user-id');
+      const savedStatus = localStorage.getItem(`user-status-${userId}`);
+      if (savedStatus === 'Active') {
+        toggle.checked = true;
+      } else {
+        toggle.checked = false;
+      }
+
+      // Update the status cell
+      const row = toggle.closest('tr');
+      const statusCell = row.querySelector('td:nth-child(5)');
+      statusCell.textContent = savedStatus || 'Deactive';
+    });
+  }
+
+  // Panggil fungsi initializeTable saat halaman dimuat
+  document.addEventListener('DOMContentLoaded', () => {
+    displayTableData(currentPage);
+    adjustRowsPerPage();
+  });
+</script>
+
+<script src="script.js"></script>
+
+</html>
