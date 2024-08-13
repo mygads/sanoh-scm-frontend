@@ -8,106 +8,120 @@ tailwind.config = {
     },
 }
 
-function updatePagination() {
-const paginationContainer = document.querySelector('.pagination');
-paginationContainer.innerHTML = '';
+const data = [
+    {
+        noPO: 'PL2401657',
+        poDate: '1-1-2018',
+        planDelivery: '2024-08-01',
+        poRevision: 'Rev 02',
+        revisionDate: '1-2-2023',
+        status: 'In Process',
+        response: 'Accepted',
+        note: 'Urgent Delivery',
+        details: [
+            { no: '1', partNumber: 'RL1ST08976487200C000', partName: 'asaasdafaf', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL asdasdasasdaO1', UoM: 'PCS', QTY: '12000' },
+        ],
+    },
+    {
+        noPO: 'PL2401658',
+        poDate: '2-2-2023',
+        planDelivery: '2024-08-01',
+        poRevision: 'Rev 02',
+        revisionDate: '1-2-2023',
+        status: 'Opened',
+        response: '',
+        note: 'Urgent Delivery',
+        details: [
+            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+        ],
+    },
+    {
+        noPO: '24100009',
+        poDate: '3-2-2023',
+        planDelivery: '2024-08-01',
+        poRevision: 'Rev 02',
+        revisionDate: '',
+        status: 'In Process',
+        response: '',
+        note: 'Urgent Delivery',
+        details: [
+            { no: '1', partNumber: 'RL1ST08914261J02B100', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'sad', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1asdaJ00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1STasdaJ00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST0asdaJ00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1STasda61J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST0qwdq1J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1S1e1e1J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1e21101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: '12e00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL12e01', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: '1261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL112e61J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST01e200B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: '1eB101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'R1e1J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: '1261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL112e61J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST01e200B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: '1eB101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'R1e1J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: '1261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL112e61J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST01e200B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: '1eB101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'R1e1J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: '1261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL112e61J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST01e200B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: '1eB101', partName: 'nia', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'R1e1J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+        ],
+    },
+];
 
-const totalPages = Math.ceil(filteredData.length / rowsPerPage);
-const maxPageNumbersToShow = 4; // Number of page buttons to display (including current)
 
-// Previous button
-const prevButton = document.createElement('button');
-prevButton.className = 'px-3 py-3 2xl:px-4 2xl:py-4 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
-prevButton.innerHTML = `
-    <svg class="2xl:w-4 2xl:h-4 w-3 h-3 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
-    <path d="M8.766.566A2 2 0 0 0 6.586 1L1 6.586a2 2 0 0 0 0 2.828L6.586 15A2 2 0 0 0 10 13.586V2.414A2 2 0 0 0 8.766.566Z" />
-    </svg>
-`;
-prevButton.disabled = currentPage === 1;
-prevButton.addEventListener('click', () => {
-    if (currentPage > 1) {
-    currentPage--;
-    displayTableData(currentPage);
-    updatePagination();
-    }
-});
-paginationContainer.appendChild(prevButton);
-
-// Calculate page numbers to show
-const pageNumbers = [];
-if (totalPages <= maxPageNumbersToShow) {
-    // If total pages is less than or equal to maxPageNumbersToShow, show all page numbers
-    for (let i = 1; i <= totalPages; i++) {
-    pageNumbers.push(i);
-    }
-} else {
-    // Otherwise, calculate which page numbers to show
-    pageNumbers.push(1); // Always show the first page
-
-    const startPage = Math.max(2, currentPage - 1);
-    const endPage = Math.min(totalPages - 1, currentPage + 1);
-
-    if (startPage > 2) {
-    pageNumbers.push('...');
-    }
-
-    for (let i = startPage; i <= endPage; i++) {
-    pageNumbers.push(i);
-    }
-
-    if (endPage < totalPages - 1) {
-    pageNumbers.push('...');
-    }
-
-    pageNumbers.push(totalPages); // Always show the last page
-}
-
-// Page numbers buttons
-pageNumbers.forEach(number => {
-    const pageButton = document.createElement('button');
-    if (number === '...') {
-    pageButton.className = 'px-4 py-2 2xl:px-6 2xl:py-4 text-gray-900 bg-gray-200 rounded-md cursor-default';
-    pageButton.textContent = '...';
-    } else {
-    pageButton.className = `px-4 py-2 2xl:px-6 2xl:py-4 ${number === currentPage ? 'bg-blue-900 text-white' : 'bg-gray-200 text-gray-900'} rounded-md hover:bg-gray-300`;
-    pageButton.textContent = number;
-    pageButton.addEventListener('click', () => {
-        currentPage = number;
-        displayTableData(currentPage);
-        updatePagination();
-    });
-    }
-    paginationContainer.appendChild(pageButton);
-});
-
-// Next button
-const nextButton = document.createElement('button');
-nextButton.className = '2xl:px-4 2xl:py-4 px-3 py-3 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
-nextButton.innerHTML = `
-    <svg class="2xl:w-4 2xl:h-4 w-3 h-3 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
-    <path d="M1.234 15.434A2 2 0 0 0 3.414 15L9 9.414a2 2 0 0 0 0-2.828L3.414 1A2 2 0 0 0 1 2.414v11.172a2 2 0 0 0 1.234 1.848Z" />
-    </svg>
-`;
-nextButton.disabled = currentPage === totalPages;
-nextButton.addEventListener('click', () => {
-    if (currentPage < totalPages) {
-    currentPage++;
-    displayTableData(currentPage);
-    updatePagination();
-    }
-});
-paginationContainer.appendChild(nextButton);
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    adjustRowsPerPage(); // Set rows per page based on initial screen size
-    window.addEventListener('resize', () => {
-      adjustRowsPerPage(); // Adjust rows per page on screen resize
-      displayTableData(currentPage); // Re-render table data
-      updatePagination(); // Re-render pagination
-    });
-
-    document.getElementById('search-input').addEventListener('input', searchTable);
-    displayTableData(currentPage);
-    updatePagination();
-  });
