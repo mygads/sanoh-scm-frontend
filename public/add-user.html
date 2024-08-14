@@ -110,81 +110,167 @@
 
 
       <!-- Main Content -->
-      <main class="flex flex-col w-[80%] mb-[100%] mt-[3%] mx-auto px-6 2xl:px-10">
-
-        <section class="flex flex-col self-stretch py-px my-auto w-full">
+      <main class="flex flex-col w-[80%] mb-[100%] mt-[3%] mx-auto px-6 2xl:px-12">
+        <section class="flex flex-col self-stretch py-px my-auto w-full pb-4 2xl:pb-10">
           <header class="flex gap-3 items-center self-start text-2xl font-semibold text-black">
-            <img loading="lazy" src="assets/icon_back.svg" alt=""
-              class="object-contain shrink-0 self-stretch my-auto w-5 2xl:w-7 cursor-pointer pointer-events-auto aspect-square" />
+            <img loading="lazy" src="assets/icon_back.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-5 2xl:w-7 cursor-pointer pointer-events-auto aspect-square" />
             <h1 class="self-stretch my-auto text-[80%] 2xl:text-[120%]">Add User</h1>
           </header>
           <div class="flex flex-col mt-4 2xl:mt-6 w-full 2xl:text-base text-xs font-medium">
-            <div class="flex flex-wrap gap-10 justify-between items-center w-full">
-            </div>
+            <div class="flex flex-wrap gap-10 justify-between items-center w-full"></div>
           </div>
         </section>
 
         <!-- Forms -->
-        <form class="flex flex-col space-y-6 mb-6">
-          <div class="flex items-center gap-4 mb-6">
-            <label for="user_id" class="text-base font-medium dark:text-black w-[15%]">User ID</label>
-            <input type="text" id="user_id"
-              class="bg-white border border-neutral-300 text-black text-sm rounded-lg block p-3 dark:text-black"
-              placeholder="User ID" required />
+        <form class="flex flex-col mb-6" id="user-form">
+          <div class="flex items-center gap-4 mb-6 2xl:mb-8">
+            <label for="user_id" class="text-base 2xl:text-lg font-medium dark:text-black w-[15%] 2xl:w-[10%]">User ID</label>
+            <input type="text" id="user_id" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block p-3 dark:text-black" placeholder="User ID" required />
+            <span id="user_id_error" class="text-red-500 text-sm hidden">User ID must be a number.</span>
           </div>
 
-          <div class="flex items-center gap-4 mb-6">
-            <label for="supplier_id" class="text-base font-medium dark:text-black w-[15%]">Supplier ID</label>
-            <input type="text" id="supplier_id"
-              class="bg-white border border-neutral-300 text-black text-sm rounded-lg block p-3 dark:text-black"
-              placeholder="Supplier ID" required />
+          <div class="flex items-center gap-4 mb-6 2xl:mb-8">
+            <label for="supplier_id" class="text-base 2xl:text-lg font-medium dark:text-black w-[15%] 2xl:w-[10%]">Supplier ID</label>
+            <input type="text" id="supplier_id" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block p-3 dark:text-black" placeholder="Supplier ID" required />
           </div>
 
-          <div class="flex gap-6 mb-6">
+          <div class="flex gap-6 mb-6 2xl:mb-8">
             <div class="flex-1 flex items-center gap-4">
-              <label for="first_name" class="text-base font-medium dark:text-black w-[32%]">Name</label>
-              <input type="text" id="first_name"
-                class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[70%] p-3 dark:text-black"
-                placeholder="Name" required />
+              <label for="first_name" class="text-base 2xl:text-lg font-medium dark:text-black w-[32%] 2xl:w-[20%]">Name</label>
+              <input type="text" id="first_name" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[70%] 2xl:w-[50%] p-3 dark:text-black" placeholder="Name" required />
             </div>
             <div class="flex-1 flex items-center gap-4">
-              <label for="last_name" class="text-base font-medium dark:text-black w-[10%]">Role</label>
-              <input type="text" id="last_name"
-                class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-1/2 p-3 dark:text-black"
-                placeholder="Role" required />
+              <label for="role" class="text-base 2xl:text-lg font-medium dark:text-black w-[10%] 2xl:w-[7%]">Role</label>
+              <select id="role" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[40%] 2xl:w-[30%] p-3 dark:text-black" required>
+                <option value="" disabled selected>Select a role</option>
+                <option value="supplier">Supplier</option>
+                <option value="warehouse">Warehouse</option>
+                <option value="purchasing">Purchasing</option>
+                <option value="admin">Admin</option>
+              </select>
             </div>
           </div>
 
-          <div class="flex items-center gap-4 mb-6">
-            <label for="username" class="text-base font-medium dark:text-black w-[15%]">Username</label>
-            <input type="text" id="username"
-              class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[32%] p-3 dark:text-black"
-              placeholder="Username" required />
+          <div class="flex items-center gap-4 mb-6 2xl:mb-8">
+            <label for="username" class="text-base 2xl:text-lg font-medium dark:text-black w-[15%] 2xl:w-[10%]">Username</label>
+            <input type="text" id="username" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[32%] p-3 dark:text-black" placeholder="Username" required />
           </div>
 
-          <div class="flex items-center gap-4 mb-6">
-            <label for="email" class="text-base font-medium dark:text-black w-[15%]">Email</label>
-            <input type="email" id="email"
-              class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[32%] p-3 dark:text-black"
-              placeholder="example@example.com" required />
+          <div class="flex items-center gap-4 mb-6 2xl:mb-8">
+            <label for="email" class="text-base 2xl:text-lg font-medium dark:text-black w-[15%] 2xl:w-[10%]">Email</label>
+            <input type="email" id="email" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[32%] p-3 dark:text-black" placeholder="example@example.com" required />
+            <span id="email_error" class="text-red-500 text-sm hidden">Email must contain "@" symbol.</span>
           </div>
 
-          <div class="flex items-center gap-4 mb-6">
-            <label for="password" class="text-base font-medium dark:text-black w-[15%]">Password</label>
-            <input type="password" id="password"
-              class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[32%] p-3 dark:text-black"
-              placeholder="Password" required />
+          <div class="flex items-center gap-4 mb-6 2xl:mb-8">
+            <label for="password" class="text-base 2xl:text-lg font-medium dark:text-black w-[15%] 2xl:w-[10%]">Password</label>
+            <input type="password" id="password" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[32%] p-3 dark:text-black" placeholder="Password" required />
+            <img id="toggle_password" src="assets/icon_see.svg" alt="Toggle Password Visibility" class="ml-2 cursor-pointer w-6 h-6" />
+            <button type="button" id="generate_password" class="ml-2 bg-blue-400 text-white rounded px-4 py-3 text-xs 2xl:text-sm">Generate Password</button>
           </div>
-
+          
           <div class="flex justify-end">
-            <button type="submit"
-              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-base 2xl:text-xl px-6 2xl:px-8 py-3 2xl:py-4 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
           </div>
         </form>
       </main>
+
     </div>
   </section>
 </body>
+
+<script>
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const userIdInput = document.getElementById('user_id');
+    const roleSelect = document.getElementById('role');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const togglePasswordButton = document.getElementById('toggle_password');
+  
+    // User ID validation
+    userIdInput.addEventListener('input', () => {
+      if (!/^\d*$/.test(userIdInput.value)) {
+        userIdInput.value = userIdInput.value.replace(/[^\d]/g, ''); // Remove non-numeric characters
+        document.getElementById('user_id_error').classList.remove('hidden');
+      } else {
+        document.getElementById('user_id_error').classList.add('hidden');
+      }
+    });
+  
+    // Role validation
+    roleSelect.addEventListener('change', () => {
+      // No specific validation required for role selection; just ensure a valid option is selected
+    });
+  
+    // Email validation
+    emailInput.addEventListener('input', () => {
+      if (!emailInput.value.includes('@')) {
+        document.getElementById('email_error').classList.remove('hidden');
+      } else {
+        document.getElementById('email_error').classList.add('hidden');
+      }
+    });
+  
+    // Toggle Password Visibility
+    togglePasswordButton.addEventListener('click', () => {
+      const isPasswordVisible = passwordInput.type === 'text';
+      passwordInput.type = isPasswordVisible ? 'password' : 'text';
+      togglePasswordButton.src = isPasswordVisible ? 'assets/icon_hide.svg' : 'assets/icon_see.svg';
+    });
+  
+    // Generate Random Password
+    const generatePasswordButton = document.getElementById('generate_password');
+  
+    generatePasswordButton.addEventListener('click', () => {
+      const password = generateRandomPassword();
+      passwordInput.value = password;
+    });
+  
+    function generateRandomPassword(length = 12) {
+      const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+[]{}|;:,.<>?";
+      let password = '';
+      for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * charset.length);
+        password += charset[randomIndex];
+      }
+      return password;
+    }
+  
+    // Form Validation on Submit
+    const form = document.getElementById('user-form');
+  
+    form.addEventListener('submit', (e) => {
+      let valid = true;
+  
+      // User ID must be a number
+      if (!/^\d+$/.test(userIdInput.value)) {
+        document.getElementById('user_id_error').classList.remove('hidden');
+        valid = false;
+      } else {
+        document.getElementById('user_id_error').classList.add('hidden');
+      }
+  
+      // Role must be selected
+      if (!roleSelect.value) {
+        valid = false;
+      }
+  
+      // Email must contain "@" symbol
+      if (!emailInput.value.includes('@')) {
+        document.getElementById('email_error').classList.remove('hidden');
+        valid = false;
+      } else {
+        document.getElementById('email_error').classList.add('hidden');
+      }
+  
+      if (!valid) {
+        e.preventDefault(); // Prevent form submission if validation fails
+      }
+    });
+  });
+  
+</script>
 
 <script src="script.js"></script>
 
