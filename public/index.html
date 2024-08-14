@@ -3,197 +3,162 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, width=device-width,initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="style.css">
   
 </head>
 
+<body>
+  <!-- <section class="flex overflow-hidden flex-col self-stretch mx-auto my-auto bg-white xl:w-[1280px] xl:h-[720px] 2xl:w-[1920px] 2xl:h-[1080px]">
+    <div class="flex gap-10 my-auto">
 
-    <!-- <section class="flex overflow-hidden flex-col py-11 my-auto mr-auto w-screen h-screen bg-white ml-[calc(50%_-_50vw)] max-md:px-5">
-      <div class="flex gap-5 max-md:flex-col">
-        <div class="flex flex-col w-[58%] max-md:ml-0 max-md:w-full">
-          <div class="flex relative flex-col grow self-stretch px-20 pt-10 pb-20 my-auto ml-auto h-auto text-white border-white w-[608px] max-md:px-5 max-md:py-24 max-md:mt-10 max-md:max-w-full max-sm:pt-9 max-sm:pb-6 max-sm:mx-auto max-sm:mb-auto max-sm:min-h-0">
-            <img loading="lazy" src="assets/foto-sanoh.png" alt="" class="object-contain absolute inset-0 size-full" />
-            <header class="flex relative flex-col items-center self-center">
-              <h1 class="text-4xl font-semibold leading-tight">Welcome to</h1>
-              <p class="mx-auto mt-1 text-xl text-center max-sm:text-base max-sm:text-center">
-                Your Gateway to Effortless Management.
-              </p>
+      <div class="flex flex-col w-[50%] ">
+        <div class="flex relative flex-col w-[600px] ml-auto text-white h-full">
+          <img loading="lazy" alt="Sanoh Indonesia company background" src="assets/foto-sanoh.png" class="object-contain absolute size-full ml-[10%]" />
+          <div class=" flex relative flex-col grow justify-between items-center py-10 pl-[20%] h-auto">
+            <header class="flex relative flex-col items-center  mb-auto w-auto text-xs">
+              <h1 class="text-3xl font-semibold leading-tight">Welcome to</h1>
+              <p class="mt-1 text-xs text-center">Your Gateway to Effortless Management.</p>
             </header>
-            <footer class="flex relative flex-col items-center text-center mt-[572px] max-md:mt-10 max-md:max-w-full">
-              <h2 class="text-4xl font-semibold max-md:max-w-full max-sm:pt-32 max-sm:mb-4 max-sm:text-2xl">
-                Seamless Collaboration
-              </h2>
-              <p class="mt-1 text-xl max-md:max-w-full max-sm:text-xs">
-                Effortlessly work together with us in real-time.
-              </p>
+            <footer class="flex relative flex-col items-center  mt-auto w-auto text-xs text-center">
+              <h2 class="self-stretch w-auto text-xl font-semibold max-md:max-w-full">Seamless Collaboration</h2>
+              <p class="self-stretch mt-1 w-auto text-xs">Effortlessly work together with us in real-time.</p>
             </footer>
           </div>
         </div>
-        <div class="flex flex-col ml-5 w-[42%] max-md:ml-0 max-md:w-full">
-          <main class="flex flex-col mt-auto mr-auto w-[370px] max-md:mt-10 max-sm:mx-auto max-sm:mb-auto max-sm:w-[334px]">
-            <img loading="lazy" src="assets/logo-sanoh.png" alt="Company Logo" class="object-contain max-w-full aspect-[2.79] w-[120px] max-md:ml-1 max-sm:mx-auto" />
-            <form class="flex flex-col mt-6">
-              <div class="flex flex-col w-full">
-                <label for="username" class="gap-0.5 self-start text-base whitespace-nowrap text-slate-800">
-                  Username
-                </label>
-                <div class="flex flex-col mt-2 w-full text-sm text-zinc-400">
-                  <input id="username" type="text" placeholder="Enter Username" class="gap-2.5 self-stretch px-4 py-3.5 w-full bg-white rounded-lg border border-solid border-[black] min-h-[48px]" />
+      </div>
+
+      <div class="flex flex-col w-[50%]">
+        <main class="flex flex-col mt-auto mr-auto w-[370px] max-md:mt-10 max-sm:mx-auto max-sm:mb-auto max-sm:w-[334px]">
+          <img loading="lazy" src="assets/logo-sanoh.png" alt="Company Logo" class="object-contain max-w-full aspect-[2.79] w-[120px] max-md:ml-1 max-sm:mx-auto" />
+        
+          
+          <form class="flex flex-col mt-6" onsubmit="handleLogin(event)">
+            <div class="flex flex-col w-full">
+              <label for="username" class="gap-0.5 self-start text-base whitespace-nowrap text-slate-800">
+                Username
+              </label>
+              <div class="flex flex-col mt-2 w-full text-sm text-zinc-400">
+                <input id="username" type="text" placeholder="Enter Username" class="gap-2.5 self-stretch px-4 py-3.5 w-full bg-white rounded-lg border border-solid border-[black] min-h-[48px]" />
+              </div>
+            </div>
+            <div class="flex flex-col mt-5 w-full">
+              <label for="password" class="gap-0.5 self-start text-base whitespace-nowrap text-slate-800">
+                Password
+              </label>
+              <div class="flex justify-between items-start mt-2 w-full text-sm min-h-[48px] text-zinc-400">
+                <div class="flex gap-5 justify-between items-center min-h-[48px] w-full relative">
+                  <input id="password" type="password" placeholder="Enter Password" class="self-stretch px-4 py-3.5 w-full bg-white rounded-lg border border-solid border-[black] min-h-[48px]" />
+                  <button type="button" onclick="togglePassword()" class="absolute inset-y-0 end-0 flex items-center z-20 px-3 cursor-pointer text-gray-400 rounded-e-md focus:outline-none focus:text-blue-600">
+                    <svg id="eye-icon" class="shrink-0 size-3.5" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path id="eye" d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
+                      <path id="eye" d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path>
+                      <path id="eye" d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path>
+                      <line id="eye-line" x1="2" x2="22" y1="2" y2="22"></line>
+                      <path id="eye-off" class="hidden" d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                      <circle id="eye-off" class="hidden" cx="12" cy="12" r="3"></circle>
+                    </svg>
+                  </button>
                 </div>
               </div>
-              <div class="flex flex-col mt-5 w-full">
-                <label for="password" class="gap-0.5 self-start text-base whitespace-nowrap text-slate-800">
-                  Password
-                </label>
-                <div class="flex justify-between items-start mt-2 w-full text-sm min-h-[48px] text-zinc-400">
+            </div>
+            <button type="submit" class="gap-2 self-stretch px-5 py-3 mt-7 text-base text-white whitespace-nowrap rounded-lg bg-blue-950 min-h-[48px]">
+              Login
+            </button>
+          </form>
+          
+          <p class="self-center mt-56 mb-5 text-xs font-medium text-center text-slate-800 w-[259px] max-md:mt-10">
+            <span class="text-zinc-400">By login an account I accept Company's</span>
+            <br />
+            <span class="text-slate-800">Terms of use & Privacy Policy.</span>
+          </p>
+        </main>
+      </div>
+    </div>
+  </section> -->
 
-                  <div class="flex gap-5 justify-between items-center px-4 py-3.5 w-full bg-white rounded-lg border border-solid border-black min-h-[48px] min-w-[240px] relative">
-                    <input id="password" type="password" placeholder="Enter Password" class="self-stretch my-auto w-full bg-transparent border-none" />
-                    <button type="button" onclick="togglePassword()" class="absolute inset-y-0 end-0 flex items-center z-20 px-3 cursor-pointer text-gray-400 rounded-e-md focus:outline-none focus:text-blue-600">
-                      <svg id="eye-icon" class="shrink-0 size-3.5" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path id="eye" d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
-                        <path id="eye" d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path>
-                        <path id="eye" d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path>
-                        <line id="eye-line" x1="2" x2="22" y1="2" y2="22"></line>
-                        <path id="eye-off" class="hidden" d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
-                        <circle id="eye-off" class="hidden" cx="12" cy="12" r="3"></circle>
-                      </svg>
-                    </button>
-                  </div>
+  <section class="flex overflow-hidden flex-col self-stretch mx-auto my-auto bg-white xl:w-[1280px] xl:h-[720px] 2xl:w-[1920px] 2xl:h-[1080px]">
+    <div class="flex gap-10 my-auto">
 
-                </div>
-              </div>
-              <button type="submit" class="gap-2 self-stretch px-5 py-3 mt-7 text-base text-white whitespace-nowrap rounded-lg bg-blue-950 min-h-[48px]">
-                Login
-              </button>
-            </form>
-            <p class="self-center mt-64 text-xs font-medium text-center text-slate-800 w-[259px] max-md:mt-10">
-              <span class="text-zinc-400">By login an account I accept Company's</span>
-              <br />
-              <span class="text-slate-800">Terms of use & Privacy Policy.</span>
+      <div class="flex flex-col w-[55%]">
+        <div class="flex relative flex-col px-20 py-20 my-5 ml-auto w-full h-auto text-white border-white max-w-[632px]">
+          <img loading="lazy" alt="Sanoh Indonesia company background" src="assets/foto-sanoh.png" alt="" class="object-contain absolute inset-0 size-full" />
+          <header class="flex relative flex-col items-center self-center">
+            <h1 class="text-4xl font-semibold leading-tight">Welcome to</h1>
+            <p class="mx-auto mt-1 text-xl text-center max-sm:text-base max-sm:text-center">
+              Your Gateway to Effortless Management.
             </p>
-          </main>
+          </header>
+          <footer class="flex relative flex-col items-center text-center mt-[572px] max-md:mt-10 max-md:max-w-full">
+            <h2 class="text-4xl font-semibold max-md:max-w-full max-sm:pt-32 max-sm:mb-4 max-sm:text-2xl">
+              Seamless Collaboration
+            </h2>
+            <p class="mt-1 text-base max-md:max-w-full max-sm:text-xs">
+              Effortlessly work together with us in real-time.
+            </p>
+          </footer>
         </div>
       </div>
-    </section> -->
-    
-    <section class="flex overflow-hidden flex-col py-11 my-auto mr-auto w-screen h-screen bg-white ml-[calc(50%_-_50vw)] max-md:px-5">
-      <div class="flex gap-5 max-md:flex-col">
-        <div class="flex flex-col w-[58%] max-md:ml-0 max-md:w-full">
-          <div class="flex relative flex-col grow self-stretch px-20 py-20 my-5 ml-auto w-full h-auto text-white border-white max-w-[632px] max-md:px-5 max-md:py-24 max-md:mt-10 max-md:max-w-full max-sm:pt-9 max-sm:pb-6 max-sm:mx-auto max-sm:mb-auto max-sm:min-h-0">
-            <img loading="lazy" src="assets/foto-sanoh.png" alt="" class="object-contain absolute inset-0 size-full" />
-            <header class="flex relative flex-col items-center self-center">
-              <h1 class="text-4xl font-semibold leading-tight">Welcome to</h1>
-              <p class="mx-auto mt-1 text-xl text-center max-sm:text-base max-sm:text-center">
-                Your Gateway to Effortless Management.
-              </p>
-            </header>
-            <footer class="flex relative flex-col items-center text-center mt-[572px] max-md:mt-10 max-md:max-w-full">
-              <h2 class="text-4xl font-semibold max-md:max-w-full max-sm:pt-32 max-sm:mb-4 max-sm:text-2xl">
-                Seamless Collaboration
-              </h2>
-              <p class="mt-1 text-base max-md:max-w-full max-sm:text-xs">
-                Effortlessly work together with us in real-time.
-              </p>
-            </footer>
-          </div>
-        </div>
-        <div class="flex flex-col ml-5 w-[42%] max-md:ml-0 max-md:w-full">
-          <main class="flex flex-col mt-auto mr-auto w-[370px] max-md:mt-10 max-sm:mx-auto max-sm:mb-auto max-sm:w-[334px]">
-            <img loading="lazy" src="assets/logo-sanoh.png" alt="Company Logo" class="object-contain max-w-full aspect-[2.79] w-[120px] max-md:ml-1 max-sm:mx-auto" />
-            <!-- <form class="flex flex-col mt-6">
-              <div class="flex flex-col w-full">
-                <label for="username" class="gap-0.5 self-start text-base whitespace-nowrap text-slate-800">
-                  Username
-                </label>
-                <div class="flex flex-col mt-2 w-full text-sm text-zinc-400">
-                  <input id="username" type="text" placeholder="Enter Username" class="gap-2.5 self-stretch px-4 py-3.5 w-full bg-white rounded-lg border border-solid border-[black] min-h-[48px]" />
+
+      <div class="flex flex-col w-[35%]">
+        <main class="flex flex-col mt-auto mr-auto w-[370px] max-md:mt-10 max-sm:mx-auto max-sm:mb-auto max-sm:w-[334px]">
+          <img loading="lazy" src="assets/logo-sanoh.png" alt="Company Logo" class="object-contain max-w-full aspect-[2.79] w-[120px] max-md:ml-1 max-sm:mx-auto" />
+        
+          
+          <form class="flex flex-col mt-6" onsubmit="handleLogin(event)">
+            <div class="flex flex-col w-full">
+              <label for="username" class="gap-0.5 self-start text-base whitespace-nowrap text-slate-800">
+                Username
+              </label>
+              <div class="flex flex-col mt-2 w-full text-sm text-zinc-400">
+                <input id="username" type="text" placeholder="Enter Username" class="gap-2.5 self-stretch px-4 py-3.5 w-full bg-white rounded-lg border border-solid border-[black] min-h-[48px]" />
+              </div>
+            </div>
+            <div class="flex flex-col mt-5 w-full">
+              <label for="password" class="gap-0.5 self-start text-base whitespace-nowrap text-slate-800">
+                Password
+              </label>
+              <div class="flex justify-between items-start mt-2 w-full text-sm min-h-[48px] text-zinc-400">
+                <div class="flex gap-5 justify-between items-center min-h-[48px] w-full relative">
+                  <input id="password" type="password" placeholder="Enter Password" class="self-stretch px-4 py-3.5 w-full bg-white rounded-lg border border-solid border-[black] min-h-[48px]" />
+                  <button type="button" onclick="togglePassword()" class="absolute inset-y-0 end-0 flex items-center z-20 px-3 cursor-pointer text-gray-400 rounded-e-md focus:outline-none focus:text-blue-600">
+                    <svg id="eye-icon" class="shrink-0 size-3.5" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path id="eye" d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
+                      <path id="eye" d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path>
+                      <path id="eye" d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path>
+                      <line id="eye-line" x1="2" x2="22" y1="2" y2="22"></line>
+                      <path id="eye-off" class="hidden" d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                      <circle id="eye-off" class="hidden" cx="12" cy="12" r="3"></circle>
+                    </svg>
+                  </button>
                 </div>
               </div>
-              <div class="flex flex-col mt-5 w-full">
-                <label for="password" class="gap-0.5 self-start text-base whitespace-nowrap text-slate-800">
-                  Password
-                </label>
-                <div class="flex justify-between items-start mt-2 w-full text-sm min-h-[48px] text-zinc-400">
-                  <div class="flex gap-5 justify-between items-center  min-h-[48px] w-full relative">
-                    <input id="password" type="password" placeholder="Enter Password" class="self-stretch px-4 py-3.5 w-full bg-white rounded-lg border border-solid border-[black] min-h-[48px]" />
-                    <button type="button" onclick="togglePassword()" class="absolute inset-y-0 end-0 flex items-center z-20 px-3 cursor-pointer text-gray-400 rounded-e-md focus:outline-none focus:text-blue-600">
-                      <svg id="eye-icon" class="shrink-0 size-3.5" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path id="eye" d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
-                        <path id="eye" d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path>
-                        <path id="eye" d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path>
-                        <line id="eye-line" x1="2" x2="22" y1="2" y2="22"></line>
-                        <path id="eye-off" class="hidden" d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
-                        <circle id="eye-off" class="hidden" cx="12" cy="12" r="3"></circle>
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <button type="submit" class="gap-2 self-stretch px-5 py-3 mt-7 text-base text-white whitespace-nowrap rounded-lg bg-blue-950 min-h-[48px]">
-                Login
-              </button>
-            </form> -->
-            
-            <form class="flex flex-col mt-6" onsubmit="handleLogin(event)">
-              <div class="flex flex-col w-full">
-                <label for="username" class="gap-0.5 self-start text-base whitespace-nowrap text-slate-800">
-                  Username
-                </label>
-                <div class="flex flex-col mt-2 w-full text-sm text-zinc-400">
-                  <input id="username" type="text" placeholder="Enter Username" class="gap-2.5 self-stretch px-4 py-3.5 w-full bg-white rounded-lg border border-solid border-[black] min-h-[48px]" />
-                </div>
-              </div>
-              <div class="flex flex-col mt-5 w-full">
-                <label for="password" class="gap-0.5 self-start text-base whitespace-nowrap text-slate-800">
-                  Password
-                </label>
-                <div class="flex justify-between items-start mt-2 w-full text-sm min-h-[48px] text-zinc-400">
-                  <div class="flex gap-5 justify-between items-center min-h-[48px] w-full relative">
-                    <input id="password" type="password" placeholder="Enter Password" class="self-stretch px-4 py-3.5 w-full bg-white rounded-lg border border-solid border-[black] min-h-[48px]" />
-                    <button type="button" onclick="togglePassword()" class="absolute inset-y-0 end-0 flex items-center z-20 px-3 cursor-pointer text-gray-400 rounded-e-md focus:outline-none focus:text-blue-600">
-                      <svg id="eye-icon" class="shrink-0 size-3.5" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path id="eye" d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
-                        <path id="eye" d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path>
-                        <path id="eye" d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path>
-                        <line id="eye-line" x1="2" x2="22" y1="2" y2="22"></line>
-                        <path id="eye-off" class="hidden" d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
-                        <circle id="eye-off" class="hidden" cx="12" cy="12" r="3"></circle>
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <button type="submit" class="gap-2 self-stretch px-5 py-3 mt-7 text-base text-white whitespace-nowrap rounded-lg bg-blue-950 min-h-[48px]">
-                Login
-              </button>
-            </form>
-            
-            <p class="self-center mt-56 mb-5 text-xs font-medium text-center text-slate-800 w-[259px] max-md:mt-10">
-              <span class="text-zinc-400">By login an account I accept Company's</span>
-              <br />
-              <span class="text-slate-800">Terms of use & Privacy Policy.</span>
-            </p>
-          </main>
-        </div>
+            </div>
+            <button type="submit" class="gap-2 self-stretch px-5 py-3 mt-7 text-base text-white whitespace-nowrap rounded-lg bg-blue-950 min-h-[48px]">
+              Login
+            </button>
+          </form>
+          
+          <p class="self-center mt-56 mb-5 text-xs font-medium text-center text-slate-800 w-[259px] max-md:mt-10">
+            <span class="text-zinc-400">By login an account I accept Company's</span>
+            <br />
+            <span class="text-slate-800">Terms of use & Privacy Policy.</span>
+          </p>
+        </main>
       </div>
-    </section>
+    </div>
+  </section>
+
 </body>
 
+<script src="script.js"></script>
 <script>
-// Dummy user data
-const users = [
-  { username: '1', password: '1', role: 'supplier' },
-  { username: '2', password: '2', role: 'admin gudang' },
-  { username: '3', password: '3', role: 'admin purchasing' },
-  { username: '4', password: '4', role: 'super admin' },
-];
+
 
 // Toggle password visibility
 function togglePassword() {
@@ -232,16 +197,16 @@ function handleLogin(event) {
 function redirectToDashboard(role) {
   switch(role) {
     case 'supplier':
-      window.location.href = 'dashboard_supplier.html';
+      window.location.href = 'supplier/';
       break;
     case 'admin gudang':
-      window.location.href = 'dashboard_gudang.html';
+      window.location.href = 'admin-warehouse/';
       break;
     case 'admin purchasing':
-      window.location.href = 'dashboard_purchasing.html';
+      window.location.href = 'admin-purchasing/';
       break;
     case 'super admin':
-      window.location.href = 'dashboard_superadmin.html';
+      window.location.href = 'supper-admin/';
       break;
     default:
       alert('Role not recognized');
