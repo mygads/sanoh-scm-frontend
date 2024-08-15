@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
 .poppins-thin {
   font-family: "Poppins", sans-serif;
   font-weight: 100;
@@ -119,154 +117,38 @@
   transition: background-color 0.3s;
 }
 
-.hover-stroke:hover::before {
-  background-color: #0A2757;
+a:hover .logout-icon {
+  content: url('assets/icon_logout_white.svg');
 }
 
-.sidebar-btn {
-  position: relative;
-  padding-left: 2.5rem;
-  /* space for stroke */
+.icon-dn-active {
+  content: url('assets/icon_dn.svg')
 }
 
-.sidebar-btn::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 8px;
-  background-color: transparent;
-  transition: background-color 0.3s ease;
+.icon-po-active {
+  content: url('assets/icon_po.svg')
 }
 
-.sidebar-btn:hover::before,
-.sidebar-btn.active::before {
-  background-color: currentColor;
+.icon-home-active {
+  content: url('assets/icon_home.svg')
 }
 
-.sidebar-btn:hover {
-  opacity: 1;
-  background-color: rgba(2, 19, 70, 0.1);
-  font-weight: 600;
+.icon-listing-active {
+  content: url('assets/icon_listing.svg')
 }
 
-@media (max-width: 1080px) {
-  .sidebar {
-    width: 250px;
-  }
+.icon-history-active {
+  content: url('assets/icon_history.svg')
 }
 
-@media (max-width: 720px) {
-  .sidebar {
-    width: 200px;
-  }
-}
-
-.sidebar-btn {
-  @apply flex gap-4 items-center px-6 py-4 opacity-50 transition-opacity rounded text-[20px];
-}
-
-.sidebar {
-  @apply flex flex-col bg-stone-300 py-14;
-}
-
-/* css responsive */
-
-main {
-  margin: auto;
-  text-align: center;
-}
-
-img {
-  width: 90%;
-  height: auto;
-  max-width: 80%;
-}
-
-h1, h2, p {
-  margin: 0;
-}
-
-.flex {
-  display: flex;
-}
-
-.flex-col {
-  flex-direction: column;
-}
-
-.items-center {
-  align-items: center;
-}
-
-.justify-between {
-  justify-content: space-between;
-}
-
-.w-full {
-  width: 100%;
-}
-
-.max-w-full {
-  max-width: 100%;
-}
-
-/* Responsive styles for screens with max-width of 720px */
-@media (max-width: 720px) {
-  h1 {
-    font-size: 4xl; /* Reduce font size */
-  }
-
-  p {
-    font-size: base; /* Adjust font size */
-  }
-
-  .w-691px {
-    width: 100%; /* Make header width full */
-  }
-
-  .w-573px {
-    width: 100%; /* Make inner div width full */
-  }
-
-  .flex-wrap {
-    flex-wrap: wrap; /* Wrap flex items */
-  }
-
-  .w-391px, .w-352px {
-    width: 100%; /* Make cards full width */
-    max-width: 100%;
-  }
-
-  .gap-10 {
-    gap: 1rem; /* Adjust gap between items */
-  }
-}
-
-/* Responsive styles for screens with max-width of 1080px */
-@media (max-width: 1080px) and (min-width: 721px) {
-  h1 {
-    font-size: 4xl; /* Reduce font size slightly */
-  }
-
-  p {
-    font-size: base; /* Adjust font size */
-  }
-
-  .w-691px {
-    width: 90%; /* Adjust width for medium screens */
-  }
-
-  .w-573px {
-    width: 90%; /* Adjust width for medium screens */
-  }
-
-  .w-391px, .w-352px {
-    width: 45%; /* Adjust card width for medium screens */
-  }
-
-  .gap-10 {
-    gap: 1.5rem; /* Adjust gap between items */
-  }
+.active {
+  border-left-width: 8px;
+  border-style: solid;
+  --tw-bg-opacity: 1;
+  background-color: rgb(30 64 175 / var(--tw-bg-opacity)) /* #1e40af */;
+  --tw-bg-opacity: 0.1;
+  --tw-border-opacity: 1;
+  border-color: rgb(23 37 84 / var(--tw-border-opacity)) /* #172554 */;
+  --tw-text-opacity: 1;
+  color: rgb(23 37 84 / var(--tw-text-opacity)) /* #172554 */;
 }
