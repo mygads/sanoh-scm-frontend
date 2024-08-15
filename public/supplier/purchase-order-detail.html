@@ -223,7 +223,7 @@
   const noPO = params.get('noPO');
 
   if (noPO) {
-      const po = data.find(po => po.noPO === noPO);
+      const po = purchaseOrder.find(po => po.noPO === noPO);
       if (po) {
         document.getElementById('poNumber').textContent = po.noPO;
         document.getElementById('noteInput').textContent = po.note;
@@ -403,7 +403,7 @@
   // Function to handle search
   function searchTable() {
     const searchInput = document.getElementById('search-input').value.toLowerCase();
-    filteredData = data.find(po => po.noPO === noPO).details.filter(row => 
+    filteredData = purchaseOrder.find(po => po.noPO === noPO).details.filter(row => 
       row.partNumber.toLowerCase().includes(searchInput) || 
       row.partName.toLowerCase().includes(searchInput)
     );
