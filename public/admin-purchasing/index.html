@@ -1,110 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
-  
 </head>
 
-<body class="font-poppins bg-white">
-  <section class="overflow-hidden w-screen h-screen bg-white">
-    <div class="flex">
+<body class="font-poppins flex justify-center items-center min-h-screen">
+  <section class="flex flex-wrap bg-white max-md:pr-5 w-full">
 
-      <!-- nav-side bar -->
-      <aside class="flex flex-col w-[20%]">
-        <nav class="flex flex-col grow py-9 2xl:py-14 w-full h-screen text-base font-medium border-r border-solid bg-stone-300 border-r-neutral-400 ">
-          
-          <!-- Logo Sanoh -->
-          <img loading="lazy" src="../assets/logosanoh.svg" class="object-contain self-center w-30 2xl:w-48 max-w-full cursor-pointer pointer-events-auto aspect-[2.79]" />
-          
-          <!-- Menu Items -->
-          <ul class="flex flex-col mt-7 2xl:mt-10 w-full text-gray-500">
-            
-            <!-- Dashboard (Visible) -->
-            <li> 
-                <a href="select-supplier.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 w-full whitespace-nowrap cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../assets/icon_home_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square " />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Select Supplier</span>
-                </a>
-            </li>
-            
-            <!-- Purchase Order -->
-            <li class="hidden">
-              <a href="purchase-order.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 ">
-                <img loading="lazy" src="../assets/icon_po_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-[0.89] " />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Purchase Order</span>
-              </a>
-            </li>
-            
-            <!-- Delivery Note -->
-            <li class="hidden">
-              <a href="delivery-note.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../assets/icon_dn_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Delivery Note</span>
-              </a>
-            </li>
-            
-            <!-- History Purchase Order -->
-            <li class="hidden">
-              <a href="history-purchase-order.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../assets/icon_history_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">History Purchase Order</span>
-              </a>
-            </li>
-            
-            <!-- History Delivery Note -->
-            <li class="hidden">
-              <a href="history-delivery-note.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../assets/icon_history_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">History Delivery Note</span>
-              </a>
-            </li>
-            
-          </ul>
+    <!-- nav-side bar -->
+<aside class="flex flex-col w-[20%] max-md:ml-0 max-md:w-full">
+  <nav class="flex flex-col grow py-9 2xl:py-14 w-full h-screen text-base font-medium border-r border-solid bg-stone-300 border-r-neutral-400 max-md:mt-9">
+    
+    <!-- Logo Sanoh -->
+    <img loading="lazy" src="../assets/logosanoh.svg" class="object-contain self-center w-30 2xl:w-48 max-w-full cursor-pointer pointer-events-auto aspect-[2.79]" />
+    
+    <!-- Menu Items -->
+    <ul class="flex flex-col mt-7 2xl:mt-10 w-full text-gray-500">
+      
+      <!-- Dashboard (Visible) -->
+      <li> 
+        <a href="main-dashboard-admin.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 w-full whitespace-nowrap cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+          <img loading="lazy" src="../assets/icon_home_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square " />
+          <span class="self-stretch my-auto text-sm 2xl:text-xl">Select Supplier</span>
+        </a>
+      </li>
+      
+      <!-- Purchase Order (Hidden) -->
+      <li class="hidden">
+        <a href="/purchase-order.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+          <img loading="lazy" src="assets/icon_po_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-[0.89] fill-blue-950 " />
+          <span class="self-stretch my-auto text-sm 2xl:text-xl">Purchase Order</span>
+        </a>
+      </li>
+      
+      <!-- Delivery Note (Hidden) -->
+      <li class="hidden">
+        <a href="/delivery-note.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+          <img loading="lazy" src="assets/icon_dn_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
+          <span class="self-stretch my-auto text-sm 2xl:text-xl">Delivery Note</span>
+        </a>
+      </li>
+      
+      <!-- History Purchase Order (Hidden) -->
+      <li class="hidden">
+        <a href="/history-purchase-order.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+          <img loading="lazy" src="assets/icon_history_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
+          <span class="self-stretch my-auto text-sm 2xl:text-xl">History Purchase Order</span>
+        </a>
+      </li>
+      
+      <!-- History Delivery Note (Hidden) -->
+      <li class="hidden">
+        <a href="/history-delivery-note.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+          <img loading="lazy" src="assets/icon_history_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
+          <span class="self-stretch my-auto text-sm 2xl:text-xl">History Delivery Note</span>
+        </a>
+      </li>
+      
+      <!-- Listing Report (Hidden) -->
+      <li class="hidden">
+        <a href="/listing-report" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+          <img loading="lazy" src="assets/icon_listing_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
+          <span class="self-stretch my-auto text-sm 2xl:text-xl">Listing Report</span>
+        </a>
+      </li>
+    </ul>
 
-          <!-- User and Logout Section at the Bottom -->
-          <div class="mt-[185%] flex flex-col w-full">
-            
-            <!-- User Info -->
-            <div class="flex gap-4 items-center p-2 2xl:p-4 w-full bg-blue-950 bg-opacity-10 text-blue-950">
-              <img loading="lazy" src="../assets/icon_people.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-              <span class="self-stretch my-auto text-sm 2xl:text-xl">PT Kawasaki</span>
-            </div>
-            
-            <!-- Logout Button -->
-            <a href="../index.html" class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
-              <img loading="lazy" src="../assets/icon_logout.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square logout-icon hover:icon_logout_white.svg" />
-              <span class="self-stretch my-auto text-sm 2xl:text-xl">Logout</span>
-            </a>
-          </div>
-        </nav>
-      </aside>
+    <!-- User and Logout Section at the Bottom -->
+    <div class="mt-auto flex flex-col w-full">
+      
+      <!-- User Info -->
+      <div class="flex gap-4 items-center p-2 2xl:p-4 w-full bg-blue-950 bg-opacity-10 text-blue-950">
+        <img loading="lazy" src="../assets/icon_people.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
+        <span class="self-stretch my-auto text-sm 2xl:text-xl">Warehouse (name)</span>
+      </div>
+      
+      <!-- Logout Button -->
+      <a href="/logout.html" class="flex gap-4 items-center p-2 2xl:p-4  w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
+        <img loading="lazy" src="../assets/icon_logout.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square logout-icon hover:icon_logout_white.svg" />
+        <span class="self-stretch my-auto text-sm 2xl:text-xl">Logout</span>
+      </a>
+    </div>
+  </nav>
+</aside>
 
 
     <!-- Main Content -->
     <main class="flex flex-col justify-center items-center m-auto max-md:max-w-full">
-      <header class="flex flex-col items-center self-center max-w-full xl:w-[700px] 2xl:w-[1100px]">
+      <header class="flex flex-col items-center self-center max-w-full  2xl:w-[1100px]">
         <h1 class="flex flex-col justify-between items-center text-black w-full text-center">
-          <span class="font-semibold max-w-full xl:text-4xl 2xl:text-6xl">
+          <span class="font-semibold max-w-full xl:text-4xl 2xl:text-5xl">
             Welcome Warehouse!
           </span>
         </h1>
-        <p class="mx-auto my-auto xl:mt-5 2xl:mt-7 text-center text-neutral-400 xl:text-lg 2xl:text-3xl">
-          Welcome to our dashboard, where you can seamlessly manage and monitor all your supply chain operations with
-          ease and efficiency.
+        <p class="mx-auto my-auto xl:mt-3 2xl:mt-6 text-center text-neutral-400 xl:text-sm 2xl:text-lg xl:w-[500px] 2xl:w-[700px]">
+          Welcome to our dashboard, where you can seamlessly manage and 
+          <br>monitor all your supply chain operations with ease and efficiency.
         </p>
       </header>
-      <img src="../assets/dashboard_warehouse.png" alt="Dashboard overview"
-        class="object-contain mx-auto xl:w-[600px] 2xl:w-[900px]" />
+      <img src=../assets/dashboard_warehouse.png alt="Dashboard overview"
+        class="object-contain mx-auto xl:w-[560px] 2xl:w-[760px]" />
     </main>
-  </section>
-</body>
 
+    <script src="../script.js"></script>
+
+</body>
 </html>
