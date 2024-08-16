@@ -39,6 +39,10 @@
     #status-section {
       display: none;
     }
+
+    .nav-hidden {
+      display: none;
+    }
   </style>
 </head>
 
@@ -52,16 +56,51 @@
         class="object-contain self-center w-30 2xl:w-48 max-w-full cursor-pointer pointer-events-auto aspect-[2.79]" />
       <!-- Menu Items -->
       <ul class="flex flex-col mt-7 2xl:mt-10 w-full text-gray-500">
-        <!-- Dashboard (Visible) -->
+        <!-- Select Supplier (Always Visible) -->
         <li>
-          <a href="/dashboard-warehouse.html"
+          <a id="select-supplier-nav" href="/dashboard-warehouse.html"
             class="flex gap-4 items-center p-[9px] 2xl:p-4 w-full whitespace-nowrap cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 active">
             <img loading="lazy" src="assets/icon_home_default.svg" alt=""
               class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square icon-home-active" />
-            <span class="self-stretch my-auto text-sm 2xl:text-xl">Select Supplier</span>
+            <span id="select-supplier-text" class="self-stretch my-auto text-[80%] 2xl:text-[120%]">Select
+              Supplier</span>
           </a>
         </li>
-        
+
+
+        <!-- Other Navigation Items (Initially Hidden) -->
+        <li class="nav-hidden">
+          <a href="purchase-order.html"
+            class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+            <img loading="lazy" src="../assets/icon_po_default.svg" alt=""
+              class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-[0.89] fill-blue-950" />
+            <span class="self-stretch my-auto text-sm 2xl:text-xl">Purchase Order</span>
+          </a>
+        </li>
+        <li class="nav-hidden">
+          <a href="delivery-note.html"
+            class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+            <img loading="lazy" src="../assets/icon_dn_default.svg" alt=""
+              class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
+            <span class="self-stretch my-auto text-sm 2xl:text-xl">Delivery Note</span>
+          </a>
+        </li>
+        <li class="nav-hidden">
+          <a href="history-purchase-order.html"
+            class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+            <img loading="lazy" src="../assets/icon_history_default.svg" alt=""
+              class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
+            <span class="self-stretch my-auto text-sm 2xl:text-xl">History Purchase Order</span>
+          </a>
+        </li>
+        <li class="nav-hidden">
+          <a href="history-delivery-note.html"
+            class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+            <img loading="lazy" src="../assets/icon_history_default.svg" alt=""
+              class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
+            <span class="self-stretch my-auto text-sm 2xl:text-xl">History Delivery Note</span>
+          </a>
+        </li>
         <!-- ... -->
       </ul>
       <!-- User and Logout Section at the Bottom -->
@@ -84,18 +123,16 @@
   </aside>
 
   <!-- Main Content -->
-  <main class="flex flex-col w-[80%] xl:px-10 2xl:px-14 xl:py-14 2xl:py-20">
+  <main class="flex flex-col w-full xl:px-10 2xl:px-14 xl:py-14 2xl:py-20">
     <article class="flex flex-col items-start w-full text-base">
       <h1 class="xl:text-xl 2xl:text-3xl font-semibold text-black">Select Supplier</h1>
       <form id="supplierForm" class="flex flex-col w-full text-neutral-500">
         <div class="flex flex-col xl:w-[500px] 2xl:w-[600px]">
-          <label for="Supplier"
-            class="block xl:mb-2 2xl:mb-4 xl:text-base 2xl:text-lg text-neutral-500 dark:text-white">Cari
-            Supplier</label>
+          <label for="Supplier" class="block xl:mb-6 2xl:mb-8 xl:text-base 2xl:text-lg text-neutral-500"></label>
           <select id="Supplier"
-            class="scrollable-select bg-transparent border border-neutral-300 rounded-lg block w-full p-4 2xl:p-7 text-neutral-500 dark:focus:ring-blue-600 dark:focus:border-blue-600 text-sm 2xl:text-lg">
-            <option selected value="">Cari Supplier</option>
-            <!-- Options akan diisi secara dinamis melalui JavaScript -->
+            class="scrollable-select bg-transparent border border-neutral-300 rounded-lg block w-full p-4 2xl:p-7 text-neutral-500 text-sm 2xl:text-lg">
+            <option value="">Cari Supplier</option>
+            <!-- Options will be added here by JavaScript -->
           </select>
         </div>
         <div
@@ -108,54 +145,42 @@
     </article>
 
     <!-- Status -->
-    <section id="status-section" class="flex flex-wrap gap-10 justify-start items-start mt-8 max-md:mt-6">
-      <div class="flex flex-col items-center">
-        <h2 class="text-2xl font-semibold text-center text-black">Status Purchase Order (PO)</h2>
-        <div class="flex gap-4 items-start mt-4">
-          <a id="po-active" href="/purchase-order.html"
-            class="flex flex-col p-3 sm:p-4 md:p-4 text-left text-white bg-red-600 rounded cursor-pointer pointer-events-auto w-full sm:w-[180px] md:w-[188px]">
-            <span class="text-3xl font-medium" id="po-active-count">0</span>
-            <span class="mt-2 text-sm font-semibold">
-              Purchase Order (PO)
-              <br />
-              Active
-            </span>
-          </a>
-          <a id="po-in-progress" href="/purchase-order.html"
-            class="flex flex-col p-3 sm:p-4 md:p-4 text-left text-sky-900 bg-yellow-200 rounded cursor-pointer pointer-events-auto sm:w-[188px]">
-            <span class="text-3xl font-medium text-left" id="po-in-progress-count">0</span>
-            <span class="mt-2 text-sm font-semibold text-left">
-              Purchase Order (PO)
-              <br />
-              In Progress
-            </span>
-          </a>
+    <section id="status-section" class="flex gap-10 mt-8 max-md:mt-6">
+      <div class="flex ">
+        <!-- Purchase Order (PO) Section -->
+        <div class="flex flex-col items-start w-full max-w-[400px]">
+          <h2 class="text-2xl font-semibold text-black">Status Purchase Order (PO)</h2>
+          <div class="flex gap-4 items-start mt-4">
+            <a id="po-active" href="/purchase-order.html"
+              class="flex flex-col p-3 sm:p-4 md:p-4 text-left text-white bg-red-600 rounded cursor-pointer pointer-events-auto w-[180px]">
+              <span class="text-3xl font-medium" id="po-active-count">0</span>
+              <span class="mt-2 text-sm font-semibold">Purchase Order (PO) Active</span>
+            </a>
+            <a id="po-in-progress" href="/purchase-order.html"
+              class="flex flex-col p-3 sm:p-4 md:p-4 text-left text-sky-900 bg-yellow-200 rounded cursor-pointer pointer-events-auto w-[188px]">
+              <span class="text-3xl font-medium" id="po-in-progress-count">0</span>
+              <span class="mt-2 text-sm font-semibold">Purchase Order (PO) In Progress</span>
+            </a>
+          </div>
         </div>
-      </div>
-      <div class="flex flex-col items-center min-w-[240px] w-[352px]">
-        <h2 class="text-2xl font-semibold text-center text-black">Status Delivery Note (DN)</h2>
-        <div class="flex gap-4 items-start mt-4">
-          <a id="dn-active" href="/delivery-note.html"
-            class="flex flex-col p-3 sm:p-4 md:p-4 text-left text-white bg-red-600 rounded cursor-pointer pointer-events-auto sm:w-[188px]">
-            <span class="text-3xl font-medium text-left" id="dn-active-count">0</span>
-            <span class="mt-2 text-sm font-semibold text-left">
-              Delivery Note (DN)
-              <br />
-              Active
-            </span>
-          </a>
-          <a id="dn-in-progress" href="/delivery-note.html"
-            class="flex flex-col p-3 sm:p-4 md:p-4 text-left bg-yellow-200 rounded cursor-pointer pointer-events-auto text-blue-950 sm:w-[188px]">
-            <span class="text-3xl font-medium text-left" id="dn-in-progress-count">0</span>
-            <span class="mt-2 text-sm font-semibold text-left">
-              Delivery Note (DN)
-              <br />
-              In Progress
-            </span>
-          </a>
+        <div class="flex flex-col items-start w-full max-w-[400px]">
+          <h2 class="text-2xl font-semibold text-black">Status Delivery Note (DN)</h2>
+          <div class="flex gap-4 items-start mt-4">
+            <a id="dn-active" href="/delivery-note.html"
+              class="flex flex-col p-3 sm:p-4 md:p-4 text-left text-white bg-red-600 rounded cursor-pointer pointer-events-auto w-[188px]">
+              <span class="text-3xl font-medium" id="dn-active-count">0</span>
+              <span class="mt-2 text-sm font-semibold">Delivery Note (DN) Active</span>
+            </a>
+            <a id="dn-in-progress" href="/delivery-note.html"
+              class="flex flex-col p-3 sm:p-4 md:p-4 text-left text-blue-950 bg-yellow-200 rounded cursor-pointer pointer-events-auto w-[188px]">
+              <span class="text-3xl font-medium" id="dn-in-progress-count">0</span>
+              <span class="mt-2 text-sm font-semibold">Delivery Note (DN) In Progress</span>
+            </a>
+          </div>
         </div>
       </div>
     </section>
+
   </main>
 
   <!-- jQuery for Select2 -->
@@ -164,7 +189,7 @@
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    $(document).ready(function () {
       const suppliers = [
         { id: '1', name: 'Supplier A', code: 'A123' },
         { id: '2', name: 'Supplier B', code: 'B456' },
@@ -182,64 +207,72 @@
         '1': { poActive: '5', poInProgress: '3', dnActive: '7', dnInProgress: '2' },
         '2': { poActive: '8', poInProgress: '4', dnActive: '5', dnInProgress: '6' },
         '3': { poActive: '3', poInProgress: '2', dnActive: '4', dnInProgress: '1' },
-        // Data lainnya...
+        // Additional data...
       };
 
-      const supplierSelect = document.getElementById('Supplier');
-      const submitBtn = document.getElementById('submitBtn');
-      const poActiveCount = document.getElementById('po-active-count');
-      const poInProgressCount = document.getElementById('po-in-progress-count');
-      const dnActiveCount = document.getElementById('dn-active-count');
-      const dnInProgressCount = document.getElementById('dn-in-progress-count');
+      const supplierSelect = $('#Supplier');
+      const submitBtn = $('#submitBtn');
+      const poActiveCount = $('#po-active-count');
+      const poInProgressCount = $('#po-in-progress-count');
+      const dnActiveCount = $('#dn-active-count');
+      const dnInProgressCount = $('#dn-in-progress-count');
+      const selectSupplierText = $('#select-supplier-text');
 
+      // Populate supplier select options
       suppliers.forEach(supplier => {
-        const option = document.createElement('option');
-        option.value = supplier.id;
-        option.textContent = `${supplier.name} (${supplier.code})`;
-        supplierSelect.appendChild(option);
+        const option = new Option(`${supplier.name} (${supplier.code})`, supplier.id, false, false);
+        supplierSelect.append(option);
       });
 
-      $(supplierSelect).select2({
+      // Initialize Select2
+      supplierSelect.select2({
         placeholder: 'Cari Supplier',
         allowClear: true
       });
 
-      supplierSelect.addEventListener('change', () => {
-        if (supplierSelect.value) {
-          submitBtn.disabled = false;
-          submitBtn.classList.remove('bg-zinc-400', 'hover:bg-zinc-500');
-          submitBtn.classList.add('bg-blue-600', 'hover:bg-blue-700');
+      // Change event for select
+      supplierSelect.on('change', function () {
+        if ($(this).val()) {
+          submitBtn.prop('disabled', false).removeClass('bg-zinc-400').addClass('bg-blue-600');
         } else {
-          submitBtn.disabled = true;
-          submitBtn.classList.remove('bg-blue-600', 'hover:bg-blue-700');
-          submitBtn.classList.add('bg-zinc-400', 'hover:bg-zinc-500');
+          submitBtn.prop('disabled', true).removeClass('bg-blue-600').addClass('bg-zinc-400');
         }
       });
 
-      submitBtn.addEventListener('click', () => {
-        const selectedSupplierId = supplierSelect.value;
+      // Click event for submit button
+      submitBtn.on('click', function () {
+        const selectedSupplierId = supplierSelect.val();
         console.log(`Selected Supplier ID: ${selectedSupplierId}`); // Debugging line
-      
+
         if (selectedSupplierId) {
           const status = statusData[selectedSupplierId] || {
             poActive: '0', poInProgress: '0', dnActive: '0', dnInProgress: '0'
           };
           console.log(`Status:`, status); // Debugging line
-      
-          poActiveCount.textContent = status.poActive;
-          poInProgressCount.textContent = status.poInProgress;
-          dnActiveCount.textContent = status.dnActive;
-          dnInProgressCount.textContent = status.dnInProgress;
-      
-          // Tampilkan status section
-          document.getElementById('status-section').style.display = 'flex';
+
+          poActiveCount.text(status.poActive);
+          poInProgressCount.text(status.poInProgress);
+          dnActiveCount.text(status.dnActive);
+          dnInProgressCount.text(status.dnInProgress);
+
+          // Update the "Select Supplier" text in the sidebar
+          const selectedSupplier = suppliers.find(supplier => supplier.id === selectedSupplierId);
+          if (selectedSupplier) {
+            selectSupplierText.text(`${selectedSupplier.name} (${selectedSupplier.code})`);
+          }
+
+          // Show status section
+          $('#status-section').show();
+
+          // Show other navigation items
+          $('.nav-hidden').removeClass('nav-hidden');
         } else {
           console.log('No supplier selected');
         }
       });
-      
     });
   </script>
+
 </body>
 
 </html>
