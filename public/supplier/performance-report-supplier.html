@@ -278,10 +278,10 @@ function sortTable(columnIndex) {
 
 function adjustRowsPerPage() {
   const screenWidth = window.innerWidth;
-  if (screenWidth < 640) {
-    rowsPerPage = 5;
-  } else if (screenWidth < 1024) {
-    rowsPerPage = 10;
+  if (screenWidth < 1280) {
+    rowsPerPage = 7;
+  } else if (screenWidth < 1600) {
+    rowsPerPage = 9;
   } else {
     rowsPerPage = 15;
   }
