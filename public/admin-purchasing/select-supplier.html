@@ -77,14 +77,7 @@
             <span class="self-stretch my-auto text-sm 2xl:text-xl">Purchase Order</span>
           </a>
         </li>
-        <li class="nav-hidden">
-          <a href="delivery-note.html"
-            class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-            <img loading="lazy" src="../assets/icon_dn_default.svg" alt=""
-              class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-            <span class="self-stretch my-auto text-sm 2xl:text-xl">Delivery Note</span>
-          </a>
-        </li>
+        
         <li class="nav-hidden">
           <a href="history-purchase-order.html"
             class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
@@ -94,11 +87,11 @@
           </a>
         </li>
         <li class="nav-hidden">
-          <a href="history-delivery-note.html"
+          <a href="performance-report.html"
             class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-            <img loading="lazy" src="../assets/icon_history_default.svg" alt=""
+            <img loading="lazy" src="../assets/icon_listing_default.svg" alt=""
               class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-            <span class="self-stretch my-auto text-sm 2xl:text-xl">History Delivery Note</span>
+            <span class="self-stretch my-auto text-sm 2xl:text-xl">Performance Report</span>
           </a>
         </li>
         <!-- ... -->
@@ -109,7 +102,7 @@
         <div class="flex gap-4 items-center p-2 2xl:p-4 w-full bg-blue-950 bg-opacity-10 text-blue-950">
           <img loading="lazy" src="../assets/icon_people.svg" alt=""
             class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-          <span class="self-stretch my-auto text-sm 2xl:text-xl">Warehouse (name)</span>
+          <span class="self-stretch my-auto text-sm 2xl:text-xl">Purchasing (name)</span>
         </div>
         <!-- Logout Button -->
         <a href="/logout.html"
@@ -149,7 +142,7 @@
       <div class="flex ">
         <!-- Purchase Order (PO) Section -->
         <div class="flex flex-col items-start w-full max-w-[400px]">
-          <h2 class="text-2xl font-semibold text-black">Status Purchase Order (PO)</h2>
+          <h2 class="xl:text-xl 2xl:text-2xl font-semibold text-black">Status Purchase Order (PO)</h2>
           <div class="flex gap-4 items-start mt-4">
             <a id="po-active" href="/purchase-order.html"
               class="flex flex-col p-3 sm:p-4 md:p-4 text-left text-white bg-red-600 rounded cursor-pointer pointer-events-auto w-[180px]">
@@ -164,7 +157,7 @@
           </div>
         </div>
         <div class="flex flex-col items-start w-full max-w-[400px]">
-          <h2 class="text-2xl font-semibold text-black">Status Delivery Note (DN)</h2>
+          <h2 class="xl:text-xl 2xl:text-2xl  font-semibold text-black">Status Delivery Note (DN)</h2>
           <div class="flex gap-4 items-start mt-4">
             <a id="dn-active" href="/delivery-note.html"
               class="flex flex-col p-3 sm:p-4 md:p-4 text-left text-white bg-red-600 rounded cursor-pointer pointer-events-auto w-[188px]">
