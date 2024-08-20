@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+
+</head>
+
+<body class="font-poppins bg-white">
+  <section class="overflow-hidden w-screen h-screen bg-white ]">
+    <div class="flex">
+
+      <!-- nav-side bar -->
+      <aside class="flex flex-col w-[20%] h-screen">
+        <nav
+          class="flex flex-col grow py-9 2xl:py-14 w-full text-base font-medium border-r border-solid bg-stone-300 border-r-neutral-400">
+
+          <!-- Logo Sanoh -->
+          <img loading="lazy" src="../assets/logosanoh.svg"
+            class="object-contain self-center w-30 2xl:w-48 max-w-full cursor-pointer pointer-events-auto aspect-[2.79]" />
+
+          <!-- Menu Items -->
+          <ul class="flex flex-col mt-7 2xl:mt-10 w-full text-gray-500">
+
+            <!-- Manage Account (visible) -->
+            <li id="manage-account">
+              <a href="index.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 w-full whitespace-nowrap cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 active">
+                <img loading="lazy" src=../assets/icon_home_default.svg alt=""
+                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square icon-home-active" />
+                <span class="self-stretch my-auto text-sm 2xl:text-xl">Manage Account</span>
+              </a>
+            </li>
+
+            <!-- Hidden Menu Items -->
+            <li class="hidden">
+              <a href="purchase-order.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+                <img loading="lazy" src="../assets/icon_po_default.svg" alt=""
+                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-[0.89] fill-blue-950 icon-po-active" />
+                <span class="self-stretch my-auto text-sm 2xl:text-xl">Purchase Order</span>
+              </a>
+            </li>
+
+            <li class="hidden">
+              <a href="delivery-note.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+                <img loading="lazy" src="../assets/icon_dn_default.svg" alt=""
+                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
+                <span class="self-stretch my-auto text-sm 2xl:text-xl">Delivery Note</span>
+              </a>
+            </li>
+
+            <li class="hidden">
+              <a href="history-purchase-order.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+                <img loading="lazy" src="../assets/icon_history_default.svg" alt=""
+                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
+                <span class="self-stretch my-auto text-sm 2xl:text-xl">History Purchase Order</span>
+              </a>
+            </li>
+
+            <li class="hidden">
+              <a href="history-delivery-note.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+                <img loading="lazy" src="../assets/icon_history_default.svg" alt=""
+                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
+                <span class="self-stretch my-auto text-sm 2xl:text-xl">History Delivery Note</span>
+              </a>
+            </li>
+
+            <li class="hidden">
+              <a href="performance-report"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+                <img loading="lazy" src="../assets/icon_performance_default.svg" alt=""
+                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
+                <span class="self-stretch my-auto text-sm 2xl:text-xl">Performance Report</span>
+              </a>
+            </li>
+          </ul>
+
+          <!-- User and Logout Section at the Bottom -->
+          <div class="mt-auto flex flex-col w-full">
+
+            <!-- User Info -->
+            <div class="flex gap-4 items-center p-2 2xl:p-4 w-full bg-blue-950 bg-opacity-10 text-blue-950">
+              <img loading="lazy" src="../assets/icon_people.svg" alt=""
+                class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
+              <span class="self-stretch my-auto text-sm 2xl:text-xl">Admin (Heru)</span>
+            </div>
+
+            <!-- Logout Button -->
+            <a href="../index.html"
+              class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
+              <img loading="lazy" src="../assets/icon_logout.svg" alt=""
+                class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square logout-icon hover:icon_logout_white.svg" />
+              <span class="self-stretch my-auto text-sm 2xl:text-xl">Logout</span>
+            </a>
+          </div>
+        </nav>
+      </aside>
+
+
+    <!-- Main Content -->
+      <main class="flex flex-col w-[80%] mb-[100%] mt-[3%] mx-auto px-6 2xl:px-12">
+        <section class="flex flex-col self-stretch py-px my-auto w-full pb-4 2xl:pb-10">
+          <header class="flex gap-3 items-center self-start text-2xl font-semibold text-black">
+            <img loading="lazy" src="../assets/icon_back.svg" alt=""
+              class="object-contain shrink-0 self-stretch my-auto w-5 2xl:w-7 cursor-pointer pointer-events-auto aspect-square" onclick="window.location.href='manage-user.html';"/>
+            <h1 class="self-stretch my-auto text-[80%] 2xl:text-[120%]">Edit User</h1>
+          </header>
+          <div class="flex flex-col mt-4 2xl:mt-6 w-full 2xl:text-base text-xs font-medium">
+            <form class="flex flex-col mb-6" id="edit-user-form">
+              <div class="flex items-center gap-4 mb-6 2xl:mb-8">
+                <label for="user_id" class="text-base 2xl:text-lg font-medium dark:text-black w-[15%] 2xl:w-[10%]">User ID</label>
+                <input type="text" id="user_id" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block p-3 dark:text-black" placeholder="User ID" required readonly />
+              </div>
+
+              <div class="flex items-center gap-4 mb-6 2xl:mb-8">
+                <label for="supplier_id" class="text-base 2xl:text-lg font-medium dark:text-black w-[15%] 2xl:w-[10%]">Supplier ID</label>
+                <input type="text" id="supplier_id" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block p-3 dark:text-black" placeholder="Supplier ID" required />
+              </div>
+
+              <div class="flex gap-6 mb-6 2xl:mb-8">
+                <div class="flex-1 flex items-center gap-4">
+                  <label for="first_name" class="text-base 2xl:text-lg font-medium dark:text-black w-[32%] 2xl:w-[20%]">Name</label>
+                  <input type="text" id="first_name" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[70%] 2xl:w-[50%] p-3 dark:text-black" placeholder="Name" required />
+                </div>
+                <div class="flex-1 flex items-center gap-4">
+                  <label for="role" class="text-base 2xl:text-lg font-medium dark:text-black w-[10%] 2xl:w-[7%]">Role</label>
+                  <select id="role" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[40%] 2xl:w-[30%] p-3 dark:text-black" required>
+                    <option value="" disabled>Select a role</option>
+                    <option value="supplier">Supplier</option>
+                    <option value="warehouse">Warehouse</option>
+                    <option value="purchasing">Purchasing</option>
+                    <option value="admin">Admin</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-4 mb-6 2xl:mb-8">
+                <label for="username" class="text-base 2xl:text-lg font-medium dark:text-black w-[15%] 2xl:w-[10%]">Username</label>
+                <input type="text" id="username" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[32%] p-3 dark:text-black" placeholder="Username" required />
+              </div>
+
+              <div class="flex items-center gap-4 mb-6 2xl:mb-8">
+                <label for="email" class="text-base 2xl:text-lg font-medium dark:text-black w-[15%] 2xl:w-[10%]">Email</label>
+                <input type="email" id="email" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[32%] p-3 dark:text-black" placeholder="example@example.com" required />
+              </div>
+
+              <div class="flex items-center gap-4 mb-6 2xl:mb-8">
+                <label for="password" class="text-base 2xl:text-lg font-medium dark:text-black w-[15%] 2xl:w-[10%]">Password</label>
+                <input type="password" id="password" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[32%] p-3 dark:text-black" placeholder="Password" required />
+                <img id="toggle_password" src="../assets/icon_see.svg" alt="Toggle Password Visibility" class="ml-2 cursor-pointer w-6 h-6" />
+                <button type="button" id="generate_password" class="ml-2 bg-blue-400 text-white rounded px-4 py-3 text-xs 2xl:text-sm">Generate Password</button>
+              </div>
+
+              <div class="flex justify-end">
+                <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-base 2xl:text-xl px-6 2xl:px-8 py-3 2xl:py-4 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save</button>
+              </div>
+            </form>
+          </div>
+        </section>
+      </main>
+    </div>
+  </section>
+</body>
+
+<!-- Add the script to handle table sorting and pagination -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const passwordInput = document.getElementById('password');
+    const togglePasswordButton = document.getElementById('toggle_password');
+    const generatePasswordButton = document.getElementById('generate_password');
+    const form = document.getElementById('edit-user-form');
+    const userIdInput = document.getElementById('user_id');
+
+    // Dummy data for editing
+    const dummyData = {
+      user_id: '12345',
+      supplier_id: '67890',
+      first_name: 'John Doe',
+      role: 'admin',
+      username: 'johndoe',
+      email: 'john.doe@example.com',
+      password: 'password123'
+    };
+
+    // Populate form with dummy data
+    function populateForm(data) {
+      document.getElementById('user_id').value = data.user_id;
+      document.getElementById('supplier_id').value = data.supplier_id;
+      document.getElementById('first_name').value = data.first_name;
+      document.getElementById('role').value = data.role;
+      document.getElementById('username').value = data.username;
+      document.getElementById('email').value = data.email;
+      document.getElementById('password').value = data.password;
+    }
+
+    populateForm(dummyData);
+
+    // Toggle Password Visibility
+    togglePasswordButton.addEventListener('click', () => {
+      const isPasswordVisible = passwordInput.type === 'text';
+      passwordInput.type = isPasswordVisible ? 'password' : 'text';
+      togglePasswordButton.src = isPasswordVisible ? '../assets/icon_see.svg' : '../assets/icon_hide.svg';
+    });
+
+    // Generate Random Password
+    generatePasswordButton.addEventListener('click', () => {
+      const password = generateRandomPassword();
+      passwordInput.value = password;
+    });
+
+    function generateRandomPassword(length = 12) {
+      const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+[]{}|;:,.<>?";
+      let password = '';
+      for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * charset.length);
+        password += charset[randomIndex];
+      }
+      return password;
+    }
+
+    // Form submission
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('User data saved successfully!');
+      window.location.href = 'manage-user.html';
+    });
+  });
+</script>
+
+<script src="script.js"></script>
+
+</html>
