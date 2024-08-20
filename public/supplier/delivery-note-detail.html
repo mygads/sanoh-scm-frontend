@@ -37,16 +37,16 @@
             
             <!-- Purchase Order -->
             <li>
-              <a href="purchase-order.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 active">
-                <img loading="lazy" src="../assets/icon_po_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-[0.89] fill-blue-950 icon-po-active" />
+              <a href="purchase-order.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 ">
+                <img loading="lazy" src="../assets/icon_po_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-[0.89] fill-blue-950" />
                 <span class="self-stretch my-auto text-sm 2xl:text-xl">Purchase Order</span>
               </a>
             </li>
             
             <!-- Delivery Note -->
             <li>
-              <a href="delivery-note.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../assets/icon_dn_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
+              <a href="delivery-note.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 active">
+                <img loading="lazy" src="../assets/icon_dn_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square icon-dn-active" />
                 <span class="self-stretch my-auto text-sm 2xl:text-xl">Delivery Note</span>
               </a>
             </li>
@@ -100,21 +100,21 @@
         <section class="flex flex-col self-stretch py-px my-auto w-full ">
 
           <header class="flex gap-3 items-center self-start text-2xl font-semibold text-black">
-            <a href="purchase-order.html">
+            <a href="delivery-note.html">
                 <img loading="lazy" src="../assets/icon_back.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-5 2xl:w-7 cursor-pointer pointer-events-auto aspect-square" />
             </a>
             
-            <h1 class="self-stretch my-auto text-[80%] 2xl:text-[120%]">Purchase Order (PO) Detail</h1>
+            <h1 class="self-stretch my-auto text-[80%] 2xl:text-[120%]">Delivery Note (DN) Detail</h1>
           </header>
 
           <div class="flex flex-col mt-4 2xl:mt-6 w-full 2xl:text-base text-xs font-medium">
 
             <div class="flex flex-wrap gap-10 justify-between items-center w-full">
 
-              <!-- No PO -->
+              <!-- No DN -->
               <div class="flex gap-3 2xl:gap-6 items-center self-stretch my-auto text-black min-w-[10%]">
-                <div class="self-stretch my-auto ">No. PO</div>
-                <div id="poNumber" class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap rounded bg-stone-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
+                <div class="self-stretch my-auto ">No. DN</div>
+                <div id="dnNumber" class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap rounded bg-stone-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
               </div>
 
               <!-- Search Bar -->
@@ -129,10 +129,10 @@
 
             <div class="flex flex-wrap gap-[10%] justify-between items-center mt-4 2xl:mt-6 w-full">
               
-              <!-- Note -->
-              <div class="flex gap-6 2xl:gap-10 items-center self-stretch my-auto text-black min-w-[10%]">
-                <div class="self-stretch my-auto ">Note</div>
-                <div id="noteInput" type="text" class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap ounded border border-solid border-neutral-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
+              <!-- No PO -->
+              <div class="flex gap-[13px] 2xl:gap-10 items-center self-stretch my-auto text-black min-w-[10%]">
+                <div class="self-stretch my-auto ">No. PO</div>
+                <div id="poNumber" type="text" class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap ounded border border-solid border-neutral-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
               </div>
               
               <div class="flex gap-3 2xl:gap-6 items-center self-stretch my-auto text-white 2xl:min-w-[240px] text-[10px] 2xl:text-lg">
@@ -158,30 +158,49 @@
             <table class="w-full text-[11px] 2xl:text-base text-left text-gray-700 dark:text-gray-700">
               <thead class="text-[14px] 2xl:text-[20px] text-gray-700">
                 <tr>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(0)">
+                  <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer w-[5%]" onclick="sortTable(0)">
                     No
                     <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
                   <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(1)">
                     Part Number
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
-                    <span class="sort-indicator"></span>
+                    <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" /> -->
                   </th>
                   <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(2)">
                     Part Name
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
-                    <span class="sort-indicator"></span>
                   </th>
                   <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(3)">
                     UoM
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
-                    <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(4)">
+                  <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(4)">
                     QTY
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
-                    <span class="sort-indicator"></span>
+                    <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" /> -->
+                    <!-- <span class="sort-indicator"></span> -->
+                  </th>
+                  <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(5)">
+                    QTY Label
+                    <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" /> -->
+                    <!-- <span class="sort-indicator"></span> -->
+                  </th>
+                  <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(6)">
+                    QTY Requested
+                    <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" /> -->
+                    <!-- <span class="sort-indicator"></span> -->
+                  </th>
+                  <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(7)">
+                    QTY Confirm
+                    <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" /> -->
+                    <!-- <span class="sort-indicator"></span> -->
+                  </th>
+                  <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer " onclick="sortTable(8)">
+                    QTY Delivered
+                    <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" /> -->
+                    <!-- <span class="sort-indicator"></span> -->
+                  </th>
+                  <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(9)">
+                    QTY Minus
+                    
                   </th>
                 </tr>
               </thead>
@@ -198,6 +217,29 @@
             <!-- Pagination buttons will be inserted here by JavaScript -->
           </div>
         </div>
+
+
+        <!-- Confirm Button -->
+        <!-- <div id="confirm-button-section" class="flex justify-start mt-6">
+          <button id="confirm-button" class="px-4 2xl:px-6 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5 text-white text-xs 2xl:text-sm">Confirm Order</button>
+        </div> -->
+
+        <div id="confirm-section" class="flex flex-col justify-start mt-6">
+          <!-- Checkbox Confirmation -->
+          <div id="confirmation-section" class="hidden">
+            <label class="flex items-center mb-4 text-sm">
+              <input type="checkbox" id="confirmation-checkbox" class="mr-2">
+              <span>I confirm that the data I provided is correct</span>
+            </label>
+          </div>
+
+          <!-- Submit and Cancel Buttons -->
+          <div id="confirm-button-section" class="flex">
+            <button id="confirm-button" class="px-4 2xl:px-6 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5 text-white text-xs 2xl:text-sm">Confirm Order</button>
+          </div>
+        </div>
+
+        
       </main>
     </div>
   </section>
@@ -220,24 +262,23 @@
   adjustRowsPerPage(); 
 
   const params = new URLSearchParams(window.location.search);
-  const noPO = params.get('noPO');
+  const noDN = params.get('noDN');
 
-  if (noPO) {
-      const po = purchaseOrder.find(po => po.noPO === noPO);
-      if (po) {
-        document.getElementById('poNumber').textContent = po.noPO;
-        document.getElementById('noteInput').textContent = po.note;
-        filteredData = po.details;
-        displayPODetails(po.details);
+  if (noDN) {
+      const dn = deliveryNote.find(dn => dn.noDN === noDN);
+      if (dn) {
+        document.getElementById('dnNumber').textContent = dn.noDN;
+        document.getElementById('poNumber').textContent = dn.noPO;
+        filteredData = dn.details;
+        displayDNDetails(dn.details);
         updatePagination();
       } else {
-        console.error('Data PO tidak ditemukan dalam array data.');
+        console.error('Data DN tidak ditemukan dalam array data.');
       }
   } else {
-      console.error('Parameter noPO tidak ditemukan dalam URL.');
+      console.error('Parameter noDN tidak ditemukan dalam URL.');
   }
-  // let filteredData = details; // Initialize filteredData with all data
-  // Adjust rows per page based on screen size
+
   function adjustRowsPerPage() {
     if (window.innerWidth <= 1280) {
         rowsPerPage = 7;
@@ -248,7 +289,7 @@
       }
   }
 
-  function displayPODetails(details) {
+  function displayDNDetails(details) {
     const tableBody = document.getElementById('table-body-detail');
     tableBody.innerHTML = '';
 
@@ -265,9 +306,98 @@
         <td class="px-2 py-4 text-center">${row.partName}</td>
         <td class="px-2 py-4 text-center">${row.UoM}</td>
         <td class="px-2 py-4 text-center">${row.QTY}</td>
+        <td class="px-2 py-4 text-center">${row.qtyLabel}</td>
+        <td class="px-2 py-4 text-center">${row.qtyRequested}</td>
+        <td class="px-2 py-4 text-center">
+          <input type="text" class="qty-confirm-input border border-gray-300 rounded px-2 py-1 text-center w-full ${row.qtyConfirm ? 'input-enabled' : ''}" value="${row.qtyConfirm || '-'}" disabled>
+        </td>
+        <td class="px-2 py-4 text-center">${row.qtyDelivered}</td>
+        <td class="px-2 py-4 text-center">${row.qtyMinus}</td>
       `;
       tableBody.appendChild(tableRow);
     });
+    updateButtonState(); // Update button state after displaying data
+  }
+
+  document.getElementById('confirm-button').addEventListener('click', () => {
+    const confirmButton = document.getElementById('confirm-button');
+    const confirmationSection = document.getElementById('confirmation-section');
+
+    if (confirmButton.textContent === 'Confirm Order' || confirmButton.textContent === 'Edit') {
+      // Enable qtyConfirm inputs
+      document.querySelectorAll('.qty-confirm-input').forEach(input => {
+        input.disabled = false;
+        input.classList.add('border-black'); // Add border when enabled
+      });
+
+      // Change button text to "Submit" and display the Cancel button and Checkbox
+      confirmButton.textContent = 'Submit';
+
+      const cancelButton = document.createElement('button');
+      cancelButton.id = 'cancel-button';
+      cancelButton.className = 'ml-[1%] px-4 2xl:px-6 py-2 2xl:py-3 my-auto bg-red-500 rounded cursor-pointer pointer-events-auto max-md:px-5 text-white text-xs 2xl:text-sm';
+      cancelButton.textContent = 'Cancel';
+      document.getElementById('confirm-button-section').appendChild(cancelButton);
+
+      confirmationSection.classList.remove('hidden'); // Show the checkbox confirmation section
+
+      document.getElementById('confirmation-checkbox').addEventListener('change', (e) => {
+        confirmButton.disabled = !e.target.checked;
+      });
+
+    
+
+      // Handle Cancel button
+      cancelButton.addEventListener('click', () => {
+        displayDNDetails(filteredData);
+        confirmationSection.classList.add('hidden');
+        cancelButton.remove();
+        confirmButton.textContent = 'Edit';
+      });
+
+      confirmButton.disabled = true; // Disable Submit button initially until checkbox is checked
+    } else if (confirmButton.textContent === 'Submit') {
+      // Submit logic
+      const inputs = document.querySelectorAll('.qty-confirm-input');
+      inputs.forEach((input, index) => {
+        filteredData[index].qtyConfirm = input.value;
+      });
+
+      alert('Data submitted successfully!');
+      displayDNDetails(filteredData);
+      updateButtonState();
+
+      confirmationSection.classList.add('hidden');
+      document.getElementById('cancel-button').remove();
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    adjustRowsPerPage(); // Set rows per page based on initial screen size
+    window.addEventListener('resize', () => {
+      adjustRowsPerPage(); // Adjust rows per page on screen resize
+      displayDNDetails(filteredData); // Re-render table data
+      updatePagination(); // Re-render pagination
+    });
+
+    document.getElementById('search-input').addEventListener('input', searchTable);
+
+    displayDNDetails(filteredData);
+    updatePagination();
+    updateButtonState();
+  });
+
+  function updateButtonState() {
+    const hasUnconfirmedQty = filteredData.some(detail => !detail.qtyConfirm);
+    const confirmButton = document.getElementById('confirm-button');
+
+    if (hasUnconfirmedQty) {
+      confirmButton.textContent = 'Confirm Order';
+      confirmButton.classList.remove('hidden');
+    } else {
+      confirmButton.textContent = 'Edit';
+      confirmButton.classList.remove('hidden');
+    }
   }
 
   function updatePagination() {
@@ -289,7 +419,7 @@
     prevButton.addEventListener('click', () => {
         if (currentPage > 1) {
         currentPage--;
-        displayPODetails(filteredData);
+        displayDNDetails(filteredData);
         updatePagination();
         }
     });
@@ -335,7 +465,7 @@
         pageButton.textContent = number;
         pageButton.addEventListener('click', () => {
             currentPage = number;
-            displayPODetails(filteredData);
+            displayDNDetails(filteredData);
             updatePagination();
         });
         }
@@ -354,26 +484,12 @@
     nextButton.addEventListener('click', () => {
         if (currentPage < totalPages) {
         currentPage++;
-        displayPODetails(filteredData);
+        displayDNDetails(filteredData);
         updatePagination();
         }
     });
     paginationContainer.appendChild(nextButton);
-}
-
-  document.addEventListener('DOMContentLoaded', () => {
-    adjustRowsPerPage(); // Set rows per page based on initial screen size
-    window.addEventListener('resize', () => {
-      adjustRowsPerPage(); // Adjust rows per page on screen resize
-      displayPODetails(filteredData); // Re-render table data
-      updatePagination(); // Re-render pagination
-    });
-
-    document.getElementById('search-input').addEventListener('input', searchTable);
-
-    displayPODetails(filteredData);
-    updatePagination();
-  });
+  }
 
   // Function to sort table based on column index
   function sortTable(columnIndex) {
@@ -403,12 +519,12 @@
   // Function to handle search
   function searchTable() {
     const searchInput = document.getElementById('search-input').value.toLowerCase();
-    filteredData = purchaseOrder.find(po => po.noPO === noPO).details.filter(row => 
+    filteredData = deliveryNote.find(dn => dn.noDN === noDN).details.filter(row => 
       row.partNumber.toLowerCase().includes(searchInput) || 
       row.partName.toLowerCase().includes(searchInput)
     );
     currentPage = 1;
-    displayPODetails(filteredData);
+    displayDNDetails(filteredData);
     updatePagination();
   }
 
