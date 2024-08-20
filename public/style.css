@@ -133,8 +133,8 @@ a:hover .logout-icon {
   content: url('assets/icon_home.svg')
 }
 
-.icon-listing-active {
-  content: url('assets/icon_listing.svg')
+.icon-performance-active {
+  content: url('assets/icon_performance.svg')
 }
 
 .icon-history-active {
@@ -151,4 +151,12 @@ a:hover .logout-icon {
   border-color: rgb(23 37 84 / var(--tw-border-opacity)) /* #172554 */;
   --tw-text-opacity: 1;
   color: rgb(23 37 84 / var(--tw-text-opacity)) /* #172554 */;
+}
+
+#status-section {
+  display: none;
+}
+
+.nav-hidden {
+  display: none;
 }
