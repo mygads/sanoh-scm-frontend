@@ -10,12 +10,44 @@
   <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  
+  <style>
+    /* Default state: Div 1 is visible, Div 2 is hidden */
+    .div1 {
+      display: block;
+    }
+    
+    .div2 {
+      display: none;
+    }
+
+    /* Media query for screens larger than 1920px: Show Div 2, hide Div 1 */
+    @media (min-width: 1920px) {
+      .div1 {
+        display: none;
+      }
+
+      .div2 {
+        display: flex; /* Or block, depending on your layout */
+      }
+    }
+
+    /* Media query for screens smaller than 1920px (i.e., 1280px or smaller): Show Div 1, hide Div 2 */
+    @media (max-width: 1280px) {
+      .div1 {
+        display: block;
+      }
+
+      .div2 {
+        display: none;
+      }
+    }
+  </style>
+
 </head>
 
 <body>
   <section class="flex overflow-hidden flex-col self-stretch mx-auto my-auto bg-white xl:w-[1280px] xl:h-[720px] 2xl:w-[1920px] 2xl:h-[1080px]">
-    <div class="flex gap-10 my-auto">
+    <div class="div1  flex gap-10 my-auto">
 
       <div class="flex flex-col w-[50%] ">
         <div class="flex relative flex-col w-[600px] ml-auto text-white h-full">
@@ -80,10 +112,8 @@
         </main>
       </div>
     </div>
-  </section>
 
-  <!-- <section class="flex overflow-hidden flex-col self-stretch mx-auto my-auto bg-white xl:w-[1280px] xl:h-[720px] 2xl:w-[1920px] 2xl:h-[1080px]">
-    <div class="flex gap-10 my-auto">
+    <div class="div2 hidden flex gap-10 my-auto ">
 
       <div class="flex flex-col w-[55%]">
         <div class="flex relative flex-col px-20 py-20 my-5 ml-auto w-full h-auto text-white border-white max-w-[632px]">
@@ -152,7 +182,11 @@
         </main>
       </div>
     </div>
-  </section> -->
+  </section>
+
+
+
+
 
 </body>
 
@@ -206,7 +240,7 @@ function redirectToDashboard(role) {
       window.location.href = 'admin-purchasing/';
       break;
     case 'super admin':
-      window.location.href = 'supper-admin/';
+      window.location.href = 'super-admin/';
       break;
     default:
       alert('Role not recognized');
