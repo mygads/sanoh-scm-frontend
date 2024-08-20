@@ -6,10 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Select Supplier</title>
 
-  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Customize Font Family -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -21,29 +18,6 @@
 
   <!-- Custom Styles -->
   <link rel="stylesheet" href="../style.css">
-
-  <!-- Configure Tailwind CSS -->
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            poppins: ['Poppins', 'sans-serif'],
-          },
-        },
-      },
-    }
-  </script>
-
-  <style>
-    #status-section {
-      display: none;
-    }
-
-    .nav-hidden {
-      display: none;
-    }
-  </style>
 </head>
 
 <body class="font-poppins flex min-h-screen">
@@ -58,7 +32,7 @@
       <ul class="flex flex-col mt-7 2xl:mt-10 w-full text-gray-500">
         <!-- Select Supplier (Always Visible) -->
         <li>
-          <a id="select-supplier-nav" href="/dashboard-warehouse.html"
+          <a id="select-supplier-nav" href="index.html"
             class="flex gap-4 items-center p-[9px] 2xl:p-4 w-full whitespace-nowrap cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 active">
             <img loading="lazy" src="assets/icon_home_default.svg" alt=""
               class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square icon-home-active" />
@@ -116,7 +90,7 @@
           <span class="self-stretch my-auto text-sm 2xl:text-xl">Warehouse (name)</span>
         </div>
         <!-- Logout Button -->
-        <a href="/logout.html"
+        <a href="../index.html"
           class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
           <img loading="lazy" src="../assets/icon_logout.svg" alt=""
             class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square logout-icon hover:icon_logout_white.svg" />
