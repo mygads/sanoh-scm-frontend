@@ -158,13 +158,14 @@
             <table class="w-full text-[11px] 2xl:text-base text-left text-gray-700 dark:text-gray-700">
               <thead class="text-[14px] 2xl:text-[20px] text-gray-700">
                 <tr>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(0)">
+                  <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer w-[5%]" onclick="sortTable(0)">
                     No
-                    
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <span class="sort-indicator"></span>
                   </th>
                   <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(1)">
                     Part Number
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" /> -->
                   </th>
                   <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(2)">
                     Part Name
@@ -174,24 +175,28 @@
                   </th>
                   <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(4)">
                     QTY
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
-                    <span class="sort-indicator"></span>
+                    <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" /> -->
+                    <!-- <span class="sort-indicator"></span> -->
                   </th>
                   <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(5)">
                     QTY Label
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" /> -->
+                    <!-- <span class="sort-indicator"></span> -->
                   </th>
                   <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(6)">
                     QTY Requested
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" /> -->
+                    <!-- <span class="sort-indicator"></span> -->
                   </th>
                   <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(7)">
                     QTY Confirm
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" /> -->
+                    <!-- <span class="sort-indicator"></span> -->
                   </th>
                   <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer " onclick="sortTable(8)">
                     QTY Delivered
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" /> -->
+                    <!-- <span class="sort-indicator"></span> -->
                   </th>
                   <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(9)">
                     QTY Minus
@@ -213,10 +218,28 @@
           </div>
         </div>
 
+
         <!-- Confirm Button -->
-        <div id="confirm-button-section" class="flex justify-start mt-6">
-          <button id="confirm-button" class="px-4 py-2 text-white bg-blue-500 rounded">Confirm</button>
+        <!-- <div id="confirm-button-section" class="flex justify-start mt-6">
+          <button id="confirm-button" class="px-4 2xl:px-6 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5 text-white text-xs 2xl:text-sm">Confirm Order</button>
+        </div> -->
+
+        <div id="confirm-section" class="flex flex-col justify-start mt-6">
+          <!-- Checkbox Confirmation -->
+          <div id="confirmation-section" class="hidden">
+            <label class="flex items-center mb-4 text-sm">
+              <input type="checkbox" id="confirmation-checkbox" class="mr-2">
+              <span>I confirm that the data I provided is correct</span>
+            </label>
+          </div>
+
+          <!-- Submit and Cancel Buttons -->
+          <div id="confirm-button-section" class="flex">
+            <button id="confirm-button" class="px-4 2xl:px-6 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5 text-white text-xs 2xl:text-sm">Confirm Order</button>
+          </div>
         </div>
+
+        
       </main>
     </div>
   </section>
@@ -286,22 +309,25 @@
         <td class="px-2 py-4 text-center">${row.qtyLabel}</td>
         <td class="px-2 py-4 text-center">${row.qtyRequested}</td>
         <td class="px-2 py-4 text-center">
-          <input type="text" class="qty-confirm-input border border-gray-300 rounded px-2 py-1 text-center w-full" value="${row.qtyConfirm || '-'}" disabled>
+          <input type="text" class="qty-confirm-input border border-gray-300 rounded px-2 py-1 text-center w-full ${row.qtyConfirm ? 'input-enabled' : ''}" value="${row.qtyConfirm || '-'}" disabled>
         </td>
         <td class="px-2 py-4 text-center">${row.qtyDelivered}</td>
         <td class="px-2 py-4 text-center">${row.qtyMinus}</td>
       `;
       tableBody.appendChild(tableRow);
     });
+    updateButtonState(); // Update button state after displaying data
   }
 
   document.getElementById('confirm-button').addEventListener('click', () => {
     const confirmButton = document.getElementById('confirm-button');
+    const confirmationSection = document.getElementById('confirmation-section');
 
-    if (confirmButton.textContent === 'Confirm' || confirmButton.textContent === 'Edit') {
+    if (confirmButton.textContent === 'Confirm Order' || confirmButton.textContent === 'Edit') {
       // Enable qtyConfirm inputs
       document.querySelectorAll('.qty-confirm-input').forEach(input => {
         input.disabled = false;
+        input.classList.add('border-black'); // Add border when enabled
       });
 
       // Change button text to "Submit" and display the Cancel button and Checkbox
@@ -309,29 +335,22 @@
 
       const cancelButton = document.createElement('button');
       cancelButton.id = 'cancel-button';
-      cancelButton.className = 'px-4 py-2 text-white bg-red-500 rounded ml-4';
+      cancelButton.className = 'ml-[1%] px-4 2xl:px-6 py-2 2xl:py-3 my-auto bg-red-500 rounded cursor-pointer pointer-events-auto max-md:px-5 text-white text-xs 2xl:text-sm';
       cancelButton.textContent = 'Cancel';
       document.getElementById('confirm-button-section').appendChild(cancelButton);
 
-      const confirmationSection = document.createElement('div');
-      confirmationSection.id = 'confirmation-section';
-      confirmationSection.className = 'flex flex-col mt-6';
-      confirmationSection.innerHTML = `
-        <label class="flex items-center mb-4">
-          <input type="checkbox" id="confirmation-checkbox" class="mr-2">
-          <span>I confirm that the data I provided is correct</span>
-        </label>
-      `;
-      document.getElementById('confirm-button-section').prepend(confirmationSection);
+      confirmationSection.classList.remove('hidden'); // Show the checkbox confirmation section
 
       document.getElementById('confirmation-checkbox').addEventListener('change', (e) => {
         confirmButton.disabled = !e.target.checked;
       });
 
+    
+
       // Handle Cancel button
       cancelButton.addEventListener('click', () => {
         displayDNDetails(filteredData);
-        confirmationSection.remove();
+        confirmationSection.classList.add('hidden');
         cancelButton.remove();
         confirmButton.textContent = 'Edit';
       });
@@ -348,7 +367,7 @@
       displayDNDetails(filteredData);
       updateButtonState();
 
-      document.getElementById('confirmation-section').remove();
+      confirmationSection.classList.add('hidden');
       document.getElementById('cancel-button').remove();
     }
   });
@@ -373,7 +392,7 @@
     const confirmButton = document.getElementById('confirm-button');
 
     if (hasUnconfirmedQty) {
-      confirmButton.textContent = 'Confirm';
+      confirmButton.textContent = 'Confirm Order';
       confirmButton.classList.remove('hidden');
     } else {
       confirmButton.textContent = 'Edit';
