@@ -45,8 +45,8 @@
             
             <!-- Delivery Note -->
             <li>
-              <a href="delivery-note.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 active">
-                <img loading="lazy" src="../assets/icon_dn_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square icon-dn-active" />
+              <a href="delivery-note.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 ">
+                <img loading="lazy" src="../assets/icon_dn_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square " />
                 <span class="self-stretch my-auto text-sm 2xl:text-xl">Delivery Note</span>
               </a>
             </li>
@@ -61,19 +61,19 @@
             
             <!-- History Delivery Note -->
             <li>
-              <a href="history-delivery-note.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../assets/icon_history_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
+              <a href="history-delivery-note.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 active">
+                <img loading="lazy" src="../assets/icon_history_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-5 2xl:w-6 aspect-square icon-history-active" />
                 <span class="self-stretch my-auto text-sm 2xl:text-xl">History Delivery Note</span>
               </a>
             </li>
             
             <!-- Performance Report -->
             <li>
-              <a href="performance-report.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+              <a href="performance-report" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
                 <img loading="lazy" src="../assets/icon_performance_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
                 <span class="self-stretch my-auto text-sm 2xl:text-xl">Performance Report</span>
               </a>
-            </li>        
+            </li>
           </ul>
 
           <!-- User and Logout Section at the Bottom -->
@@ -100,7 +100,7 @@
         <section class="flex flex-col self-stretch py-px my-auto w-full max-md:mt-10 max-md:max-w-full">
 
           <header class="flex items-center self-start text-2xl font-semibold text-black">
-            <h1 class="self-stretch my-auto text-[80%] 2xl:text-[120%]">Delivery Note (DN)</h1>
+            <h1 class="self-stretch my-auto text-[80%] 2xl:text-[120%]">History Delivery Note (DN)</h1>
           </header>
 
           <div class="flex flex-col mt-4 2xl:mt-6 w-full 2xl:text-base text-xs font-medium">
@@ -134,17 +134,22 @@
                     No. PO
                     <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
-                  </th>
+                  </th>                  
                   <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(2)">
-                    Plan DN Date
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
-                    <span class="sort-indicator"></span>
-                  </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(3)">
                     Status DN
                     <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
-                  </th>    
+                  </th> 
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(3)">
+                    Sent Date
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <span class="sort-indicator"></span>
+                  </th> 
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(4)">
+                    Received Date
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <span class="sort-indicator"></span>
+                  </th>  
                 </tr>
               </thead>
               <tbody id="table-body">
@@ -204,13 +209,14 @@
       tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
       tableRow.innerHTML = `
         <td class="px-2 py-4 text-center font-medium text-gray-900">
-            <a href="delivery-note-detail.html?noDN=${row.noDN}" class="text-blue-600 underline">${row.noDN}</a>
+            <a href="history-delivery-note-detail.html?noDN=${row.noDN}" class="text-blue-600 underline">${row.noDN}</a>
         </td>
         <td class="px-2 py-4 text-center font-medium text-gray-900">
-            <a href="purchase-order-detail.html?noPO=${row.noPO}" class="text-blue-600 underline">${row.noPO}</a>
-        </td>
-        <td class="px-2 py-4 text-center">${row.planDNDate}</td>
+            <a href="history-purchase-order-detail.html?noPO=${row.noPO}" class="text-blue-600 underline">${row.noPO}</a>
+        </td>        
         <td class="px-2 py-4 text-center">${row.statusDN}</td>
+        <td class="px-2 py-4 text-center">${row.planDNDate}</td>
+        <td class="px-2 py-4 text-center">${row.receivedDNDate}</td>
       `;
       tableBody.appendChild(tableRow);
     });

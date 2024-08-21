@@ -9,7 +9,8 @@ const purchaseOrder = [
         response: 'Accepted',
         note: 'Urgent Delivery',
         details: [
-            { no: '1', partNumber: 'RL1ST08976487200C000', partName: 'asaasdafaf', UoM: 'PCS', QTY: '12000' },
+            { 
+                no: '1', partNumber: 'RL1ST08976487200C000', partName: 'asaasdafaf', UoM: 'PCS', QTY: '12000' },
             { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL asdasdasasdaO1', UoM: 'PCS', QTY: '12000' },
         ],
     },
@@ -708,6 +709,7 @@ const deliveryNote = [
     {
         noDN: 'DN001',
         noPO: 'PL2401658',
+        planDNDate: '14-11-2025 11.00',
         planDNDate: '14-11-2025 11.00',
         statusDN: 'Opened',
         details: [
