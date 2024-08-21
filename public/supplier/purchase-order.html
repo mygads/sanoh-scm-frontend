@@ -199,11 +199,9 @@
 <script src="script.js"></script>
 <!-- Add the script to handle table sorting and pagination -->
 <script>
-
-  
   let rowsPerPage = 12;
   let currentPage = 1;
-  let filteredData = purchaseOrder; // Initialize filteredData with all data
+  // let filteredData = purchaseOrder; // Initialize filteredData with all data
   let pendingResponseIndex = null;
   let pendingResponseAction = '';
 
@@ -406,6 +404,7 @@
 }
 
   document.addEventListener('DOMContentLoaded', () => {
+    fetchPurchaseOrders(); // Fetch the purchase orders when the page loads
     adjustRowsPerPage(); // Set rows per page based on initial screen size
     window.addEventListener('resize', () => {
       adjustRowsPerPage(); // Adjust rows per page on screen resize
