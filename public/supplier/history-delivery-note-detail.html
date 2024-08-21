@@ -45,8 +45,8 @@
             
             <!-- Delivery Note -->
             <li>
-              <a href="delivery-note.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 active">
-                <img loading="lazy" src="../assets/icon_dn_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square icon-dn-active" />
+              <a href="delivery-note.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 ">
+                <img loading="lazy" src="../assets/icon_dn_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
                 <span class="self-stretch my-auto text-sm 2xl:text-xl">Delivery Note</span>
               </a>
             </li>
@@ -62,7 +62,7 @@
             <!-- History Delivery Note -->
             <li>
               <a href="history-delivery-note.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 active">
-                <img loading="lazy" src="../assets/icon_history_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square icon-history-active" />
+                <img loading="lazy" src="../assets/icon_history_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-5 2xl:w-6 aspect-square icon-history-active" />
                 <span class="self-stretch my-auto text-sm 2xl:text-xl">History Delivery Note</span>
               </a>
             </li>
@@ -100,7 +100,7 @@
         <section class="flex flex-col self-stretch py-px my-auto w-full ">
 
           <header class="flex gap-3 items-center self-start text-2xl font-semibold text-black">
-            <a href="delivery-note.html">
+            <a href="history-delivery-note.html">
                 <img loading="lazy" src="../assets/icon_back.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-5 2xl:w-7 cursor-pointer pointer-events-auto aspect-square" />
             </a>
             
@@ -129,21 +129,29 @@
 
             <div class="flex flex-wrap gap-[10%] justify-between items-center mt-4 2xl:mt-6 w-full">
               
-              <!-- No PO -->
-              <div class="flex gap-[13px] 2xl:gap-10 items-center self-stretch my-auto text-black min-w-[10%]">
-                <div class="self-stretch my-auto ">No. PO</div>
-                <div id="poNumber" type="text" class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap ounded border border-solid border-neutral-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
+              <div class="flex gap-5">
+                <!-- No PO -->
+                <!-- <div class="flex gap-[13px] 2xl:gap-10 items-center self-stretch my-auto text-black min-w-[10%]">
+                  <div class="self-stretch my-auto ">No. PO</div>
+                  <div id="poNumber" type="text" class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap ounded border border-solid border-neutral-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
+                </div> -->
+
+                <div class="flex gap-3 2xl:gap-6 items-center self-stretch my-auto text-black min-w-[10%]">
+                  <div class="self-stretch my-auto ">No. PO</div>
+                  <div id="poNumber" class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap rounded bg-stone-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
+                </div>
+
+                <div class="flex gap-3 2xl:gap-6 items-center self-stretch my-auto text-black min-w-[10%]">
+                  <div class="self-stretch my-auto ">Plan Delivery Date</div>
+                  <div id="planDelivery" class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap rounded bg-stone-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
+                </div>
               </div>
-              
               <div class="flex gap-3 2xl:gap-6 items-center self-stretch my-auto text-white 2xl:min-w-[240px] text-[10px] 2xl:text-lg">
                 <a href="export-csv.html" class="flex gap-2 2xl:gap-4 items-center self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5">
                   <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-5 aspect-square" />
                   <span class="flex-1 shrink self-stretch my-auto ">Export CSV</span>
                 </a>
-                <a href="print-po.html" class="flex gap-2 2xl:gap-4 items-center self-stretch px-6 2xl:px-9 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5">
-                  <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-5 aspect-square" />
-                  <span class="flex-1 shrink self-stretch my-auto basis-0">Print PO </span>
-                </a>
+                
               </div>
             </div>
 
@@ -170,37 +178,25 @@
                   <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(2)">
                     Part Name
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(3)">
-                    UoM
+                  <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer w-[13%]" onclick="sortTable(3)">
+                    Quantiy Order
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(4)">
-                    QTY
+                  <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer w-[13%]" onclick="sortTable(4)">
+                    Quantity Label
                     <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" /> -->
                     <!-- <span class="sort-indicator"></span> -->
                   </th>
-                  <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(5)">
-                    QTY Label
+                  <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer w-[15%]" onclick="sortTable(5)">
+                    Quantity Delivered
                     <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" /> -->
                     <!-- <span class="sort-indicator"></span> -->
                   </th>
-                  <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(6)">
-                    QTY Requested
+                  <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer w-[15%]" onclick="sortTable(6)">
+                    Quantity Received
                     <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" /> -->
                     <!-- <span class="sort-indicator"></span> -->
-                  </th>
-                  <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(7)">
-                    QTY Confirm
-                    <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" /> -->
-                    <!-- <span class="sort-indicator"></span> -->
-                  </th>
-                  <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer " onclick="sortTable(8)">
-                    QTY Delivered
-                    <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" /> -->
-                    <!-- <span class="sort-indicator"></span> -->
-                  </th>
-                  <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(9)">
-                    QTY Minus
-                    
                   </th>
                 </tr>
               </thead>
@@ -215,27 +211,6 @@
         <div class="flex justify-end my-6">
           <div class="flex gap-2 2xl:gap-4 items-center pagination">
             <!-- Pagination buttons will be inserted here by JavaScript -->
-          </div>
-        </div>
-
-
-        <!-- Confirm Button -->
-        <!-- <div id="confirm-button-section" class="flex justify-start mt-6">
-          <button id="confirm-button" class="px-4 2xl:px-6 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5 text-white text-xs 2xl:text-sm">Confirm Order</button>
-        </div> -->
-
-        <div id="confirm-section" class="flex flex-col justify-start mt-6">
-          <!-- Checkbox Confirmation -->
-          <div id="confirmation-section" class="hidden">
-            <label class="flex items-center mb-4 text-sm">
-              <input type="checkbox" id="confirmation-checkbox" class="mr-2">
-              <span>I confirm that the data I provided is correct</span>
-            </label>
-          </div>
-
-          <!-- Submit and Cancel Buttons -->
-          <div id="confirm-button-section" class="flex">
-            <button id="confirm-button" class="px-4 2xl:px-6 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5 text-white text-xs 2xl:text-sm">Confirm Order</button>
           </div>
         </div>
 
@@ -269,6 +244,7 @@
       if (dn) {
         document.getElementById('dnNumber').textContent = dn.noDN;
         document.getElementById('poNumber').textContent = dn.noPO;
+        document.getElementById('planDelivery').textContent = dn.planDNDate;
         filteredData = dn.details;
         displayDNDetails(dn.details);
         updatePagination();
@@ -304,73 +280,14 @@
         <td class="px-2 py-4 text-center font-medium text-gray-900">${row.no}</td>
         <td class="px-2 py-4 text-center">${row.partNumber}</td>
         <td class="px-2 py-4 text-center">${row.partName}</td>
-        <td class="px-2 py-4 text-center">${row.UoM}</td>
         <td class="px-2 py-4 text-center">${row.QTY}</td>
         <td class="px-2 py-4 text-center">${row.qtyLabel}</td>
-        <td class="px-2 py-4 text-center">${row.qtyRequested}</td>
-        <td class="px-2 py-4 text-center">
-          <input type="text" class="qty-confirm-input border border-gray-300 rounded px-2 py-1 text-center w-full ${row.qtyConfirm ? 'input-enabled' : ''}" value="${row.qtyConfirm || '-'}" disabled>
-        </td>
         <td class="px-2 py-4 text-center">${row.qtyDelivered}</td>
-        <td class="px-2 py-4 text-center">${row.qtyMinus}</td>
+        <td class="px-2 py-4 text-center">${row.qtyReceived}</td>
       `;
       tableBody.appendChild(tableRow);
     });
-    updateButtonState(); // Update button state after displaying data
   }
-
-  document.getElementById('confirm-button').addEventListener('click', () => {
-    const confirmButton = document.getElementById('confirm-button');
-    const confirmationSection = document.getElementById('confirmation-section');
-
-    if (confirmButton.textContent === 'Confirm Order' || confirmButton.textContent === 'Edit') {
-      // Enable qtyConfirm inputs
-      document.querySelectorAll('.qty-confirm-input').forEach(input => {
-        input.disabled = false;
-        input.classList.add('border-black'); // Add border when enabled
-      });
-
-      // Change button text to "Submit" and display the Cancel button and Checkbox
-      confirmButton.textContent = 'Submit';
-
-      const cancelButton = document.createElement('button');
-      cancelButton.id = 'cancel-button';
-      cancelButton.className = 'ml-[1%] px-4 2xl:px-6 py-2 2xl:py-3 my-auto bg-red-500 rounded cursor-pointer pointer-events-auto max-md:px-5 text-white text-xs 2xl:text-sm';
-      cancelButton.textContent = 'Cancel';
-      document.getElementById('confirm-button-section').appendChild(cancelButton);
-
-      confirmationSection.classList.remove('hidden'); // Show the checkbox confirmation section
-
-      document.getElementById('confirmation-checkbox').addEventListener('change', (e) => {
-        confirmButton.disabled = !e.target.checked;
-      });
-
-    
-
-      // Handle Cancel button
-      cancelButton.addEventListener('click', () => {
-        displayDNDetails(filteredData);
-        confirmationSection.classList.add('hidden');
-        cancelButton.remove();
-        confirmButton.textContent = 'Edit';
-      });
-
-      confirmButton.disabled = true; // Disable Submit button initially until checkbox is checked
-    } else if (confirmButton.textContent === 'Submit') {
-      // Submit logic
-      const inputs = document.querySelectorAll('.qty-confirm-input');
-      inputs.forEach((input, index) => {
-        filteredData[index].qtyConfirm = input.value;
-      });
-
-      alert('Data submitted successfully!');
-      displayDNDetails(filteredData);
-      updateButtonState();
-
-      confirmationSection.classList.add('hidden');
-      document.getElementById('cancel-button').remove();
-    }
-  });
 
   document.addEventListener('DOMContentLoaded', () => {
     adjustRowsPerPage(); // Set rows per page based on initial screen size
@@ -384,21 +301,8 @@
 
     displayDNDetails(filteredData);
     updatePagination();
-    updateButtonState();
   });
 
-  function updateButtonState() {
-    const hasUnconfirmedQty = filteredData.some(detail => !detail.qtyConfirm);
-    const confirmButton = document.getElementById('confirm-button');
-
-    if (hasUnconfirmedQty) {
-      confirmButton.textContent = 'Confirm Order';
-      confirmButton.classList.remove('hidden');
-    } else {
-      confirmButton.textContent = 'Edit';
-      confirmButton.classList.remove('hidden');
-    }
-  }
 
   function updatePagination() {
     const paginationContainer = document.querySelector('.pagination');
@@ -417,59 +321,59 @@
     `;
     prevButton.disabled = currentPage === 1;
     prevButton.addEventListener('click', () => {
-        if (currentPage > 1) {
-        currentPage--;
-        displayDNDetails(filteredData);
-        updatePagination();
-        }
+      if (currentPage > 1) {
+      currentPage--;
+      displayDNDetails(filteredData);
+      updatePagination();
+      }
     });
     paginationContainer.appendChild(prevButton);
 
     // Calculate page numbers to show
     const pageNumbers = [];
     if (totalPages <= maxPageNumbersToShow) {
-        // If total pages is less than or equal to maxPageNumbersToShow, show all page numbers
-        for (let i = 1; i <= totalPages; i++) {
-        pageNumbers.push(i);
-        }
+      // If total pages is less than or equal to maxPageNumbersToShow, show all page numbers
+      for (let i = 1; i <= totalPages; i++) {
+      pageNumbers.push(i);
+      }
     } else {
-        // Otherwise, calculate which page numbers to show
-        pageNumbers.push(1); // Always show the first page
+      // Otherwise, calculate which page numbers to show
+      pageNumbers.push(1); // Always show the first page
 
-        const startPage = Math.max(2, currentPage - 1);
-        const endPage = Math.min(totalPages - 1, currentPage + 1);
+      const startPage = Math.max(2, currentPage - 1);
+      const endPage = Math.min(totalPages - 1, currentPage + 1);
 
-        if (startPage > 2) {
-        pageNumbers.push('...');
-        }
+      if (startPage > 2) {
+      pageNumbers.push('...');
+      }
 
-        for (let i = startPage; i <= endPage; i++) {
-        pageNumbers.push(i);
-        }
+      for (let i = startPage; i <= endPage; i++) {
+      pageNumbers.push(i);
+      }
 
-        if (endPage < totalPages - 1) {
-        pageNumbers.push('...');
-        }
+      if (endPage < totalPages - 1) {
+      pageNumbers.push('...');
+      }
 
-        pageNumbers.push(totalPages); // Always show the last page
+      pageNumbers.push(totalPages); // Always show the last page
     }
 
     // Page numbers buttons
     pageNumbers.forEach(number => {
-        const pageButton = document.createElement('button');
-        if (number === '...') {
-        pageButton.className = 'px-4 py-2 2xl:px-6 2xl:py-4 text-gray-900 bg-gray-200 rounded-md cursor-default';
-        pageButton.textContent = '...';
-        } else {
-        pageButton.className = `px-4 py-2 2xl:px-6 2xl:py-4 ${number === currentPage ? 'bg-blue-900 text-white' : 'bg-gray-200 text-gray-900'} rounded-md hover:bg-gray-300`;
-        pageButton.textContent = number;
-        pageButton.addEventListener('click', () => {
-            currentPage = number;
-            displayDNDetails(filteredData);
-            updatePagination();
-        });
-        }
-        paginationContainer.appendChild(pageButton);
+      const pageButton = document.createElement('button');
+      if (number === '...') {
+      pageButton.className = 'px-4 py-2 2xl:px-6 2xl:py-4 text-gray-900 bg-gray-200 rounded-md cursor-default';
+      pageButton.textContent = '...';
+      } else {
+      pageButton.className = `px-4 py-2 2xl:px-6 2xl:py-4 ${number === currentPage ? 'bg-blue-900 text-white' : 'bg-gray-200 text-gray-900'} rounded-md hover:bg-gray-300`;
+      pageButton.textContent = number;
+      pageButton.addEventListener('click', () => {
+          currentPage = number;
+          displayDNDetails(filteredData);
+          updatePagination();
+      });
+      }
+      paginationContainer.appendChild(pageButton);
     });
 
     // Next button

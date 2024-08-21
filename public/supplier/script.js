@@ -709,7 +709,7 @@ const deliveryNote = [
     {
         noDN: 'DN001',
         noPO: 'PL2401658',
-        planDNDate: '14-11-2025',
+        planDNDate: '14-11-2025 11.00',
         statusDN: 'Opened',
         details: [
             {   
@@ -717,12 +717,13 @@ const deliveryNote = [
                 partNumber: 'RL1ST08914261J00B104', 
                 partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1 BRC, OIL LEVEL GAUGE GUIDE NO1', 
                 UoM: 'PCS', 
-                QTY: '12000', 
-                qtyLabel: '12000', 
-                qtyRequested: '10000', 
-                qtyConfirm: '', 
-                qtyDelivered: '9500', 
-                qtyMinus: '500' },
+                QTY: '12', 
+                qtyLabel: '100', 
+                qtyRequested: '1200', 
+                qtyConfirm: '1200', 
+                qtyDelivered: '1200', 
+                qtyReceived: '1200', 
+                qtyMinus: '0' },
             { 
                 no: '2', 
                 partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO2', 
@@ -732,6 +733,7 @@ const deliveryNote = [
                 qtyRequested: '100000', 
                 qtyConfirm: '', 
                 qtyDelivered: '90000', 
+                qtyReceived: '1200', 
                 qtyMinus: '10000' },
         ]
     },
