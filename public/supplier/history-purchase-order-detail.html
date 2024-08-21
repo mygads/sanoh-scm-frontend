@@ -37,7 +37,7 @@
             
             <!-- Purchase Order -->
             <li>
-              <a href="purchase-order.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 ">
+              <a href="purchase-order.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
                 <img loading="lazy" src="../assets/icon_po_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-[0.89] fill-blue-950" />
                 <span class="self-stretch my-auto text-sm 2xl:text-xl">Purchase Order</span>
               </a>
@@ -45,16 +45,16 @@
             
             <!-- Delivery Note -->
             <li>
-              <a href="delivery-note.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 active">
-                <img loading="lazy" src="../assets/icon_dn_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square icon-dn-active" />
+              <a href="delivery-note.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+                <img loading="lazy" src="../assets/icon_dn_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
                 <span class="self-stretch my-auto text-sm 2xl:text-xl">Delivery Note</span>
               </a>
             </li>
             
             <!-- History Purchase Order -->
             <li>
-              <a href="history-purchase-order.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../assets/icon_history_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
+              <a href="history-purchase-order.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 active">
+                <img loading="lazy" src="../assets/icon_history_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-5 2xl:w-6 aspect-square icon-history-active" />
                 <span class="self-stretch my-auto text-sm 2xl:text-xl">History Purchase Order</span>
               </a>
             </li>
@@ -67,13 +67,13 @@
               </a>
             </li>
             
-            <!-- Performance Report -->
+            <!-- Listing Report -->
             <li>
-              <a href="performance-report.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../assets/icon_performance_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Performance Report</span>
+              <a href="listing-report" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+                <img loading="lazy" src="../assets/icon_listing_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
+                <span class="self-stretch my-auto text-sm 2xl:text-xl">Listing Report</span>
               </a>
-            </li>        
+            </li>
           </ul>
 
           <!-- User and Logout Section at the Bottom -->
@@ -97,28 +97,58 @@
       <!-- Main Content -->
       <main class="flex flex-col w-[80%] mb-[100%] mt-[3%] mx-auto px-6 2xl:px-10">
 
-        <section class="flex flex-col self-stretch py-px my-auto w-full max-md:mt-10 max-md:max-w-full">
+        <section class="flex flex-col self-stretch py-px my-auto w-full ">
 
-          <header class="flex items-center self-start text-2xl font-semibold text-black">
-            <h1 class="self-stretch my-auto text-[80%] 2xl:text-[120%]">Delivery Note (DN)</h1>
+          <header class="flex gap-3 items-center self-start text-2xl font-semibold text-black">
+            <a href="history-purchase-order.html">
+                <img loading="lazy" src="../assets/icon_back.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-5 2xl:w-7 cursor-pointer pointer-events-auto aspect-square" />
+            </a>
+            
+            <h1 class="self-stretch my-auto text-[80%] 2xl:text-[120%]">History Purchase Order (PO) Detail</h1>
           </header>
 
           <div class="flex flex-col mt-4 2xl:mt-6 w-full 2xl:text-base text-xs font-medium">
 
-            <div class="flex flex-wrap gap-10 justify-end items-center w-full">
+            <div class="flex flex-wrap gap-10 justify-between items-center w-full">
+
+              <!-- No PO -->
+              <div class="flex gap-3 2xl:gap-6 items-center self-stretch my-auto text-black min-w-[10%]">
+                <div class="self-stretch my-auto ">No. PO</div>
+                <div id="poNumber" class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap rounded bg-stone-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
+              </div>
 
               <!-- Search Bar -->
               <div class="flex flex-wrap items-center self-stretch my-auto  text-neutral-500">
                 <div class="flex items-center px-4 2xl:px-6 py-2 2xl:py-4 bg-neutral-100 rounded w-full ml-auto">
-                  <input id="search-input" type="text" placeholder="Search no delivery note" class="flex-1 bg-neutral-100 outline-none 2xl:text-base">
+                  <input id="search-input" type="text" placeholder="Search part number or name" class="flex-1 bg-neutral-100 outline-none 2xl:text-base">
                   <img src="../assets/icon_search.svg" alt="Search Icon" class="w-4 2xl:w-5 h-4 2xl:h-5 ml-3">
                 </div>
               </div>
-          </div>
 
+            </div>
+
+            <div class="flex flex-wrap gap-[10%] justify-between items-center mt-4 2xl:mt-6 w-full">
+              
+              <!-- Note -->
+              <div class="flex gap-6 2xl:gap-10 items-center self-stretch my-auto text-black min-w-[10%]">
+                <div class="self-stretch my-auto ">Note</div>
+                <div id="noteInput" type="text" class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap ounded border border-solid border-neutral-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
+              </div>
+              
+              <div class="flex gap-3 2xl:gap-6 items-center self-stretch my-auto text-white 2xl:min-w-[240px] text-[10px] 2xl:text-lg">
+                <a href="export-csv.html" class="flex gap-2 2xl:gap-4 items-center self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5">
+                  <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-5 aspect-square" />
+                  <span class="flex-1 shrink self-stretch my-auto ">Export CSV</span>
+                </a>
+                
+              </div>
+            </div>
+
+          </div>
+          
         </section>
 
-        <!-- Table -->
+        <!-- table -->
         <div class="flex flex-col mt-5 2xl:mt-8">
           <div class="relative overflow-x-auto shadow-md rounded-lg border border-gray-300">
 
@@ -126,35 +156,39 @@
               <thead class="text-[14px] 2xl:text-[20px] text-gray-700">
                 <tr>
                   <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(0)">
-                    No. DN
+                    No
                     <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
                   <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(1)">
-                    No. PO
+                    Part Number
                     <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
                   <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(2)">
-                    Plan DN Date
+                    Part Name
                     <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
                   <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(3)">
-                    Status DN
+                    QTY PO
                     <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
-                  </th>    
+                  </th>
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(4)">
+                    QTY Delivered
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <span class="sort-indicator"></span>
+                  </th>
                 </tr>
               </thead>
-              <tbody id="table-body">
+              <tbody id="table-body-detail">
                 <!-- Data rows will be inserted here by JavaScript -->
               </tbody>
             </table>
           </div>
         </div>
-
-        
+  
         <!-- Pagination -->
         <div class="flex justify-end my-6">
           <div class="flex gap-2 2xl:gap-4 items-center pagination">
@@ -162,97 +196,75 @@
           </div>
         </div>
       </main>
-
     </div>
   </section>
+
 
 </body>
 
 <script src="../script.js"></script>
 <script src="script.js"></script>
+
 <!-- Add the script to handle table sorting and pagination -->
 <script>
 
-  
   let rowsPerPage = 10;
   let currentPage = 1;
-  let filteredData = deliveryNote; // Initialize filteredData with all data
-  let pendingResponseIndex = null;
-  let pendingResponseAction = '';
+  let filteredData = [];
+  
 
+  // Adjust rows per page based on screen size
+  adjustRowsPerPage(); 
+
+  const params = new URLSearchParams(window.location.search);
+  const noPO = params.get('noPO');
+
+  if (noPO) {
+      const po = historyPurchaseOrder.find(po => po.noPO === noPO);
+      if (po) {
+        document.getElementById('poNumber').textContent = po.noPO;
+        document.getElementById('noteInput').textContent = po.note;
+        filteredData = po.details;
+        displayPODetails(po.details);
+        updatePagination();
+      } else {
+        console.error('Data PO tidak ditemukan dalam array data.');
+      }
+  } else {
+      console.error('Parameter noPO tidak ditemukan dalam URL.');
+  }
+  // let filteredData = details; // Initialize filteredData with all data
   // Adjust rows per page based on screen size
   function adjustRowsPerPage() {
     if (window.innerWidth <= 1280) {
-        rowsPerPage = 6;
+        rowsPerPage = 7;
       } else if (window.innerWidth <= 1600) {
-        rowsPerPage = 8;
+        rowsPerPage = 9;
       } else {
         rowsPerPage = 10;
       }
   }
 
-  function displayTableData(page) {
-    const tableBody = document.getElementById('table-body');
+  function displayPODetails(details) {
+    const tableBody = document.getElementById('table-body-detail');
     tableBody.innerHTML = '';
 
-    const start = (page - 1) * rowsPerPage;
+    const start = (currentPage - 1) * rowsPerPage;
     const end = start + rowsPerPage;
-    const paginatedData = filteredData.slice(start, end);
+    const paginatedData = details.slice(start, end);
 
     paginatedData.forEach((row, index) => {
       const tableRow = document.createElement('tr');
       tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
       tableRow.innerHTML = `
-        <td class="px-2 py-4 text-center font-medium text-gray-900">
-            <a href="delivery-note-detail.html?noDN=${row.noDN}" class="text-blue-600 underline">${row.noDN}</a>
-        </td>
-        <td class="px-2 py-4 text-center font-medium text-gray-900">
-            <a href="purchase-order-detail.html?noPO=${row.noPO}" class="text-blue-600 underline">${row.noPO}</a>
-        </td>
-        <td class="px-2 py-4 text-center">${row.planDNDate}</td>
-        <td class="px-2 py-4 text-center">${row.statusDN}</td>
+        <td class="px-2 py-4 text-center font-medium text-gray-900">${row.no}</td>
+        <td class="px-2 py-4 text-center">${row.partNumber}</td>
+        <td class="px-2 py-4 text-center">${row.partName}</td>
+        <td class="px-2 py-4 text-center">${row.QTY}</td>
+        <td class="px-2 py-4 text-center">${row.QTYDelivered}</td>
       `;
       tableBody.appendChild(tableRow);
     });
-  }
-
-
-  function searchTable() {
-    const searchInput = document.getElementById('search-input').value.toLowerCase();
-    filteredData = deliveryNote.filter(row => row.noDN.toLowerCase().includes(searchInput));
-    currentPage = 1;
-    displayTableData(currentPage);
-    updatePagination();
-  }
-
-  // Function to sort table based on column index
-  function sortTable(columnIndex) {
-    const table = document.querySelector('table');
-    const tbody = table.querySelector('tbody');
-    const rows = Array.from(tbody.querySelectorAll('tr'));
-    const isAscending = table.querySelectorAll('th')[columnIndex].classList.toggle('asc');
-    table.querySelectorAll('th').forEach((th, index) => {
-      if (index !== columnIndex) th.classList.remove('asc', 'desc');
-    });
-
-    rows.sort((a, b) => {
-      const cellA = a.querySelectorAll('td')[columnIndex].textContent.trim();
-      const cellB = b.querySelectorAll('td')[columnIndex].textContent.trim();
-
-
-      if (columnIndex === 3) { // For Revision Date, handle date sorting
-        return new Date(cellA) - new Date(cellB);
-      }
-
-      return cellA.localeCompare(cellB, undefined, { numeric: true, sensitivity: 'base' });
-    });
-
-    if (!isAscending) {
-      rows.reverse();
-    }
-
-    tbody.innerHTML = '';
-    tbody.append(...rows);
   }
 
   function updatePagination() {
@@ -274,7 +286,7 @@
     prevButton.addEventListener('click', () => {
         if (currentPage > 1) {
         currentPage--;
-        displayTableData(currentPage);
+        displayPODetails(filteredData);
         updatePagination();
         }
     });
@@ -320,7 +332,7 @@
         pageButton.textContent = number;
         pageButton.addEventListener('click', () => {
             currentPage = number;
-            displayTableData(currentPage);
+            displayPODetails(filteredData);
             updatePagination();
         });
         }
@@ -339,7 +351,7 @@
     nextButton.addEventListener('click', () => {
         if (currentPage < totalPages) {
         currentPage++;
-        displayTableData(currentPage);
+        displayPODetails(filteredData);
         updatePagination();
         }
     });
@@ -350,14 +362,55 @@
     adjustRowsPerPage(); // Set rows per page based on initial screen size
     window.addEventListener('resize', () => {
       adjustRowsPerPage(); // Adjust rows per page on screen resize
-      displayTableData(currentPage); // Re-render table data
+      displayPODetails(filteredData); // Re-render table data
       updatePagination(); // Re-render pagination
     });
 
     document.getElementById('search-input').addEventListener('input', searchTable);
-    displayTableData(currentPage);
+
+    displayPODetails(filteredData);
     updatePagination();
   });
+
+  // Function to sort table based on column index
+  function sortTable(columnIndex) {
+    const table = document.querySelector('table');
+    const tbody = table.querySelector('tbody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    const isAscending = table.querySelectorAll('th')[columnIndex].classList.toggle('asc');
+    table.querySelectorAll('th').forEach((th, index) => {
+      if (index !== columnIndex) th.classList.remove('asc', 'desc');
+    });
+
+    rows.sort((a, b) => {
+      const cellA = a.querySelectorAll('td')[columnIndex].textContent.trim();
+      const cellB = b.querySelectorAll('td')[columnIndex].textContent.trim();
+
+      return cellA.localeCompare(cellB, undefined, { numeric: true, sensitivity: 'base' });
+    });
+
+    if (!isAscending) {
+      rows.reverse();
+    }
+
+    tbody.innerHTML = '';
+    tbody.append(...rows);
+  }
+
+  // Function to handle search
+  function searchTable() {
+    const searchInput = document.getElementById('search-input').value.toLowerCase();
+    filteredData = historyPurchaseOrder.find(po => po.noPO === noPO).details.filter(row => 
+      row.partNumber.toLowerCase().includes(searchInput) || 
+      row.partName.toLowerCase().includes(searchInput)
+    );
+    currentPage = 1;
+    displayPODetails(filteredData);
+    updatePagination();
+  }
+
 </script>
+
+
 
 </html>
