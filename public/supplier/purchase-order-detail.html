@@ -213,7 +213,6 @@
 
   let rowsPerPage = 10;
   let currentPage = 1;
-  let filteredData = [];
   
 
   // Adjust rows per page based on screen size
@@ -223,12 +222,12 @@
   const noPO = params.get('noPO');
 
   if (noPO) {
-      const po = purchaseOrder.find(po => po.noPO === noPO);
+      const po = purchaseOrderDetail.find(po => po.noPO === noPO);
       if (po) {
         document.getElementById('poNumber').textContent = po.noPO;
         document.getElementById('noteInput').textContent = po.note;
-        filteredData = po.details;
-        displayPODetails(po.details);
+        filteredDataDetail = po.filteredDataDetail;
+        displayPODetails(po.filteredDataDetail);
         updatePagination();
       } else {
         console.error('Data PO tidak ditemukan dalam array data.');
@@ -236,7 +235,7 @@
   } else {
       console.error('Parameter noPO tidak ditemukan dalam URL.');
   }
-  // let filteredData = details; // Initialize filteredData with all data
+  // let filteredDataDetail = details; // Initialize filteredDataDetail with all data
   // Adjust rows per page based on screen size
   function adjustRowsPerPage() {
     if (window.innerWidth <= 1280) {
@@ -274,7 +273,7 @@
     const paginationContainer = document.querySelector('.pagination');
     paginationContainer.innerHTML = '';
 
-    const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+    const totalPages = Math.ceil(filteredDataDetail.length / rowsPerPage);
     const maxPageNumbersToShow = 4; // Number of page buttons to display (including current)
 
     // Previous button
@@ -289,7 +288,7 @@
     prevButton.addEventListener('click', () => {
         if (currentPage > 1) {
         currentPage--;
-        displayPODetails(filteredData);
+        displayPODetails(filteredDataDetail);
         updatePagination();
         }
     });
@@ -335,7 +334,7 @@
         pageButton.textContent = number;
         pageButton.addEventListener('click', () => {
             currentPage = number;
-            displayPODetails(filteredData);
+            displayPODetails(filteredDataDetail);
             updatePagination();
         });
         }
@@ -354,7 +353,7 @@
     nextButton.addEventListener('click', () => {
         if (currentPage < totalPages) {
         currentPage++;
-        displayPODetails(filteredData);
+        displayPODetails(filteredDataDetail);
         updatePagination();
         }
     });
@@ -362,16 +361,17 @@
 }
 
   document.addEventListener('DOMContentLoaded', () => {
+    fetchPurchaseOrdersDetail(); // Fetch the purchase orders when the page loads
     adjustRowsPerPage(); // Set rows per page based on initial screen size
     window.addEventListener('resize', () => {
       adjustRowsPerPage(); // Adjust rows per page on screen resize
-      displayPODetails(filteredData); // Re-render table data
+      displayPODetails(filteredDataDetail); // Re-render table data
       updatePagination(); // Re-render pagination
     });
 
     document.getElementById('search-input').addEventListener('input', searchTable);
 
-    displayPODetails(filteredData);
+    displayPODetails(filteredDataDetail);
     updatePagination();
   });
 
@@ -403,12 +403,12 @@
   // Function to handle search
   function searchTable() {
     const searchInput = document.getElementById('search-input').value.toLowerCase();
-    filteredData = purchaseOrder.find(po => po.noPO === noPO).details.filter(row => 
+    filteredDataDetail = purchaseOrderDetail.find(po => po.noPO === noPO).details.filter(row => 
       row.partNumber.toLowerCase().includes(searchInput) || 
       row.partName.toLowerCase().includes(searchInput)
     );
     currentPage = 1;
-    displayPODetails(filteredData);
+    displayPODetails(filteredDataDetail);
     updatePagination();
   }
 
