@@ -729,10 +729,13 @@ async function fetchPurchaseOrders() {
             status: po.po_status,
             response: po.response,
             note: 'Urgent Delivery',
-            details: [
-                { no: '1', partNumber: 'RL1ST08976487200C000', partName: 'asaasdafaf', UoM: 'PCS', QTY: '12000' },
-                { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL asdasdasasdaO1', UoM: 'PCS', QTY: '12000' },
-            ],
+            details: po.detail.map((detail, index) => ({
+                no: (index + 1).toString(),
+                partNumber: detail.bp_part_no,
+                partName: detail.item_desc_a,
+                UoM: detail.purchase_unit,
+                QTY: detail.po_qty,
+            }))
         }));
 
         // Set filteredData to match purchaseOrder initially
@@ -745,6 +748,88 @@ async function fetchPurchaseOrders() {
         console.error('Error fetching purchase orders:', error);
     }
 }
+
+async function fetchPODetails(po_no) {
+    try {
+        const detailsURL = `http://127.0.0.1:8000/api/indexpodetail/${po_no}`;
+        const response = await fetch(detailsURL);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log(`Details fetched for PO ${po_no}:`, data);
+
+        if (data.success && data.data) {
+            return data.data.map((detail, index) => ({
+                no: (index + 1).toString(),
+                partNumber: detail.bp_part_no,
+                partName: detail.item_desc_a,
+                UoM: detail.purchase_unit,
+                QTY: detail.po_qty,
+            }));
+        } else {
+            console.error('No data found or unexpected format.');
+            return [];
+        }
+    } catch (error) {
+        console.error(`Error fetching details for PO ${po_no}:`, error);
+        return [];
+    }
+}
+
+async function updateResponse(po_no, response) {
+    try {
+        const updateURL = `http://127.0.0.1:8000/api/updatepoheader/${po_no}`; // Ensure this is the correct endpoint
+        const responseBody = JSON.stringify({ response }); // Assuming the endpoint uses { response } format
+
+        console.log(`Sending request to ${updateURL} with body: ${responseBody}`);
+
+        const updateResponse = await fetch(updateURL, {
+            method: 'PUT', // or 'POST', depending on your API design
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: responseBody,
+        });
+
+        console.log(`Response status: ${updateResponse.status}`);
+
+        if (!updateResponse.ok) {
+            throw new Error(`HTTP error! status: ${updateResponse.status}`);
+        }
+
+        const result = await updateResponse.json();
+        console.log(`Response updated for PO ${po_no}:`, result);
+
+        if (result.success) {
+            updatePOStatusInUI(po_no, response);
+        } else {
+            console.error('Failed to update response. API returned:', result);
+        }
+    } catch (error) {
+        console.error('Error updating response:', error);
+    }
+}
+
+function updatePOStatusInUI(po_no, response) {
+    const poIndex = filteredData.findIndex(po => po.noPO === po_no);
+    
+    if (poIndex !== -1) {
+        filteredData[poIndex].response = response;
+        displayTableData(currentPage);
+    } else {
+        console.error('PO not found in filteredData:', po_no);
+    }
+}
+
+function handleResponse(po_no, response) {
+    updateResponse(po_no, response);
+}
+
+// Assuming this is called after the table is rendered
+// setupPONumberClickEvents();
 
 // document.addEventListener('DOMContentLoaded', () => {
 //     fetchPurchaseOrders(); // Fetch the purchase orders when the page loads

@@ -213,7 +213,7 @@
 
   let rowsPerPage = 10;
   let currentPage = 1;
-  let filteredData = [];
+  // let filteredData = [];
   
 
   // Adjust rows per page based on screen size
@@ -223,18 +223,13 @@
   const noPO = params.get('noPO');
 
   if (noPO) {
-      const po = purchaseOrder.find(po => po.noPO === noPO);
-      if (po) {
-        document.getElementById('poNumber').textContent = po.noPO;
-        document.getElementById('noteInput').textContent = po.note;
-        filteredData = po.details;
-        displayPODetails(po.details);
-        updatePagination();
-      } else {
-        console.error('Data PO tidak ditemukan dalam array data.');
-      }
+      fetchPODetails(noPO).then(details => {
+          displayPODetails(details);
+      }).catch(error => {
+          console.error('Error displaying PO details:', error);
+      });
   } else {
-      console.error('Parameter noPO tidak ditemukan dalam URL.');
+      console.error('Parameter noPO not found in URL.');
   }
   // let filteredData = details; // Initialize filteredData with all data
   // Adjust rows per page based on screen size
@@ -252,21 +247,33 @@
     const tableBody = document.getElementById('table-body-detail');
     tableBody.innerHTML = '';
 
+    // Check if the details array is empty
+    if (details.length === 0) {
+        const noDataRow = document.createElement('tr');
+        noDataRow.innerHTML = `
+            <td colspan="5" class="px-2 py-4 text-center font-medium text-gray-500">
+                No details available for this PO.
+            </td>
+        `;
+        tableBody.appendChild(noDataRow);
+        return;
+    }
+
     const start = (currentPage - 1) * rowsPerPage;
     const end = start + rowsPerPage;
     const paginatedData = details.slice(start, end);
 
     paginatedData.forEach((row, index) => {
-      const tableRow = document.createElement('tr');
-      tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
-      tableRow.innerHTML = `
-        <td class="px-2 py-4 text-center font-medium text-gray-900">${row.no}</td>
-        <td class="px-2 py-4 text-center">${row.partNumber}</td>
-        <td class="px-2 py-4 text-center">${row.partName}</td>
-        <td class="px-2 py-4 text-center">${row.UoM}</td>
-        <td class="px-2 py-4 text-center">${row.QTY}</td>
-      `;
-      tableBody.appendChild(tableRow);
+        const tableRow = document.createElement('tr');
+        tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
+        tableRow.innerHTML = `
+            <td class="px-2 py-4 text-center font-medium text-gray-900">${row.no}</td>
+            <td class="px-2 py-4 text-center">${row.partNumber}</td>
+            <td class="px-2 py-4 text-center">${row.partName}</td>
+            <td class="px-2 py-4 text-center">${row.UoM}</td>
+            <td class="px-2 py-4 text-center">${row.QTY}</td>
+        `;
+        tableBody.appendChild(tableRow);
     });
   }
 
