@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Purchase Order</title>
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            width: 210mm;
+            height: 297mm;
+            margin: 20mm auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 0.5px solid #000;
+            box-sizing: border-box;
+            page-break-after: always;
+            position: relative;
+        }
+
+        .header, .footer {
+            margin-bottom: 10px;
+            font-size: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .logo img {
+            width: 300px;
+        }
+
+        .company-info {
+            text-align: center;
+            flex-grow: 1;
+            font-size: 14px;
+        }
+
+        .company-info h3 {
+            margin: 30px;
+            text-decoration: underline;
+            text-align: center;
+            flex-grow: 5;
+            margin-right: 250px;
+        }
+
+        .details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            font-size: 10px;
+            margin-bottom: 0;
+            margin-top: 0;
+            line-height: 1.1;
+        }
+
+        .details-left, .details-right {
+            text-align: left;
+        }
+
+        .details-left div, .details-right .row {
+            margin-bottom: 5px;
+        }
+
+        .details-left strong, .details-right .label {
+            min-width: 15px;
+            display: inline-block;
+            padding-right: 0px;
+        }
+
+        .details-right {
+            display: grid;
+            grid-template-columns: auto auto;
+            justify-content: end;
+            text-align: left;
+        }
+
+        .details-right .row {
+            display: contents;
+            margin-bottom: 2px;
+            line-height: 1;
+        }
+
+        .details-right .label {
+            padding-right: 10px;
+            min-width: 80px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .details-right .value {
+            min-width: 170px;
+            text-align: left;
+            font-weight: bold;
+            line-height: 1.1;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1px;
+            font-size: 10px;
+            table-layout: auto;
+            text-align: center;
+        }
+
+        table, th, td {
+            border: 1px solid #e9e6e6;
+            padding: 4px 6px;
+            word-wrap: break-word;
+            white-space: normal;
+            text-align: center;
+        }
+
+        th {
+            background-color: #ffffff;
+            color: black;
+            font-weight: bold;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        td {
+            text-align: left;
+            vertical-align: middle;
+            background-color: #ffffff;
+            border: 1px solid #e6e1e1;
+        }
+
+        table th:nth-child(1), 
+        table td:nth-child(1) {
+            width: 3%;
+        }
+
+        table th:nth-child(2), 
+        table td:nth-child(2) {
+            width: 3%;
+        }
+
+        table th:nth-child(3), 
+        table td:nth-child(3) {
+            width: 20%;
+        }
+
+        table th:nth-child(4), 
+        table td:nth-child(4) {
+            width: 10%;
+        }
+
+        table th:nth-child(5), 
+        table td:nth-child(5) {
+            width: 5%;
+        }
+
+        table th:nth-child(6), 
+        table td:nth-child(6) {
+            width: 5%;
+        }
+
+        table th:nth-child(7), 
+        table td:nth-child(7) {
+            width: 10%;
+        }
+
+        table th:nth-child(8), 
+        table td:nth-child(8) {
+            width: 10%;
+        }
+
+        .page-info {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 12px;
+            text-align: right;
+        }
+
+        .page-info span {
+            display: inline-block;
+            padding-left: 30px;
+        }
+
+        .summary-row td {
+            border-top: 2px solid #eaeaea;
+            font-weight: bold;
+            min-width: 12px;
+        }
+
+        .summary-label {
+            text-align: right;
+            padding-right: 10px;
+            min-width: 12px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-family: Arial, sans-serif;
+            font-size: 9px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 2px;
+            font-size: 9px;
+        }
+
+        .label {
+            width: 150px; /* Adjust this width for better alignment */
+            text-align: left;
+        }
+
+        .value {
+            text-align: left;
+        }
+
+
+    </style>
+</head>
+<body>
+    <!-- Page 1 -->
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <img src="../assets/logosanoh.svg" alt="Sanoh Logo">
+            </div>
+            <div class="company-info">
+                <h3>Purchase Order</h3>
+            </div>
+            <div class="page-info">
+                <div>Page :<span class="page-number">1</span></div>
+            </div>
+        </div>
+
+        <div class="details">
+            <div class="details-left">
+                <div><strong>To</strong> <span>: <strong id="to-company">PT. DELA CEMARA INDAH</strong></span></div>
+                <div><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong id="to-code">SLSDELA-1</strong></span></div>
+                <div><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong id="to-address">Jl Balak H Saimun RW01 Cibuntu Cibitung</strong></span></div>
+                <br>
+                <div><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Phone Number:</span></div>
+                <div><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fax Number:</span></div>
+                <br>
+                <div><strong>Attn</strong> <span>: <span id="attn">MR. STEPHANSON</span></span></div>
+                <br>
+                <div><span>Please supply the following</span></div>
+                <br>
+            </div>
+
+            <div class="details-right">
+                <div class="row">
+                    <div class="label">P/O NO</div>
+                    <div class="value" id="po-no">: PL2300834</div>
+                </div>
+                <div class="row">
+                    <div class="label">Date</div>
+                    <div class="value" id="date">: 27-March-2023</div>
+                </div>
+                <div class="row">
+                    <div class="label">P/O Type</div>
+                    <div class="value" id="po-type">: PO LOCAL</div>
+                </div>
+                <div class="row">
+                    <div class="label">PR</div>
+                    <div class="value" id="pr">: PP2300337</div>
+                </div>
+                <div class="row">
+                    <div class="label">Planned Receipt</div>
+                    <div class="value" id="planned-receipt">: 03-April-2023</div>
+                </div>
+                <div class="row">
+                    <div class="label">Delivery Terms</div>
+                    <div class="value" id="delivery-terms">:</div>
+                </div>
+                <div class="row">
+                    <div class="label">Currency</div>
+                    <div class="value" id="currency">: IDR</div>
+                </div>
+            </div>
+        </div>
+
+        <table id="purchase-order-table">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Seq</th>
+                    <th>Description <br>Part No.</th>
+                    <th>Delivery Date</th>
+                    <th>Qty</th>
+                    <th>Unit</th>
+                    <th>Unit Price</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Baris data akan dimasukkan di sini -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Page 2 -->
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <img src="./logo_sanoh_address.png" alt="Sanoh Logo">
+            </div>
+            <div class="company-info">
+                <h3>Purchase Order</h3>
+            </div>
+            <div class="page-info">
+                <div>Page :<span class="page-number">2</span></div>
+            </div>
+        </div>
+
+        <div class="details">
+            <div class="details-left">
+                <div><strong>To</strong> <span>: <strong id="to-company-2">PT. DELA CEMARA INDAH</strong></span></div>
+                <div><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong id="to-code-2">SLSDELA-1</strong></span></div>
+                <div><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong id="to-address-2">Jl Balak H Saimun RW01 Cibuntu Cibitung</strong></span></div>
+                <br>
+                <div><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Phone Number:</span></div>
+                <div><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fax Number:</span></div>
+                <br>
+                <div><strong>Attn</strong> <span>: <span id="attn-2">MR. STEPHANSON</span></span></div>
+                <br>
+                <div><span>Please supply the following</span></div>
+                <br>
+            </div>
+
+            <div class="details-right">
+                <div class="row">
+                    <div class="label">P/O NO</div>
+                    <div class="value" id="po-no-2">: PL2300834</div>
+                </div>
+                <div class="row">
+                    <div class="label">Date</div>
+                    <div class="value" id="date-2">: 27-March-2023</div>
+                </div>
+                <div class="row">
+                    <div class="label">P/O Type</div>
+                    <div class="value" id="po-type-2">: PO LOCAL</div>
+                </div>
+                <div class="row">
+                    <div class="label">PR</div>
+                    <div class="value" id="pr-2">: PP2300337</div>
+                </div>
+                <div class="row">
+                    <div class="label">Planned Receipt</div>
+                    <div class="value" id="planned-receipt-2">: 03-April-2023</div>
+                </div>
+                <div class="row">
+                    <div class="label">Delivery Terms</div>
+                    <div class="value" id="delivery-terms-2">:</div>
+                </div>
+                <div class="row">
+                    <div class="label">Currency</div>
+                    <div class="value" id="currency-2">: IDR</div>
+                </div>
+            </div>
+        </div>
+
+        <table id="purchase-order-table-2">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Seq</th>
+                    <th>Description <br>Part No.</th>
+                    <th>Delivery Date</th>
+                    <th>Qty</th>
+                    <th>Unit</th>
+                    <th>Unit Price</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Baris data akan dimasukkan di sini -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Dummy data untuk purchase order
+        const dummyData = [
+            { no: 1, seq: 1, description: '15144-E0030 & 15144-E0040 SUPPORT, OIL STRAINER', deliveryDate: '03-April-2023', qty: 450, unit: 'PCS', unitPrice: '3,614.00', amount: '1,626,300.00' },
+            { no: 2, seq: 2, description: '15832-52500-B1 BRACKET NO 1', deliveryDate: '03-April-2023', qty: 2,700, unit: 'PCS', unitPrice: '993.00', amount: '2,681,100.00' },
+            // Tambahkan data dummy lainnya di sini
+        ];
+
+        // Fungsi untuk mengisi tabel dengan data
+        function populateTable(tableId, data) {
+            const tableBody = document.querySelector(`#${tableId} tbody`);
+            tableBody.innerHTML = ''; // Clear existing rows
+
+            data.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.no}</td>
+                    <td>${item.seq}</td>
+                    <td>${item.description}</td>
+                    <td>${item.deliveryDate}</td>
+                    <td>${item.qty}</td>
+                    <td>${item.unit}</td>
+                    <td>${item.unitPrice}</td>
+                    <td>${item.amount}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Mengisi tabel di halaman 1 dan halaman 2 dengan data dummy
+        populateTable('purchase-order-table', dummyData);
+        populateTable('purchase-order-table-2', dummyData); // Asumsi data untuk kedua tabel sama
+    </script>
+</body>
+
+</html>
