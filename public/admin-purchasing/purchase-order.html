@@ -200,17 +200,19 @@
 <script>
   let rowsPerPage = 12;
   let currentPage = 1;
-  let filteredData = purchaseOrder; // Initialize filteredData with all data
+  // let filteredData = purchaseOrder; // Initialize filteredData with all data
+  let pendingResponseIndex = null;
+  let pendingResponseAction = '';
 
   // Adjust rows per page based on screen size
   function adjustRowsPerPage() {
     if (window.innerWidth <= 1280) {
-      rowsPerPage = 8;
-    } else if (window.innerWidth <= 1600) {
-      rowsPerPage = 10;
-    } else {
-      rowsPerPage = 12;
-    }
+        rowsPerPage = 8;
+      } else if (window.innerWidth <= 1600) {
+        rowsPerPage = 10;
+      } else {
+        rowsPerPage = 12;
+      }
   }
 
   function displayTableData(page) {
@@ -222,35 +224,45 @@
     const paginatedData = filteredData.slice(start, end);
 
     paginatedData.forEach((row, index) => {
-      const tableRow = document.createElement('tr');
-      tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
-      tableRow.innerHTML = `
-        <td class="px-2 py-4 text-center font-medium text-gray-900">
-            <a href="purchase-order-detail.html?noPO=${row.noPO}" class="text-blue-600 underline">${row.noPO}</a>
-        </td>
-        <td class="px-2 py-4 text-center">${row.poDate}</td>
-        <td class="px-2 py-4 text-center">${row.planDelivery}</td>
-        <td class="px-2 py-4 text-center">${row.poRevision}</td>
-        <td class="px-2 py-4 text-center">${row.revisionDate}</td>
-        <td class="px-2 py-4 text-center">${row.status}</td>
-        <td class="text-center ${row.response === 'Accepted' ? 'bg-green-400' : row.response === 'Declined' ? 'bg-red-500' : ''}">
-          ${row.response ? `
-            <span class="${row.response === 'Accepted' ? 'text-black' : 'text-white'}">${row.response}</span>` : ''}
-        </td>
-      `;
-      tableBody.appendChild(tableRow);
+        const tableRow = document.createElement('tr');
+        tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
+        tableRow.innerHTML = `
+            <td class="px-2 py-4 text-center font-medium text-gray-900">
+                <a href="purchase-order-detail.html?noPO=${row.noPO}" class="text-blue-600 underline">${row.noPO}</a>
+            </td>
+            <td class="px-2 py-4 text-center">${row.poDate}</td>
+            <td class="px-2 py-4 text-center">${row.planDelivery}</td>
+            <td class="px-2 py-4 text-center">${row.poRevision}</td>
+            <td class="px-2 py-4 text-center">${row.revisionDate}</td>
+            <td class="px-2 py-4 text-center">${row.status}</td>
+            <td class="text-center ${row.response === 'Accepted' ? 'bg-green-400' : row.response === 'Declined' ? 'bg-red-500' : ''}">
+                <div class="flex gap-2 justify-center">
+                    ${row.response ? `
+                        <span class="${row.response === 'Accepted' ? 'text-black' : 'text-white'}">${row.response}</span>` : `
+                        <button class="px-3 py-2 bg-green-400 text-black rounded" onclick="handleResponse('${row.noPO}', 'Accepted')">Accept</button>
+                        <button class="px-3 py-2 bg-red-500 text-white rounded" onclick="handleResponse('${row.noPO}', 'Declined')">Decline</button>
+                    `}
+                </div>
+            </td>
+        `;
+        tableBody.appendChild(tableRow);
     });
   }
 
-  function updateResponse(index, action) {
-    purchaseOrder[index].response = action;
-    displayTableData(currentPage);
-    updatePagination();
+  function showConfirmation(index, action) {
+    pendingResponseIndex = index;
+    pendingResponseAction = action;
+    document.getElementById('confirm-action').textContent = action.toLowerCase();
+    document.getElementById('confirmation-modal').classList.remove('hidden');
+  }
+
+  function hideConfirmation() {
+    document.getElementById('confirmation-modal').classList.add('hidden');
   }
 
   function searchTable() {
     const searchInput = document.getElementById('search-input').value.toLowerCase();
-    filteredData = data.filter(row => row.noPO.toLowerCase().includes(searchInput));
+    filteredData = purchaseOrder.filter(row => row.noPO.toLowerCase().includes(searchInput));
     currentPage = 1;
     displayTableData(currentPage);
     updatePagination();
@@ -270,7 +282,13 @@
       const cellA = a.querySelectorAll('td')[columnIndex].textContent.trim();
       const cellB = b.querySelectorAll('td')[columnIndex].textContent.trim();
 
-      if (columnIndex === 2 || columnIndex === 3 || columnIndex === 5) {
+      if (columnIndex === 2) { // For Revision Date, handle date sorting
+        return new Date(cellA) - new Date(cellB);
+      }
+      if (columnIndex === 3) { // For Revision Date, handle date sorting
+        return new Date(cellA) - new Date(cellB);
+      }
+      if (columnIndex === 5) { // For Revision Date, handle date sorting
         return new Date(cellA) - new Date(cellB);
       }
 
@@ -290,7 +308,7 @@
     paginationContainer.innerHTML = '';
 
     const totalPages = Math.ceil(filteredData.length / rowsPerPage);
-    const maxPageNumbersToShow = 4;
+    const maxPageNumbersToShow = 4; // Number of page buttons to display (including current)
 
     // Previous button
     const prevButton = document.createElement('button');
@@ -302,87 +320,93 @@
     `;
     prevButton.disabled = currentPage === 1;
     prevButton.addEventListener('click', () => {
-      if (currentPage > 1) {
+        if (currentPage > 1) {
         currentPage--;
         displayTableData(currentPage);
         updatePagination();
-      }
+        }
     });
     paginationContainer.appendChild(prevButton);
 
     // Calculate page numbers to show
     const pageNumbers = [];
     if (totalPages <= maxPageNumbersToShow) {
-      for (let i = 1; i <= totalPages; i++) {
+        // If total pages is less than or equal to maxPageNumbersToShow, show all page numbers
+        for (let i = 1; i <= totalPages; i++) {
         pageNumbers.push(i);
-      }
+        }
     } else {
-      pageNumbers.push(1);
+        // Otherwise, calculate which page numbers to show
+        pageNumbers.push(1); // Always show the first page
 
-      const startPage = Math.max(2, currentPage - 1);
-      const endPage = Math.min(totalPages - 1, currentPage + 1);
+        const startPage = Math.max(2, currentPage - 1);
+        const endPage = Math.min(totalPages - 1, currentPage + 1);
 
-      if (startPage > 2) {
+        if (startPage > 2) {
         pageNumbers.push('...');
-      }
+        }
 
-      for (let i = startPage; i <= endPage; i++) {
+        for (let i = startPage; i <= endPage; i++) {
         pageNumbers.push(i);
-      }
+        }
 
-      if (endPage < totalPages - 1) {
+        if (endPage < totalPages - 1) {
         pageNumbers.push('...');
-      }
+        }
 
-      pageNumbers.push(totalPages);
+        pageNumbers.push(totalPages); // Always show the last page
     }
 
     // Page numbers buttons
     pageNumbers.forEach(number => {
-      const pageButton = document.createElement('button');
-      if (number === '...') {
+        const pageButton = document.createElement('button');
+        if (number === '...') {
         pageButton.className = 'px-4 py-2 2xl:px-6 2xl:py-4 text-gray-900 bg-gray-200 rounded-md cursor-default';
         pageButton.textContent = '...';
-      } else {
+        } else {
         pageButton.className = `px-4 py-2 2xl:px-6 2xl:py-4 ${number === currentPage ? 'bg-blue-900 text-white' : 'bg-gray-200 text-gray-900'} rounded-md hover:bg-gray-300`;
         pageButton.textContent = number;
         pageButton.addEventListener('click', () => {
-          currentPage = number;
-          displayTableData(currentPage);
-          updatePagination();
+            currentPage = number;
+            displayTableData(currentPage);
+            updatePagination();
         });
-      }
-      paginationContainer.appendChild(pageButton);
+        }
+        paginationContainer.appendChild(pageButton);
     });
 
     // Next button
     const nextButton = document.createElement('button');
-    nextButton.className = 'px-3 py-3 2xl:px-4 2xl:py-4 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
+    nextButton.className = '2xl:px-4 2xl:py-4 px-3 py-3 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
     nextButton.innerHTML = `
         <svg class="2xl:w-4 2xl:h-4 w-3 h-3 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
-        <path d="M1.234 15.434a2 2 0 0 0 2.18-1.414L9 9.414a2 2 0 0 0 0-2.828L3.414.586A2 2 0 0 0 1.234 2.414v11.172z" />
+        <path d="M1.234 15.434A2 2 0 0 0 3.414 15L9 9.414a2 2 0 0 0 0-2.828L3.414 1A2 2 0 0 0 1 2.414v11.172a2 2 0 0 0 1.234 1.848Z" />
         </svg>
     `;
     nextButton.disabled = currentPage === totalPages;
     nextButton.addEventListener('click', () => {
-      if (currentPage < totalPages) {
+        if (currentPage < totalPages) {
         currentPage++;
         displayTableData(currentPage);
         updatePagination();
-      }
+        }
     });
     paginationContainer.appendChild(nextButton);
-  }
+}
 
-  // Event listeners
-  document.getElementById('search-input').addEventListener('input', searchTable);
-  window.addEventListener('resize', () => {
-    adjustRowsPerPage();
+  document.addEventListener('DOMContentLoaded', () => {
+    fetchPurchaseOrders(); // Fetch the purchase orders when the page loads
+    adjustRowsPerPage(); // Set rows per page based on initial screen size
+    window.addEventListener('resize', () => {
+      adjustRowsPerPage(); // Adjust rows per page on screen resize
+      displayTableData(currentPage); // Re-render table data
+      updatePagination(); // Re-render pagination
+    });
+
+    document.getElementById('search-input').addEventListener('input', searchTable);
     displayTableData(currentPage);
+    updatePagination();
   });
-  adjustRowsPerPage();
-  displayTableData(currentPage);
-  updatePagination();
 </script>
 
 </html>

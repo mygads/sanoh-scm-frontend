@@ -176,7 +176,7 @@
   
   let rowsPerPage = 10;
   let currentPage = 1;
-  let filteredData = deliveryNote; // Initialize filteredData with all data
+  // let filteredData = deliveryNote; // Initialize filteredData with all data
   let pendingResponseIndex = null;
   let pendingResponseAction = '';
 
@@ -197,7 +197,7 @@
 
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
-    const paginatedData = filteredData.slice(start, end);
+    const paginatedData = filteredDNData.slice(start, end);
 
     paginatedData.forEach((row, index) => {
       const tableRow = document.createElement('tr');

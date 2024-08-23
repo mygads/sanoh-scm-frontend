@@ -253,71 +253,87 @@
 <!-- Add the script to handle table sorting and pagination -->
 <script>
 
-  let rowsPerPage = 10;
-  let currentPage = 1;
-  let filteredData = [];
-  
+let rowsPerPage = 10;
+let currentPage = 1;
+let filteredData = [];
 
-  // Adjust rows per page based on screen size
-  adjustRowsPerPage(); 
-
-  const params = new URLSearchParams(window.location.search);
-  const noDN = params.get('noDN');
-
-  if (noDN) {
-      const dn = deliveryNote.find(dn => dn.noDN === noDN);
-      if (dn) {
-        document.getElementById('dnNumber').textContent = dn.noDN;
-        document.getElementById('poNumber').textContent = dn.noPO;
-        filteredData = dn.details;
-        displayDNDetails(dn.details);
-        updatePagination();
-      } else {
-        console.error('Data DN tidak ditemukan dalam array data.');
-      }
-  } else {
-      console.error('Parameter noDN tidak ditemukan dalam URL.');
-  }
-
-  function adjustRowsPerPage() {
+// Adjust rows per page based on screen size
+function adjustRowsPerPage() {
     if (window.innerWidth <= 1280) {
         rowsPerPage = 7;
-      } else if (window.innerWidth <= 1600) {
+    } else if (window.innerWidth <= 1600) {
         rowsPerPage = 9;
-      } else {
+    } else {
         rowsPerPage = 10;
-      }
-  }
+    }
+    displayDNDetails(filteredData); // Refresh the table display after adjusting
+}
 
-  function displayDNDetails(details) {
+// Display DN details in the table
+function displayDNDetails(details) {
     const tableBody = document.getElementById('table-body-detail');
     tableBody.innerHTML = '';
+
+    if (details.length === 0) {
+        // Handle empty data case
+        tableBody.innerHTML = '<tr><td colspan="10" class="text-center py-4">No details available</td></tr>';
+        return;
+    }
 
     const start = (currentPage - 1) * rowsPerPage;
     const end = start + rowsPerPage;
     const paginatedData = details.slice(start, end);
 
-    paginatedData.forEach((row, index) => {
-      const tableRow = document.createElement('tr');
-      tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
-      tableRow.innerHTML = `
-        <td class="px-2 py-4 text-center font-medium text-gray-900">${row.no}</td>
-        <td class="px-2 py-4 text-center">${row.partNumber}</td>
-        <td class="px-2 py-4 text-center">${row.partName}</td>
-        <td class="px-2 py-4 text-center">${row.UoM}</td>
-        <td class="px-2 py-4 text-center">${row.QTY}</td>
-        <td class="px-2 py-4 text-center">${row.qtyLabel}</td>
-        <td class="px-2 py-4 text-center">${row.qtyRequested}</td>
-        <td class="px-2 py-4 text-center">
-          <input type="text" class="qty-confirm-input border border-gray-300 rounded px-2 py-1 text-center w-full ${row.qtyConfirm ? 'input-enabled' : ''}" value="${row.qtyConfirm || '-'}" disabled>
-        </td>
-        <td class="px-2 py-4 text-center">${row.qtyDelivered}</td>
-        <td class="px-2 py-4 text-center">${row.qtyMinus}</td>
-      `;
-      tableBody.appendChild(tableRow);
+    paginatedData.forEach((row) => {
+        const tableRow = document.createElement('tr');
+        tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
+        tableRow.innerHTML = `
+            <td class="px-2 py-4 text-center font-medium text-gray-900">${row.no}</td>
+            <td class="px-2 py-4 text-center">${row.partNumber}</td>
+            <td class="px-2 py-4 text-center">${row.partName}</td>
+            <td class="px-2 py-4 text-center">${row.UoM}</td>
+            <td class="px-2 py-4 text-center">${row.QTY}</td>
+            <td class="px-2 py-4 text-center">${row.qtyLabel}</td>
+            <td class="px-2 py-4 text-center">${row.qtyRequested}</td>
+            <td class="px-2 py-4 text-center">
+                <input type="text" class="qty-confirm-input border border-gray-300 rounded px-2 py-1 text-center w-full ${row.qtyConfirm ? 'input-enabled' : ''}" value="${row.qtyConfirm || '-'}" disabled>
+            </td>
+            <td class="px-2 py-4 text-center">${row.qtyDelivered}</td>
+            <td class="px-2 py-4 text-center">${row.qtyMinus}</td>
+        `;
+        tableBody.appendChild(tableRow);
     });
+
     updateButtonState(); // Update button state after displaying data
-  }
+    updatePagination();  // Ensure pagination is updated after data display
+}
+
+// Fetch and display DN details on page load
+function initializePage() {
+    adjustRowsPerPage(); // Set rows per page based on screen size
+
+    const params = new URLSearchParams(window.location.search);
+    const noDN = params.get('noDN');
+
+    if (noDN) {
+        const dn = deliveryNote.find(dn => dn.noDN === noDN);
+        if (dn) {
+            document.getElementById('dnNumber').textContent = dn.noDN;
+            document.getElementById('poNumber').textContent = dn.noPO;
+            filteredData = dn.details;
+            displayDNDetails(dn.details);
+            updatePagination(); // Ensure pagination is updated after data load
+        } else {
+            console.error('Data DN tidak ditemukan dalam array data.');
+        }
+    } else {
+        console.error('Parameter noDN tidak ditemukan dalam URL.');
+    }
+}
+
+// Call initializePage on page load and resize
+window.addEventListener('load', initializePage);
+window.addEventListener('resize', adjustRowsPerPage);
 
   document.getElementById('confirm-button').addEventListener('click', () => {
     const confirmButton = document.getElementById('confirm-button');

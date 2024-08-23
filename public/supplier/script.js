@@ -122,27 +122,88 @@ function handleResponse(po_no, response) {
     updateResponse(po_no, response);
 }
 
-// Assuming this is called after the table is rendered
-// setupPONumberClickEvents();
+const dnApiURL = 'http://127.0.0.1:8000/api/indexdnheader';
+let deliveryNotes = [];
+let filteredDNData = [];
 
-// document.addEventListener('DOMContentLoaded', () => {
-//     fetchPurchaseOrders(); // Fetch the purchase orders when the page loads
+async function fetchDeliveryNotes() {
+    try {
+        console.log("Fetching DN data...");
+        const response = await fetch(dnApiURL);
 
-//     adjustRowsPerPage(); // Set rows per page based on initial screen size
-//     window.addEventListener('resize', () => {
-//         adjustRowsPerPage(); // Adjust rows per page on screen resize
-//         displayTableData(currentPage); // Re-render table data
-//         updatePagination(); // Re-render pagination
-//     });
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
-//     document.getElementById('search-input').addEventListener('input', searchTable);
-// });
+        const data = await response.json();
+        console.log("DN data fetched:", data);
+
+        deliveryNotes = data.data.map(dn => ({
+            noDN: dn.no_dn.toString(),
+            noPO: dn.po_no,
+            planDNDate: dn.plan_delivery_date,
+            statusDN: dn.status_desc,
+            details: dn.detail.map((detail, index) => ({
+                no: (index + 1).toString(),
+                partNumber: detail.part_no,
+                partName: detail.item_desc_a,
+                UoM: detail.dn_unit,
+                QTY: detail.dn_qty,
+                qtyLabel: detail.dn_snp,
+                qtyRequested: detail.qty_confirm,
+                qtyDelivered: detail.receipt_qty,
+                qtyReceived: detail.receipt_qty,
+                qtyMinus: (detail.dn_qty - detail.receipt_qty).toString(), // Adjust as per your logic
+            }))
+        }));
+
+        // Set filteredDNData to match deliveryNotes initially
+        filteredDNData = deliveryNotes;
+
+        // Call functions to display DN data and setup pagination (implement these functions similarly to PO if not already done)
+        displayDNTableData(1);
+        updateDNPagination();
+    } catch (error) {
+        console.error('Error fetching delivery notes:', error);
+    }
+}
+
+async function fetchDNDetails(no_dn) {
+    try {
+        const detailsURL = `http://127.0.0.1:8000/api/indexdndetail/${no_dn}`;
+        const response = await fetch(detailsURL);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log(`Details fetched for DN ${no_dn}:`, data);
+
+        if (data.success && data.data) {
+            return data.data.map((detail, index) => ({
+                no: (index + 1).toString(),
+                partNumber: detail.part_no,
+                partName: detail.item_desc_a,
+                UoM: detail.dn_unit,
+                SNP: detail.dn_snp,
+                QTY: detail.dn_qty,
+                qtyConfirm: detail.qty_confirm,
+                receiptQty: detail.receipt_qty
+            }));
+        } else {
+            console.error('No data found or unexpected format.');
+            return [];
+        }
+    } catch (error) {
+        console.error(`Error fetching details for DN ${no_dn}:`, error);
+        return [];
+    }
+}
 
 
 
-
-
-const deliveryNote = [
+/* const deliveryNote = [
     {
         noDN: 'DN001',
         noPO: 'PL2401658',
@@ -610,4 +671,4 @@ const historyDeliveryNote = [
             { no: '2', partNumber: 'RL1ST08914261J00B121', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO18', UoM: 'PCS', QTY: '19000', qtyLabel: '19000', qtyRequested: '19000', qtyConfirm: '19000', qtyDelivered: '18500', qtyMinus: '500' },
         ]
     }
-];
+]; */
