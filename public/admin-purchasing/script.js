@@ -706,3 +706,245 @@ const purchaseOrder = [
       ],
   },
 ];
+
+const historyPurchaseOrder = [
+    {
+        noPO: 'PL2401657',
+        poDate: '1-1-2018',
+        planDelivery: '2024-08-01',
+        poRevision: 'Rev 02',
+        revisionDate: '1-2-2023',
+        status: 'Closed',
+        response: 'Accepted',
+        note: 'Urgent Delivery',
+        details: [
+            { 
+                no: '1',
+                partNumber: 'RL1ST08976487200C000', 
+                partName: 'asaasdafaf', 
+                UoM: 'PCS', 
+                QTY: '12000',
+                QTYDelivered: '12000'
+            },
+            { 
+                no: '2', 
+                partNumber: 'RL1ST08914261J00B101', 
+                partName: 'BRC, OIL asdasdasasdaO1', 
+                UoM: 'PCS', 
+                QTY: '100000',
+                QTYDelivered: '100000'
+            },
+        ],
+    },
+    
+    {
+        noPO: 'PL2401658',
+        poDate: '2-2-2023',
+        planDelivery: '2024-08-01',
+        poRevision: 'Rev 02',
+        revisionDate: '1-2-2023',
+        status: 'Closed',
+        response: '',
+        note: 'Urgent Delivery',
+        details: [
+            { 
+                no: '1',
+                partNumber: 'RL1ST08976487200C000', 
+                partName: 'asaasdafaf', 
+                UoM: 'PCS', 
+                QTY: '12000',
+                QTYDelivered: '12000'
+            },
+            { 
+                no: '2', 
+                partNumber: 'RL1ST08914261J00B101', 
+                partName: 'BRC, OIL asdasdasasdaO1', 
+                UoM: 'PCS', 
+                QTY: '100000',
+                QTYDelivered: '100000'
+            },
+        ],
+    },
+    {
+        noPO: 'PL2401658',
+        poDate: '2-2-2023',
+        planDelivery: '2024-08-01',
+        poRevision: 'Rev 02',
+        revisionDate: '1-2-2023',
+        status: 'Closed',
+        response: '',
+        note: 'Urgent Delivery',
+        details: [
+            { 
+                no: '1',
+                partNumber: 'RL1ST08976487200C000', 
+                partName: 'asaasdafaf', 
+                UoM: 'PCS', 
+                QTY: '12000',
+                QTYDelivered: '12000'
+            },
+            { 
+                no: '2', 
+                partNumber: 'RL1ST08914261J00B101', 
+                partName: 'BRC, OIL asdasdasasdaO1', 
+                UoM: 'PCS', 
+                QTY: '100000',
+                QTYDelivered: '100000'
+            },
+        ],
+    },
+    {
+        noPO: 'PL2401658',
+        poDate: '2-2-2023',
+        planDelivery: '2024-08-01',
+        poRevision: 'Rev 02',
+        revisionDate: '1-2-2023',
+        status: 'Closed',
+        response: '',
+        note: 'Urgent Delivery',
+        details: [
+            { 
+                no: '1',
+                partNumber: 'RL1ST08976487200C000', 
+                partName: 'asaasdafaf', 
+                UoM: 'PCS', 
+                QTY: '12000',
+                QTYDelivered: '12000'
+            },
+            { 
+                no: '2', 
+                partNumber: 'RL1ST08914261J00B101', 
+                partName: 'BRC, OIL asdasdasasdaO1', 
+                UoM: 'PCS', 
+                QTY: '100000',
+                QTYDelivered: '100000'
+            },
+        ],
+    },
+    {
+        noPO: 'PL2401658',
+        poDate: '2-2-2023',
+        planDelivery: '2024-08-01',
+        poRevision: 'Rev 02',
+        revisionDate: '1-2-2023',
+        status: 'Closed',
+        response: '',
+        note: 'Urgent Delivery',
+        details: [
+            { 
+                no: '1',
+                partNumber: 'RL1ST08976487200C000', 
+                partName: 'asaasdafaf', 
+                UoM: 'PCS', 
+                QTY: '12000',
+                QTYDelivered: '12000'
+            },
+            { 
+                no: '2', 
+                partNumber: 'RL1ST08914261J00B101', 
+                partName: 'BRC, OIL asdasdasasdaO1', 
+                UoM: 'PCS', 
+                QTY: '100000',
+                QTYDelivered: '100000'
+            },
+        ],
+    },
+    {
+        noPO: 'PL2401658',
+        poDate: '2-2-2023',
+        planDelivery: '2024-08-01',
+        poRevision: 'Rev 02',
+        revisionDate: '1-2-2023',
+        status: 'Closed',
+        response: '',
+        note: 'Urgent Delivery',
+        details: [
+            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+        ],
+    },
+    {
+        noPO: 'PL2401658',
+        poDate: '2-2-2023',
+        planDelivery: '2024-08-01',
+        poRevision: 'Rev 02',
+        revisionDate: '1-2-2023',
+        status: 'Closed',
+        response: '',
+        note: 'Urgent Delivery',
+        details: [
+            { 
+                no: '1',
+                partNumber: 'RL1ST08976487200C000', 
+                partName: 'asaasdafaf', 
+                UoM: 'PCS', 
+                QTY: '12000',
+                QTYDelivered: '12000'
+            },
+            { 
+                no: '2', 
+                partNumber: 'RL1ST08914261J00B101', 
+                partName: 'BRC, OIL asdasdasasdaO1', 
+                UoM: 'PCS', 
+                QTY: '100000',
+                QTYDelivered: '100000'
+            },
+        ],
+    },
+    {
+        noPO: 'PL2401658',
+        poDate: '2-2-2023',
+        planDelivery: '2024-08-01',
+        poRevision: 'Rev 02',
+        revisionDate: '1-2-2023',
+        status: 'Closed',
+        response: '',
+        note: 'Urgent Delivery',
+        details: [
+            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+        ],
+    },
+    {
+        noPO: 'PL2401658',
+        poDate: '2-2-2023',
+        planDelivery: '2024-08-01',
+        poRevision: 'Rev 02',
+        revisionDate: '1-2-2023',
+        status: 'Closed',
+        response: '',
+        note: 'Urgent Delivery',
+        details: [
+            { 
+                no: '1',
+                partNumber: 'RL1ST08976487200C000', 
+                partName: 'asaasdafaf', 
+                UoM: 'PCS', 
+                QTY: '12000',
+                QTYDelivered: '12000'
+            },
+            { 
+                no: '2', 
+                partNumber: 'RL1ST08914261J00B101', 
+                partName: 'BRC, OIL asdasdasasdaO1', 
+                UoM: 'PCS', 
+                QTY: '100000',
+                QTYDelivered: '100000'
+            },
+        ],
+    },
+    {
+        noPO: 'PL2401658',
+        poDate: '2-2-2023',
+        planDelivery: '2024-08-01',
+        poRevision: 'Rev 02',
+        revisionDate: '1-2-2023',
+        status: 'Closed',
+        response: '',
+        note: 'Urgent Delivery',
+        details: [
+            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
+        ],
+    },
+];
