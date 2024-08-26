@@ -11,6 +11,8 @@
     href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
+  
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
 
 </head>
 
@@ -40,51 +42,7 @@
               </a>
             </li>
 
-            <!-- Hidden Menu Items -->
-            <li class="hidden">
-              <a href="purchase-order.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../assets/icon_po_default.svg" alt=""
-                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-[0.89] fill-blue-950 icon-po-active" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Purchase Order</span>
-              </a>
-            </li>
-
-            <li class="hidden">
-              <a href="delivery-note.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../assets/icon_dn_default.svg" alt=""
-                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Delivery Note</span>
-              </a>
-            </li>
-
-            <li class="hidden">
-              <a href="history-purchase-order.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../assets/icon_history_default.svg" alt=""
-                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">History Purchase Order</span>
-              </a>
-            </li>
-
-            <li class="hidden">
-              <a href="history-delivery-note.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../assets/icon_history_default.svg" alt=""
-                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">History Delivery Note</span>
-              </a>
-            </li>
-
-            <li class="hidden">
-              <a href="performance-report"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../assets/icon_performance_default.svg" alt=""
-                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Performance Report</span>
-              </a>
-            </li>
+        
           </ul>
 
           <!-- User and Logout Section at the Bottom -->
@@ -119,14 +77,22 @@
           </header>
           <div class="flex flex-col mt-4 2xl:mt-6 w-full 2xl:text-base text-xs font-medium">
             <form class="flex flex-col mb-6" id="edit-user-form">
-              <div class="flex items-center gap-4 mb-6 2xl:mb-8">
+              <!-- <div class="flex items-center gap-4 mb-6 2xl:mb-8">
                 <label for="user_id" class="text-base 2xl:text-lg font-medium dark:text-black w-[15%] 2xl:w-[10%]">User ID</label>
-                <input type="text" id="user_id" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block p-3 dark:text-black" placeholder="User ID" required readonly />
-              </div>
+                <input type="text" id="user_id" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block p-3 dark:text-black" placeholder="User ID" required readonly disabled/>
+              </div> -->
 
-              <div class="flex items-center gap-4 mb-6 2xl:mb-8">
+              <!-- <div class="flex items-center gap-4 mb-6 2xl:mb-8">
                 <label for="supplier_id" class="text-base 2xl:text-lg font-medium dark:text-black w-[15%] 2xl:w-[10%]">Supplier ID</label>
                 <input type="text" id="supplier_id" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block p-3 dark:text-black" placeholder="Supplier ID" required />
+              </div> -->
+
+              <div class="flex w-[70%] items-center gap-4 mb-6 2xl:mb-8">
+                <label for="supplier_id" class="text-base 2xl:text-lg font-medium dark:text-black w-[21%] 2xl:w-[10%]">Select Supplier</label>
+                <select id="supplier_id" class="scrollable-select bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[70%] p-3 dark:text-black" required>
+                  <option value="">Search Supplier</option>
+                  <!-- Options will be dynamically populated -->
+                </select>
               </div>
 
               <div class="flex gap-6 mb-6 2xl:mb-8">
@@ -138,17 +104,17 @@
                   <label for="role" class="text-base 2xl:text-lg font-medium dark:text-black w-[10%] 2xl:w-[7%]">Role</label>
                   <select id="role" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[40%] 2xl:w-[30%] p-3 dark:text-black" required>
                     <option value="" disabled>Select a role</option>
-                    <option value="supplier">Supplier</option>
-                    <option value="warehouse">Warehouse</option>
-                    <option value="purchasing">Purchasing</option>
-                    <option value="admin">Admin</option>
+                    <option value="1">Supplier</option>
+                    <option value="2">Warehouse</option>
+                    <option value="3">Purchasing</option>
+                    <option value="4">Admin</option>
                   </select>
                 </div>
               </div>
 
               <div class="flex items-center gap-4 mb-6 2xl:mb-8">
                 <label for="username" class="text-base 2xl:text-lg font-medium dark:text-black w-[15%] 2xl:w-[10%]">Username</label>
-                <input type="text" id="username" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[32%] p-3 dark:text-black" placeholder="Username" required />
+                <input type="text" id="username" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[32%] p-3 dark:text-black" placeholder="Username" required readonly disabled />
               </div>
 
               <div class="flex items-center gap-4 mb-6 2xl:mb-8">
@@ -174,8 +140,41 @@
   </section>
 </body>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <!-- Add the script to handle table sorting and pagination -->
 <script>
+  $(document).ready(function () {
+
+    const supplierSelect = $('#supplier_id');
+
+    // Populate supplier select options
+    suppliers.forEach(supplier => {
+      const option = new Option(`${supplier.name} (${supplier.code})`, supplier.id, false, false);
+      supplierSelect.append(option);
+    });
+
+    // Initialize Select2
+    supplierSelect.select2({
+      placeholder: 'Search Supplier',
+      allowClear: true
+    });
+
+    // Form submission
+    $('#user-form').on('submit', function (e) {
+      e.preventDefault();
+      const selectedSupplierId = supplierSelect.val();
+      if (!selectedSupplierId) {
+        alert('Please select a supplier!');
+        return;
+      }
+      console.log('Selected Supplier ID:', selectedSupplierId);
+      // Proceed with form submission or additional processing
+    });
+  });
+
   document.addEventListener('DOMContentLoaded', function () {
     const passwordInput = document.getElementById('password');
     const togglePasswordButton = document.getElementById('toggle_password');
@@ -183,16 +182,6 @@
     const form = document.getElementById('edit-user-form');
     const userIdInput = document.getElementById('user_id');
 
-    // Dummy data for editing
-    const dummyData = {
-      user_id: '12345',
-      supplier_id: '67890',
-      first_name: 'John Doe',
-      role: 'admin',
-      username: 'johndoe',
-      email: 'john.doe@example.com',
-      password: 'password123'
-    };
 
     // Populate form with dummy data
     function populateForm(data) {
@@ -205,7 +194,7 @@
       document.getElementById('password').value = data.password;
     }
 
-    populateForm(dummyData);
+    populateForm(user);
 
     // Toggle Password Visibility
     togglePasswordButton.addEventListener('click', () => {

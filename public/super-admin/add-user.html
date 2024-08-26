@@ -11,6 +11,8 @@
     href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
+  <!-- Select2 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
 
 </head>
 
@@ -123,15 +125,20 @@
 
         <!-- Forms -->
         <form class="flex flex-col mb-6" id="user-form">
-          <div class="flex items-center gap-4 mb-6 2xl:mb-8">
-            <label for="user_id" class="text-base 2xl:text-lg font-medium dark:text-black w-[15%] 2xl:w-[10%]">User ID</label>
-            <input type="text" id="user_id" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block p-3 dark:text-black" placeholder="User ID" required />
-            <span id="user_id_error" class="text-red-500 text-sm hidden">User ID must be a number.</span>
-          </div>
 
-          <div class="flex items-center gap-4 mb-6 2xl:mb-8">
+
+          <!-- <div class="flex items-center gap-4 mb-6 2xl:mb-8">
             <label for="supplier_id" class="text-base 2xl:text-lg font-medium dark:text-black w-[15%] 2xl:w-[10%]">Supplier ID</label>
             <input type="text" id="supplier_id" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block p-3 dark:text-black" placeholder="Supplier ID" required />
+          </div> -->
+
+          <!-- Supplier ID Dropdown -->
+          <div class="flex w-[70%] items-center gap-4 mb-6 2xl:mb-8">
+            <label for="supplier_id" class="text-base 2xl:text-lg font-medium dark:text-black w-[21%] 2xl:w-[10%]">Select Supplier</label>
+            <select id="supplier_id" class="scrollable-select bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[70%] p-3 dark:text-black" required>
+              <option value="">Search Supplier</option>
+              <!-- Options will be dynamically populated -->
+            </select>
           </div>
 
           <div class="flex gap-6 mb-6 2xl:mb-8">
@@ -143,10 +150,10 @@
               <label for="role" class="text-base 2xl:text-lg font-medium dark:text-black w-[10%] 2xl:w-[7%]">Role</label>
               <select id="role" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[40%] 2xl:w-[30%] p-3 dark:text-black" required>
                 <option value="" disabled selected>Select a role</option>
-                <option value="supplier">Supplier</option>
-                <option value="warehouse">Warehouse</option>
-                <option value="purchasing">Purchasing</option>
-                <option value="admin">Admin</option>
+                <option value="1">Supplier</option>
+                <option value="2">Warehouse</option>
+                <option value="3">Purchasing</option>
+                <option value="4">Admin</option>
               </select>
             </div>
           </div>
@@ -177,25 +184,49 @@
 
     </div>
   </section>
-</body>
+
+  <!-- jQuery for Select2 -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Select2 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
   <script>
+
+    $(document).ready(function () {
+
+      const supplierSelect = $('#supplier_id');
+
+      // Populate supplier select options
+      suppliers.forEach(supplier => {
+        const option = new Option(`${supplier.name} (${supplier.code})`, supplier.id, false, false);
+        supplierSelect.append(option);
+      });
+
+      // Initialize Select2
+      supplierSelect.select2({
+        placeholder: 'Search Supplier',
+        allowClear: true
+      });
+
+      // Form submission
+      $('#user-form').on('submit', function (e) {
+        e.preventDefault();
+        const selectedSupplierId = supplierSelect.val();
+        if (!selectedSupplierId) {
+          alert('Please select a supplier!');
+          return;
+        }
+        console.log('Selected Supplier ID:', selectedSupplierId);
+        // Proceed with form submission or additional processing
+      });
+    });
+
     document.addEventListener('DOMContentLoaded', function () {
-      const userIdInput = document.getElementById('user_id');
       const roleSelect = document.getElementById('role');
       const emailInput = document.getElementById('email');
       const passwordInput = document.getElementById('password');
       const togglePasswordButton = document.getElementById('toggle_password');
   
-      // User ID validation
-      userIdInput.addEventListener('input', () => {
-        if (!/^\d*$/.test(userIdInput.value)) {
-          userIdInput.value = userIdInput.value.replace(/[^\d]/g, ''); // Remove non-numeric characters
-          document.getElementById('user_id_error').classList.remove('hidden');
-        } else {
-          document.getElementById('user_id_error').classList.add('hidden');
-        }
-      });
   
       // Email validation
       emailInput.addEventListener('input', () => {
@@ -221,8 +252,8 @@
         passwordInput.value = password;
       });
   
-      function generateRandomPassword(length = 12) {
-        const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+[]{}|;:,.<>?";
+      function generateRandomPassword(length = 8) {
+        const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890";
         let password = '';
         for (let i = 0; i < length; i++) {
           const randomIndex = Math.floor(Math.random() * charset.length);
@@ -237,13 +268,6 @@
       form.addEventListener('submit', (e) => {
         let valid = true;
   
-        // User ID must be a number
-        if (!/^\d+$/.test(userIdInput.value)) {
-          document.getElementById('user_id_error').classList.remove('hidden');
-          valid = false;
-        } else {
-          document.getElementById('user_id_error').classList.add('hidden');
-        }
   
         // Role must be selected
         if (!roleSelect.value) {
@@ -285,5 +309,7 @@
   
 
 <script src="script.js"></script>
+
+</body>
 
 </html>
