@@ -228,7 +228,7 @@
         document.getElementById('poNumber').textContent = po.noPO;
         document.getElementById('noteInput').textContent = po.note;
         filteredData = po.details;
-        displayPODetails(po.details);
+        displayPODetails(filteredData);
         updatePagination();
       } else {
         console.error('Data PO tidak ditemukan dalam array data.');

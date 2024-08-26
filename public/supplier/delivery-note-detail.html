@@ -129,20 +129,31 @@
 
             <div class="flex flex-wrap gap-[10%] justify-between items-center mt-4 2xl:mt-6 w-full">
               
-              <!-- No PO -->
-              <div class="flex gap-[13px] 2xl:gap-10 items-center self-stretch my-auto text-black min-w-[10%]">
-                <div class="self-stretch my-auto ">No. PO</div>
-                <div id="poNumber" type="text" class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap ounded border border-solid border-neutral-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
+              <div class="flex gap-5">
+                <!-- No PO -->
+                <div class="flex gap-3 2xl:gap-6 items-center self-stretch my-auto text-black min-w-[10%]">
+                  <div class="self-stretch my-auto ">No. PO</div>
+                  <div id="poNumber" class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap rounded bg-stone-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
+                </div>
+
+                <div class="flex gap-3 2xl:gap-6 items-center self-stretch my-auto text-black min-w-[10%]">
+                  <div class="self-stretch my-auto ">Plan Delivery Date</div>
+                  <div id="planDelivery" class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap rounded bg-stone-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
+                </div>
               </div>
               
               <div class="flex gap-3 2xl:gap-6 items-center self-stretch my-auto text-white 2xl:min-w-[240px] text-[10px] 2xl:text-lg">
+                <a href="print-label.html" class="flex gap-2 2xl:gap-4 items-center self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5">
+                  <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-5 aspect-square" />
+                  <span class="flex-1 shrink self-stretch my-auto ">Print Label</span>
+                </a>
                 <a href="export-csv.html" class="flex gap-2 2xl:gap-4 items-center self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5">
                   <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-5 aspect-square" />
                   <span class="flex-1 shrink self-stretch my-auto ">Export CSV</span>
                 </a>
-                <a href="print-po.html" class="flex gap-2 2xl:gap-4 items-center self-stretch px-6 2xl:px-9 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5">
+                <a href="print-dn.html" class="flex gap-2 2xl:gap-4 items-center self-stretch px-6 2xl:px-9 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5">
                   <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-5 aspect-square" />
-                  <span class="flex-1 shrink self-stretch my-auto basis-0">Print PO </span>
+                  <span class="flex-1 shrink self-stretch my-auto basis-0">Print DN </span>
                 </a>
               </div>
             </div>
@@ -268,7 +279,8 @@
       const dn = deliveryNote.find(dn => dn.noDN === noDN);
       if (dn) {
         document.getElementById('dnNumber').textContent = dn.noDN;
-        document.getElementById('poNumber').textContent = dn.noPO;
+        document.getElementById('poNumber').textContent = dn.noPO;        
+        document.getElementById('planDelivery').textContent = dn.planDNDate;
         filteredData = dn.details;
         displayDNDetails(dn.details);
         updatePagination();

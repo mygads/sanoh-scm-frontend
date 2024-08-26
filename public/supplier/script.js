@@ -10,8 +10,16 @@ const purchaseOrder = [
         note: 'Urgent Delivery',
         details: [
             { 
-                no: '1', partNumber: 'RL1ST08976487200C000', partName: 'asaasdafaf', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL asdasdasasdaO1', UoM: 'PCS', QTY: '12000' },
+                no: '1', 
+                partNumber: 'RL1ST08976487200C000', 
+                partName: 'asaasdafaf', 
+                UoM: 'PCS', 
+                QTY: '12000' },
+            {   no: '2', 
+                partNumber: 'RL1ST08914261J00B101', 
+                partName: 'BRC, OIL asdasdasasdaO1', 
+                UoM: 'PCS', 
+                QTY: '12000' },
         ],
     },
     
