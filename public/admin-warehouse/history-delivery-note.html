@@ -38,9 +38,9 @@
           </li>
 
           <!-- Purchase Order -->
-          <li>
+          <li class="hidden">
             <a href="purchase-order.html"
-              class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
+              class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 ">
               <img loading="lazy" src="../assets/icon_po_default.svg" alt="Purchase Order"
                 class="object-contain w-4 2xl:w-6 " />
               <span class="text-sm 2xl:text-xl">Purchase Order</span>
@@ -58,7 +58,7 @@
           </li>
 
           <!-- History Purchase Order -->
-          <li>
+          <li class="hidden">
             <a href="history-purchase-order.html"
               class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
               <img loading="lazy" src="../assets/icon_history_default.svg" alt="History Purchase Order"
@@ -214,7 +214,7 @@
             <a href="history-delivery-note-detail.html?noDN=${row.noDN}" class="text-blue-600 underline">${row.noDN}</a>
         </td>
         <td class="px-2 py-4 text-center font-medium text-gray-900">
-            <a href="history-purchase-order-detail.html?noPO=${row.noPO}" class="text-blue-600 underline">${row.noPO}</a>
+            <a?noPO=${row.noPO}" class="text-black">${row.noPO}</a>
         </td>        
         <td class="px-2 py-4 text-center">${row.statusDN}</td>
         <td class="px-2 py-4 text-center">${row.planDNDate}</td>
