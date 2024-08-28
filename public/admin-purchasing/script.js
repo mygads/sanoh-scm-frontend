@@ -948,3 +948,86 @@ const historyPurchaseOrder = [
         ],
     },
 ];
+
+const selectSupplier = [
+    {
+        bpCode: 'A123',
+        supplierName: 'Supplier A',
+        purchaseOrders: [
+            {
+                noPO: 'PL2401657',
+                poDate: '01-01-2018',
+                planDelivery: '2024-08-01',
+                poRevision: 'Rev 02',
+                revisionDate: '01-02-2023',
+                status: 'In Process',
+                response: 'Accepted',
+                note: 'Urgent Delivery',
+                details: [
+                    { no: '1', partNumber: 'RL1ST08976487200C000', partName: 'Part A', UoM: 'PCS', QTY: '12000' },
+                    { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'Part B', UoM: 'PCS', QTY: '15000' }
+                ]
+            }
+        ]
+    },
+    {
+        bpCode: 'B456',
+        supplierName: 'Supplier B',
+        purchaseOrders: [
+            {
+                noPO: 'PL2401658',
+                poDate: '02-02-2023',
+                planDelivery: '2024-08-01',
+                poRevision: 'Rev 02',
+                revisionDate: '02-02-2023',
+                status: 'Opened',
+                response: '',
+                note: 'Urgent Delivery',
+                details: [
+                    { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'Part C', UoM: 'PCS', QTY: '12000' },
+                    { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'Part D', UoM: 'PCS', QTY: '10000' }
+                ]
+            }
+        ]
+    },
+    {
+        bpCode: 'C789',
+        supplierName: 'Supplier C',
+        purchaseOrders: [
+            {
+                noPO: 'PL2401659',
+                poDate: '03-03-2023',
+                planDelivery: '2024-09-01',
+                poRevision: 'Rev 01',
+                revisionDate: '03-03-2023',
+                status: 'Completed',
+                response: 'Accepted',
+                note: 'Standard Delivery',
+                details: [
+                    { no: '1', partNumber: 'RL1ST08914261J00B106', partName: 'Part E', UoM: 'PCS', QTY: '15000' }
+                ]
+            }
+        ]
+    },
+    {
+        bpCode: 'D101',
+        supplierName: 'Supplier D',
+        purchaseOrders: [
+            {
+                noPO: 'PL2401660',
+                poDate: '04-04-2023',
+                planDelivery: '2024-10-01',
+                poRevision: 'Rev 01',
+                revisionDate: '04-04-2023',
+                status: 'In Process',
+                response: 'Pending',
+                note: 'Normal Delivery',
+                details: [
+                    { no: '1', partNumber: 'RL1ST08914261J00B107', partName: 'Part F', UoM: 'PCS', QTY: '10000' }
+                ]
+            }
+        ]
+    }
+];
+
+  

@@ -36,7 +36,7 @@
                 class="flex gap-4 items-center p-[9px] 2xl:p-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
                 <img loading="lazy" src="../assets/icon_home_default.svg" alt="Dashboard"
                   class="object-contain w-4 2xl:w-6" />
-                <span class="text-sm 2xl:text-xl">Supplier ABCD</span>
+                <span class="text-sm 2xl:text-xl">Supplier</span>
               </a>
             </li>
 
@@ -95,6 +95,28 @@
           <header class="flex items-center self-start text-2xl font-semibold text-black">
             <h1 class="self-stretch my-auto text-[80%] 2xl:text-[120%]">Purchase Order (PO)</h1>
           </header>
+
+          <article class="flex flex-col items-start w-full text-base">
+            <h1 class="text-base 2xl:text-xl font-semibold text-black mt-4">Select Supplier</h1>
+          </article>
+          
+            <form id="supplierForm" class="flex flex-col w-full text-neutral-500">
+              <div class="flex flex-col xl:w-[500px] 2xl:w-[600px]">
+                <label for="Supplier" class="block xl:mb-6 2xl:mb-8 xl:text-base 2xl:text-lg text-neutral-500"></label>
+                <select id="Supplier"
+                  class="scrollable-select bg-transparent border border-neutral-300 rounded-lg block w-full p-4 2xl:p-7 text-neutral-500 text-sm 2xl:text-lg">
+                  <option value="">Cari Supplier</option>
+                  <!-- Options will be added here by JavaScript -->
+                </select>
+              </div>
+              <div
+                class="flex gap-2 items-center xl:mt-6 2xl:mt-8 justify-end text-white whitespace-nowrap xl:h-[50px] 2xl:h-[100px] xl:w-[500px] 2xl:w-[600px]">
+                <button type="button" id="submitBtn"
+                  class="gap-2 xl:px-5 xl:py-3 2xl:px-8 2xl:py-4 rounded bg-zinc-400 xl:text-sm 2xl:text-lg hover:bg-blue-600"
+                  disabled>Submit</button>
+              </div>
+            </form>
+          </article>
 
           <div class="flex flex-col mt-4 2xl:mt-6 w-full 2xl:text-base text-xs font-medium">
 
@@ -195,13 +217,19 @@
 
 <script src="../script.js"></script>
 <script src="script.js"></script>
+<!-- jQuery for Select2 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <!-- Add the script to handle table sorting and pagination -->
 <script>
   let rowsPerPage = 12;
   let currentPage = 1;
-  let filteredData = purchaseOrder; // Initialize filteredData with all data
-
+  let filteredData = []; // Initialize filteredData as an empty array
+  let pendingResponseIndex = null;
+  let pendingResponseAction = '';
+  
   // Adjust rows per page based on screen size
   function adjustRowsPerPage() {
     if (window.innerWidth <= 1280) {
@@ -212,16 +240,16 @@
       rowsPerPage = 12;
     }
   }
-
+  
   function displayTableData(page) {
     const tableBody = document.getElementById('table-body');
     tableBody.innerHTML = '';
-
+  
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
     const paginatedData = filteredData.slice(start, end);
-
-    paginatedData.forEach((row, index) => {
+  
+    paginatedData.forEach(row => {
       const tableRow = document.createElement('tr');
       tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
       tableRow.innerHTML = `
@@ -241,21 +269,15 @@
       tableBody.appendChild(tableRow);
     });
   }
-
-  function updateResponse(index, action) {
-    purchaseOrder[index].response = action;
-    displayTableData(currentPage);
-    updatePagination();
-  }
-
+  
   function searchTable() {
     const searchInput = document.getElementById('search-input').value.toLowerCase();
-    filteredData = data.filter(row => row.noPO.toLowerCase().includes(searchInput));
+    filteredData = filteredData.filter(row => row.noPO.toLowerCase().includes(searchInput));
     currentPage = 1;
     displayTableData(currentPage);
     updatePagination();
   }
-
+  
   // Function to sort table based on column index
   function sortTable(columnIndex) {
     const table = document.querySelector('table');
@@ -265,33 +287,33 @@
     table.querySelectorAll('th').forEach((th, index) => {
       if (index !== columnIndex) th.classList.remove('asc', 'desc');
     });
-
+  
     rows.sort((a, b) => {
       const cellA = a.querySelectorAll('td')[columnIndex].textContent.trim();
       const cellB = b.querySelectorAll('td')[columnIndex].textContent.trim();
-
+  
       if (columnIndex === 2 || columnIndex === 3 || columnIndex === 5) {
         return new Date(cellA) - new Date(cellB);
       }
-
+  
       return cellA.localeCompare(cellB, undefined, { numeric: true, sensitivity: 'base' });
     });
-
+  
     if (!isAscending) {
       rows.reverse();
     }
-
+  
     tbody.innerHTML = '';
     tbody.append(...rows);
   }
-
+  
   function updatePagination() {
     const paginationContainer = document.querySelector('.pagination');
     paginationContainer.innerHTML = '';
-
+  
     const totalPages = Math.ceil(filteredData.length / rowsPerPage);
     const maxPageNumbersToShow = 4;
-
+  
     // Previous button
     const prevButton = document.createElement('button');
     prevButton.className = 'px-3 py-3 2xl:px-4 2xl:py-4 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
@@ -309,7 +331,7 @@
       }
     });
     paginationContainer.appendChild(prevButton);
-
+  
     // Calculate page numbers to show
     const pageNumbers = [];
     if (totalPages <= maxPageNumbersToShow) {
@@ -318,25 +340,25 @@
       }
     } else {
       pageNumbers.push(1);
-
+  
       const startPage = Math.max(2, currentPage - 1);
       const endPage = Math.min(totalPages - 1, currentPage + 1);
-
+  
       if (startPage > 2) {
         pageNumbers.push('...');
       }
-
+  
       for (let i = startPage; i <= endPage; i++) {
         pageNumbers.push(i);
       }
-
+  
       if (endPage < totalPages - 1) {
         pageNumbers.push('...');
       }
-
+  
       pageNumbers.push(totalPages);
     }
-
+  
     // Page numbers buttons
     pageNumbers.forEach(number => {
       const pageButton = document.createElement('button');
@@ -354,7 +376,7 @@
       }
       paginationContainer.appendChild(pageButton);
     });
-
+  
     // Next button
     const nextButton = document.createElement('button');
     nextButton.className = 'px-3 py-3 2xl:px-4 2xl:py-4 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
@@ -373,16 +395,54 @@
     });
     paginationContainer.appendChild(nextButton);
   }
-
+  
   // Event listeners
-  document.getElementById('search-input').addEventListener('input', searchTable);
-  window.addEventListener('resize', () => {
-    adjustRowsPerPage();
-    displayTableData(currentPage);
+  document.addEventListener('DOMContentLoaded', () => {
+    adjustRowsPerPage(); // Set rows per page based on initial screen size
+    window.addEventListener('resize', () => {
+      adjustRowsPerPage(); // Adjust rows per page on screen resize
+      displayTableData(currentPage); // Re-render table data
+      updatePagination(); // Re-render pagination
+    });
+  
+    // Initially hide the search bar, table, and pagination
+    document.getElementById('search-bar');
+    document.getElementById('table-container');
+    document.querySelector('.pagination').style.display = 'none';
   });
-  adjustRowsPerPage();
-  displayTableData(currentPage);
-  updatePagination();
+  
+  // Populate the dropdown with supplier options
+  const supplierSelect = document.getElementById('Supplier');
+  selectSupplier.forEach(supplier => {
+    const option = document.createElement('option');
+    option.value = supplier.bpCode;
+    option.textContent = supplier.supplierName;
+    supplierSelect.appendChild(option);
+  });
+  
+  // Enable submit button if a supplier is selected
+  const submitBtn = document.getElementById('submitBtn');
+  supplierSelect.addEventListener('change', () => {
+    submitBtn.disabled = !supplierSelect.value;
+  });
+  
+  // Handle form submission and display the table data
+  submitBtn.addEventListener('click', () => {
+    const selectedSupplier = selectSupplier.find(supplier => supplier.bpCode === supplierSelect.value);
+    if (selectedSupplier) {
+      filteredData = selectedSupplier.purchaseOrders; // Corrected from purchaseOrder to purchaseOrders
+      displayTableData(currentPage); // Display data for the current page
+      updatePagination(); // Update pagination
+  
+      // Show the search bar, table, and pagination
+      document.getElementById('search-bar');
+      document.getElementById('table-container');
+      document.querySelector('.pagination').style.display = 'flex'; // Adjust as needed
+    }
+  });
+  
+  document.getElementById('search-input').addEventListener('input', searchTable);
+  
 </script>
 
 </html>
