@@ -20,18 +20,16 @@
       display: none;
     }
 
-    /* Media query for screens larger than 1920px: Show Div 2, hide Div 1 */
     @media (min-width: 1920px) {
       .div1 {
         display: none;
       }
 
       .div2 {
-        display: flex; /* Or block, depending on your layout */
+        display: flex; 
       }
     }
 
-    /* Media query for screens smaller than 1920px (i.e., 1280px or smaller): Show Div 1, hide Div 2 */
     @media (max-width: 1280px) {
       .div1 {
         display: block;
@@ -46,8 +44,8 @@
 </head>
 
 <body class="font-poppins">
-  <section class="flex overflow-hidden flex-col self-stretch mx-auto my-auto bg-white xl:w-[1280px] xl:h-[720px] 2xl:w-[1920px] 2xl:h-[1080px]">
-    <div class="div1  flex gap-10 my-auto">
+  <section class="flex overflow-hidden flex-col self-stretch m-10 mt-[5%] bg-white w-full h-full">
+    <div class="div1 flex gap-10 my-">
 
       <div class="flex flex-col w-[50%] ">
         <div class="flex relative flex-col w-[600px] ml-auto text-white h-full">
@@ -113,7 +111,7 @@
       </div>
     </div>
 
-    <div class="div2 hidden flex gap-10 my-auto ">
+    <!-- <div class="div2 hidden flex gap-10 my-auto ">
 
       <div class="flex flex-col w-[55%]">
         <div class="flex relative flex-col px-20 py-20 my-5 ml-auto w-full h-auto text-white border-white max-w-[632px]">
@@ -181,13 +179,9 @@
           </p>
         </main>
       </div>
-    </div>
+    </div> -->
+
   </section>
-
-
-
-
-
 </body>
 
 <script src="script.js"></script>
@@ -213,33 +207,49 @@ function togglePassword() {
 }
 
 // Handle form submission
-function handleLogin(event) {
+async function handleLogin(event) {
   event.preventDefault();
   const username = document.getElementById('username').value;
   const password = document.getElementById('password').value;
 
-  const user = users.find(user => user.username === username && user.password === password);
+  try {
+    const response = await fetch('http://127.0.0.1:8000/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, password }),
+    });
 
-  if (user) {
-    redirectToDashboard(user.role);
-  } else {
-    alert('Invalid username or password');
+    if (response.ok) {
+      const data = await response.json();
+      localStorage.setItem('accessToken', data.access_token);
+      localStorage.setItem('name', data.name);
+      localStorage.setItem('bpCode', data.bp_code);
+      localStorage.setItem('userRole', data.role);
+      redirectToDashboard(data.role);
+    } else {
+      alert('Invalid username or password');
+    }
+  } catch (error) {
+    console.error('Error logging in:', error);
+    alert('An error occurred. Please try again later.');
   }
 }
 
 // Redirect based on user role
 function redirectToDashboard(role) {
   switch(role) {
-    case 'supplier':
+    case '1':
       window.location.href = 'supplier/';
       break;
-    case 'admin gudang':
+    case '2':
       window.location.href = 'admin-warehouse/';
       break;
-    case 'admin purchasing':
+    case '3':
       window.location.href = 'admin-purchasing/';
       break;
-    case 'super admin':
+    case '4':
       window.location.href = 'super-admin/';
       break;
     default:
