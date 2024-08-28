@@ -92,13 +92,13 @@
           </ul>
 
           <!-- User and Logout Section at the Bottom -->
-          <div class="mt-[80%] flex flex-col w-full">
+          <div class="mt-auto flex flex-col w-full">
 
             <!-- User Info -->
             <div class="flex gap-4 items-center p-2 2xl:p-4 w-full bg-blue-950 bg-opacity-10 text-blue-950">
               <img loading="lazy" src="../assets/icon_people.svg" alt=""
                 class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-              <span class="self-stretch my-auto text-sm 2xl:text-xl">PT Kawasaki</span>
+              <span id="user-info" class="self-stretch my-auto text-sm 2xl:text-xl"></span>
             </div>
 
             <!-- Logout Button -->
@@ -193,7 +193,7 @@
 <!-- Add the script to handle table sorting and pagination -->
 <script>
   let currentPage = 1;
-let rowsPerPage = 9;
+let rowsPerPage = 8;
 let filteredData = [];
 const dummyData = [
   { no: 1, periode: 'July 2024', attachedFile: 'file1.pdf' },
@@ -279,9 +279,7 @@ function adjustRowsPerPage() {
   if (screenWidth < 1280) {
     rowsPerPage = 7;
   } else if (screenWidth < 1600) {
-    rowsPerPage = 9;
-  } else {
-    rowsPerPage = 15;
+    rowsPerPage = 7;
   }
 }
 
@@ -388,6 +386,11 @@ function searchTable(event) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  const name = localStorage.getItem('name');
+  const bpCode = localStorage.getItem('bpCode');
+
+  document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
+
   filteredData = dummyData;
   displayPODetails();
   updatePagination();
