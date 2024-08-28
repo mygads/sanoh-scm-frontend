@@ -223,6 +223,7 @@
   let rowsPerPage = 7;
   let currentPage = 1;
   let filteredData = [];
+  let originalData= [];
 
   async function fetchProtectedData() {
     const token = localStorage.getItem('accessToken');
@@ -251,6 +252,8 @@
             Status: user.status === "1" ? 'active' : 'deactive',  // Correct mapping of status
             StatusValue: user.status  // Keep the original status for toggle
           }));
+
+          originalData = filteredData;
           displayTableData(currentPage);
           updatePagination();
         }
@@ -263,23 +266,15 @@
     }
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const name = localStorage.getItem('name');
-    const bpCode = localStorage.getItem('bpCode');
+  // document.addEventListener('DOMContentLoaded', () => {
+  //   const name = localStorage.getItem('name');
+  //   const bpCode = localStorage.getItem('bpCode');
 
-    document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
+  //   document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
     
-    fetchProtectedData();
+  //   fetchProtectedData();
     
-  });
-  
-  
-  
-  function adjustRowsPerPage() {
-    if (window.innerWidth <= 1600) {
-      rowsPerPage = 7;
-    } 
-  }
+  // });
 
   function displayTableData(page) {
     const tableBody = document.getElementById('table-body');
@@ -323,11 +318,18 @@
 
   function searchTable() {
     const searchInput = document.getElementById('search-input').value.toLowerCase();
-    filteredData = data.filter(row =>
-      row.Username.toLowerCase().includes(searchInput) ||
-      row.Name.toLowerCase().includes(searchInput) ||
-      row.SupplierID.toLowerCase().includes(searchInput)
-    );
+    if (searchInput === "") {
+      // Jika input kosong, kembalikan data ke originalData
+      filteredData = originalData;
+    } else {
+      // Filter data berdasarkan input
+      filteredData = originalData.filter(row =>
+        row.Username.toLowerCase().includes(searchInput) ||
+        row.Name.toLowerCase().includes(searchInput) ||
+        row.SupplierID.toLowerCase().includes(searchInput)
+      );
+    }
+
     currentPage = 1;
     displayTableData(currentPage);
     updatePagination();
@@ -415,11 +417,11 @@
     `;
     nextButton.disabled = currentPage === totalPages;
     nextButton.addEventListener('click', () => {
-        if (currentPage < totalPages) {
-        currentPage++;
-        displayTableData(currentPage);
-        updatePagination();
-        }
+      if (currentPage < totalPages) {
+      currentPage++;
+      displayTableData(currentPage);
+      updatePagination();
+      }
     });
     paginationContainer.appendChild(nextButton);
   }
@@ -489,13 +491,15 @@
   // Panggil fungsi initializeTable saat halaman dimuat
   document.addEventListener('DOMContentLoaded', () => {
       
-    displayTableData(currentPage);
-    adjustRowsPerPage();
-    updatePagination();
+    const name = localStorage.getItem('name');
+    const bpCode = localStorage.getItem('bpCode');
+
+    document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
+    
+    fetchProtectedData();
 
     document.getElementById('search-input').addEventListener('input', searchTable);
-    displayTableData(currentPage);
-    updatePagination();
+
   });
 </script>
 
