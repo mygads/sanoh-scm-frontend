@@ -16,7 +16,7 @@
 
 <body class="font-poppins bg-white">
   <section class="overflow-hidden w-screen h-screen bg-white">
-    <div class="flex">
+    <div class="flex h-screen">
 
       <!-- nav-side bar -->
       <aside class="flex flex-col w-[20%] h-screen border-r border-r-neutral-400 bg-stone-300">
@@ -64,7 +64,7 @@
             <!-- User Info -->
             <div class="flex gap-4 items-center p-2 2xl:p-4 w-full bg-blue-950 bg-opacity-10 text-blue-950">
               <img loading="lazy" src="../assets/icon_people.svg" alt="User Info" class="object-contain w-4 2xl:w-6" />
-              <span class="text-sm 2xl:text-xl">Warehouse (name)</span>
+              <span id="user-info" class="text-sm 2xl:text-xl"></span>
             </div>
 
             <!-- Logout Button -->
@@ -77,25 +77,32 @@
         </nav>
       </aside>
 
-       <!-- Main Content -->
-    <main class="flex flex-col justify-center items-center m-auto max-md:max-w-full">
-      <header class="flex flex-col items-center self-center max-w-full  2xl:w-[1100px]">
-        <h1 class="flex flex-col justify-between items-center text-black w-full text-center">
-          <span class="font-semibold max-w-full xl:text-4xl 2xl:text-6xl">
-            Welcome Warehouse!
-          </span>
-        </h1>
-        <p class="mx-auto my-auto xl:mt-3 2xl:mt-6 text-center text-neutral-400 xl:text-sm 2xl:text-xl xl:w-[500px] 2xl:w-[700px]">
-          Welcome to our dashboard, where you can seamlessly manage and <br> monitor all your supply chain operations with ease and efficiency.
-        </p>
-      </header>
-      <img src="../assets/dashboard_warehouse.png" alt="Dashboard overview"
-        class="object-contain mx-auto xl:w-[500px] 2xl:w-[700px]" />
-    </main>
+      <!-- Main Content -->
+      <main class="flex flex-col justify-center items-center m-auto max-md:max-w-full">
+        <header class="flex flex-col items-center self-center max-w-full  2xl:w-[1100px]">
+          <h1 class="flex flex-col justify-between items-center text-black w-full text-center">
+            <span class="font-semibold max-w-full xl:text-4xl 2xl:text-6xl">
+              Welcome Warehouse!
+            </span>
+          </h1>
+          <p class="mx-auto my-auto xl:mt-3 2xl:mt-6 text-center text-neutral-400 xl:text-sm 2xl:text-xl xl:w-[500px] 2xl:w-[700px]">
+            Welcome to our dashboard, where you can seamlessly manage and <br> monitor all your supply chain operations with ease and efficiency.
+          </p>
+        </header>
+        <img src="../assets/dashboard_warehouse.png" alt="Dashboard overview"
+          class="object-contain mx-auto xl:w-[500px] 2xl:w-[700px]" />
+      </main>
+    </div>
   </section>
 </body>
 
 <script src="../script.js"></script>
 <script src="script.js"></script>
+<script>
+  const name = localStorage.getItem('name');
+  const bpCode = localStorage.getItem('bpCode');
+
+  document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
+</script>
 
 </html>
