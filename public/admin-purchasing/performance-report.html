@@ -36,7 +36,7 @@
                 class="flex gap-4 items-center p-[9px] 2xl:p-4 w-full cursor-pointer hover:bg-blue fvv-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
                 <img loading="lazy" src="../assets/icon_home_default.svg" alt="Dashboard"
                   class="object-contain w-4 2xl:w-6" />
-                <span class="text-sm 2xl:text-xl">Supplier ABCD</span>
+                <span class="text-sm 2xl:text-xl">Dashboard</span>
               </a>
             </li>
 
@@ -190,20 +190,7 @@ l
   let currentPage = 1;
   let rowsPerPage = 5;
   let filteredData = [];
-  const dummyData = [
-    { no: 1, periode: 'July 2024', attachedFile: 'file1.pdf' },
-    { no: 2, periode: 'July 2024', attachedFile: 'file2.pdf' },
-    { no: 3, periode: 'June 2024', attachedFile: 'file3.pdf' },
-    { no: 4, periode: 'June 2024', attachedFile: 'file4.pdf' },
-    { no: 5, periode: 'January 2024', attachedFile: 'file5.pdf' },
-    { no: 6, periode: 'January 2024', attachedFile: 'file6.pdf' },
-    { no: 7, periode: 'December 2023', attachedFile: 'file7.pdf' },
-    { no: 8, periode: 'December 2023', attachedFile: 'file8.pdf' },
-    { no: 9, periode: 'October 2023', attachedFile: 'file9.pdf' },
-    { no: 10, periode: 'October 2023', attachedFile: 'file10.pdf' },
-    { no: 11, periode: 'September 2023', attachedFile: 'file11.pdf' },
-    { no: 12, periode: 'September 2023', attachedFile: 'file12.pdf' },
-  ];
+  const apiUrl = 'http://localhost:8000/api/indexlistingreport';
 
   document.addEventListener('DOMContentLoaded', () => {
     const name = localStorage.getItem('name');
@@ -211,9 +198,7 @@ l
 
     document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
     
-    filteredData = dummyData;
-    displayPODetails();
-    updatePagination();
+    fetchPerformanceReport();
     window.addEventListener('resize', () => {
       adjustRowsPerPage();
       displayPODetails();
@@ -223,6 +208,39 @@ l
     // Set up search input
     document.getElementById('search-input').addEventListener('input', searchTable);
   });
+
+  async function fetchPerformanceReport() {
+    const token = localStorage.getItem('authToken'); // Get the authentication token
+    try {
+      const response = await fetch(apiUrl, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      const result = await response.json();
+      if (result.success) {
+        filteredData = result.data.map(item => ({
+          no: item.po_listing_no,
+          periode: formatDate(item.date),
+          attachedFile: item.file
+        }));
+        displayPODetails();
+        updatePagination();
+      } else {
+        console.error('Failed to fetch data:', result.message);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
+
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const month = date.toLocaleString('default', { month: 'long' });
+    const year = date.getFullYear();
+    return `${month} ${year}`;
+  }
 
   function displayPODetails() {
     const tableBody = document.getElementById('table-body-detail');
@@ -236,14 +254,14 @@ l
       const tableRow = document.createElement('tr');
       tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b');
       tableRow.innerHTML = `
-      <td class="px-2 py-4 text-center font-medium text-gray-900">${row.no}</td>
-      <td class="px-2 py-4 text-center">${row.periode}</td>
-      <td class="px-1 py-2 text-center flex items-center justify-center">
-        <a href="${row.attachedFile}" target="_blank">
-          <img src="../assets/icon_pdf.svg" alt="PDF Icon" class="w-6 h-6">
-        </a>
-      </td>
-    `;
+        <td class="px-2 py-4 text-center font-medium text-gray-900">${row.no}</td>
+        <td class="px-2 py-4 text-center">${row.periode}</td>
+        <td class="px-1 py-2 text-center flex items-center justify-center">
+          <a href="${row.attachedFile}" target="_blank">
+            <img src="../assets/icon_pdf.svg" alt="PDF Icon" class="w-6 h-6">
+          </a>
+        </td>
+      `;
       tableBody.appendChild(tableRow);
     });
   }
@@ -296,10 +314,10 @@ l
     const prevButton = document.createElement('button');
     prevButton.className = 'px-3 py-3 2xl:px-4 2xl:py-4 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
     prevButton.innerHTML = `
-    <svg class="2xl:w-4 2xl:h-4 w-3 h-3 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
-      <path d="M8.766.566A2 2 0 0 0 6.586 1L1 6.586a2 2 0 0 0 0 2.828L6.586 15A2 2 0 0 0 10 13.586V2.414A2 2 0 0 0 8.766.566Z" />
-    </svg>
-  `;
+      <svg class="2xl:w-4 2xl:h-4 w-3 h-3 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
+        <path d="M8.766.566A2 2 0 0 0 6.586 1L1 6.586a2 2 0 0 0 0 2.828L6.586 15A2 2 0 0 0 10 13.586V2.414A2 2 0 0 0 8.766.566Z" />
+      </svg>
+    `;
     prevButton.disabled = currentPage === 1;
     prevButton.addEventListener('click', () => {
       if (currentPage > 1) {
@@ -361,10 +379,10 @@ l
     const nextButton = document.createElement('button');
     nextButton.className = '2xl:px-4 2xl:py-4 px-3 py-3 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
     nextButton.innerHTML = `
-    <svg class="2xl:w-4 2xl:h-4 w-3 h-3 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
-      <path d="M1.234 15.434A2 2 0 0 0 3.414 15L9 9.414a2 2 0 0 0 0-2.828L3.414 1A2 2 0 0 0 1 2.414v11.172A2 2 0 0 0 1.234 15.434Z" />
-    </svg>
-  `;
+      <svg class="2xl:w-4 2xl:h-4 w-3 h-3 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
+        <path d="M1.234 15.434A2 2 0 0 0 3.414 15L9 9.414a2 2 0 0 0 0-2.828L3.414 1A2 2 0 0 0 1 2.414v11.172a2 2 0 0 0 1.234 1.848z" />
+      </svg>
+    `;
     nextButton.disabled = currentPage === totalPages;
     nextButton.addEventListener('click', () => {
       if (currentPage < totalPages) {
@@ -376,97 +394,16 @@ l
     paginationContainer.appendChild(nextButton);
   }
 
-  function searchTable(event) {
-    const searchValue = event.target.value.toLowerCase();
-    filteredData = dummyData.filter(row =>
-      row.periode.toLowerCase().includes(searchValue) ||
-      row.no.toString().includes(searchValue)
-    );
-    currentPage = 1; // Reset to first page on search
+  function searchTable() {
+    const searchTerm = document.getElementById('search-input').value.toLowerCase();
+    filteredData = filteredData.filter(item => {
+      return item.no.toLowerCase().includes(searchTerm) || item.periode.toLowerCase().includes(searchTerm);
+    });
+    currentPage = 1; // Reset to first page
     displayPODetails();
     updatePagination();
   }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    filteredData = dummyData;
-    displayPODetails();
-    updatePagination();
-    window.addEventListener('resize', () => {
-      adjustRowsPerPage();
-      displayPODetails();
-      updatePagination();
-    });
-
-    // Set up search button
-    document.getElementById('search-button').addEventListener('click', () => {
-      const selectedMonth = document.getElementById('month-input').value;
-      if (selectedMonth) {
-        const [year, month] = selectedMonth.split('-');
-        const formattedMonth = new Date(year, month - 1).toLocaleString('default', { month: 'long' });
-        filteredData = dummyData.filter(row => row.periode.includes(`${formattedMonth} ${year}`));
-      } else {
-        filteredData = dummyData; // Reset to original data if no month is selected
-      }
-      currentPage = 1; // Reset to first page on search
-      displayPODetails();
-      updatePagination();
-    });
-  });
-
-  // Mendapatkan referensi elemen dari DOM
-const monthPicker = document.getElementById('month-picker');
-const fileUpload = document.getElementById('file-upload');
-const uploadButton = document.getElementById('upload-button');
-const notification = document.getElementById('notification');
-
-// Fungsi untuk memeriksa apakah kedua input sudah valid
-function checkInputs() {
-  if (monthPicker.value && fileUpload.files.length > 0) {
-    uploadButton.disabled = false;
-    uploadButton.classList.remove('bg-gray-400');
-    uploadButton.classList.add('bg-blue-500');
-  } else {
-    uploadButton.disabled = true;
-    uploadButton.classList.add('bg-gray-400');
-    uploadButton.classList.remove('bg-blue-500');
-  }
-}
-
-// Fungsi untuk menampilkan notifikasi
-function showNotification(message) {
-  notification.textContent = message;
-  notification.classList.remove('hidden');
-  setTimeout(() => {
-    notification.classList.add('hidden');
-  }, 3000); // Notifikasi akan hilang setelah 3 detik
-}
-
-// Menambahkan event listener pada input periode
-monthPicker.addEventListener('change', checkInputs);
-
-// Menambahkan event listener pada input file
-fileUpload.addEventListener('change', checkInputs);
-
-// Menambahkan event listener pada tombol Upload
-uploadButton.addEventListener('click', () => {
-  const period = monthPicker.value;
-  const file = fileUpload.files[0];
-
-  if (period && file) {
-    // Simulasikan proses penyimpanan file dan periode
-    // Misalnya, mengirim data ke server atau menyimpannya secara lokal
-
-    // Menampilkan notifikasi
-    showNotification('Data berhasil ditambahkan!');
-    
-    // Reset form
-    monthPicker.value = '';
-    fileUpload.value = '';
-    checkInputs(); // Nonaktifkan tombol jika input di-reset
-  }
-});
-
-
 </script>
+
 
 </html>
