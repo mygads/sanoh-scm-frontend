@@ -17,7 +17,7 @@
 </head>
 
 <body class="font-poppins bg-white">
-  <section class="overflow-hidden w-screen h-screen bg-white">
+  <section class="overflow-hidden h-screen bg-white">
     <div class="flex">
 
       <!-- nav-side bar -->
@@ -141,49 +141,49 @@
             <table class="w-full text-[11px] 2xl:text-base text-left text-gray-700 dark:text-gray-700">
               <thead class="text-[14px] 2xl:text-[20px] text-gray-700">
                 <tr>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                  <th data-sort="noPO" scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
                     onclick="sortTable(0)">
                     No. PO
                     <img loading="lazy" src="../assets/icon_sort.svg" alt=""
                       class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                  <th data-sort="poDate" scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
                     onclick="sortTable(1)">
                     PO Date
                     <img loading="lazy" src="../assets/icon_sort.svg" alt=""
                       class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                  <th data-sort="planDelivery" scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
                     onclick="sortTable(2)">
                     Plan Delivery
                     <img loading="lazy" src="../assets/icon_sort.svg" alt=""
                       class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                  <th data-sort="poRevision" scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
                     onclick="sortTable(3)">
                     Revision No.
                     <img loading="lazy" src="../assets/icon_sort.svg" alt=""
                       class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                  <th data-sort="revisionDate" scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
                     onclick="sortTable(4)">
                     Revision Date
                     <img loading="lazy" src="../assets/icon_sort.svg" alt=""
                       class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                  <th data-sort="status" scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
                     onclick="sortTable(5)">
                     Status
                     <img loading="lazy" src="../assets/icon_sort.svg" alt=""
                       class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-10 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                  <th data-sort="response" scope="col" class="px-10 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
                     onclick="sortTable(6)">
                     Response
                     <img loading="lazy" src="../assets/icon_sort.svg" alt=""
@@ -226,35 +226,132 @@
 <script>
   let rowsPerPage = 12;
   let currentPage = 1;
-  let filteredData = []; // Initialize filteredData as an empty array
-  let pendingResponseIndex = null;
-  let pendingResponseAction = '';
-  
-  // Adjust rows per page based on screen size
-  function adjustRowsPerPage() {
-    if (window.innerWidth <= 1280) {
-      rowsPerPage = 8;
-    } else if (window.innerWidth <= 1600) {
-      rowsPerPage = 10;
-    } else {
-      rowsPerPage = 12;
+  let suppliersData = [];
+  let filteredData = [];
+  let sortOrder = {}; // Object to keep track of sort order for each column
+
+  // Fungsi untuk mengambil data supplier
+  async function fetchSuppliers() {
+    try {
+      const response = await fetch('http://localhost:8000/api/partner');
+      const data = await response.json();
+
+      console.log('API Response for Suppliers:', data); // Debugging log untuk memeriksa data
+
+      if (data.success) { // Sesuaikan dengan respons API
+        suppliersData = data.data;
+        populateSupplierDropdown();
+      } else {
+        console.error('Failed to fetch suppliers:', data.message);
+      }
+    } catch (error) {
+      console.error('Error fetching suppliers:', error);
     }
   }
-  
+
+  // Fungsi untuk mengisi dropdown supplier
+  function populateSupplierDropdown() {
+    const supplierSelect = document.getElementById('Supplier');
+    if (!supplierSelect) {
+      console.error('Supplier select element not found!');
+      return;
+    }
+
+    supplierSelect.innerHTML = '<option value="">Select a supplier</option>'; // Reset dropdown
+
+    suppliersData.forEach(supplier => {
+      const option = document.createElement('option');
+      option.value = supplier.bp_code;
+      option.textContent = supplier.bp_name;
+      supplierSelect.appendChild(option);
+    });
+  }
+
+  // Event listener untuk pemilihan supplier dan pengambilan data purchase order
+  document.addEventListener('DOMContentLoaded', () => {
+    const supplierSelect = document.getElementById('Supplier');
+    if (!supplierSelect) {
+      console.error('Supplier select element not found during DOMContentLoaded!');
+      return;
+    }
+
+    supplierSelect.addEventListener('change', async () => {
+      const selectedSupplier = supplierSelect.value;
+      if (selectedSupplier) {
+        try {
+          const response = await fetch(`http://localhost:8000/api/indexpoheader/${selectedSupplier}`);
+          const data = await response.json();
+
+          console.log('API Response for Purchase Orders:', data); // Debugging log untuk memeriksa data
+
+          if (data.status === "success") { // Sesuaikan dengan respons API
+            filteredData = data.data.map(po => ({
+              noPO: po.po_no,
+              poDate: po.po_date,
+              planDelivery: po.planned_receipt_date,
+              poRevision: po.po_revision_no,
+              revisionDate: po.po_revision_date,
+              status: po.po_status,
+              response: po.response
+            }));
+            adjustRowsPerPage(); // Panggil fungsi ini setelah mengambil data
+            displayTableData(currentPage);
+            updatePagination();
+
+            // Tampilkan elemen-elemen yang terkait dengan tabel
+            document.getElementById('search-bar').style.display = 'block';
+            document.getElementById('table-container').style.display = 'block';
+            document.querySelector('.pagination').style.display = 'flex';
+          } else {
+            console.error('Failed to fetch purchase orders:', data.message);
+          }
+        } catch (error) {
+          console.error('Error fetching purchase orders:', error);
+        }
+      } else {
+        // Sembunyikan elemen-elemen jika tidak ada supplier yang dipilih
+        document.getElementById('search-bar').style.display = 'none';
+        document.getElementById('table-container').style.display = 'none';
+        document.querySelector('.pagination').style.display = 'none';
+      }
+    });
+
+    fetchSuppliers(); // Memanggil fungsi untuk mengambil data supplier saat halaman dimuat
+    adjustRowsPerPage(); // Inisialisasi jumlah baris per halaman berdasarkan ukuran layar
+
+    // Setel ulang tabel dan paginasi saat ukuran layar berubah
+    window.addEventListener('resize', () => {
+      adjustRowsPerPage();
+      displayTableData(currentPage);
+      updatePagination();
+    });
+
+    document.getElementById('search-input').addEventListener('input', searchTable);
+
+    // Tambahkan event listener untuk pengurutan
+    addSortingListeners();
+  });
+
+  // Fungsi untuk menampilkan data tabel
   function displayTableData(page) {
     const tableBody = document.getElementById('table-body');
+    if (!tableBody) {
+      console.error('Table body element not found!');
+      return;
+    }
+
     tableBody.innerHTML = '';
-  
+
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
     const paginatedData = filteredData.slice(start, end);
-  
+
     paginatedData.forEach(row => {
       const tableRow = document.createElement('tr');
       tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
       tableRow.innerHTML = `
         <td class="px-2 py-4 text-center font-medium text-gray-900">
-            <a href="purchase-order-detail.html?noPO=${row.noPO}" class="text-blue-600 underline">${row.noPO}</a>
+          <a href="purchase-order-detail.html?noPO=${row.noPO}" class="text-blue-600 underline">${row.noPO}</a>
         </td>
         <td class="px-2 py-4 text-center">${row.poDate}</td>
         <td class="px-2 py-4 text-center">${row.planDelivery}</td>
@@ -262,14 +359,15 @@
         <td class="px-2 py-4 text-center">${row.revisionDate}</td>
         <td class="px-2 py-4 text-center">${row.status}</td>
         <td class="text-center ${row.response === 'Accepted' ? 'bg-green-400' : row.response === 'Declined' ? 'bg-red-500' : ''}">
-          ${row.response ? `
-            <span class="${row.response === 'Accepted' ? 'text-black' : 'text-white'}">${row.response}</span>` : ''}
+          ${row.response ? 
+            `<span class="${row.response === 'Accepted' ? 'text-black' : 'text-white'}">${row.response}</span>` : ''}
         </td>
       `;
       tableBody.appendChild(tableRow);
     });
   }
-  
+
+  // Fungsi untuk melakukan pencarian data di tabel
   function searchTable() {
     const searchInput = document.getElementById('search-input').value.toLowerCase();
     filteredData = filteredData.filter(row => row.noPO.toLowerCase().includes(searchInput));
@@ -277,50 +375,26 @@
     displayTableData(currentPage);
     updatePagination();
   }
-  
-  // Function to sort table based on column index
-  function sortTable(columnIndex) {
-    const table = document.querySelector('table');
-    const tbody = table.querySelector('tbody');
-    const rows = Array.from(tbody.querySelectorAll('tr'));
-    const isAscending = table.querySelectorAll('th')[columnIndex].classList.toggle('asc');
-    table.querySelectorAll('th').forEach((th, index) => {
-      if (index !== columnIndex) th.classList.remove('asc', 'desc');
-    });
-  
-    rows.sort((a, b) => {
-      const cellA = a.querySelectorAll('td')[columnIndex].textContent.trim();
-      const cellB = b.querySelectorAll('td')[columnIndex].textContent.trim();
-  
-      if (columnIndex === 2 || columnIndex === 3 || columnIndex === 5) {
-        return new Date(cellA) - new Date(cellB);
-      }
-  
-      return cellA.localeCompare(cellB, undefined, { numeric: true, sensitivity: 'base' });
-    });
-  
-    if (!isAscending) {
-      rows.reverse();
-    }
-  
-    tbody.innerHTML = '';
-    tbody.append(...rows);
-  }
-  
+
+  // Fungsi untuk memperbarui paginasi
   function updatePagination() {
     const paginationContainer = document.querySelector('.pagination');
+    if (!paginationContainer) {
+      console.error('Pagination container not found!');
+      return;
+    }
+    
     paginationContainer.innerHTML = '';
-  
+
     const totalPages = Math.ceil(filteredData.length / rowsPerPage);
     const maxPageNumbersToShow = 4;
-  
-    // Previous button
+
     const prevButton = document.createElement('button');
     prevButton.className = 'px-3 py-3 2xl:px-4 2xl:py-4 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
     prevButton.innerHTML = `
-        <svg class="2xl:w-4 2xl:h-4 w-3 h-3 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
+      <svg class="2xl:w-4 2xl:h-4 w-3 h-3 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
         <path d="M8.766.566A2 2 0 0 0 6.586 1L1 6.586a2 2 0 0 0 0 2.828L6.586 15A2 2 0 0 0 10 13.586V2.414A2 2 0 0 0 8.766.566Z" />
-        </svg>
+      </svg>
     `;
     prevButton.disabled = currentPage === 1;
     prevButton.addEventListener('click', () => {
@@ -331,8 +405,7 @@
       }
     });
     paginationContainer.appendChild(prevButton);
-  
-    // Calculate page numbers to show
+
     const pageNumbers = [];
     if (totalPages <= maxPageNumbersToShow) {
       for (let i = 1; i <= totalPages; i++) {
@@ -340,26 +413,25 @@
       }
     } else {
       pageNumbers.push(1);
-  
+
       const startPage = Math.max(2, currentPage - 1);
       const endPage = Math.min(totalPages - 1, currentPage + 1);
-  
+
       if (startPage > 2) {
         pageNumbers.push('...');
       }
-  
+
       for (let i = startPage; i <= endPage; i++) {
         pageNumbers.push(i);
       }
-  
+
       if (endPage < totalPages - 1) {
         pageNumbers.push('...');
       }
-  
+
       pageNumbers.push(totalPages);
     }
-  
-    // Page numbers buttons
+
     pageNumbers.forEach(number => {
       const pageButton = document.createElement('button');
       if (number === '...') {
@@ -376,14 +448,13 @@
       }
       paginationContainer.appendChild(pageButton);
     });
-  
-    // Next button
+
     const nextButton = document.createElement('button');
     nextButton.className = 'px-3 py-3 2xl:px-4 2xl:py-4 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
     nextButton.innerHTML = `
-        <svg class="2xl:w-4 2xl:h-4 w-3 h-3 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
+      <svg class="2xl:w-4 2xl:h-4 w-3 h-3 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
         <path d="M1.234 15.434a2 2 0 0 0 2.18-1.414L9 9.414a2 2 0 0 0 0-2.828L3.414.586A2 2 0 0 0 1.234 2.414v11.172z" />
-        </svg>
+      </svg>
     `;
     nextButton.disabled = currentPage === totalPages;
     nextButton.addEventListener('click', () => {
@@ -395,54 +466,47 @@
     });
     paginationContainer.appendChild(nextButton);
   }
-  
-  // Event listeners
-  document.addEventListener('DOMContentLoaded', () => {
-    adjustRowsPerPage(); // Set rows per page based on initial screen size
-    window.addEventListener('resize', () => {
-      adjustRowsPerPage(); // Adjust rows per page on screen resize
-      displayTableData(currentPage); // Re-render table data
-      updatePagination(); // Re-render pagination
-    });
-  
-    // Initially hide the search bar, table, and pagination
-    document.getElementById('search-bar');
-    document.getElementById('table-container');
-    document.querySelector('.pagination').style.display = 'none';
-  });
-  
-  // Populate the dropdown with supplier options
-  const supplierSelect = document.getElementById('Supplier');
-  selectSupplier.forEach(supplier => {
-    const option = document.createElement('option');
-    option.value = supplier.bpCode;
-    option.textContent = supplier.supplierName;
-    supplierSelect.appendChild(option);
-  });
-  
-  // Enable submit button if a supplier is selected
-  const submitBtn = document.getElementById('submitBtn');
-  supplierSelect.addEventListener('change', () => {
-    submitBtn.disabled = !supplierSelect.value;
-  });
-  
-  // Handle form submission and display the table data
-  submitBtn.addEventListener('click', () => {
-    const selectedSupplier = selectSupplier.find(supplier => supplier.bpCode === supplierSelect.value);
-    if (selectedSupplier) {
-      filteredData = selectedSupplier.purchaseOrders; // Corrected from purchaseOrder to purchaseOrders
-      displayTableData(currentPage); // Display data for the current page
-      updatePagination(); // Update pagination
-  
-      // Show the search bar, table, and pagination
-      document.getElementById('search-bar');
-      document.getElementById('table-container');
-      document.querySelector('.pagination').style.display = 'flex'; // Adjust as needed
+
+  // Fungsi untuk mengatur jumlah baris per halaman berdasarkan ukuran layar
+  function adjustRowsPerPage() {
+    if (window.innerWidth <= 768) {
+      rowsPerPage = 4; // Atur menjadi 4 jika ukuran layar <= 768
+    } else if (window.innerWidth <= 1280) {
+      rowsPerPage = 5;
+    } else {
+      rowsPerPage = 7;
     }
-  });
-  
-  document.getElementById('search-input').addEventListener('input', searchTable);
-  
+  }
+
+  // Fungsi untuk menambahkan event listener untuk sorting
+  function addSortingListeners() {
+    const headers = document.querySelectorAll('th[data-sort]');
+    headers.forEach(header => {
+      header.addEventListener('click', () => {
+        const sortKey = header.getAttribute('data-sort');
+        sortData(sortKey);
+        displayTableData(currentPage);
+        updatePagination();
+      });
+    });
+  }
+
+  // Fungsi untuk mengurutkan data
+  function sortData(sortKey) {
+    // Toggle sort order
+    sortOrder[sortKey] = sortOrder[sortKey] === 'asc' ? 'desc' : 'asc';
+
+    filteredData.sort((a, b) => {
+      if (a[sortKey] < b[sortKey]) {
+        return sortOrder[sortKey] === 'asc' ? -1 : 1;
+      } else if (a[sortKey] > b[sortKey]) {
+        return sortOrder[sortKey] === 'asc' ? 1 : -1;
+      } else {
+        return 0;
+      }
+    });
+  }
 </script>
+
 
 </html>
