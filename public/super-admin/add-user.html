@@ -42,52 +42,8 @@
               </a>
             </li>
 
-            <!-- Hidden Menu Items -->
-            <li class="hidden">
-              <a href="purchase-order.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../../assets/icon_po_default.svg" alt=""
-                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-[0.89] fill-blue-950 icon-po-active" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Purchase Order</span>
-              </a>
-            </li>
-
-            <li class="hidden">
-              <a href="delivery-note.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../../assets/icon_dn_default.svg" alt=""
-                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Delivery Note</span>
-              </a>
-            </li>
-
-            <li class="hidden">
-              <a href="history-purchase-order.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../../assets/icon_history_default.svg" alt=""
-                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">History Purchase Order</span>
-              </a>
-            </li>
-
-            <li class="hidden">
-              <a href="history-delivery-note.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../../assets/icon_history_default.svg" alt=""
-                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">History Delivery Note</span>
-              </a>
-            </li>
-
-            <li class="hidden">
-              <a href="listing-report"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../../assets/icon_listing_default.svg" alt=""
-                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Listing Report</span>
-              </a>
-            </li>
-            </ul>
+          </ul>
+            
 
           <!-- User and Logout Section at the Bottom -->
           <div class="mt-auto flex flex-col w-full">
@@ -180,6 +136,8 @@
             <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-base 2xl:text-xl px-6 2xl:px-8 py-3 2xl:py-4 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
           </div>
         </form>
+        <!-- Notification Area -->
+        <div id="notification" class="fixed bottom-4 right-4 hidden p-4 rounded-lg shadow-lg"></div>
       </main>
 
     </div>
@@ -191,43 +149,152 @@
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const name = localStorage.getItem('name');
-        const bpCode = localStorage.getItem('bpCode');
+    
+    document.addEventListener('DOMContentLoaded', function () {
+      const name = localStorage.getItem('name');
+      const bpCode = localStorage.getItem('bpCode');
+      
+      document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
+
+      fetchSuppliers();
+
+      initializeForm();
+    });
+
+    async function fetchSuppliers() {
+      const token = localStorage.getItem('accessToken');
+      
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/partner', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
         
-        document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
+        if (response.ok) {
+          const data = await response.json();
+          console.log('API Response for Suppliers:', data);
+          
+          // Map data to filteredData and update table
+          if (data.success) {
+            suppliersData = data.data;
+            populateSupplierDropdown(suppliersData);
+          } else {
+            console.error('Failed to fetch suppliers:', data.message);
+          }
+          
+        } else {
+          console.error('Kesalahan saat mengambil data supplier:', response.status, response.statusText);
+        }
+      } catch (error) {        
+        console.error('Error Token Not Valid', error);
+      }
+    }
+
+    // Fungsi untuk mengisi dropdown supplier
+    function populateSupplierDropdown(suppliersData) {
+      const supplierSelect = document.getElementById('supplier_id');
+
+      if (!supplierSelect) {
+        console.error('Supplier select element not found!');
+        return;
+      }
+
+      supplierSelect.innerHTML = '<option value="">Search Supplier</option>'; // Reset dropdown
+
+      suppliersData.forEach(supplier => {
+        const option = document.createElement('option');
+        option.value = supplier.bp_code;
+        option.textContent = `${supplier.bp_code} | ${supplier.bp_name}`;
+        supplierSelect.appendChild(option);
       });
 
-    $(document).ready(function () {
-
-      const supplierSelect = $('#supplier_id');
-
-      // Populate supplier select options
-      suppliers.forEach(supplier => {
-        const option = new Option(`${supplier.name} (${supplier.code})`, supplier.id, false, false);
-        supplierSelect.append(option);
-      });
-
-      // Initialize Select2
-      supplierSelect.select2({
+      // Initialize Select2 again after options are populated
+      $(supplierSelect).select2({
         placeholder: 'Search Supplier',
         allowClear: true
       });
+    }
 
-      // Form submission
-      $('#user-form').on('submit', function (e) {
+    $(document).ready(function () {
+
+      $('#user-form').on('submit', async function (e) {
         e.preventDefault();
-        const selectedSupplierId = supplierSelect.val();
+        const selectedSupplierId = $('#supplier_id').val();
+        const roleValue = $('#role').val();
+        const usernameValue = $('#username').val();
+        const passwordValue = $('#password').val();
+        const emailValue = $('#email').val();
+        const firstNameValue = $('#first_name').val();
+
         if (!selectedSupplierId) {
-          alert('Please select a supplier!');
+          displayNotification('Please select a supplier!', 'error');
           return;
         }
-        console.log('Selected Supplier ID:', selectedSupplierId);
-        // Proceed with form submission or additional processing
+
+        const payload = {
+          bp_code: selectedSupplierId,
+          name: firstNameValue,
+          role: roleValue,
+          status: "1",  // Default status for new users, can be adjusted as needed
+          username: usernameValue,
+          password: passwordValue,
+          email: emailValue
+        };
+
+        try {
+          const token = localStorage.getItem('accessToken');
+          const response = await fetch('http://127.0.0.1:8000/api/create', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+          });
+
+          const result = await response.json();
+
+          if (response.ok && result.success) {
+            displayNotification('User successfully created!', 'success');
+            // Tidak ada redirect setelah sukses, tetap di halaman
+            // Reset form setelah berhasil menambah user
+
+            document.getElementById('user-form').reset();
+
+            // Redirect after successful creation
+
+            // setTimeout(() => {
+            //   window.location.href = 'manage-user.html';  
+            // }, 1500);
+            
+          } else {
+            displayNotification('Failed to create user: ' + result.message, 'error');
+          }
+        } catch (error) {
+          console.error('Error during user creation:', error);
+          displayNotification('An error occurred while creating the user.', 'error');
+        }
       });
     });
 
-    document.addEventListener('DOMContentLoaded', function () {
+    function displayNotification(message, type) {
+      const notification = document.getElementById('notification');
+      notification.textContent = message;
+
+      notification.className = 'fixed bottom-4 right-4 p-4 rounded-lg shadow-lg ';
+      notification.className += type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white';
+      notification.classList.remove('hidden');
+
+      setTimeout(() => {
+        notification.classList.add('hidden');
+      }, 3000);
+    }
+    
+    function initializeForm() {
+
       const roleSelect = document.getElementById('role');
       const emailInput = document.getElementById('email');
       const passwordInput = document.getElementById('password');
@@ -258,14 +325,23 @@
         passwordInput.value = password;
       });
   
-      function generateRandomPassword(length = 8) {
+      function generateRandomPassword(maxLength = 8) {
         const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890";
-        let password = '';
-        for (let i = 0; i < length; i++) {
+        
+        const selectedSupplierId = $('#supplier_id').val(); // Ambil bp_code yang dipilih
+        
+        // Hitung sisa panjang setelah bp_code
+        const remainingLength = maxLength - selectedSupplierId.length;
+        
+        let randomPart = '';
+        
+        for (let i = 0; i < remainingLength; i++) {
           const randomIndex = Math.floor(Math.random() * charset.length);
-          password += charset[randomIndex];
+          randomPart += charset[randomIndex];
         }
-        return password;
+
+        return selectedSupplierId + randomPart; // Password akan dihasilkan berdasarkan bp_code + karakter random
+
       }
   
       // Form Validation on Submit
@@ -310,7 +386,7 @@
           window.location.href = 'manage-user.html';
         }
       });
-    });
+    };
   </script>
   
 
