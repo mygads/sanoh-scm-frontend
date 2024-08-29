@@ -37,6 +37,10 @@ async function handleLogout() {
         }, 1500);
       } else {
         displayNotification('Logout failed: ' + result.message, 'error');
+        clearSession();
+        setTimeout(() => {
+          window.location.href = '../index.html';
+        }, 1500);
       }
     } catch (error) {
       console.error('Error during logout:', error);
@@ -77,3 +81,13 @@ function displayNotification(message, type) {
     }, 3000);
 }
   
+// Function to check token expiration
+function isTokenExpired() {
+  const tokenExpiry = localStorage.getItem('tokenExpiry');
+  if (tokenExpiry) {
+    const now = new Date().getTime();
+    return now > parseInt(tokenExpiry);
+  }
+  return true;
+}
+

@@ -230,7 +230,7 @@
     const token = localStorage.getItem('accessToken');
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/index', {
+      const response = await fetch('http://127.0.0.1:8000/api/index4', {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -433,30 +433,6 @@
     updateStatusAPI(userId, status);  // Pass 'status' to the API function
   }
 
-  // Function to call API and update status
-  // async function updateStatusAPI(userId, newStatus) {
-  //   const token = localStorage.getItem('accessToken');
-  //   try {
-  //     const response = await fetch(`http://127.0.0.1:8000/api/update/${userId}`, {
-  //       method: 'PUT',
-  //       headers: {
-  //         'Authorization': `Bearer ${token}`,
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({
-  //         status: newStatus
-  //       }),
-  //     });
-
-  //     if (response.ok) {
-  //       console.log(`Status berhasil diupdate untuk User ID: ${userId}`);
-  //     } else {
-  //       console.error('Kesalahan saat mengupdate status:', response.status, response.statusText);
-  //     }
-  //   } catch (error) {
-  //     console.error('Kesalahan fetch:', error);
-  //   }
-  // }
 
 
   // Function to initialize the table with the saved statuses from localStorage
