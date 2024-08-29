@@ -15,7 +15,7 @@
 
 <body class="font-poppins bg-white">
   <section class="overflow-hidden w-screen h-screen bg-white">
-    <div class="flex">
+    <div class="flex h-screen">
 
       <!-- nav-side bar -->
       <aside class="flex flex-col w-[20%] max-md:ml-0 max-md:w-full">
@@ -38,14 +38,15 @@
                 <span class="self-stretch my-auto text-sm 2xl:text-xl">Select Supplier</span>
               </a>
             </li>
+          </ul>
 
           <!-- User and Logout Section at the Bottom -->
-          <div class="mt-[185%] flex flex-col w-full">
+          <div class="mt-auto flex flex-col w-full">
             
             <!-- User Info -->
             <div class="flex gap-4 items-center p-2 2xl:p-4 w-full bg-blue-950 bg-opacity-10 text-blue-950">
               <img loading="lazy" src="../assets/icon_people.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-              <span class="self-stretch my-auto text-sm 2xl:text-xl">PT Kawasaki</span>
+              <span id="user-info" class="self-stretch my-auto text-sm 2xl:text-xl"></span>
             </div>
             
             <!-- Logout Button -->
@@ -77,6 +78,12 @@
     </main>
 
     <script src="../script.js"></script>
+    <script>
+      const name = localStorage.getItem('name');
+      const bpCode = localStorage.getItem('bpCode');
+
+      document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
+    </script>
 
 </body>
 
