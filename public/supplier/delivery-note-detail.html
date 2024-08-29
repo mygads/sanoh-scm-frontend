@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delivery Note Supplier</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,7 +16,7 @@
 
 <body class="font-poppins bg-white">
   <section class="overflow-hidden w-screen h-screen bg-white">
-    <div class="flex">
+    <div class="flex h-screen">
 
       <!-- nav-side bar -->
       <aside class="flex flex-col w-[20%]">
@@ -77,12 +78,12 @@
           </ul>
 
           <!-- User and Logout Section at the Bottom -->
-          <div class="mt-[80%] flex flex-col w-full">
+          <div class="mt-auto flex flex-col w-full">
             
             <!-- User Info -->
             <div class="flex gap-4 items-center p-2 2xl:p-4 w-full bg-blue-950 bg-opacity-10 text-blue-950">
               <img loading="lazy" src="../assets/icon_people.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-              <span class="self-stretch my-auto text-sm 2xl:text-xl">PT Kawasaki</span>
+              <span id="user-info" class="self-stretch my-auto text-sm 2xl:text-xl"></span>
             </div>
             
             <!-- Logout Button -->
@@ -95,7 +96,7 @@
       </aside>
 
       <!-- Main Content -->
-      <main class="flex flex-col w-[80%] mb-[100%] mt-[3%] mx-auto px-6 2xl:px-10">
+      <main class="flex flex-col w-[80%] mb-auto mt-[3%] mx-auto px-6 2xl:px-10">
 
         <section class="flex flex-col self-stretch py-px my-auto w-full ">
 
@@ -385,6 +386,12 @@
   });
 
   document.addEventListener('DOMContentLoaded', () => {
+
+    const name = localStorage.getItem('name');
+    const bpCode = localStorage.getItem('bpCode');
+
+    document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
+    
     adjustRowsPerPage(); // Set rows per page based on initial screen size
     window.addEventListener('resize', () => {
       adjustRowsPerPage(); // Adjust rows per page on screen resize
