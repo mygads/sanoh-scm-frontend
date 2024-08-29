@@ -7,10 +7,11 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
+  <link
+    href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
-  
+
 </head>
 
 <body class="font-poppins bg-white">
@@ -33,22 +34,32 @@
                 class="flex gap-4 items-center p-[9px] 2xl:p-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
                 <img loading="lazy" src="../assets/icon_home_default.svg" alt="Dashboard"
                   class="object-contain w-4 2xl:w-6" />
-                <span class="text-sm 2xl:text-xl">Supplier ABCD</span>
+                <span class="text-sm 2xl:text-xl">Dashboard</span>
               </a>
             </li>
 
             <!-- Purchase Order -->
-            <li>
-              <a 
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 active">
+            <li class="hidden">
+              <a href="purchase-order.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
                 <img loading="lazy" src="../assets/icon_po_default.svg" alt="Purchase Order"
-                  class="object-contain w-4 2xl:w-6 icon-po-active" />
+                  class="object-contain w-4 2xl:w-6 " />
                 <span class="text-sm 2xl:text-xl">Purchase Order</span>
               </a>
             </li>
 
-            <!-- History Purchase Order -->
+            <!-- Delivery Note -->
             <li>
+              <a href="delivery-note.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
+                <img loading="lazy" src="../assets/icon_dn_default.svg" alt="Purchase Order"
+                  class="object-contain w-4 2xl:w-6" />
+                <span class="text-sm 2xl:text-xl">Delivery Note</span>
+              </a>
+            </li>
+
+            <!-- History Purchase Order -->
+            <li class="hidden">
               <a href="history-purchase-order.html"
                 class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
                 <img loading="lazy" src="../assets/icon_history_default.svg" alt="History Purchase Order"
@@ -57,13 +68,13 @@
               </a>
             </li>
 
-            <!-- Performance Report -->
+            <!-- History Delivery Note -->
             <li>
-              <a href="performance-report.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
-                <img loading="lazy" src="../assets/icon_performance_default.svg" alt="Performance Report"
-                  class="object-contain w-4 2xl:w-6" />
-                <span class="text-sm 2xl:text-xl">Performance Report</span>
+              <a href="history-delivery-note.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 active">
+                <img loading="lazy" src="../assets/icon_history_default.svg" alt="History Purchase Order"
+                  class="object-contain w-4 2xl:w-6 icon-history-active" />
+                <span class="text-sm 2xl:text-xl">History Delivery Note</span>
               </a>
             </li>
           </ul>
@@ -92,45 +103,74 @@
         <section class="flex flex-col self-stretch py-px my-auto w-full ">
 
           <header class="flex gap-3 items-center self-start text-2xl font-semibold text-black">
-            <a href="purchase-order.html">
-                <img loading="lazy" src="../assets/icon_back.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-5 2xl:w-7 cursor-pointer pointer-events-auto aspect-square" />
+            <a href="history-delivery-note.html">
+              <img loading="lazy" src="../assets/icon_back.svg" alt=""
+                class="object-contain shrink-0 self-stretch my-auto w-5 2xl:w-7 cursor-pointer pointer-events-auto aspect-square" />
             </a>
-            
-            <h1 class="self-stretch my-auto text-[80%] 2xl:text-[120%]">Purchase Order (PO) Detail</h1>
+
+            <h1 class="self-stretch my-auto text-[80%] 2xl:text-[120%]">History Delivery Note (DN) Detail</h1>
           </header>
 
           <div class="flex flex-col mt-4 2xl:mt-6 w-full 2xl:text-base text-xs font-medium">
 
             <div class="flex flex-wrap gap-10 justify-between items-center w-full">
 
-              <!-- No PO -->
+              <!-- No DN -->
               <div class="flex gap-3 2xl:gap-6 items-center self-stretch my-auto text-black min-w-[10%]">
-                <div class="self-stretch my-auto ">No. PO</div>
-                <div id="poNumber" class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap rounded bg-stone-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
+                <div class="self-stretch my-auto ">No. DN</div>
+                <div id="dnNumber"
+                  class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap rounded bg-stone-300 min-h-[10%] w-[8%] max-md:px-5">
+                </div>
               </div>
 
               <!-- Search Bar -->
               <div class="flex flex-wrap items-center self-stretch my-auto  text-neutral-500">
                 <div class="flex items-center px-4 2xl:px-6 py-2 2xl:py-4 bg-neutral-100 rounded w-full ml-auto">
-                  <input id="search-input" type="text" placeholder="Search part number or name" class="flex-1 bg-neutral-100 outline-none 2xl:text-base">
+                  <input id="search-input" type="text" placeholder="Search part number or name"
+                    class="flex-1 bg-neutral-100 outline-none 2xl:text-base">
                   <img src="../assets/icon_search.svg" alt="Search Icon" class="w-4 2xl:w-5 h-4 2xl:h-5 ml-3">
                 </div>
               </div>
+
             </div>
 
             <div class="flex flex-wrap gap-[10%] justify-between items-center mt-4 2xl:mt-6 w-full">
-              
-              <!-- Note -->
-              <div class="flex gap-6 2xl:gap-10 items-center self-stretch my-auto text-black min-w-[10%]">
-                <div class="self-stretch my-auto ">Note</div>
-                <div id="noteInput" type="text" class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap ounded border border-solid border-neutral-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
+
+              <div class="flex gap-5">
+                <!-- No PO -->
+                <!-- <div class="flex gap-[13px] 2xl:gap-10 items-center self-stretch my-auto text-black min-w-[10%]">
+                  <div class="self-stretch my-auto ">No. PO</div>
+                  <div id="poNumber" type="text" class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap ounded border border-solid border-neutral-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
+                </div> -->
+
+                <div class="flex gap-3 2xl:gap-6 items-center self-stretch my-auto text-black min-w-[10%]">
+                  <div class="self-stretch my-auto ">No. PO</div>
+                  <div id="poNumber"
+                    class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap rounded bg-stone-300 min-h-[10%] w-[8%] max-md:px-5">
+                  </div>
+                </div>
+
+                <div class="flex gap-3 2xl:gap-6 items-center self-stretch my-auto text-black min-w-[10%]">
+                  <div class="self-stretch my-auto ">Plan Delivery Date</div>
+                  <div id="planDelivery"
+                    class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap rounded bg-stone-300 min-h-[10%] w-[8%] max-md:px-5">
+                  </div>
+                </div>
               </div>
-              
-              
+              <div
+                class="flex gap-3 2xl:gap-6 items-center self-stretch my-auto text-white 2xl:min-w-[240px] text-[10px] 2xl:text-lg">
+                <a href="export-csv.html"
+                  class="flex gap-2 2xl:gap-4 items-center self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5">
+                  <img loading="lazy" src="../assets/icon_print.png" alt=""
+                    class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-5 aspect-square" />
+                  <span class="flex-1 shrink self-stretch my-auto ">Export CSV</span>
+                </a>
+
+              </div>
             </div>
 
           </div>
-          
+
         </section>
 
         <!-- table -->
@@ -140,30 +180,51 @@
             <table class="w-full text-[11px] 2xl:text-base text-left text-gray-700 dark:text-gray-700">
               <thead class="text-[14px] 2xl:text-[20px] text-gray-700">
                 <tr>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(0)">
+                  <th scope="col"
+                    class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer w-[5%]"
+                    onclick="sortTable(0)">
                     No
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
+                      class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(1)">
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                    onclick="sortTable(1)">
                     Part Number
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
-                    <span class="sort-indicator"></span>
+                    <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" /> -->
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(2)">
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                    onclick="sortTable(2)">
                     Part Name
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                  </th>
+                  <th scope="col"
+                    class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer w-[13%]"
+                    onclick="sortTable(3)">
+                    Quantiy Order
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
+                      class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(3)">
-                    UoM
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
-                    <span class="sort-indicator"></span>
+                  <th scope="col"
+                    class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer w-[13%]"
+                    onclick="sortTable(4)">
+                    Quantity Label
+                    <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" /> -->
+                    <!-- <span class="sort-indicator"></span> -->
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(4)">
-                    QTY
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
-                    <span class="sort-indicator"></span>
+                  <th scope="col"
+                    class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer w-[15%]"
+                    onclick="sortTable(5)">
+                    Quantity Delivered
+                    <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" /> -->
+                    <!-- <span class="sort-indicator"></span> -->
+                  </th>
+                  <th scope="col"
+                    class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer w-[15%]"
+                    onclick="sortTable(6)">
+                    Quantity Received
+                    <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" /> -->
+                    <!-- <span class="sort-indicator"></span> -->
                   </th>
                 </tr>
               </thead>
@@ -173,13 +234,15 @@
             </table>
           </div>
         </div>
-  
+
         <!-- Pagination -->
         <div class="flex justify-end my-6">
           <div class="flex gap-2 2xl:gap-4 items-center pagination">
             <!-- Pagination buttons will be inserted here by JavaScript -->
           </div>
         </div>
+
+
       </main>
     </div>
   </section>
@@ -196,41 +259,41 @@
   let rowsPerPage = 10;
   let currentPage = 1;
   let filteredData = [];
-  
+
 
   // Adjust rows per page based on screen size
-  adjustRowsPerPage(); 
+  adjustRowsPerPage();
 
   const params = new URLSearchParams(window.location.search);
-  const noPO = params.get('noPO');
+  const noDN = params.get('noDN');
 
-  if (noPO) {
-      const po = purchaseOrder.find(po => po.noPO === noPO);
-      if (po) {
-        document.getElementById('poNumber').textContent = po.noPO;
-        document.getElementById('noteInput').textContent = po.note;
-        filteredData = po.details;
-        displayPODetails(po.details);
-        updatePagination();
-      } else {
-        console.error('Data PO tidak ditemukan dalam array data.');
-      }
+  if (noDN) {
+    const dn = deliveryNote.find(dn => dn.noDN === noDN);
+    if (dn) {
+      document.getElementById('dnNumber').textContent = dn.noDN;
+      document.getElementById('poNumber').textContent = dn.noPO;
+      document.getElementById('planDelivery').textContent = dn.planDNDate;
+      filteredData = dn.details;
+      displayDNDetails(dn.details);
+      updatePagination();
+    } else {
+      console.error('Data DN tidak ditemukan dalam array data.');
+    }
   } else {
-      console.error('Parameter noPO tidak ditemukan dalam URL.');
+    console.error('Parameter noDN tidak ditemukan dalam URL.');
   }
-  // let filteredData = details; // Initialize filteredData with all data
-  // Adjust rows per page based on screen size
+
   function adjustRowsPerPage() {
     if (window.innerWidth <= 1280) {
-        rowsPerPage = 7;
-      } else if (window.innerWidth <= 1600) {
-        rowsPerPage = 9;
-      } else {
-        rowsPerPage = 10;
-      }
+      rowsPerPage = 7;
+    } else if (window.innerWidth <= 1600) {
+      rowsPerPage = 9;
+    } else {
+      rowsPerPage = 10;
+    }
   }
 
-  function displayPODetails(details) {
+  function displayDNDetails(details) {
     const tableBody = document.getElementById('table-body-detail');
     tableBody.innerHTML = '';
 
@@ -245,12 +308,34 @@
         <td class="px-2 py-4 text-center font-medium text-gray-900">${row.no}</td>
         <td class="px-2 py-4 text-center">${row.partNumber}</td>
         <td class="px-2 py-4 text-center">${row.partName}</td>
-        <td class="px-2 py-4 text-center">${row.UoM}</td>
         <td class="px-2 py-4 text-center">${row.QTY}</td>
+        <td class="px-2 py-4 text-center">${row.qtyLabel}</td>
+        <td class="px-2 py-4 text-center">${row.qtyDelivered}</td>
+        <td class="px-2 py-4 text-center">${row.qtyReceived}</td>
       `;
       tableBody.appendChild(tableRow);
     });
   }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const name = localStorage.getItem('name');
+    const bpCode = localStorage.getItem('bpCode');
+
+    document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
+
+    adjustRowsPerPage(); // Set rows per page based on initial screen size
+    window.addEventListener('resize', () => {
+      adjustRowsPerPage(); // Adjust rows per page on screen resize
+      displayDNDetails(filteredData); // Re-render table data
+      updatePagination(); // Re-render pagination
+    });
+
+    document.getElementById('search-input').addEventListener('input', searchTable);
+
+    displayDNDetails(filteredData);
+    updatePagination();
+  });
+
 
   function updatePagination() {
     const paginationContainer = document.querySelector('.pagination');
@@ -269,59 +354,59 @@
     `;
     prevButton.disabled = currentPage === 1;
     prevButton.addEventListener('click', () => {
-        if (currentPage > 1) {
+      if (currentPage > 1) {
         currentPage--;
-        displayPODetails(filteredData);
+        displayDNDetails(filteredData);
         updatePagination();
-        }
+      }
     });
     paginationContainer.appendChild(prevButton);
 
     // Calculate page numbers to show
     const pageNumbers = [];
     if (totalPages <= maxPageNumbersToShow) {
-        // If total pages is less than or equal to maxPageNumbersToShow, show all page numbers
-        for (let i = 1; i <= totalPages; i++) {
+      // If total pages is less than or equal to maxPageNumbersToShow, show all page numbers
+      for (let i = 1; i <= totalPages; i++) {
         pageNumbers.push(i);
-        }
+      }
     } else {
-        // Otherwise, calculate which page numbers to show
-        pageNumbers.push(1); // Always show the first page
+      // Otherwise, calculate which page numbers to show
+      pageNumbers.push(1); // Always show the first page
 
-        const startPage = Math.max(2, currentPage - 1);
-        const endPage = Math.min(totalPages - 1, currentPage + 1);
+      const startPage = Math.max(2, currentPage - 1);
+      const endPage = Math.min(totalPages - 1, currentPage + 1);
 
-        if (startPage > 2) {
+      if (startPage > 2) {
         pageNumbers.push('...');
-        }
+      }
 
-        for (let i = startPage; i <= endPage; i++) {
+      for (let i = startPage; i <= endPage; i++) {
         pageNumbers.push(i);
-        }
+      }
 
-        if (endPage < totalPages - 1) {
+      if (endPage < totalPages - 1) {
         pageNumbers.push('...');
-        }
+      }
 
-        pageNumbers.push(totalPages); // Always show the last page
+      pageNumbers.push(totalPages); // Always show the last page
     }
 
     // Page numbers buttons
     pageNumbers.forEach(number => {
-        const pageButton = document.createElement('button');
-        if (number === '...') {
+      const pageButton = document.createElement('button');
+      if (number === '...') {
         pageButton.className = 'px-4 py-2 2xl:px-6 2xl:py-4 text-gray-900 bg-gray-200 rounded-md cursor-default';
         pageButton.textContent = '...';
-        } else {
+      } else {
         pageButton.className = `px-4 py-2 2xl:px-6 2xl:py-4 ${number === currentPage ? 'bg-blue-900 text-white' : 'bg-gray-200 text-gray-900'} rounded-md hover:bg-gray-300`;
         pageButton.textContent = number;
         pageButton.addEventListener('click', () => {
-            currentPage = number;
-            displayPODetails(filteredData);
-            updatePagination();
+          currentPage = number;
+          displayDNDetails(filteredData);
+          updatePagination();
         });
-        }
-        paginationContainer.appendChild(pageButton);
+      }
+      paginationContainer.appendChild(pageButton);
     });
 
     // Next button
@@ -334,33 +419,14 @@
     `;
     nextButton.disabled = currentPage === totalPages;
     nextButton.addEventListener('click', () => {
-        if (currentPage < totalPages) {
+      if (currentPage < totalPages) {
         currentPage++;
-        displayPODetails(filteredData);
+        displayDNDetails(filteredData);
         updatePagination();
-        }
+      }
     });
     paginationContainer.appendChild(nextButton);
-}
-
-  document.addEventListener('DOMContentLoaded', () => {
-    const name = localStorage.getItem('name');
-    const bpCode = localStorage.getItem('bpCode');
-
-    document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
-
-    adjustRowsPerPage(); // Set rows per page based on initial screen size
-    window.addEventListener('resize', () => {
-      adjustRowsPerPage(); // Adjust rows per page on screen resize
-      displayPODetails(filteredData); // Re-render table data
-      updatePagination(); // Re-render pagination
-    });
-
-    document.getElementById('search-input').addEventListener('input', searchTable);
-
-    displayPODetails(filteredData);
-    updatePagination();
-  });
+  }
 
   // Function to sort table based on column index
   function sortTable(columnIndex) {
@@ -390,12 +456,12 @@
   // Function to handle search
   function searchTable() {
     const searchInput = document.getElementById('search-input').value.toLowerCase();
-    filteredData = purchaseOrder.find(po => po.noPO === noPO).details.filter(row => 
-      row.partNumber.toLowerCase().includes(searchInput) || 
+    filteredData = deliveryNote.find(dn => dn.noDN === noDN).details.filter(row =>
+      row.partNumber.toLowerCase().includes(searchInput) ||
       row.partName.toLowerCase().includes(searchInput)
     );
     currentPage = 1;
-    displayPODetails(filteredData);
+    displayDNDetails(filteredData);
     updatePagination();
   }
 

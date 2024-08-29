@@ -33,17 +33,27 @@
                 class="flex gap-4 items-center p-[9px] 2xl:p-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
                 <img loading="lazy" src="../assets/icon_home_default.svg" alt="Dashboard"
                   class="object-contain w-4 2xl:w-6" />
-                <span class="text-sm 2xl:text-xl">Supplier ABCD</span>
+                <span class="text-sm 2xl:text-xl">Dashboard</span>
               </a>
             </li>
 
             <!-- Purchase Order -->
             <li>
-              <a 
+              <a
                 class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 active">
                 <img loading="lazy" src="../assets/icon_po_default.svg" alt="Purchase Order"
                   class="object-contain w-4 2xl:w-6 icon-po-active" />
                 <span class="text-sm 2xl:text-xl">Purchase Order</span>
+              </a>
+            </li>
+
+            <!-- Delivery Note -->
+            <li>
+              <a href="delivery-note.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
+                <img loading="lazy" src="../assets/icon_dn_default.svg" alt="Purchase Order"
+                  class="object-contain w-4 2xl:w-6" />
+                <span class="text-sm 2xl:text-xl">Delivery Note</span>
               </a>
             </li>
 
@@ -57,13 +67,13 @@
               </a>
             </li>
 
-            <!-- Performance Report -->
+            <!-- History Delivery Note -->
             <li>
-              <a href="performance-report.html"
+              <a href="history-delivery-note.html"
                 class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
-                <img loading="lazy" src="../assets/icon_performance_default.svg" alt="Performance Report"
+                <img loading="lazy" src="../assets/icon_history_default.svg" alt="History Purchase Order"
                   class="object-contain w-4 2xl:w-6" />
-                <span class="text-sm 2xl:text-xl">Performance Report</span>
+                <span class="text-sm 2xl:text-xl">History Delivery Note</span>
               </a>
             </li>
           </ul>
@@ -116,16 +126,10 @@
                   <img src="../assets/icon_search.svg" alt="Search Icon" class="w-4 2xl:w-5 h-4 2xl:h-5 ml-3">
                 </div>
               </div>
+
             </div>
 
             <div class="flex flex-wrap gap-[10%] justify-between items-center mt-4 2xl:mt-6 w-full">
-              
-              <!-- Note -->
-              <div class="flex gap-6 2xl:gap-10 items-center self-stretch my-auto text-black min-w-[10%]">
-                <div class="self-stretch my-auto ">Note</div>
-                <div id="noteInput" type="text" class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap ounded border border-solid border-neutral-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
-              </div>
-              
               
             </div>
 
@@ -208,7 +212,6 @@
       const po = purchaseOrder.find(po => po.noPO === noPO);
       if (po) {
         document.getElementById('poNumber').textContent = po.noPO;
-        document.getElementById('noteInput').textContent = po.note;
         filteredData = po.details;
         displayPODetails(po.details);
         updatePagination();

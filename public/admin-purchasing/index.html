@@ -8,7 +8,8 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
+  <link
+    href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
 </head>
@@ -18,24 +19,42 @@
     <div class="flex h-screen">
 
       <!-- nav-side bar -->
-      <aside class="flex flex-col w-[20%] max-md:ml-0 max-md:w-full">
-        <nav
-          class="flex flex-col grow py-9 2xl:py-14 w-full h-screen text-base font-medium border-r border-solid bg-stone-300 border-r-neutral-400 max-md:mt-9">
+      <aside class="flex flex-col w-[20%] h-screen border-r border-r-neutral-400 bg-stone-300">
+        <nav class="flex flex-col grow py-9 2xl:py-14 text-base font-medium">
 
           <!-- Logo Sanoh -->
           <img loading="lazy" src="../assets/logosanoh.svg"
-            class="object-contain self-center w-30 2xl:w-48 max-w-full cursor-pointer pointer-events-auto aspect-[2.79]" />
+            class="object-contain self-center w-30 2xl:w-48 max-w-full cursor-pointer" />
 
           <!-- Menu Items -->
           <ul class="flex flex-col mt-7 2xl:mt-10 w-full text-gray-500">
-
-            <!-- Dashboard (Visible) -->
+            <!-- Dashboard -->
             <li>
-              <a href="select-supplier.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 w-full whitespace-nowrap cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../assets/icon_home_default.svg" alt=""
-                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square " />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Select Supplier</span>
+              <a href="index.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 active">
+                <img loading="lazy" src="../assets/icon_home_default.svg" alt="Dashboard"
+                  class="object-contain w-4 2xl:w-6 icon-home-active" />
+                <span class="text-sm 2xl:text-xl">Dashboard</span>
+              </a>
+            </li>
+
+            <!-- Purchase Order -->
+            <li>
+              <a href="purchase-order.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
+                <img loading="lazy" src="../assets/icon_po_default.svg" alt="Purchase Order"
+                  class="object-contain w-4 2xl:w-6" />
+                <span class="text-sm 2xl:text-xl">Purchase Order</span>
+              </a>
+            </li>
+
+            <!-- History Purchase Order -->
+            <li>
+              <a href="history-purchase-order.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
+                <img loading="lazy" src="../assets/icon_history_default.svg" alt="History Purchase Order"
+                  class="object-contain w-4 2xl:w-6" />
+                <span class="text-sm 2xl:text-xl">History Purchase Order</span>
               </a>
             </li>
           </ul>
@@ -48,34 +67,35 @@
               <img loading="lazy" src="../assets/icon_people.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
               <span id="user-info" class="self-stretch my-auto text-sm 2xl:text-xl"></span>
             </div>
-            
+
             <!-- Logout Button -->
-            <a href="../index.html" class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
-              <img loading="lazy" src="../assets/icon_logout.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square logout-icon hover:icon_logout_white.svg" />
-              <span class="self-stretch my-auto text-sm 2xl:text-xl">Logout</span>
+            <a href="../index.html"
+              class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 cursor-pointer bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50">
+              <img loading="lazy" src="../assets/icon_logout.svg" alt="Logout" class="object-contain w-4 2xl:w-6" />
+              <span class="text-sm 2xl:text-xl">Logout</span>
             </a>
           </div>
         </nav>
       </aside>
 
 
-    <!-- Main Content -->
-    <main class="flex flex-col justify-center items-center m-auto max-md:max-w-full">
-      <header class="flex flex-col items-center self-center max-w-full  2xl:w-[1100px]">
-        <h1 class="flex flex-col justify-between items-center text-black w-full text-center">
-          <span class="font-semibold max-w-full xl:text-4xl 2xl:text-5xl">
-            Welcome Purchasing!
-          </span>
-        </h1>
-        <p
-          class="mx-auto my-auto xl:mt-3 2xl:mt-6 text-center text-neutral-400 xl:text-sm 2xl:text-lg xl:w-[500px] 2xl:w-[700px]">
-          Welcome to our dashboard, where efficiency meets
-          <br> seamless procurement management!
-        </p>
-      </header>
-      <img src=../assets/dashboard_purchasing.png alt="Dashboard overview"
-        class="object-contain mx-auto xl:w-[550px] 2xl:w-[750px]" />
-    </main>
+      <!-- Main Content -->
+      <main class="flex flex-col justify-center items-center m-auto max-md:max-w-full">
+        <header class="flex flex-col items-center self-center max-w-full  2xl:w-[1100px]">
+          <h1 class="flex flex-col justify-between items-center text-black w-full text-center">
+            <span class="font-semibold max-w-full xl:text-4xl 2xl:text-5xl">
+              Welcome Purchasing!
+            </span>
+          </h1>
+          <p
+            class="mx-auto my-auto xl:mt-3 2xl:mt-6 text-center text-neutral-400 xl:text-sm 2xl:text-lg xl:w-[500px] 2xl:w-[700px]">
+            Welcome to our dashboard, where efficiency meets
+            <br> seamless procurement management!
+          </p>
+        </header>
+        <img src=../assets/dashboard_purchasing.png alt="Dashboard overview"
+          class="object-contain mx-auto xl:w-[550px] 2xl:w-[750px]" />
+      </main>
 
     <script src="../script.js"></script>
     <script>
