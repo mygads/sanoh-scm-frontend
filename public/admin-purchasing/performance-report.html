@@ -18,7 +18,7 @@
 
 <body class="font-poppins bg-white">
   <section class="overflow-hidden w-screen h-screen bg-white">
-    <div class="flex">
+    <div class="flex h-screen">
 
       <!-- nav-side bar -->
       <aside class="flex flex-col w-[20%] h-screen border-r border-r-neutral-400 bg-stone-300">
@@ -76,7 +76,7 @@
             <!-- User Info -->
             <div class="flex gap-4 items-center p-2 2xl:p-4 w-full bg-blue-950 bg-opacity-10 text-blue-950">
               <img loading="lazy" src="../assets/icon_people.svg" alt="User Info" class="object-contain w-4 2xl:w-6" />
-              <span class="text-sm 2xl:text-xl">Purchasing (name)</span>
+              <span id="user-info" class="text-sm 2xl:text-xl"></span>
             </div>
 
             <!-- Logout Button -->
@@ -90,7 +90,7 @@
       </aside>
 
       <!-- Main Content -->
-      <main class="flex flex-col w-[80%] mb-[100%] mt-[3%] mx-auto px-6 2xl:px-10">
+      <main class="flex flex-col w-[80%] mb-auto mt-[3%] mx-auto px-6 2xl:px-10">
 
         <section class="flex flex-col self-stretch py-px my-auto w-full ">
 
@@ -206,6 +206,11 @@ l
   ];
 
   document.addEventListener('DOMContentLoaded', () => {
+    const name = localStorage.getItem('name');
+    const bpCode = localStorage.getItem('bpCode');
+
+    document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
+    
     filteredData = dummyData;
     displayPODetails();
     updatePagination();
