@@ -173,6 +173,11 @@
 <script src="script.js"></script>
 <!-- Add the script to handle table sorting and pagination -->
 <script>
+  const name = localStorage.getItem('name');
+  const bpCode = localStorage.getItem('bpCode');
+
+  document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
+  
   let rowsPerPage = 12;
   let currentPage = 1;
   let suppliersData = [];
@@ -180,112 +185,130 @@
   let originalData = [];  // Menyimpan data asli
   let sortOrder = {}; // Object to keep track of sort order for each column
 
-    // Fungsi untuk mengambil data supplier
-    async function fetchSuppliers() {
-      const token = localStorage.getItem('accessToken');
-      try {
-        const response = await fetch('http://localhost:8000/api/partner', {
+  // Fungsi untuk mengambil data supplier
+  async function fetchSuppliers() {
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      console.error('No access token found');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:8000/api/partner', {
         method: 'GET',
         headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        });
-  
-        console.log('API Response for Suppliers:', data); // Debugging log untuk memeriksa data
-  
-        if (data.success) { // Sesuaikan dengan respons API
-          suppliersData = data.data;
-          populateSupplierDropdown();
-        } else {
-          console.error('Failed to fetch suppliers:', data.message);
-        }
-      } catch (error) {
-        console.error('Error fetching suppliers:', error);
-      }
-    }
-  
-    // Fungsi untuk mengisi dropdown supplier
-    function populateSupplierDropdown() {
-      const supplierSelect = document.getElementById('Supplier');
-      if (!supplierSelect) {
-        console.error('Supplier select element not found!');
-        return;
-      }
-  
-      supplierSelect.innerHTML = '<option value="">Select a supplier</option>'; // Reset dropdown
-  
-      suppliersData.forEach(supplier => {
-        const option = document.createElement('option');
-        option.value = supplier.bp_code;
-        option.textContent = supplier.bp_name;
-        supplierSelect.appendChild(option);
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
       });
-    }
+      
+      const data = await response.json();
+      console.log('API Response for Suppliers:', data); // Debugging log untuk memeriksa data
   
-    // Event listener untuk pemilihan supplier dan pengambilan data purchase order
-    document.addEventListener('DOMContentLoaded', () => {
-      const supplierSelect = document.getElementById('Supplier');
-      if (!supplierSelect) {
-        console.error('Supplier select element not found during DOMContentLoaded!');
-        return;
+      if (data.success) { // Sesuaikan dengan respons API
+        suppliersData = data.data;
+        populateSupplierDropdown();
+      } else {
+        console.error('Failed to fetch suppliers:', data.message);
       }
-  
-      supplierSelect.addEventListener('change', async () => {
-        const selectedSupplier = supplierSelect.value;
-        if (selectedSupplier) {
-          try {
-            const response = await fetch(`http://localhost:8000/api/indexpoheader/${selectedSupplier}`);
-            const data = await response.json();
-  
-            console.log('API Response for Purchase Orders:', data); // Debugging log untuk memeriksa data
-  
-            if (data.status === "success") { // Sesuaikan dengan respons API
-              originalData = data.data.map(po => ({
-                noPO: po.po_no,
-                poDate: po.po_date,
-                status: po.po_status,
-              }));
-              filteredData = [...originalData]; // Salin data asli ke data yang akan ditampilkan
-              adjustRowsPerPage(); // Panggil fungsi ini setelah mengambil data
-              displayTableData(currentPage);
-              updatePagination();
-  
-              // Tampilkan elemen-elemen yang terkait dengan tabel
-              document.getElementById('search-bar').style.display = 'block';
-              document.getElementById('table-container').style.display = 'block';
-              document.querySelector('.pagination').style.display = 'flex';
-            } else {
-              console.error('Failed to fetch purchase orders:', data.message);
-            }
-          } catch (error) {
-            console.error('Error fetching purchase orders:', error);
+    } catch (error) {
+      console.error('Error fetching suppliers:', error);
+    }
+  }
+
+  // Fungsi untuk mengisi dropdown supplier
+  function populateSupplierDropdown() {
+    const supplierSelect = document.getElementById('Supplier');
+    if (!supplierSelect) {
+      console.error('Supplier select element not found!');
+      return;
+    }
+
+    supplierSelect.innerHTML = '<option value="">Select a supplier</option>'; // Reset dropdown
+
+    suppliersData.forEach(supplier => {
+      const option = document.createElement('option');
+      option.value = supplier.bp_code;
+      option.textContent = supplier.bp_name;
+      supplierSelect.appendChild(option);
+    });
+  }
+
+  // Event listener untuk pemilihan supplier dan pengambilan data purchase order
+  document.addEventListener('DOMContentLoaded', () => {
+    const supplierSelect = document.getElementById('Supplier');
+    if (!supplierSelect) {
+      console.error('Supplier select element not found during DOMContentLoaded!');
+      return;
+    }
+
+    supplierSelect.addEventListener('change', async () => {
+      const selectedSupplier = supplierSelect.value;
+      if (selectedSupplier) {
+        const token = localStorage.getItem('accessToken');
+        if (!token) {
+          console.error('No access token found');
+          return;
+        }
+
+        try {
+          const response = await fetch(`http://localhost:8000/api/indexpoheader/${selectedSupplier}`, {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+          });
+          const data = await response.json();
+
+          console.log('API Response for Purchase Orders:', data); // Debugging log untuk memeriksa data
+
+          if (data.status === "success") { // Sesuaikan dengan respons API
+            originalData = data.data.map(po => ({
+              noPO: po.po_no,
+              poDate: po.po_date,
+              status: po.po_status,
+            }));
+            filteredData = [...originalData]; // Salin data asli ke data yang akan ditampilkan
+            adjustRowsPerPage(); // Panggil fungsi ini setelah mengambil data
+            displayTableData(currentPage);
+            updatePagination();
+
+            // Tampilkan elemen-elemen yang terkait dengan tabel
+            document.getElementById('search-bar').style.display = 'block';
+            document.getElementById('table-container').style.display = 'block';
+            document.querySelector('.pagination').style.display = 'flex';
+          } else {
+            console.error('Failed to fetch purchase orders:', data.message);
           }
-        } else {
-          // Sembunyikan elemen-elemen jika tidak ada supplier yang dipilih
-          document.getElementById('search-bar').style.display = 'none';
-          document.getElementById('table-container').style.display = 'none';
-          document.querySelector('.pagination').style.display = 'none';
+        } catch (error) {
+          console.error('Error fetching purchase orders:', error);
         }
-      });
-  
-      fetchSuppliers(); // Memanggil fungsi untuk mengambil data supplier saat halaman dimuat
-      adjustRowsPerPage(); // Inisialisasi jumlah baris per halaman berdasarkan ukuran layar
-  
-      // Setel ulang tabel dan paginasi saat ukuran layar berubah
-      window.addEventListener('resize', () => {
-        adjustRowsPerPage();
-        displayTableData(currentPage);
-        updatePagination();
-      });
-  
-      document.getElementById('search-input').addEventListener('input', searchTable);
-  
-      // Tambahkan event listener untuk pengurutan
-      addSortingListeners();
+      } else {
+        // Sembunyikan elemen-elemen jika tidak ada supplier yang dipilih
+        document.getElementById('search-bar').style.display = 'none';
+        document.getElementById('table-container').style.display = 'none';
+        document.querySelector('.pagination').style.display = 'none';
+      }
     });
 
-     // Fungsi untuk menampilkan data tabel
+    fetchSuppliers(); // Memanggil fungsi untuk mengambil data supplier saat halaman dimuat
+    adjustRowsPerPage(); // Inisialisasi jumlah baris per halaman berdasarkan ukuran layar
+
+    // Setel ulang tabel dan paginasi saat ukuran layar berubah
+    window.addEventListener('resize', () => {
+      adjustRowsPerPage();
+      displayTableData(currentPage);
+      updatePagination();
+    });
+
+    document.getElementById('search-input').addEventListener('input', searchTable);
+
+    // Tambahkan event listener untuk pengurutan
+    addSortingListeners();
+  });
+
+  // Fungsi untuk menampilkan data tabel
   function displayTableData(page) {
     const tableBody = document.getElementById('table-body');
     if (!tableBody) {
@@ -420,7 +443,7 @@
     });
     paginationContainer.appendChild(nextButton);
   }
-    
+
   // Fungsi untuk mengatur jumlah baris per halaman berdasarkan ukuran layar
   function adjustRowsPerPage() {
     if (window.innerWidth <= 768) {
@@ -431,7 +454,6 @@
       rowsPerPage = 9;
     }
   }
-
 
   // Fungsi untuk menambahkan event listener untuk sorting
   function addSortingListeners() {
@@ -467,5 +489,6 @@
     updatePagination();
   }
 </script>
+
 
 </html>
