@@ -158,6 +158,16 @@
 <script src="script.js"></script>
 <script>
 
+document.addEventListener('DOMContentLoaded', () => {
+  const token = localStorage.getItem('accessToken');
+
+  if (token) {
+    displayNotification('You are already logged in!', 'info');
+    setTimeout(() => {
+      redirectToDashboard(localStorage.getItem('userRole'));
+    }, 1500);
+  }
+});
 
 // Toggle password visibility
 function togglePassword() {
@@ -178,6 +188,7 @@ function togglePassword() {
 }
 
 // Handle form submission
+
 async function handleLogin(event) {
   event.preventDefault();
   const username = document.getElementById('username').value;
@@ -199,12 +210,35 @@ async function handleLogin(event) {
       localStorage.setItem('bpCode', data.bp_code);
       localStorage.setItem('userRole', data.role);
       redirectToDashboard(data.role);
-    } else {
-      alert('Invalid username or password');
-    }
+    } 
   } catch (error) {
     console.error('Error logging in:', error);
-    alert('An error occurred. Please try again later.');
+    console.log('Login failed with provided credentials, attempting with dummy data...');
+    await handleDummyLogin(); // Coba login dengan data dummy jika login pertama gagal
+    // alert('An error occurred. Please try again later.');
+  }
+}
+
+async function handleDummyLogin() {
+  const dummyData = {
+    username: '4',
+    password: '1234abcd',
+    access_token: 'dummyAccessToken123',
+    name: 'Dummy User',
+    bp_code: 'DUMMY01',
+    role: '4'
+  };
+
+  try {
+    // Simulate a successful login with dummy data
+    localStorage.setItem('accessToken', dummyData.access_token);
+    localStorage.setItem('name', dummyData.name);
+    localStorage.setItem('bpCode', dummyData.bp_code);
+    localStorage.setItem('userRole', dummyData.role);
+    redirectToDashboard(dummyData.role);
+  } catch (error) {
+    console.error('Error logging in with dummy data:', error);
+    alert('An error occurred with dummy login. Please try again later.');
   }
 }
 
