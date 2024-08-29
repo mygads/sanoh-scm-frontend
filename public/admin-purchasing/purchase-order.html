@@ -228,6 +228,7 @@
   let currentPage = 1;
   let suppliersData = [];
   let filteredData = [];
+  let originalData = [];  // Menyimpan data asli
   let sortOrder = {}; // Object to keep track of sort order for each column
 
   // Fungsi untuk mengambil data supplier
@@ -285,7 +286,7 @@
           console.log('API Response for Purchase Orders:', data); // Debugging log untuk memeriksa data
 
           if (data.status === "success") { // Sesuaikan dengan respons API
-            filteredData = data.data.map(po => ({
+            originalData = data.data.map(po => ({
               noPO: po.po_no,
               poDate: po.po_date,
               planDelivery: po.planned_receipt_date,
@@ -294,6 +295,7 @@
               status: po.po_status,
               response: po.response
             }));
+            filteredData = [...originalData]; // Salin data asli ke data yang akan ditampilkan
             adjustRowsPerPage(); // Panggil fungsi ini setelah mengambil data
             displayTableData(currentPage);
             updatePagination();
@@ -370,8 +372,16 @@
   // Fungsi untuk melakukan pencarian data di tabel
   function searchTable() {
     const searchInput = document.getElementById('search-input').value.toLowerCase();
-    filteredData = filteredData.filter(row => row.noPO.toLowerCase().includes(searchInput));
-    currentPage = 1;
+
+    if (searchInput === "") {
+      // Jika search input kosong, reset ke data asli
+      filteredData = [...originalData]; // Salin kembali dari data asli
+    } else {
+      // Filter data berdasarkan input pencarian
+      filteredData = originalData.filter(row => row.noPO.toLowerCase().includes(searchInput));
+    }
+
+    currentPage = 1; // Reset ke halaman pertama setelah pencarian
     displayTableData(currentPage);
     updatePagination();
   }
@@ -505,8 +515,15 @@
         return 0;
       }
     });
+
+    // Update table after sorting
+    currentPage = 1; // Reset to the first page after sorting
+    displayTableData(currentPage);
+    updatePagination();
   }
 </script>
+
+
 
 
 </html>
