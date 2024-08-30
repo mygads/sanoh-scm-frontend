@@ -109,11 +109,13 @@
             <div class="flex items-center mb-4">
               <label for="file-upload" class=" text-base 2xl:text-xl">Add File :</label>
               <input type="file" id="file-upload" class="rounded-md p-2 ml-2 text-gray-600">
-            </div>
-
-            <button id="upload-button"
+              
+              <button id="upload-button"
               class="px-4 py-2 w-24 h-10 bg-gray-400 text-white text-sm 2xl:text-base rounded-md"
               disabled>Upload</button>
+            </div>
+
+      
 
           </div>
 
@@ -191,13 +193,13 @@ l
   let rowsPerPage = 5;
   let filteredData = [];
   const apiUrl = 'http://localhost:8000/api/indexlistingreport';
+  const uploadApiUrl = 'http://localhost:8000/api/createlistingreport';
 
   document.addEventListener('DOMContentLoaded', () => {
     const name = localStorage.getItem('name');
     const bpCode = localStorage.getItem('bpCode');
-
     document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
-    
+
     fetchPerformanceReport();
     window.addEventListener('resize', () => {
       adjustRowsPerPage();
@@ -205,12 +207,20 @@ l
       updatePagination();
     });
 
-    // Set up search input
-    document.getElementById('search-input').addEventListener('input', searchTable);
+    // Set up file upload
+    const uploadButton = document.getElementById('upload-button');
+    const fileUpload = document.getElementById('file-upload');
+    const monthPicker = document.getElementById('month-picker');
+
+    fileUpload.addEventListener('change', () => {
+      uploadButton.disabled = !fileUpload.files.length;
+    });
+
+    uploadButton.addEventListener('click', uploadFile);
   });
 
   async function fetchPerformanceReport() {
-    const token = localStorage.getItem('authToken'); // Get the authentication token
+    const token = localStorage.getItem('authToken');
     try {
       const response = await fetch(apiUrl, {
         headers: {
@@ -233,6 +243,66 @@ l
     } catch (error) {
       console.error('Error fetching data:', error);
     }
+  }
+
+  async function uploadFile() {
+    const file = document.getElementById('file-upload').files[0];
+    const period = document.getElementById('month-picker').value;
+
+    if (file && period) {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('periode', period);
+
+      const token = localStorage.getItem('authToken'); // Ensure token is included
+
+      try {
+        const response = await {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}` // Add token to headers
+          },
+          body: formData
+        };
+
+        const result = await response.json();
+        if (result.success) {
+          displayNotification('Data berhasil ditambahkan!');
+          addFileToTable(result.data); // Assuming result.data contains the new file information
+        } else {
+          console.error('Failed to upload file:', result.message);
+        }
+      } catch (error) {
+        console.error('Error uploading file:', error);
+      }
+    } else {
+      console.error('File and period are required.');
+    }
+  }
+
+  function displayNotification(message) {
+    const notification = document.getElementById('notification');
+    notification.textContent = message;
+    notification.classList.remove('hidden');
+    setTimeout(() => {
+      notification.classList.add('hidden');
+    }, 3000);
+  }
+
+  function addFileToTable(fileData) {
+    const tableBody = document.getElementById('table-body-detail');
+    const tableRow = document.createElement('tr');
+    tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b');
+    tableRow.innerHTML = `
+      <td class="px-2 py-4 text-center font-medium text-gray-900">${fileData.no}</td>
+      <td class="px-2 py-4 text-center">${fileData.periode}</td>
+      <td class="px-1 py-2 text-center flex items-center justify-center">
+        <a href="${fileData.attachedFile}" target="_blank">
+          <img src="../assets/icon_pdf.svg" alt="PDF Icon" class="w-6 h-6">
+        </a>
+      </td>
+    `;
+    tableBody.appendChild(tableRow);
   }
 
   function formatDate(dateString) {
@@ -331,12 +401,10 @@ l
     // Calculate page numbers to show
     const pageNumbers = [];
     if (totalPages <= maxPageNumbersToShow) {
-      // If total pages is less than or equal to maxPageNumbersToShow, show all page numbers
       for (let i = 1; i <= totalPages; i++) {
         pageNumbers.push(i);
       }
     } else {
-      // Otherwise, calculate which page numbers to show
       pageNumbers.push(1); // Always show the first page
 
       const startPage = Math.max(2, currentPage - 1);
@@ -404,6 +472,7 @@ l
     updatePagination();
   }
 </script>
+
 
 
 </html>
