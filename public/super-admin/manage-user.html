@@ -97,7 +97,7 @@
             </div>
 
             <!-- Logout Button -->
-            <a href="../index.html"
+            <a href="javascript:void(0)" onclick="handleLogout()"
               class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
               <img loading="lazy" src="../assets/icon_logout.svg" alt=""
                 class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square logout-icon hover:icon_logout_white.svg" />
@@ -217,7 +217,9 @@
   </section>
 </body>
 
-<!-- Add the script to handle table sorting and pagination -->
+<script src="script.js"></script>
+<script src="../script.js"></script>
+
 <script>
   let rowsPerPage = 7;
   let currentPage = 1;
@@ -228,7 +230,7 @@
     const token = localStorage.getItem('accessToken');
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/index', {
+      const response = await fetch('http://127.0.0.1:8000/api/index4', {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -431,30 +433,6 @@
     updateStatusAPI(userId, status);  // Pass 'status' to the API function
   }
 
-  // Function to call API and update status
-  // async function updateStatusAPI(userId, newStatus) {
-  //   const token = localStorage.getItem('accessToken');
-  //   try {
-  //     const response = await fetch(`http://127.0.0.1:8000/api/update/${userId}`, {
-  //       method: 'PUT',
-  //       headers: {
-  //         'Authorization': `Bearer ${token}`,
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({
-  //         status: newStatus
-  //       }),
-  //     });
-
-  //     if (response.ok) {
-  //       console.log(`Status berhasil diupdate untuk User ID: ${userId}`);
-  //     } else {
-  //       console.error('Kesalahan saat mengupdate status:', response.status, response.statusText);
-  //     }
-  //   } catch (error) {
-  //     console.error('Kesalahan fetch:', error);
-  //   }
-  // }
 
 
   // Function to initialize the table with the saved statuses from localStorage
@@ -480,19 +458,27 @@
 
   // Panggil fungsi initializeTable saat halaman dimuat
   document.addEventListener('DOMContentLoaded', () => {
+
+    const token = localStorage.getItem('accessToken');
+
+    if (!token) {
+      redirectToLogin();
+    } else {
+      // Bisa tambahkan fungsi lain seperti fetch data pengguna atau pengaturan lainnya
+      const name = localStorage.getItem('name');
+      const bpCode = localStorage.getItem('bpCode');
+  
+      document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
       
-    const name = localStorage.getItem('name');
-    const bpCode = localStorage.getItem('bpCode');
-
-    document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
-    
-    fetchProtectedData();
-
-    document.getElementById('search-input').addEventListener('input', searchTable);
+      fetchProtectedData();
+  
+      document.getElementById('search-input').addEventListener('input', searchTable);
+    }
+      
 
   });
 </script>
 
-<script src="script.js"></script>
+
 
 </html>
