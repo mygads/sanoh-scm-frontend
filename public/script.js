@@ -70,6 +70,10 @@ function redirectToLogin() {
   
 function displayNotification(message, type) {
     const notification = document.createElement('div');
+    if (Array.isArray(message)) {
+      message = message.join(' ');
+    }
+
     notification.textContent = message;
     notification.className = 'fixed bottom-4 right-4 p-4 rounded-lg shadow-lg text-white ';
     notification.className += type === 'success' ? 'bg-green-500' : 'bg-red-500';
