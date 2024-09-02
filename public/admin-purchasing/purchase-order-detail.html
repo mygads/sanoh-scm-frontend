@@ -192,215 +192,354 @@
 
 <!-- Add the script to handle table sorting and pagination -->
 <script>
-
-  let rowsPerPage = 10;
+  let rowsPerPage = 12;
   let currentPage = 1;
+  let suppliersData = [];
+  let originalData = [];
   let filteredData = [];
-  
+  let sortOrder = {};
+  let selectedSupplier = null; // Track the selected supplier
 
-  // Adjust rows per page based on screen size
-  adjustRowsPerPage(); 
+  // Function to fetch suppliers
+  async function fetchSuppliers() {
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      console.error('No access token found');
+      return;
+    }
 
-  const params = new URLSearchParams(window.location.search);
-  const noPO = params.get('noPO');
+    try {
+      const response = await fetch('http://localhost:8000/api/partner3', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
 
-  if (noPO) {
-      const po = purchaseOrder.find(po => po.noPO === noPO);
-      if (po) {
-        document.getElementById('poNumber').textContent = po.noPO;
-        document.getElementById('noteInput').textContent = po.note;
-        filteredData = po.details;
-        displayPODetails(po.details);
+      if (!response.ok) throw new Error('Network response was not ok');
+      
+      const data = await response.json();
+
+      if (data.success) {
+        suppliersData = data.data;
+        populateSupplierDropdown();
+      } else {
+        console.error('Failed to fetch suppliers:', data.message);
+      }
+    } catch (error) {
+      console.error('Error fetching suppliers:', error);
+    }
+  }
+
+  // Function to populate supplier dropdown
+  function populateSupplierDropdown() {
+    const supplierSelect = document.getElementById('Supplier');
+    if (!supplierSelect) {
+      console.error('Supplier select element not found!');
+      return;
+    }
+
+    supplierSelect.innerHTML = '<option value="">Select a supplier</option>'; // Reset dropdown
+
+    suppliersData.forEach(supplier => {
+      const option = document.createElement('option');
+      option.value = supplier.bp_code;
+      option.textContent = supplier.bp_name;
+      supplierSelect.appendChild(option);
+    });
+  }
+
+  // Function to display table data
+  function displayTableData(page) {
+    const tableBody = document.getElementById('table-body');
+    if (!tableBody) {
+      console.error('Table body element not found!');
+      return;
+    }
+
+    tableBody.innerHTML = '';
+
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+    const paginatedData = filteredData.slice(start, end);
+
+    paginatedData.forEach(row => {
+      const tableRow = document.createElement('tr');
+      tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
+      tableRow.innerHTML = `
+        <td class="px-2 py-4 text-center font-medium text-gray-900">
+          <a href="purchase-order-detail.html?noPO=${row.noPO}" class="text-blue-600 underline">${row.noPO}</a>
+        </td>
+        <td class="px-2 py-4 text-center">${row.poDate}</td>
+        <td class="px-2 py-4 text-center">${row.planDelivery}</td>
+        <td class="px-2 py-4 text-center">${row.poRevision}</td>
+        <td class="px-2 py-4 text-center">${row.revisionDate}</td>
+        <td class="px-2 py-4 text-center">${row.status}</td>
+        <td class="text-center ${row.response === 'Accepted' ? 'bg-green-400' : row.response === 'Declined' ? 'bg-red-500' : ''}">
+          ${row.response ? 
+            `<span class="${row.response === 'Accepted' ? 'text-black' : 'text-white'}">${row.response}</span>` : ''}
+        </td>
+      `;
+      tableBody.appendChild(tableRow);
+    });
+  }
+
+  // Function to search in table
+  function searchTable() {
+    const searchInput = document.getElementById('search-input').value.toLowerCase();
+
+    if (searchInput === "") {
+      filteredData = [...originalData]; // Reset to original data
+    } else {
+      filteredData = originalData.filter(row => row.noPO.toLowerCase().includes(searchInput));
+    }
+
+    currentPage = 1; // Reset to first page after search
+    displayTableData(currentPage);
+    updatePagination();
+  }
+
+  // Function to update pagination
+  function updatePagination() {
+    const paginationContainer = document.querySelector('.pagination');
+    if (!paginationContainer) {
+      console.error('Pagination container not found!');
+      return;
+    }
+
+    paginationContainer.innerHTML = '';
+
+    const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+    const maxPageNumbersToShow = 4;
+
+    const prevButton = document.createElement('button');
+    prevButton.className = 'px-3 py-3 2xl:px-4 2xl:py-4 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
+    prevButton.innerHTML = `
+      <svg class="2xl:w-4 2xl:h-4 w-3 h-3 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
+        <path d="M8.766.566A2 2 0 0 0 6.586 1L1 6.586a2 2 0 0 0 0 2.828L6.586 15A2 2 0 0 0 10 13.586V2.414A2 2 0 0 0 8.766.566Z" />
+      </svg>
+    `;
+    prevButton.disabled = currentPage === 1;
+    prevButton.addEventListener('click', () => {
+      if (currentPage > 1) {
+        currentPage--;
+        displayTableData(currentPage);
         updatePagination();
-      } else {
-        console.error('Data PO tidak ditemukan dalam array data.');
       }
-  } else {
-      console.error('Parameter noPO tidak ditemukan dalam URL.');
-  }
-  // let filteredData = details; // Initialize filteredData with all data
-  // Adjust rows per page based on screen size
-  function adjustRowsPerPage() {
-    if (window.innerWidth <= 1280) {
-        rowsPerPage = 7;
-      } else if (window.innerWidth <= 1600) {
-        rowsPerPage = 9;
-      } else {
-        rowsPerPage = 10;
+    });
+    paginationContainer.appendChild(prevButton);
+
+    const pageNumbers = [];
+    if (totalPages <= maxPageNumbersToShow) {
+      for (let i = 1; i <= totalPages; i++) {
+        pageNumbers.push(i);
       }
+    } else {
+      pageNumbers.push(1);
+
+      const startPage = Math.max(2, currentPage - 1);
+      const endPage = Math.min(totalPages - 1, currentPage + 1);
+
+      if (startPage > 2) {
+        pageNumbers.push('...');
+      }
+
+      for (let i = startPage; i <= endPage; i++) {
+        pageNumbers.push(i);
+      }
+
+      if (endPage < totalPages - 1) {
+        pageNumbers.push('...');
+      }
+
+      pageNumbers.push(totalPages);
+    }
+
+    pageNumbers.forEach(number => {
+      const pageButton = document.createElement('button');
+      if (number === '...') {
+        pageButton.className = 'px-4 py-2 2xl:px-6 2xl:py-4 text-gray-900 bg-gray-200 rounded-md cursor-default';
+        pageButton.textContent = '...';
+      } else {
+        pageButton.className = `px-4 py-2 2xl:px-6 2xl:py-4 ${number === currentPage ? 'bg-blue-900 text-white' : 'bg-gray-200 text-gray-900'} rounded-md hover:bg-gray-300`;
+        pageButton.textContent = number;
+        pageButton.addEventListener('click', () => {
+          currentPage = number;
+          displayTableData(currentPage);
+          updatePagination();
+        });
+      }
+      paginationContainer.appendChild(pageButton);
+    });
+
+    const nextButton = document.createElement('button');
+    nextButton.className = 'px-3 py-3 2xl:px-4 2xl:py-4 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
+    nextButton.innerHTML = `
+      <svg class="2xl:w-4 2xl:h-4 w-3 h-3 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
+        <path d="M1.234 15.434a2 2 0 0 0 2.18-1.414L9 9.414a2 2 0 0 0 0-2.828L3.414 1A2 2 0 0 0 1 2.414v11.172a2 2 0 0 0 1.234 1.848Z" />
+      </svg>
+    `;
+    nextButton.disabled = currentPage === totalPages;
+    nextButton.addEventListener('click', () => {
+      if (currentPage < totalPages) {
+        currentPage++;
+        displayTableData(currentPage);
+        updatePagination();
+      }
+    });
+    paginationContainer.appendChild(nextButton);
   }
 
+  // Function to handle detail PO click
+  async function authenticateAndFetchData(noPO) {
+    try {
+      const token = localStorage.getItem('accessToken');
+      if (!token) throw new Error('Token tidak ditemukan.');
+
+      if (selectedSupplier) {
+        const responseHeader = await fetch(`http://localhost:8000/api/indexpoheader3/${selectedSupplier}`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        if (!responseHeader.ok) throw new Error('Gagal mengambil header PO.');
+
+        const headerData = await responseHeader.json();
+        const poDetails = headerData.data.find(po => po.po_no === noPO);
+
+        if (poDetails) {
+          const responseDetail = await fetch(`http://localhost:8000/api/indexpodetail3/${noPO}`, {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+          if (!responseDetail.ok) throw new Error('Gagal mengambil detail PO.');
+
+          const detailData = await responseDetail.json();
+          if (detailData.success) {
+            filteredData = detailData.data;
+            displayPODetails(filteredData);
+            updatePagination();
+          } else {
+            console.error('Gagal mengambil detail PO:', detailData.message);
+          }
+        } else {
+          console.error('PO tidak ditemukan dalam header.');
+        }
+      } else {
+        console.error('Supplier tidak dipilih.');
+      }
+    } catch (error) {
+      console.error('Terjadi kesalahan:', error.message);
+    }
+  }  
+
+  // Function to display PO details
   function displayPODetails(details) {
     const tableBody = document.getElementById('table-body-detail');
+    if (!tableBody) {
+      console.error('Table body detail element not found!');
+      return;
+    }
+
     tableBody.innerHTML = '';
 
     const start = (currentPage - 1) * rowsPerPage;
     const end = start + rowsPerPage;
     const paginatedData = details.slice(start, end);
 
-    paginatedData.forEach((row, index) => {
+    paginatedData.forEach((row) => {
       const tableRow = document.createElement('tr');
       tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
       tableRow.innerHTML = `
-        <td class="px-2 py-4 text-center font-medium text-gray-900">${row.no}</td>
-        <td class="px-2 py-4 text-center">${row.partNumber}</td>
-        <td class="px-2 py-4 text-center">${row.partName}</td>
-        <td class="px-2 py-4 text-center">${row.UoM}</td>
-        <td class="px-2 py-4 text-center">${row.QTY}</td>
+        <td class="px-2 py-4 text-center font-medium text-gray-900">${row.bp_part_no}</td>
+        <td class="px-2 py-4 text-center">${row.item_desc_a}</td>
+        <td class="px-2 py-4 text-center">${row.purchase_unit}</td>
+        <td class="px-2 py-4 text-center">${row.po_qty}</td>
+        <td class="px-2 py-4 text-center">${row.price}</td>
       `;
       tableBody.appendChild(tableRow);
     });
   }
 
-  function updatePagination() {
-    const paginationContainer = document.querySelector('.pagination');
-    paginationContainer.innerHTML = '';
-
-    const totalPages = Math.ceil(filteredData.length / rowsPerPage);
-    const maxPageNumbersToShow = 4; // Number of page buttons to display (including current)
-
-    // Previous button
-    const prevButton = document.createElement('button');
-    prevButton.className = 'px-3 py-3 2xl:px-4 2xl:py-4 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
-    prevButton.innerHTML = `
-        <svg class="2xl:w-4 2xl:h-4 w-3 h-3 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
-        <path d="M8.766.566A2 2 0 0 0 6.586 1L1 6.586a2 2 0 0 0 0 2.828L6.586 15A2 2 0 0 0 10 13.586V2.414A2 2 0 0 0 8.766.566Z" />
-        </svg>
-    `;
-    prevButton.disabled = currentPage === 1;
-    prevButton.addEventListener('click', () => {
-        if (currentPage > 1) {
-        currentPage--;
-        displayPODetails(filteredData);
-        updatePagination();
-        }
-    });
-    paginationContainer.appendChild(prevButton);
-
-    // Calculate page numbers to show
-    const pageNumbers = [];
-    if (totalPages <= maxPageNumbersToShow) {
-        // If total pages is less than or equal to maxPageNumbersToShow, show all page numbers
-        for (let i = 1; i <= totalPages; i++) {
-        pageNumbers.push(i);
-        }
-    } else {
-        // Otherwise, calculate which page numbers to show
-        pageNumbers.push(1); // Always show the first page
-
-        const startPage = Math.max(2, currentPage - 1);
-        const endPage = Math.min(totalPages - 1, currentPage + 1);
-
-        if (startPage > 2) {
-        pageNumbers.push('...');
-        }
-
-        for (let i = startPage; i <= endPage; i++) {
-        pageNumbers.push(i);
-        }
-
-        if (endPage < totalPages - 1) {
-        pageNumbers.push('...');
-        }
-
-        pageNumbers.push(totalPages); // Always show the last page
+  document.addEventListener('DOMContentLoaded', () => {
+    const supplierSelect = document.getElementById('Supplier'); // Make sure this ID is correct
+    if (!supplierSelect) {
+      console.error('Supplier select element not found during DOMContentLoaded!');
+      return;
     }
 
-    // Page numbers buttons
-    pageNumbers.forEach(number => {
-        const pageButton = document.createElement('button');
-        if (number === '...') {
-        pageButton.className = 'px-4 py-2 2xl:px-6 2xl:py-4 text-gray-900 bg-gray-200 rounded-md cursor-default';
-        pageButton.textContent = '...';
-        } else {
-        pageButton.className = `px-4 py-2 2xl:px-6 2xl:py-4 ${number === currentPage ? 'bg-blue-900 text-white' : 'bg-gray-200 text-gray-900'} rounded-md hover:bg-gray-300`;
-        pageButton.textContent = number;
-        pageButton.addEventListener('click', () => {
-            currentPage = number;
-            displayPODetails(filteredData);
+    supplierSelect.addEventListener('change', async () => {
+      selectedSupplier = supplierSelect.value;
+      if (selectedSupplier) {
+        const token = localStorage.getItem('accessToken');
+        if (!token) {
+          console.error('No access token found');
+          return;
+        }
+
+        try {
+          const response = await fetch(`http://localhost:8000/api/indexpoheader3/${selectedSupplier}`, {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+          });
+
+          if (!response.ok) throw new Error('Network response was not ok');
+          
+          const data = await response.json();
+
+          if (data.status === "success") {
+            originalData = data.data.map(po => ({
+              noPO: po.po_no,
+              poDate: po.po_date,
+              planDelivery: po.planned_receipt_date,
+              poRevision: po.po_revision_no,
+              revisionDate: po.po_revision_date,
+              status: po.po_status,
+              response: po.response
+            }));
+            filteredData = [...originalData]; // Copy original data to display data
+            adjustRowsPerPage(); // Call this function after fetching data
+            displayTableData(currentPage);
             updatePagination();
-        });
+
+            // Show elements related to table
+            document.getElementById('search-bar').style.display = 'block';
+            document.getElementById('table-container').style.display = 'block';
+            document.querySelector('.pagination').style.display = 'flex';
+          } else {
+            console.error('Failed to fetch purchase orders:', data.message);
+          }
+        } catch (error) {
+          console.error('Error fetching purchase orders:', error);
         }
-        paginationContainer.appendChild(pageButton);
+      } else {
+        // Hide elements if no supplier is selected
+        document.getElementById('search-bar').style.display = 'none';
+        document.getElementById('table-container').style.display = 'none';
+        document.querySelector('.pagination').style.display = 'none';
+      }
     });
 
-    // Next button
-    const nextButton = document.createElement('button');
-    nextButton.className = '2xl:px-4 2xl:py-4 px-3 py-3 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
-    nextButton.innerHTML = `
-        <svg class="2xl:w-4 2xl:h-4 w-3 h-3 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
-        <path d="M1.234 15.434A2 2 0 0 0 3.414 15L9 9.414a2 2 0 0 0 0-2.828L3.414 1A2 2 0 0 0 1 2.414v11.172a2 2 0 0 0 1.234 1.848Z" />
-        </svg>
-    `;
-    nextButton.disabled = currentPage === totalPages;
-    nextButton.addEventListener('click', () => {
-        if (currentPage < totalPages) {
-        currentPage++;
-        displayPODetails(filteredData);
-        updatePagination();
-        }
-    });
-    paginationContainer.appendChild(nextButton);
-}
+    fetchSuppliers(); // Call function to fetch suppliers when page loads
+    adjustRowsPerPage(); // Initialize rows per page based on screen size
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const name = localStorage.getItem('name');
-    const bpCode = localStorage.getItem('bpCode');
-
-    document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
-
-    adjustRowsPerPage(); // Set rows per page based on initial screen size
+    // Reset table and pagination on screen size change
     window.addEventListener('resize', () => {
-      adjustRowsPerPage(); // Adjust rows per page on screen resize
-      displayPODetails(filteredData); // Re-render table data
-      updatePagination(); // Re-render pagination
+      adjustRowsPerPage();
+      displayTableData(currentPage);
+      updatePagination();
     });
 
     document.getElementById('search-input').addEventListener('input', searchTable);
 
-    displayPODetails(filteredData);
-    updatePagination();
+    // Add sorting listeners if needed
+    addSortingListeners();
   });
-
-  // Function to sort table based on column index
-  function sortTable(columnIndex) {
-    const table = document.querySelector('table');
-    const tbody = table.querySelector('tbody');
-    const rows = Array.from(tbody.querySelectorAll('tr'));
-    const isAscending = table.querySelectorAll('th')[columnIndex].classList.toggle('asc');
-    table.querySelectorAll('th').forEach((th, index) => {
-      if (index !== columnIndex) th.classList.remove('asc', 'desc');
-    });
-
-    rows.sort((a, b) => {
-      const cellA = a.querySelectorAll('td')[columnIndex].textContent.trim();
-      const cellB = b.querySelectorAll('td')[columnIndex].textContent.trim();
-
-      return cellA.localeCompare(cellB, undefined, { numeric: true, sensitivity: 'base' });
-    });
-
-    if (!isAscending) {
-      rows.reverse();
-    }
-
-    tbody.innerHTML = '';
-    tbody.append(...rows);
-  }
-
-  // Function to handle search
-  function searchTable() {
-    const searchInput = document.getElementById('search-input').value.toLowerCase();
-    filteredData = purchaseOrder.find(po => po.noPO === noPO).details.filter(row => 
-      row.partNumber.toLowerCase().includes(searchInput) || 
-      row.partName.toLowerCase().includes(searchInput)
-    );
-    currentPage = 1;
-    displayPODetails(filteredData);
-    updatePagination();
-  }
-
 </script>
-
-
 
 </html>
