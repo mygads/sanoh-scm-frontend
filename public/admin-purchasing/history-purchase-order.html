@@ -194,7 +194,7 @@
     }
 
     try {
-      const response = await fetch('http://localhost:8000/api/partner', {
+      const response = await fetch('http://localhost:8000/api/partner3', {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -235,39 +235,44 @@
   }
 
   // Event listener untuk pemilihan supplier dan pengambilan data purchase order
-  document.addEventListener('DOMContentLoaded', () => {
-    const supplierSelect = document.getElementById('Supplier');
-    if (!supplierSelect) {
-      console.error('Supplier select element not found during DOMContentLoaded!');
-      return;
-    }
+document.addEventListener('DOMContentLoaded', () => {
+  const supplierSelect = document.getElementById('Supplier');
+  if (!supplierSelect) {
+    console.error('Supplier select element not found during DOMContentLoaded!');
+    return;
+  }
 
-    supplierSelect.addEventListener('change', async () => {
-      const selectedSupplier = supplierSelect.value;
-      if (selectedSupplier) {
-        const token = localStorage.getItem('accessToken');
-        if (!token) {
-          console.error('No access token found');
-          return;
-        }
+  supplierSelect.addEventListener('change', async () => {
+    const selectedSupplier = supplierSelect.value;
+    if (selectedSupplier) {
+      const token = localStorage.getItem('accessToken');
+      if (!token) {
+        console.error('No access token found');
+        return;
+      }
 
-        try {
-          const response = await fetch(`http://localhost:8000/api/indexpoheader/${selectedSupplier}`, {
-            method: 'GET',
-            headers: {
-              'Authorization': `Bearer ${token}`,
-              'Content-Type': 'application/json',
-            },
-          });
-          const data = await response.json();
+      try {
+        const response = await fetch(`http://localhost:8000/api/pohistory3/${selectedSupplier}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
+        const data = await response.json();
 
-          console.log('API Response for Purchase Orders:', data); // Debugging log untuk memeriksa data
+        console.log('API Response for PO History:', data); // Debugging log untuk memeriksa data
 
-          if (data.status === "success") { // Sesuaikan dengan respons API
+        if (data.success) { // Sesuaikan dengan respons API
+          if (data.data && data.data.length > 0) {
             originalData = data.data.map(po => ({
               noPO: po.po_no,
               poDate: po.po_date,
+              planDelivery: po.planned_receipt_date,
+              poRevision: po.po_revision_no,
+              revisionDate: po.po_revision_date,
               status: po.po_status,
+              response: po.response
             }));
             filteredData = [...originalData]; // Salin data asli ke data yang akan ditampilkan
             adjustRowsPerPage(); // Panggil fungsi ini setelah mengambil data
@@ -275,220 +280,84 @@
             updatePagination();
 
             // Tampilkan elemen-elemen yang terkait dengan tabel
-            document.getElementById('search-bar').style.display = 'block';
-            document.getElementById('table-container').style.display = 'block';
-            document.querySelector('.pagination').style.display = 'flex';
+            const searchBar = document.getElementById('search-bar');
+            const tableContainer = document.getElementById('table-container');
+            const pagination = document.querySelector('.pagination');
+            
+            if (searchBar && tableContainer && pagination) {
+              searchBar.style.display = 'block';
+              tableContainer.style.display = 'block';
+              pagination.style.display = 'flex';
+            }
           } else {
-            console.error('Failed to fetch purchase orders:', data.message);
+            console.log('No PO history available for the selected supplier.');
+            // Pastikan elemen ada sebelum mengubah style
+            const searchBar = document.getElementById('search-bar');
+            const tableContainer = document.getElementById('table-container');
+            const pagination = document.querySelector('.pagination');
+            
+            if (searchBar && tableContainer && pagination) {
+              searchBar.style.display = 'none';
+              tableContainer.style.display = 'none';
+              pagination.style.display = 'none';
+            }
           }
-        } catch (error) {
-          console.error('Error fetching purchase orders:', error);
+        } else {
+          console.error('Failed to fetch PO history:', data.message);
         }
-      } else {
-        // Sembunyikan elemen-elemen jika tidak ada supplier yang dipilih
-        document.getElementById('search-bar').style.display = 'none';
-        document.getElementById('table-container').style.display = 'none';
-        document.querySelector('.pagination').style.display = 'none';
+      } catch (error) {
+        console.error('Error fetching PO history:', error);
       }
-    });
-
-    fetchSuppliers(); // Memanggil fungsi untuk mengambil data supplier saat halaman dimuat
-    adjustRowsPerPage(); // Inisialisasi jumlah baris per halaman berdasarkan ukuran layar
-
-    // Setel ulang tabel dan paginasi saat ukuran layar berubah
-    window.addEventListener('resize', () => {
-      adjustRowsPerPage();
-      displayTableData(currentPage);
-      updatePagination();
-    });
-
-    document.getElementById('search-input').addEventListener('input', searchTable);
-
-    // Tambahkan event listener untuk pengurutan
-    addSortingListeners();
+    } else {
+      // Sembunyikan elemen-elemen jika tidak ada supplier yang dipilih
+      const searchBar = document.getElementById('search-bar');
+      const tableContainer = document.getElementById('table-container');
+      const pagination = document.querySelector('.pagination');
+      
+      if (searchBar && tableContainer && pagination) {
+        searchBar.style.display = 'none';
+        tableContainer.style.display = 'none';
+        pagination.style.display = 'none';
+      }
+    }
   });
 
-  // Fungsi untuk menampilkan data tabel
-  function displayTableData(page) {
-    const tableBody = document.getElementById('table-body');
-    if (!tableBody) {
-      console.error('Table body element not found!');
-      return;
-    }
+  fetchSuppliers(); // Memanggil fungsi untuk mengambil data supplier saat halaman dimuat
+  adjustRowsPerPage(); // Inisialisasi jumlah baris per halaman berdasarkan ukuran layar
 
-    tableBody.innerHTML = '';
-
-    const start = (page - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
-    const paginatedData = filteredData.slice(start, end);
-
-    paginatedData.forEach(row => {
-      const tableRow = document.createElement('tr');
-      tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
-      tableRow.innerHTML = `
-        <td class="px-2 py-4 text-center font-medium text-gray-900">
-          <a href="purchase-order-detail.html?noPO=${row.noPO}" class="text-blue-600 underline">${row.noPO}</a>
-        </td>
-        <td class="px-2 py-4 text-center">${row.poDate}</td>
-        <td class="px-2 py-4 text-center">${row.status}</td>
-      `;
-      tableBody.appendChild(tableRow);
-    });
-  }
-
-  // Fungsi untuk melakukan pencarian data di tabel
-  function searchTable() {
-    const searchInput = document.getElementById('search-input').value.toLowerCase();
-
-    if (searchInput === "") {
-      // Jika search input kosong, reset ke data asli
-      filteredData = [...originalData]; // Salin kembali dari data asli
-    } else {
-      // Filter data berdasarkan input pencarian
-      filteredData = originalData.filter(row => row.noPO.toLowerCase().includes(searchInput));
-    }
-
-    currentPage = 1; // Reset ke halaman pertama setelah pencarian
+  // Setel ulang tabel dan paginasi saat ukuran layar berubah
+  window.addEventListener('resize', () => {
+    adjustRowsPerPage();
     displayTableData(currentPage);
     updatePagination();
-  }
+  });
 
-  // Fungsi untuk memperbarui paginasi
-  function updatePagination() {
-    const paginationContainer = document.querySelector('.pagination');
-    if (!paginationContainer) {
-      console.error('Pagination container not found!');
-      return;
-    }
-    
-    paginationContainer.innerHTML = '';
+  document.getElementById('search-input').addEventListener('input', searchTable);
 
-    const totalPages = Math.ceil(filteredData.length / rowsPerPage);
-    const maxPageNumbersToShow = 4;
+  // Tambahkan event listener untuk pengurutan
+  addSortingListeners();
+});
 
-    const prevButton = document.createElement('button');
-    prevButton.className = 'px-3 py-3 2xl:px-4 2xl:py-4 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
-    prevButton.innerHTML = `
-      <svg class="2xl:w-4 2xl:h-4 w-3 h-3 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
-        <path d="M8.766.566A2 2 0 0 0 6.586 1L1 6.586a2 2 0 0 0 0 2.828L6.586 15A2 2 0 0 0 10 13.586V2.414A2 2 0 0 0 8.766.566Z" />
-      </svg>
-    `;
-    prevButton.disabled = currentPage === 1;
-    prevButton.addEventListener('click', () => {
-      if (currentPage > 1) {
-        currentPage--;
-        displayTableData(currentPage);
-        updatePagination();
-      }
-    });
-    paginationContainer.appendChild(prevButton);
+// Fungsi untuk pengurutan data
+function sortData(sortKey) {
+  // Toggle sort order
+  sortOrder[sortKey] = sortOrder[sortKey] === 'asc' ? 'desc' : 'asc';
 
-    const pageNumbers = [];
-    if (totalPages <= maxPageNumbersToShow) {
-      for (let i = 1; i <= totalPages; i++) {
-        pageNumbers.push(i);
-      }
+  filteredData.sort((a, b) => {
+    if (a[sortKey] < b[sortKey]) {
+      return sortOrder[sortKey] === 'asc' ? -1 : 1;
+    } else if (a[sortKey] > b[sortKey]) {
+      return sortOrder[sortKey] === 'asc' ? 1 : -1;
     } else {
-      pageNumbers.push(1);
-
-      const startPage = Math.max(2, currentPage - 1);
-      const endPage = Math.min(totalPages - 1, currentPage + 1);
-
-      if (startPage > 2) {
-        pageNumbers.push('...');
-      }
-
-      for (let i = startPage; i <= endPage; i++) {
-        pageNumbers.push(i);
-      }
-
-      if (endPage < totalPages - 1) {
-        pageNumbers.push('...');
-      }
-
-      pageNumbers.push(totalPages);
+      return 0;
     }
+  });
 
-    pageNumbers.forEach(number => {
-      const pageButton = document.createElement('button');
-      if (number === '...') {
-        pageButton.className = 'px-4 py-2 2xl:px-6 2xl:py-4 text-gray-900 bg-gray-200 rounded-md cursor-default';
-        pageButton.textContent = '...';
-      } else {
-        pageButton.className = `px-4 py-2 2xl:px-6 2xl:py-4 ${number === currentPage ? 'bg-blue-900 text-white' : 'bg-gray-200 text-gray-900'} rounded-md hover:bg-gray-300`;
-        pageButton.textContent = number;
-        pageButton.addEventListener('click', () => {
-          currentPage = number;
-          displayTableData(currentPage);
-          updatePagination();
-        });
-      }
-      paginationContainer.appendChild(pageButton);
-    });
+  // Update table after sorting
+  currentPage = 1; // Reset to the first page after sorting
+  displayTableData(currentPage);
+  updatePagination();
+}
 
-    const nextButton = document.createElement('button');
-    nextButton.className = 'px-3 py-3 2xl:px-4 2xl:py-4 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
-    nextButton.innerHTML = `
-      <svg class="2xl:w-4 2xl:h-4 w-3 h-3 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
-        <path d="M1.234 15.434a2 2 0 0 0 2.18-1.414L9 9.414a2 2 0 0 0 0-2.828L3.414.586A2 2 0 0 0 1.234 2.414v11.172z" />
-      </svg>
-    `;
-    nextButton.disabled = currentPage === totalPages;
-    nextButton.addEventListener('click', () => {
-      if (currentPage < totalPages) {
-        currentPage++;
-        displayTableData(currentPage);
-        updatePagination();
-      }
-    });
-    paginationContainer.appendChild(nextButton);
-  }
-
-  // Fungsi untuk mengatur jumlah baris per halaman berdasarkan ukuran layar
-  function adjustRowsPerPage() {
-    if (window.innerWidth <= 768) {
-      rowsPerPage = 4; // Atur menjadi 4 jika ukuran layar <= 768
-    } else if (window.innerWidth <= 1280) {
-      rowsPerPage = 6;
-    } else {
-      rowsPerPage = 9;
-    }
-  }
-
-  // Fungsi untuk menambahkan event listener untuk sorting
-  function addSortingListeners() {
-    const headers = document.querySelectorAll('th[data-sort]');
-    headers.forEach(header => {
-      header.addEventListener('click', () => {
-        const sortKey = header.getAttribute('data-sort');
-        sortData(sortKey);
-        displayTableData(currentPage);
-        updatePagination();
-      });
-    });
-  }
-
-  // Fungsi untuk mengurutkan data
-  function sortData(sortKey) {
-    // Toggle sort order
-    sortOrder[sortKey] = sortOrder[sortKey] === 'asc' ? 'desc' : 'asc';
-
-    filteredData.sort((a, b) => {
-      if (a[sortKey] < b[sortKey]) {
-        return sortOrder[sortKey] === 'asc' ? -1 : 1;
-      } else if (a[sortKey] > b[sortKey]) {
-        return sortOrder[sortKey] === 'asc' ? 1 : -1;
-      } else {
-        return 0;
-      }
-    });
-
-    // Update table after sorting
-    currentPage = 1; // Reset to the first page after sorting
-    displayTableData(currentPage);
-    updatePagination();
-  }
 </script>
-
-
 </html>
