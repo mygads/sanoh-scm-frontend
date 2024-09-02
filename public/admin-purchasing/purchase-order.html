@@ -239,13 +239,16 @@
     }
 
     try {
-      const response = await fetch('http://localhost:8000/api/partner', {
+      const response = await fetch('http://localhost:8000/api/partner3', {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
       });
+
+      if (!response.ok) throw new Error('Network response was not ok');
+      
       const data = await response.json();
 
       console.log('API Response for Suppliers:', data); // Debugging log untuk memeriksa data
@@ -297,13 +300,16 @@
         }
 
         try {
-          const response = await fetch(`http://localhost:8000/api/indexpoheader/${selectedSupplier}`, {
+          const response = await fetch(`http://localhost:8000/api/indexpoheader3/${selectedSupplier}`, {
             method: 'GET',
             headers: {
               'Authorization': `Bearer ${token}`,
               'Content-Type': 'application/json',
             },
           });
+
+          if (!response.ok) throw new Error('Network response was not ok');
+          
           const data = await response.json();
 
           console.log('API Response for Purchase Orders:', data); // Debugging log untuk memeriksa data
