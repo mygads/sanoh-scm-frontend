@@ -194,11 +194,9 @@
 <script>
   let rowsPerPage = 12;
   let currentPage = 1;
-  let suppliersData = [];
   let originalData = [];
   let filteredData = [];
-  let sortOrder = {};
-  let selectedSupplier = null; // Track the selected supplier
+  let selectedSupplier = null;
 
   // Function to fetch suppliers
   async function fetchSuppliers() {
@@ -222,8 +220,7 @@
       const data = await response.json();
 
       if (data.success) {
-        suppliersData = data.data;
-        populateSupplierDropdown();
+        populateSupplierDropdown(data.data);
       } else {
         console.error('Failed to fetch suppliers:', data.message);
       }
@@ -233,7 +230,7 @@
   }
 
   // Function to populate supplier dropdown
-  function populateSupplierDropdown() {
+  function populateSupplierDropdown(suppliersData) {
     const supplierSelect = document.getElementById('Supplier');
     if (!supplierSelect) {
       console.error('Supplier select element not found!');
@@ -248,6 +245,53 @@
       option.textContent = supplier.bp_name;
       supplierSelect.appendChild(option);
     });
+  }
+
+  // Function to fetch and display purchase orders based on selected supplier
+  async function fetchPurchaseOrders(supplierCode) {
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      console.error('No access token found');
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:8000/api/indexpoheader3/${supplierCode}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) throw new Error('Failed to fetch purchase orders');
+
+      const data = await response.json();
+
+      if (data.status === "success") {
+        originalData = data.data.map(po => ({
+          noPO: po.po_no,
+          poDate: po.po_date,
+          planDelivery: po.planned_receipt_date,
+          poRevision: po.po_revision_no,
+          revisionDate: po.po_revision_date,
+          status: po.po_status,
+          response: po.response
+        }));
+        filteredData = [...originalData];
+        displayTableData(currentPage);
+        updatePagination();
+
+        // Show elements related to table
+        document.getElementById('search-bar').style.display = 'block';
+        document.getElementById('table-container').style.display = 'block';
+        document.querySelector('.pagination').style.display = 'flex';
+      } else {
+        console.error('Failed to fetch purchase orders:', data.message);
+      }
+    } catch (error) {
+      console.error('Error fetching purchase orders:', error);
+    }
   }
 
   // Function to display table data
@@ -283,21 +327,6 @@
       `;
       tableBody.appendChild(tableRow);
     });
-  }
-
-  // Function to search in table
-  function searchTable() {
-    const searchInput = document.getElementById('search-input').value.toLowerCase();
-
-    if (searchInput === "") {
-      filteredData = [...originalData]; // Reset to original data
-    } else {
-      filteredData = originalData.filter(row => row.noPO.toLowerCase().includes(searchInput));
-    }
-
-    currentPage = 1; // Reset to first page after search
-    displayTableData(currentPage);
-    updatePagination();
   }
 
   // Function to update pagination
@@ -391,49 +420,52 @@
     paginationContainer.appendChild(nextButton);
   }
 
-  // Function to handle detail PO click
-  async function authenticateAndFetchData(noPO) {
+  // Function to search in table
+  function searchTable() {
+    const searchInput = document.getElementById('search-input').value.toLowerCase();
+
+    if (searchInput === "") {
+      filteredData = [...originalData]; // Reset to original data
+    } else {
+      filteredData = originalData.filter(row => row.noPO.toLowerCase().includes(searchInput));
+    }
+
+    currentPage = 1; // Reset to first page after search
+    displayTableData(currentPage);
+    updatePagination();
+  }
+
+  // Function to fetch and display PO details
+  async function fetchPODetails(noPO) {
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      console.error('No access token found');
+      return;
+    }
+
     try {
-      const token = localStorage.getItem('accessToken');
-      if (!token) throw new Error('Token tidak ditemukan.');
+      const response = await fetch(`http://localhost:8000/api/indexpodetail3/${noPO}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
 
-      if (selectedSupplier) {
-        const responseHeader = await fetch(`http://localhost:8000/api/indexpoheader3/${selectedSupplier}`, {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-        if (!responseHeader.ok) throw new Error('Gagal mengambil header PO.');
+      if (!response.ok) throw new Error('Failed to fetch PO details');
 
-        const headerData = await responseHeader.json();
-        const poDetails = headerData.data.find(po => po.po_no === noPO);
+      const data = await response.json();
 
-        if (poDetails) {
-          const responseDetail = await fetch(`http://localhost:8000/api/indexpodetail3/${noPO}`, {
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          });
-          if (!responseDetail.ok) throw new Error('Gagal mengambil detail PO.');
-
-          const detailData = await responseDetail.json();
-          if (detailData.success) {
-            filteredData = detailData.data;
-            displayPODetails(filteredData);
-            updatePagination();
-          } else {
-            console.error('Gagal mengambil detail PO:', detailData.message);
-          }
-        } else {
-          console.error('PO tidak ditemukan dalam header.');
-        }
+      if (data.success) {
+        displayPODetails(data.data);
+        updatePagination();
       } else {
-        console.error('Supplier tidak dipilih.');
+        console.error('Failed to fetch PO details:', data.message);
       }
     } catch (error) {
-      console.error('Terjadi kesalahan:', error.message);
+      console.error('Error fetching PO details:', error);
     }
-  }  
+  }
 
   // Function to display PO details
   function displayPODetails(details) {
@@ -449,7 +481,7 @@
     const end = start + rowsPerPage;
     const paginatedData = details.slice(start, end);
 
-    paginatedData.forEach((row) => {
+    paginatedData.forEach(row => {
       const tableRow = document.createElement('tr');
       tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
       tableRow.innerHTML = `
@@ -464,7 +496,7 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    const supplierSelect = document.getElementById('Supplier'); // Make sure this ID is correct
+    const supplierSelect = document.getElementById('Supplier');
     if (!supplierSelect) {
       console.error('Supplier select element not found during DOMContentLoaded!');
       return;
@@ -473,50 +505,7 @@
     supplierSelect.addEventListener('change', async () => {
       selectedSupplier = supplierSelect.value;
       if (selectedSupplier) {
-        const token = localStorage.getItem('accessToken');
-        if (!token) {
-          console.error('No access token found');
-          return;
-        }
-
-        try {
-          const response = await fetch(`http://localhost:8000/api/indexpoheader3/${selectedSupplier}`, {
-            method: 'GET',
-            headers: {
-              'Authorization': `Bearer ${token}`,
-              'Content-Type': 'application/json',
-            },
-          });
-
-          if (!response.ok) throw new Error('Network response was not ok');
-          
-          const data = await response.json();
-
-          if (data.status === "success") {
-            originalData = data.data.map(po => ({
-              noPO: po.po_no,
-              poDate: po.po_date,
-              planDelivery: po.planned_receipt_date,
-              poRevision: po.po_revision_no,
-              revisionDate: po.po_revision_date,
-              status: po.po_status,
-              response: po.response
-            }));
-            filteredData = [...originalData]; // Copy original data to display data
-            adjustRowsPerPage(); // Call this function after fetching data
-            displayTableData(currentPage);
-            updatePagination();
-
-            // Show elements related to table
-            document.getElementById('search-bar').style.display = 'block';
-            document.getElementById('table-container').style.display = 'block';
-            document.querySelector('.pagination').style.display = 'flex';
-          } else {
-            console.error('Failed to fetch purchase orders:', data.message);
-          }
-        } catch (error) {
-          console.error('Error fetching purchase orders:', error);
-        }
+        await fetchPurchaseOrders(selectedSupplier);
       } else {
         // Hide elements if no supplier is selected
         document.getElementById('search-bar').style.display = 'none';
@@ -525,10 +514,9 @@
       }
     });
 
-    fetchSuppliers(); // Call function to fetch suppliers when page loads
-    adjustRowsPerPage(); // Initialize rows per page based on screen size
+    fetchSuppliers();
+    adjustRowsPerPage();
 
-    // Reset table and pagination on screen size change
     window.addEventListener('resize', () => {
       adjustRowsPerPage();
       displayTableData(currentPage);
@@ -536,10 +524,19 @@
     });
 
     document.getElementById('search-input').addEventListener('input', searchTable);
-
-    // Add sorting listeners if needed
-    addSortingListeners();
   });
+
+  function adjustRowsPerPage() {
+    if (window.innerWidth <= 1280) {
+      rowsPerPage = 7;
+    } else if (window.innerWidth <= 1600) {
+      rowsPerPage = 9;
+    } else {
+      rowsPerPage = 12;
+    }
+  }
 </script>
+
+
 
 </html>

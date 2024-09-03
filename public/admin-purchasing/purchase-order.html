@@ -246,9 +246,6 @@
           'Content-Type': 'application/json',
         },
       });
-
-      if (!response.ok) throw new Error('Network response was not ok');
-      
       const data = await response.json();
 
       console.log('API Response for Suppliers:', data); // Debugging log untuk memeriksa data
@@ -307,9 +304,6 @@
               'Content-Type': 'application/json',
             },
           });
-
-          if (!response.ok) throw new Error('Network response was not ok');
-          
           const data = await response.json();
 
           console.log('API Response for Purchase Orders:', data); // Debugging log untuk memeriksa data
@@ -551,6 +545,5 @@
     updatePagination();
   }
 </script>
-
 
 </html>

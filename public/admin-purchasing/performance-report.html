@@ -8,12 +8,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-
-
 </head>
 
 <body class="font-poppins bg-white">
@@ -158,21 +156,21 @@
               <thead class="text-[14px] 2xl:text-[20px] text-gray-700">
                 <tr>
                   <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
-                    onclick="sortTable(0)">
+                    data-sort="no">
                     No
                     <img loading="lazy" src="../assets/icon_sort.svg" alt=""
                       class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
                   <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
-                    onclick="sortTable(1)">
+                    data-sort="periode">
                     Periode
                     <img loading="lazy" src="../assets/icon_sort.svg" alt=""
                       class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
                   <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
-                    onclick="sortTable(2)">
+                    data-sort="attachedFile">
                     Attached File
                     <span class="sort-indicator"></span>
                   </th>
@@ -203,15 +201,18 @@
 <!-- Add the script to handle table sorting and pagination -->
 <script>
   let currentPage = 1;
-  let rowsPerPage = 5;
+  let rowsPerPage = 4;  // Default jumlah data per halaman
   let filteredData = [];
+  let originalData = [];  // Menyimpan data asli
+  let sortOrder = {}; // Object to keep track of sort order for each column
+
   const apiUrl = 'http://localhost:8000/api/indexlistingreport3';
   const uploadApiUrl = 'http://localhost:8000/api/createlistingreport3';
   const supplierApiUrl = 'http://localhost:8000/api/partner3';
 
   document.addEventListener('DOMContentLoaded', () => {
     const name = localStorage.getItem('name');
-    const bpCode = localStorage.getItem('bpCode');  // Ambil bpCode dari localStorage
+    const bpCode = localStorage.getItem('bpCode');
     const token = localStorage.getItem('accessToken');
     
     document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
@@ -222,10 +223,10 @@
     }
   
     fetchSuppliers(token);
-    fetchPerformanceReport(token);
+    adjustRowsPerPage(); // Atur jumlah data per halaman berdasarkan ukuran layar
     window.addEventListener('resize', () => {
       adjustRowsPerPage();
-      displayPODetails();
+      displayTableData(currentPage);
       updatePagination();
     });
 
@@ -235,7 +236,7 @@
     const fileUpload = document.getElementById('file-upload');
     const monthPicker = document.getElementById('month-picker');
 
-    supplierSelect.addEventListener('change', (event) => {
+    supplierSelect.addEventListener('change', async (event) => {
       const selectedSupplierId = event.target.value;
       if (selectedSupplierId) {
         // Tampilkan section setelah supplier dipilih
@@ -245,6 +246,11 @@
         document.getElementById('paginationSection').classList.remove('hidden');
         
         localStorage.setItem('selectedSupplierId', selectedSupplierId);
+
+        // Panggil fetchPerformanceReport untuk memperbarui data tabel berdasarkan supplier yang dipilih
+        await fetchPerformanceReport(token);
+        displayTableData(currentPage);
+        updatePagination();
       } else {
         // Sembunyikan section jika tidak ada supplier yang dipilih
         document.getElementById('addFileSection').classList.add('hidden');
@@ -298,6 +304,20 @@
         await uploadFile(token, bpCode); // Tambahkan bpCode saat memanggil uploadFile
       }
     });
+
+    document.getElementById('search-button').addEventListener('click', async () => {
+      const selectedMonth = document.getElementById('month-input').value;
+
+      if (selectedMonth) {
+        await fetchPerformanceReport(token, selectedMonth);  // Panggil fetchPerformanceReport dengan parameter bulan yang dipilih
+        displayTableData(currentPage);
+        updatePagination();
+      } else {
+        alert('Silakan pilih periode.');
+      }
+    });
+
+    addSortingListeners(); // Tambahkan event listener untuk sorting
   });
 
   async function fetchSuppliers(token) {
@@ -338,7 +358,7 @@
     });
   }
 
-  async function fetchPerformanceReport(token) {
+  async function fetchPerformanceReport(token, selectedMonth = null) {
     const supplierId = localStorage.getItem('selectedSupplierId');
   
     if (!supplierId) {
@@ -360,12 +380,23 @@
   
       const result = await response.json();
       if (result.success) {
-        filteredData = result.data.map(item => ({
+        originalData = result.data.map(item => ({
           no: item.po_listing_no,
           periode: formatDate(item.date),
           attachedFile: item.file
         }));
-        displayPODetails();
+
+        if (selectedMonth) {
+          // Filter data berdasarkan bulan yang dipilih
+          filteredData = originalData.filter(row => {
+            const rowMonth = row.periode.slice(0, 7); // Ambil bagian YYYY-MM dari tanggal
+            return rowMonth === selectedMonth;
+          });
+        } else {
+          filteredData = [...originalData]; // Jika tidak ada bulan yang dipilih, tampilkan semua data
+        }
+
+        displayTableData(currentPage);
         updatePagination();
       } else {
         console.error('Gagal mengambil data:', result.message);
@@ -387,46 +418,72 @@
       alert("Token otentikasi tidak ditemukan. Silakan masuk lagi.");
       return;
     }
-
+  
+    if (!file) {
+      alert('Silakan pilih file untuk diunggah.');
+      return;
+    }
+  
+    if (!period) {
+      alert('Silakan pilih periode.');
+      return;
+    }
+  
+    if (!supplierId) {
+      alert('Silakan pilih supplier.');
+      return;
+    }
+  
+    if (!bpCode) {
+      alert('Silakan ambil kode BP dari localStorage.');
+      return;
+    }
+  
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('date', period); // Ensure date field is included and correctly named
-    formData.append('bp_code', bpCode); // Correctly include bp_code
-    formData.append('supplierId', supplierId); // Ensure this is sent if needed
-
-    console.log('Uploading file:', file.name); // Debugging line to check if file is ready to be uploaded
-    console.log('Period:', period); // Debugging line to check period value
-    console.log('bpCode:', bpCode); // Debugging line to check bpCode value
+    formData.append('date', period);
+    formData.append('bp_code', bpCode);
+  
+    formData.forEach((value, key) => {
+        console.log(key + ': ' + value);
+    });
   
     try {
       const response = await fetch(uploadApiUrl, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`
-          // No need to set 'Content-Type'; FormData will handle it
         },
         body: formData
       });
 
-      if (!response.ok) {
-        const errorData = await response.json(); // Expect JSON error data
-        console.error('Error Details:', errorData);
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-  
-      const result = await response.json();
-      if (result.status) {
-        displayNotification(result.message);
-        addFileToTable(result.data);
-      } else {
-        console.error('Gagal mengunggah file:', result.message);
-        alert(`Error: ${result.message}`);
+      const responseText = await response.text();
+      console.log("Response Text:", responseText);
+
+      try {
+        const result = JSON.parse(responseText);
+        
+        if (response.ok) {
+          if (result.status) {
+            displayNotification(result.message);
+            addFileToTable(result.data);
+          } else {
+            console.error('Gagal mengunggah file:', result.message);
+            alert(`Error: ${result.message}`);
+          }
+        } else {
+          console.error('Error Details:', result);
+          alert(`HTTP error! Status: ${response.status}`);
+        }
+      } catch (jsonError) {
+        console.error('Error parsing JSON:', jsonError);
+        alert("Error parsing response JSON: " + jsonError.message);
       }
     } catch (error) {
       console.error('Error uploading file:', error);
       alert(`Error uploading file: ${error.message}`);
     }
-  }  
+  }
 
   function displayNotification(message) {
     const notification = document.getElementById('notification');
@@ -458,18 +515,164 @@
     return date.toISOString().split('T')[0]; // Format to YYYY-MM-DD
   }
 
-  function displayPODetails() {
-    // Display logic for performance report
+  function displayTableData(page) {
+    const tableBody = document.getElementById('table-body-detail');
+    if (!tableBody) {
+      console.error('Table body element not found!');
+      return;
+    }
+
+    tableBody.innerHTML = '';
+
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+    const paginatedData = filteredData.slice(start, end);
+
+    paginatedData.forEach(row => {
+      const tableRow = document.createElement('tr');
+      tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b');
+      tableRow.innerHTML = `
+        <td class="px-2 py-4 text-center font-medium text-gray-900">${row.no}</td>
+        <td class="px-2 py-4 text-center">${row.periode}</td>
+        <td class="px-1 py-2 text-center flex items-center justify-center">
+          <a href="${row.attachedFile}" target="_blank">
+            <img src="../assets/icon_pdf.svg" alt="PDF Icon" class="w-6 h-6"/>
+          </a>
+        </td>
+      `;
+      tableBody.appendChild(tableRow);
+    });
   }
 
   function updatePagination() {
-    // Update pagination logic
+    const paginationContainer = document.querySelector('.pagination');
+    if (!paginationContainer) {
+      console.error('Pagination container not found!');
+      return;
+    }
+    
+    paginationContainer.innerHTML = '';
+
+    const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+    const maxPageNumbersToShow = 4;
+
+    const prevButton = document.createElement('button');
+    prevButton.className = 'px-3 py-3 2xl:px-4 2xl:py-4 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
+    prevButton.innerHTML = `
+      <svg class="2xl:w-4 2xl:h-4 w-3 h-3 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
+        <path d="M8.766.566A2 2 0 0 0 6.586 1L1 6.586a2 2 0 0 0 0 2.828L6.586 15A2 2 0 0 0 10 13.586V2.414A2 2 0 0 0 8.766.566Z" />
+      </svg>
+    `;
+    prevButton.disabled = currentPage === 1;
+    prevButton.addEventListener('click', () => {
+      if (currentPage > 1) {
+        currentPage--;
+        displayTableData(currentPage);
+        updatePagination();
+      }
+    });
+    paginationContainer.appendChild(prevButton);
+
+    const pageNumbers = [];
+    if (totalPages <= maxPageNumbersToShow) {
+      for (let i = 1; i <= totalPages; i++) {
+        pageNumbers.push(i);
+      }
+    } else {
+      pageNumbers.push(1);
+
+      const startPage = Math.max(2, currentPage - 1);
+      const endPage = Math.min(totalPages - 1, currentPage + 1);
+
+      if (startPage > 2) {
+        pageNumbers.push('...');
+      }
+
+      for (let i = startPage; i <= endPage; i++) {
+        pageNumbers.push(i);
+      }
+
+      if (endPage < totalPages - 1) {
+        pageNumbers.push('...');
+      }
+
+      pageNumbers.push(totalPages);
+    }
+
+    pageNumbers.forEach(number => {
+      const pageButton = document.createElement('button');
+      if (number === '...') {
+        pageButton.className = 'px-4 py-2 2xl:px-6 2xl:py-4 text-gray-900 bg-gray-200 rounded-md cursor-default';
+        pageButton.textContent = '...';
+      } else {
+        pageButton.className = `px-4 py-2 2xl:px-6 2xl:py-4 ${number === currentPage ? 'bg-blue-900 text-white' : 'bg-gray-200 text-gray-900'} rounded-md hover:bg-gray-300`;
+        pageButton.textContent = number;
+        pageButton.addEventListener('click', () => {
+          currentPage = number;
+          displayTableData(currentPage);
+          updatePagination();
+        });
+      }
+      paginationContainer.appendChild(pageButton);
+    });
+
+    const nextButton = document.createElement('button');
+    nextButton.className = 'px-3 py-3 2xl:px-4 2xl:py-4 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
+    nextButton.innerHTML = `
+      <svg class="2xl:w-4 2xl:h-4 w-3 h-3 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
+        <path d="M1.234 15.434a2 2 0 0 0 2.18-1.414L9 9.414a2 2 0 0 0 0-2.828L3.414.586A2 2 0 0 0 1.234 2.414v11.172z" />
+      </svg>
+    `;
+    nextButton.disabled = currentPage === totalPages;
+    nextButton.addEventListener('click', () => {
+      if (currentPage < totalPages) {
+        currentPage++;
+        displayTableData(currentPage);
+        updatePagination();
+      }
+    });
+    paginationContainer.appendChild(nextButton);
   }
-  
+
   function adjustRowsPerPage() {
-    // Adjust rows per page logic
+    if (window.innerWidth < 768) {
+      rowsPerPage = 3; // Atur menjadi 3 jika ukuran layar < 768
+    } else if (window.innerWidth < 1280) {
+      rowsPerPage = 4; // Atur menjadi 4 jika ukuran layar >= 768
+    }
+  }
+
+  // Fungsi untuk menambahkan event listener untuk sorting
+  function addSortingListeners() {
+    const headers = document.querySelectorAll('th[data-sort]');
+    headers.forEach(header => {
+      header.addEventListener('click', () => {
+        const sortKey = header.getAttribute('data-sort');
+        sortData(sortKey);
+      });
+    });
+  }
+
+  // Fungsi untuk mengurutkan data
+  function sortData(sortKey) {
+    // Toggle sort order
+    sortOrder[sortKey] = sortOrder[sortKey] === 'asc' ? 'desc' : 'asc';
+
+    filteredData.sort((a, b) => {
+      if (a[sortKey] < b[sortKey]) {
+        return sortOrder[sortKey] === 'asc' ? -1 : 1;
+      } else if (a[sortKey] > b[sortKey]) {
+        return sortOrder[sortKey] === 'asc' ? 1 : -1;
+      } else {
+        return 0;
+      }
+    });
+
+    // Update table after sorting
+    currentPage = 1; // Reset to the first page after sorting
+    displayTableData(currentPage);
+    updatePagination();
   }
 </script>
-
 
 </html>
