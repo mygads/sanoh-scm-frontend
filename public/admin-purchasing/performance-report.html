@@ -426,7 +426,7 @@
     const pdfLink = tableRow.querySelector('.pdf-link');
     pdfLink.addEventListener('click', async (event) => {
         event.preventDefault();
-        const filename = event.currentTarget.getAttribute('data-filename').split('/').pop(); // Get the filename only
+        const filename = event.currentTarget.getAttribute('data-filename'); // Get the filename directly
 
         try {
             const response = await fetch(`http://localhost:8000/api/listingreport/file/${filename}`);
@@ -614,6 +614,7 @@
   }
   
 </script>
+
 
 
 </html>
