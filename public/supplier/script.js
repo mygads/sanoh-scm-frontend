@@ -315,20 +315,21 @@ async function fetchHistoryPurchaseOrders() {
             historyPurchaseOrder = data.data
                 .filter(po => po.po_status && po.po_status.toLowerCase() === 'closed')  // Filter by status
                 .map(po => ({
-                    noPO: po.po_number ? po.po_number.toString() : 'No PO Number',  // Updated to use po_number
-                    poDate: po.po_date || 'No Date Provided',                  // Handle undefined po_date
-                    status: po.po_status || 'Unknown Status',                  // Handle undefined po_status
+                    noPO: po.po_number ? po.po_number.toString() : 'No PO Number',
+                    poDate: po.po_date || 'No Date Provided',                  
+                    status: po.po_status || 'Unknown Status',
                     details: po.detail ? po.detail.map((detail, index) => ({
                         no: (index + 1).toString(),
-                        partNumber: detail.bp_part_no || 'No Part Number', // Handle undefined bp_part_no
-                        partName: detail.item_desc_a || 'No Item Description', // Handle undefined item_desc_a
-                        UoM: detail.purchase_unit || 'No UoM', // Handle undefined purchase_unit
-                        QTY: detail.po_qty || 'No Quantity' // Handle undefined po_qty
+                        partNumber: detail.bp_part_no || 'No Part Number',
+                        partName: detail.item_desc_a || 'No Item Description',
+                        UoM: detail.purchase_unit || 'No UoM',
+                        QTY: detail.po_qty || 'No Quantity'
                     })) : []
                 }));
 
             // Set filteredHistoryPOData to match historyPurchaseOrder initially
             filteredHistoryPOData = historyPurchaseOrder;
+            filteredHistoryPODetailData = historyPurchaseOrder;
 
             // Call functions to display data and setup pagination
             if (typeof displayTableData === 'function') {
@@ -350,7 +351,5 @@ async function fetchHistoryPurchaseOrders() {
     }
 }
 
-// Fetch data when the DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    fetchHistoryPurchaseOrders();
-});
+// Call fetchHistoryPurchaseOrders to initiate the data fetch when the page loads
+fetchHistoryPurchaseOrders();
