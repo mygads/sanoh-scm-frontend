@@ -125,6 +125,7 @@
     <script>
       document.addEventListener('DOMContentLoaded', () => {
         const token = localStorage.getItem('accessToken');
+        const expiryDate = localStorage.getItem('tokenExpiry');
 
         if (!token) {
           redirectToLogin();

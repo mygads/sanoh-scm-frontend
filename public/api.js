@@ -33,9 +33,16 @@ const dummyData = [
     },
 ];
 
-APIlogin = 'http://127.0.0.1:8000/api/login';
-APIlogout = 'http://127.0.0.1:8000/api/login';
-APIpartner4 = 'http://127.0.0.1:8000/api/partner4';
-APIcreateuser = 'http://127.0.0.1:8000/api/create4';
-APIedit4 = 'http://127.0.0.1:8000/api/edit4/';
-APIupdate4 = 'http://127.0.0.1:8000/api/update4/';
+const API = 'http://127.0.0.1:8000/api';
+
+function saveLogout() {
+  localStorage.setItem('APIlogout', API + '/logout');
+}
+APIlogin = API + '/login';
+APIpartner4 = API + '/partner4';
+APIcreateuser = API + '/create4';
+APIedit4 = API + '/edit4/';
+APIupdate4 = API + '/update4/';
+APIlistuser = API + '/index4';
+APIupdatestatus = API + `/updatestatus/`;
+
