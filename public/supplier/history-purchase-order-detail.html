@@ -211,8 +211,8 @@
 
   let rowsPerPage = 10;
   let currentPage = 1;
-  let filteredData = [];
-  
+  let details = [];
+  let filteredHistoryPOData = [];
 
   // Adjust rows per page based on screen size
   adjustRowsPerPage(); 
@@ -221,29 +221,29 @@
   const noPO = params.get('noPO');
 
   if (noPO) {
-      const po = historyPurchaseOrder.find(po => po.noPO === noPO);
-      if (po) {
+    const po = historyPurchaseOrder.find(po => po.noPO === noPO);
+    if (po) {
         document.getElementById('poNumber').textContent = po.noPO;
         document.getElementById('noteInput').textContent = po.note;
-        filteredData = po.details;
-        displayPODetails(po.details);
-        updatePagination();
-      } else {
+        filteredHistoryPOData = po.details;
+        displayPODetails(filteredHistoryPOData);  // Ensure this function is defined
+        updatePagination();  // Ensure this function is defined
+    } else {
         console.error('Data PO tidak ditemukan dalam array data.');
-      }
+    }
   } else {
-      console.error('Parameter noPO tidak ditemukan dalam URL.');
+    console.error('Parameter noPO tidak ditemukan dalam URL.');
   }
-  // let filteredData = details; // Initialize filteredData with all data
+
   // Adjust rows per page based on screen size
   function adjustRowsPerPage() {
     if (window.innerWidth <= 1280) {
         rowsPerPage = 7;
-      } else if (window.innerWidth <= 1600) {
+    } else if (window.innerWidth <= 1600) {
         rowsPerPage = 9;
-      } else {
+    } else {
         rowsPerPage = 10;
-      }
+    }
   }
 
   function displayPODetails(details) {
@@ -255,16 +255,15 @@
     const paginatedData = details.slice(start, end);
 
     paginatedData.forEach((row, index) => {
-      const tableRow = document.createElement('tr');
-      tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
-      tableRow.innerHTML = `
-        <td class="px-2 py-4 text-center font-medium text-gray-900">${row.no}</td>
-        <td class="px-2 py-4 text-center">${row.partNumber}</td>
-        <td class="px-2 py-4 text-center">${row.partName}</td>
-        <td class="px-2 py-4 text-center">${row.QTY}</td>
-        <td class="px-2 py-4 text-center">${row.QTYDelivered}</td>
-      `;
-      tableBody.appendChild(tableRow);
+        const tableRow = document.createElement('tr');
+        tableRow.innerHTML = `
+            <td class="px-2 py-4 text-center">${row.no}</td>
+            <td class="px-2 py-4 text-center">${row.partNumber}</td>
+            <td class="px-2 py-4 text-center">${row.partName}</td>
+            <td class="px-2 py-4 text-center">${row.QTY}</td>
+            <td class="px-2 py-4 text-center">${row.QTYDelivered || 'N/A'}</td>
+        `;
+        tableBody.appendChild(tableRow);
     });
   }
 
@@ -272,7 +271,7 @@
     const paginationContainer = document.querySelector('.pagination');
     paginationContainer.innerHTML = '';
 
-    const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+    const totalPages = Math.ceil(filteredHistoryPOData.length / rowsPerPage);
     const maxPageNumbersToShow = 4; // Number of page buttons to display (including current)
 
     // Previous button
@@ -287,7 +286,7 @@
     prevButton.addEventListener('click', () => {
         if (currentPage > 1) {
         currentPage--;
-        displayPODetails(filteredData);
+        displayPODetails(filteredHistoryPOData);
         updatePagination();
         }
     });
@@ -333,7 +332,7 @@
         pageButton.textContent = number;
         pageButton.addEventListener('click', () => {
             currentPage = number;
-            displayPODetails(filteredData);
+            displayPODetails(filteredHistoryPOData);
             updatePagination();
         });
         }
@@ -352,7 +351,7 @@
     nextButton.addEventListener('click', () => {
         if (currentPage < totalPages) {
         currentPage++;
-        displayPODetails(filteredData);
+        displayPODetails(filteredHistoryPOData);
         updatePagination();
         }
     });
@@ -369,13 +368,13 @@
     adjustRowsPerPage(); // Set rows per page based on initial screen size
     window.addEventListener('resize', () => {
       adjustRowsPerPage(); // Adjust rows per page on screen resize
-      displayPODetails(filteredData); // Re-render table data
+      displayPODetails(filteredHistoryPOData); // Re-render table data
       updatePagination(); // Re-render pagination
     });
 
     document.getElementById('search-input').addEventListener('input', searchTable);
 
-    displayPODetails(filteredData);
+    displayPODetails(filteredHistoryPOData);
     updatePagination();
   });
 
@@ -407,12 +406,12 @@
   // Function to handle search
   function searchTable() {
     const searchInput = document.getElementById('search-input').value.toLowerCase();
-    filteredData = historyPurchaseOrder.find(po => po.noPO === noPO).details.filter(row => 
+    filteredHistoryPOData = historyPurchaseOrder.find(po => po.noPO === noPO).details.filter(row => 
       row.partNumber.toLowerCase().includes(searchInput) || 
       row.partName.toLowerCase().includes(searchInput)
     );
     currentPage = 1;
-    displayPODetails(filteredData);
+    displayPODetails(filteredHistoryPOData);
     updatePagination();
   }
 

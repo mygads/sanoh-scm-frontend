@@ -4,7 +4,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Purchase Order Supplier</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,7 +15,7 @@
 
 <body class="font-poppins bg-white">
   <section class="overflow-hidden w-screen h-screen bg-white">
-    <div class="flex h-screen">
+    <div class="flex">
 
       <!-- nav-side bar -->
       <aside class="flex flex-col w-[20%]">
@@ -78,12 +77,12 @@
           </ul>
 
           <!-- User and Logout Section at the Bottom -->
-          <div class="mt-auto flex flex-col w-full">
+          <div class="mt-[80%] flex flex-col w-full">
             
             <!-- User Info -->
             <div class="flex gap-4 items-center p-2 2xl:p-4 w-full bg-blue-950 bg-opacity-10 text-blue-950">
               <img loading="lazy" src="../assets/icon_people.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-              <span id="user-info" class="self-stretch my-auto text-sm 2xl:text-xl">i</span>
+              <span class="self-stretch my-auto text-sm 2xl:text-xl">PT Kawasaki</span>
             </div>
             
             <!-- Logout Button -->
@@ -211,8 +210,7 @@
 
 <!-- Add the script to handle table sorting and pagination -->
 <script>
-
-  let rowsPerPage = 8;
+  let rowsPerPage = 10;
   let currentPage = 1;
   let details = [];
   let filteredDataDetail = []; // Initialize this to hold the filtered data
@@ -220,8 +218,56 @@
   // Adjust rows per page based on screen size
   adjustRowsPerPage();
 
-  const params = new URLSearchParams(window.location.search);
-  const noPO = params.get('noPO');
+  document.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const noPO = params.get('noPO');
+    const noteFromURL = params.get('note');
+
+    console.log("noPO from URL:", noPO);
+    console.log("Note from URL:", noteFromURL);
+
+    if (!noPO) {
+        console.error('Parameter noPO tidak ditemukan dalam URL.');
+        return;
+    }
+
+    fetchPODetails(noPO).then(poDetails => {
+        if (!poDetails || poDetails.length === 0) {
+            console.error('Data PO tidak ditemukan.');
+            return;
+        }
+
+        document.getElementById('poNumber').textContent = noPO;
+        const po = poDetails[0];  // Assuming we only care about the first PO in the list
+
+        const finalNote = noteFromURL || po.note || "No Note Found";  // Prefer URL note, fallback to PO note, then fallback to a default
+
+        const noteInputElement = document.getElementById('noteInput');
+        if (noteInputElement) {
+            noteInputElement.value = finalNote;
+            console.log("Note input element updated with:", finalNote);
+        } else {
+            console.error("Element with ID 'noteInput' not found.");
+        }
+
+        // Populate `purchaseOrder` with `poDetails` and render the table
+        purchaseOrder = poDetails;
+        filteredDataDetail = poDetails;
+        displayPODetails(poDetails);
+        updatePagination(poDetails);
+    }).catch(error => {
+        console.error('Error fetching PO details:', error);
+    });
+
+    adjustRowsPerPage();
+    window.addEventListener('resize', () => {
+        adjustRowsPerPage();
+        displayPODetails(filteredDataDetail);
+        updatePagination();
+    });
+
+    document.getElementById('search-input').addEventListener('input', searchTable);
+  });
 
   function adjustRowsPerPage() {
     if (window.innerWidth <= 1280) {
@@ -265,56 +311,6 @@
           `;
           tableBody.appendChild(tableRow);
       });
-  }
-
-  // Function to fetch and display PO details
-  function fetchAndDisplayPODetails(noPO) {
-    if (noPO) {
-        fetchPODetails(noPO).then(fetchedDetails => {
-            details = fetchedDetails;
-            filteredDataDetail = details.slice();
-            displayPODetails(filteredDataDetail);
-            updatePagination(filteredDataDetail);
-
-            const poNumberElement = document.getElementById('poNumber');
-            const noteInputElement = document.getElementById('noteInput');
-
-            // Debug: Log purchaseOrder array and noPO
-            console.log('purchaseOrder array:', purchaseOrder);
-            console.log('Received noPO:', noPO);
-
-            // Check if purchaseOrder array is populated
-            if (!purchaseOrder || purchaseOrder.length === 0) {
-                console.error('purchaseOrder array is not populated or empty.');
-                poNumberElement.textContent = 'PO not found';
-                noteInputElement.value = 'No note available';
-                return;
-            }
-
-            // Find matching PO data
-            const poData = purchaseOrder.find(po => po.noPO === noPO.trim());
-            console.log('Matching PO Data:', poData);
-
-            // Populate the boxes with data if found
-            if (poData) {
-                poNumberElement.textContent = poData.noPO || 'No PO found';
-                noteInputElement.value = poData.note || 'No references found';
-            } else {
-                console.error('No matching PO data found for noPO:', noPO);
-                poNumberElement.textContent = 'PO not found';
-                noteInputElement.value = 'No note available';
-            }
-
-        }).catch(error => {
-            console.error('Error displaying PO details:', error);
-            document.getElementById('poNumber').textContent = 'Error loading data';
-            document.getElementById('noteInput').value = 'Error loading data';
-        });
-    } else {
-        console.error('No PO number provided.');
-        document.getElementById('poNumber').textContent = 'No PO number provided';
-        document.getElementById('noteInput').value = 'No PO number provided';
-    }
   }
 
   function updatePagination(details) {
@@ -400,28 +396,6 @@
     });
     paginationContainer.appendChild(nextButton);
   }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    if (noPO) {
-      fetchPODetails(noPO).then(fetchedDetails => {
-        details = fetchedDetails;
-        filteredDataDetail = details.slice();
-        displayPODetails(filteredDataDetail);
-        updatePagination(filteredDataDetail);
-      }).catch(error => {
-        console.error('Error displaying PO details:', error);
-      });
-    }
-    
-    adjustRowsPerPage();
-    window.addEventListener('resize', () => {
-      adjustRowsPerPage();
-      displayPODetails(filteredDataDetail);
-      updatePagination(filteredDataDetail);
-    });
-
-    document.getElementById('search-input').addEventListener('input', searchTable);
-  });
 
   function sortTable(columnIndex) {
     const table = document.querySelector('table');
