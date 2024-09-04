@@ -11,7 +11,6 @@
     href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
-  <!-- Select2 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
 
 </head>
@@ -217,6 +216,66 @@
       });
     }
 
+    function initializeForm() {
+      const roleSelect = document.getElementById('role');
+      const emailInput = document.getElementById('email');
+      const passwordInput = document.getElementById('password');
+      const togglePasswordButton = document.getElementById('toggle_password');
+
+
+      // Email validation
+      emailInput.addEventListener('input', () => {
+        if (!emailInput.value.includes('@')) {
+          document.getElementById('email_error').classList.remove('hidden');
+        } else {
+          document.getElementById('email_error').classList.add('hidden');
+        }
+      });
+
+      // Toggle Password Visibility
+      togglePasswordButton.addEventListener('click', () => {
+        const isPasswordVisible = passwordInput.type === 'text';
+        passwordInput.type = isPasswordVisible ? 'password' : 'text';
+        togglePasswordButton.src = isPasswordVisible ? '../assets/icon_see.svg' : '../assets/icon_hide.svg';
+      });
+
+      // Generate Random Password
+      const generatePasswordButton = document.getElementById('generate_password');
+
+      generatePasswordButton.addEventListener('click', () => {
+        const password = generateRandomPassword();
+        passwordInput.value = password;
+      });
+
+
+      // Form Validation on Submit
+      const form = document.getElementById('user-form');
+
+      form.addEventListener('submit', (e) => {
+        let valid = true;
+
+
+        // Role must be selected
+        if (!roleSelect.value) {
+          valid = false;
+        }
+
+        // Email must contain "@" symbol
+        if (!emailInput.value.includes('@')) {
+          document.getElementById('email_error').classList.remove('hidden');
+          valid = false;
+        } else {
+          document.getElementById('email_error').classList.add('hidden');
+        }
+
+        if (!valid) {
+          e.preventDefault(); // Prevent form submission if validation fails
+        } else {
+
+        }
+      });
+    };
+
     $(document).ready(function () {
 
       $('#user-form').on('submit', async function (e) {
@@ -276,6 +335,8 @@
         }
       });
     });
+
+
     
   </script>
 

@@ -3,6 +3,17 @@ let currentPage = 1;
 let filteredData = [];
 let originalData= [];
 
+function adjustRowsPerPage() {
+  if (window.innerWidth <= 1280) {
+      rowsPerPage = 7;
+    } else if (window.innerWidth <= 1600) {
+      rowsPerPage = 8;
+    } else {
+      rowsPerPage = 9;
+    }
+}
+
+
 function sortTable(columnIndex) {
     const table = document.querySelector('table');
     const isAscending = table.querySelectorAll('th')[columnIndex].classList.toggle('asc');

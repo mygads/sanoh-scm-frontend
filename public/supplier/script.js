@@ -1,5 +1,3 @@
-// p
-
 async function fetchPODetails(po_no) {
     try {
         const detailsURL = `http://127.0.0.1:8000/api/indexpodetail/${po_no}`;

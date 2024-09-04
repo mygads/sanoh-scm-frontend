@@ -211,71 +211,116 @@
 
   let rowsPerPage = 10;
   let currentPage = 1;
-  let filteredData = [];
-  
+  let details = [];
+  let filteredHistoryPODetailData = [];
 
-  // Adjust rows per page based on screen size
-  adjustRowsPerPage(); 
+  document.addEventListener('DOMContentLoaded', () => {
+    const name = localStorage.getItem('name');
+    const bpCode = localStorage.getItem('bpCode');
+    document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
 
-  const params = new URLSearchParams(window.location.search);
-  const noPO = params.get('noPO');
+    adjustRowsPerPage();
 
-  if (noPO) {
-      const po = historyPurchaseOrder.find(po => po.noPO === noPO);
-      if (po) {
-        document.getElementById('poNumber').textContent = po.noPO;
-        document.getElementById('noteInput').textContent = po.note;
-        filteredData = po.details;
-        displayPODetails(po.details);
+    const params = new URLSearchParams(window.location.search);
+    const noPO = params.get('noPO');
+
+    if (noPO) {
+        const po = historyPurchaseOrder.find(po => po.noPO === noPO);
+        if (po) {
+            document.getElementById('poNumber').textContent = po.noPO;
+            document.getElementById('noteInput').textContent = po.note || 'No note provided';
+            filteredHistoryPODetailData = po.details;
+            
+            if (typeof displayTableData === 'function') {
+                displayTableData(1);
+            } else {
+                console.error('displayTableData function is not defined.');
+            }
+
+            if (typeof updatePagination === 'function') {
+                updatePagination();
+            } else {
+                console.error('updatePagination function is not defined.');
+            }
+
+        } else {
+            console.error('Data PO tidak ditemukan dalam array data.');
+        }
+    } else {
+        console.error('Parameter noPO tidak ditemukan dalam URL.');
+    }
+
+    window.addEventListener('resize', () => {
+        adjustRowsPerPage();
+        displayTableData(1);
         updatePagination();
-      } else {
-        console.error('Data PO tidak ditemukan dalam array data.');
-      }
-  } else {
-      console.error('Parameter noPO tidak ditemukan dalam URL.');
-  }
-  // let filteredData = details; // Initialize filteredData with all data
-  // Adjust rows per page based on screen size
+    });
+
+    document.getElementById('search-input').addEventListener('input', searchTable);
+  });
+
   function adjustRowsPerPage() {
     if (window.innerWidth <= 1280) {
         rowsPerPage = 7;
-      } else if (window.innerWidth <= 1600) {
+    } else if (window.innerWidth <= 1600) {
         rowsPerPage = 9;
-      } else {
+    } else {
         rowsPerPage = 10;
-      }
+    }
   }
 
-  function displayPODetails(details) {
-    const tableBody = document.getElementById('table-body-detail');
+  function displayTableData(page) {
+    const tableBody = document.getElementById('table-body');
+
+    if (!tableBody) {
+        console.error('table-body element not found.');
+        return;
+    }
+
     tableBody.innerHTML = '';
 
-    const start = (currentPage - 1) * rowsPerPage;
+    const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
-    const paginatedData = details.slice(start, end);
+    const paginatedData = filteredHistoryPODetailData.slice(start, end);
 
-    paginatedData.forEach((row, index) => {
-      const tableRow = document.createElement('tr');
-      tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
-      tableRow.innerHTML = `
-        <td class="px-2 py-4 text-center font-medium text-gray-900">${row.no}</td>
-        <td class="px-2 py-4 text-center">${row.partNumber}</td>
-        <td class="px-2 py-4 text-center">${row.partName}</td>
-        <td class="px-2 py-4 text-center">${row.QTY}</td>
-        <td class="px-2 py-4 text-center">${row.QTYDelivered}</td>
-      `;
-      tableBody.appendChild(tableRow);
+    if (paginatedData.length === 0) {
+        const noDataRow = document.createElement('tr');
+        noDataRow.innerHTML = `
+            <td colspan="5" class="px-2 py-4 text-center font-medium text-gray-900">
+                No purchase orders available.
+            </td>
+        `;
+        tableBody.appendChild(noDataRow);
+        return;
+    }
+
+    paginatedData.forEach((row) => {
+        const tableRow = document.createElement('tr');
+        tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
+        tableRow.innerHTML = `
+            <td class="px-2 py-4 text-center font-medium text-gray-900">
+                <a href="history-purchase-order-detail.html?noPO=${row.noPO}" class="text-blue-600 underline">${row.noPO}</a>
+            </td>
+            <td class="px-2 py-4 text-center">${row.poDate}</td>
+            <td class="px-2 py-4 text-center">${row.status}</td>
+        `;
+        tableBody.appendChild(tableRow);
     });
   }
 
   function updatePagination() {
     const paginationContainer = document.querySelector('.pagination');
+
+    if (!paginationContainer) {
+        console.error('pagination element not found.');
+        return;
+    }
+
     paginationContainer.innerHTML = '';
 
-    const totalPages = Math.ceil(filteredData.length / rowsPerPage);
-    const maxPageNumbersToShow = 4; // Number of page buttons to display (including current)
+    const totalPages = Math.ceil(filteredHistoryPODetailData.length / rowsPerPage);
+    const maxPageNumbersToShow = 4;
 
-    // Previous button
     const prevButton = document.createElement('button');
     prevButton.className = 'px-3 py-3 2xl:px-4 2xl:py-4 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
     prevButton.innerHTML = `
@@ -286,61 +331,56 @@
     prevButton.disabled = currentPage === 1;
     prevButton.addEventListener('click', () => {
         if (currentPage > 1) {
-        currentPage--;
-        displayPODetails(filteredData);
-        updatePagination();
+            currentPage--;
+            displayTableData(currentPage);
+            updatePagination();
         }
     });
     paginationContainer.appendChild(prevButton);
 
-    // Calculate page numbers to show
     const pageNumbers = [];
     if (totalPages <= maxPageNumbersToShow) {
-        // If total pages is less than or equal to maxPageNumbersToShow, show all page numbers
         for (let i = 1; i <= totalPages; i++) {
-        pageNumbers.push(i);
+            pageNumbers.push(i);
         }
     } else {
-        // Otherwise, calculate which page numbers to show
-        pageNumbers.push(1); // Always show the first page
+        pageNumbers.push(1); 
 
         const startPage = Math.max(2, currentPage - 1);
         const endPage = Math.min(totalPages - 1, currentPage + 1);
 
         if (startPage > 2) {
-        pageNumbers.push('...');
+            pageNumbers.push('...');
         }
 
         for (let i = startPage; i <= endPage; i++) {
-        pageNumbers.push(i);
+            pageNumbers.push(i);
         }
 
         if (endPage < totalPages - 1) {
-        pageNumbers.push('...');
+            pageNumbers.push('...');
         }
 
-        pageNumbers.push(totalPages); // Always show the last page
+        pageNumbers.push(totalPages); 
     }
 
-    // Page numbers buttons
     pageNumbers.forEach(number => {
         const pageButton = document.createElement('button');
         if (number === '...') {
-        pageButton.className = 'px-4 py-2 2xl:px-6 2xl:py-4 text-gray-900 bg-gray-200 rounded-md cursor-default';
-        pageButton.textContent = '...';
+            pageButton.className = 'px-4 py-2 2xl:px-6 2xl:py-4 text-gray-900 bg-gray-200 rounded-md cursor-default';
+            pageButton.textContent = '...';
         } else {
-        pageButton.className = `px-4 py-2 2xl:px-6 2xl:py-4 ${number === currentPage ? 'bg-blue-900 text-white' : 'bg-gray-200 text-gray-900'} rounded-md hover:bg-gray-300`;
-        pageButton.textContent = number;
-        pageButton.addEventListener('click', () => {
-            currentPage = number;
-            displayPODetails(filteredData);
-            updatePagination();
-        });
+            pageButton.className = `px-4 py-2 2xl:px-6 2xl:py-4 ${number === currentPage ? 'bg-blue-900 text-white' : 'bg-gray-200 text-gray-900'} rounded-md hover:bg-gray-300`;
+            pageButton.textContent = number;
+            pageButton.addEventListener('click', () => {
+                currentPage = number;
+                displayTableData(currentPage);
+                updatePagination();
+            });
         }
         paginationContainer.appendChild(pageButton);
     });
 
-    // Next button
     const nextButton = document.createElement('button');
     nextButton.className = '2xl:px-4 2xl:py-4 px-3 py-3 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
     nextButton.innerHTML = `
@@ -351,69 +391,46 @@
     nextButton.disabled = currentPage === totalPages;
     nextButton.addEventListener('click', () => {
         if (currentPage < totalPages) {
-        currentPage++;
-        displayPODetails(filteredData);
-        updatePagination();
+            currentPage++;
+            displayTableData(currentPage);
+            updatePagination();
         }
     });
     paginationContainer.appendChild(nextButton);
-}
+  }
 
-  document.addEventListener('DOMContentLoaded', () => {
-
-    const name = localStorage.getItem('name');
-    const bpCode = localStorage.getItem('bpCode');
-
-    document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
-    
-    adjustRowsPerPage(); // Set rows per page based on initial screen size
-    window.addEventListener('resize', () => {
-      adjustRowsPerPage(); // Adjust rows per page on screen resize
-      displayPODetails(filteredData); // Re-render table data
-      updatePagination(); // Re-render pagination
-    });
-
-    document.getElementById('search-input').addEventListener('input', searchTable);
-
-    displayPODetails(filteredData);
+  function searchTable() {
+    const searchInput = document.getElementById('search-input').value.toLowerCase();
+    filteredHistoryPODetailData = historyPurchaseOrder.find(po => po.noPO === noPO).details.filter(row => 
+        row.partNumber.toLowerCase().includes(searchInput) || 
+        row.partName.toLowerCase().includes(searchInput)
+    );
+    currentPage = 1;
+    displayTableData(currentPage);
     updatePagination();
-  });
+  }
 
-  // Function to sort table based on column index
   function sortTable(columnIndex) {
     const table = document.querySelector('table');
     const tbody = table.querySelector('tbody');
     const rows = Array.from(tbody.querySelectorAll('tr'));
     const isAscending = table.querySelectorAll('th')[columnIndex].classList.toggle('asc');
     table.querySelectorAll('th').forEach((th, index) => {
-      if (index !== columnIndex) th.classList.remove('asc', 'desc');
+        if (index !== columnIndex) th.classList.remove('asc', 'desc');
     });
 
     rows.sort((a, b) => {
-      const cellA = a.querySelectorAll('td')[columnIndex].textContent.trim();
-      const cellB = b.querySelectorAll('td')[columnIndex].textContent.trim();
-
-      return cellA.localeCompare(cellB, undefined, { numeric: true, sensitivity: 'base' });
+        const cellA = a.querySelectorAll('td')[columnIndex].textContent.trim();
+        const cellB = b.querySelectorAll('td')[columnIndex].textContent.trim();
+        return cellA.localeCompare(cellB, undefined, { numeric: true, sensitivity: 'base' });
     });
 
     if (!isAscending) {
-      rows.reverse();
+        rows.reverse();
     }
 
     tbody.innerHTML = '';
     tbody.append(...rows);
-  }
-
-  // Function to handle search
-  function searchTable() {
-    const searchInput = document.getElementById('search-input').value.toLowerCase();
-    filteredData = historyPurchaseOrder.find(po => po.noPO === noPO).details.filter(row => 
-      row.partNumber.toLowerCase().includes(searchInput) || 
-      row.partName.toLowerCase().includes(searchInput)
-    );
-    currentPage = 1;
-    displayPODetails(filteredData);
-    updatePagination();
   }
 
 </script>
