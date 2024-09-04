@@ -141,54 +141,42 @@
 </body>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- Select2 JS -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
 <script src="script.js"></script>
-<script src="../script.js"></script>
 <script src="../api.js"></script>
+<script src="../script.js"></script>
+<script src="../table.js"></script>
 
 <script>
-  
-  const token = localStorage.getItem('accessToken');
+
+  cekToken();
+  const userId = localStorage.getItem('editUserId');
+
+  if (userId) {
+    fetchUserData(userId).then(data => populateForm(data)).catch(err => console.error(err));
+  }
 
   document.addEventListener('DOMContentLoaded', function () {
-    const userId = localStorage.getItem('editUserId');
-
     
-    if (!token) {
-      redirectToLogin();
-      return;
-    } 
-    
-    const name = localStorage.getItem('name');
-    const bpCode = localStorage.getItem('bpCode');
-    
-    document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
-    
-    if (userId) {
-      fetchUserData(userId).then(data => populateForm(data)).catch(err => console.error(err));
-    }
-
     const passwordInput = document.getElementById('password');
     const togglePasswordButton = document.getElementById('toggle_password');
     const generatePasswordButton = document.getElementById('generate_password');
     const form = document.getElementById('edit-user-form');
-
+    
     // Toggle Password Visibility
     togglePasswordButton.addEventListener('click', () => {
       const isPasswordVisible = passwordInput.type === 'text';
       passwordInput.type = isPasswordVisible ? 'password' : 'text';
       togglePasswordButton.src = isPasswordVisible ? '../assets/icon_see.svg' : '../assets/icon_hide.svg';
     });
-
+    
     // Generate Random Password
     generatePasswordButton.addEventListener('click', () => {
       const password = generateRandomPassword();
       passwordInput.value = password;
     });
     
-
+    
     // Form submission
     form.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -201,11 +189,9 @@
       };
       updateUser(userId, data);
     });
-
+    
     // Fetch and populate suppliers
     fetchSuppliers();
-
-  
 
   });
 
@@ -229,12 +215,15 @@
           }
         } else {
           console.error('Failed to fetch suppliers:', data.message);
+          displayNotification(`Failed to fetch suppliers:, ${data.message}`,'error');
         }
       } else {
         console.error('Failed to fetch suppliers:', response.statusText);
+        displayNotification(`Failed to fetch suppliers:, ${response.statusText}`,'error');
       }
     } catch (error) {
       console.error('Error fetching suppliers:', error);
+      displayNotification(`Error fetching suppliers:, ${error}`,'error');
     }
   }
 
@@ -270,20 +259,23 @@
           populateForm(data.data); // Pindahkan ini agar hanya dipanggil setelah supplier dimuat
         } else {
           console.error('Failed to fetch user data:', data.message);
+          displayNotification(`Failed to fetch user data:, ${data.message}`);
         }
       } else {
         console.error('Failed to fetch user data:', response.statusText);
+        displayNotification(`Failed to fetch user data:, ${response.statusText}`);
       }
     } catch (error) {
       console.error('Error fetching user data:', error);
+      displayNotification(`Error fetching user data::, ${error}`);
     }
   }
 
   function populateForm(data) {
-    if (!data) {
-      console.error('Cannot populate form: data is undefined');
-      return;
-    }
+    // if (!data) {
+    //   console.error('Cannot populate form: data is undefined');
+    //   return;
+    // }
 
     // Set supplier select sesuai dengan user data
     $('#supplier_id').val(data.bp_code).trigger('change'); // Pastikan untuk memicu Select2 agar meng-update tampilan

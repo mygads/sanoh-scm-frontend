@@ -1,13 +1,3 @@
-tailwind.config = {
-    theme: {
-        extend: {
-            fontFamily: {
-            poppins: ['Poppins', 'sans-serif'],
-            },
-        },
-    },
-}
-
 function generateRandomPassword(maxLength = 10) {
     const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890";
     
@@ -82,32 +72,16 @@ function initializeForm() {
       if (!valid) {
         e.preventDefault(); // Prevent form submission if validation fails
       } else {
-        // // Store user data in local storage
-        // const user = {
-        //   // userId: userIdInput.value,
-        //   supplierId: document.getElementById('supplier_id').value,
-        //   firstName: document.getElementById('first_name').value,
-        //   role: roleSelect.value,
-        //   username: document.getElementById('username').value,
-        //   email: emailInput.value,
-        //   password: passwordInput.value
-        // };
 
-        // let users = JSON.parse(localStorage.getItem('users')) || [];
-        // users.push(user);
-        // localStorage.setItem('users', JSON.stringify(users));
-
-        // // Redirect to manage-user.html
-        // window.location.href = 'manage-user.html';
       }
     });
 
 };
 
 function handleErrorsPassword(errors) {
-    if (errors.password) {
-      displayNotification(errors.password, 'error');
-    } else {
-      displayNotification('An unknown error occurred.', 'error');
-    }
+  if (errors.password) {
+    displayNotification(errors.password, 'error');
+  } else {
+    displayNotification('An unknown error occurred.', 'error');
+  }
 }

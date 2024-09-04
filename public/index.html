@@ -93,7 +93,7 @@
   if (token) {
     displayNotification('You are already logged in!', 'info');
     setTimeout(() => {
-      redirectToDashboard(localStorage.getItem('userRole'));
+      redirectToDashboardIndex(localStorage.getItem('userRole'));
     }, 1500);
   }
 

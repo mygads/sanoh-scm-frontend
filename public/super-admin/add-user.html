@@ -147,27 +147,20 @@
   <!-- Select2 JS -->
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   <script src="script.js"></script>
-  <script src="../script.js"></script>
   <script src="../api.js"></script>
+  <script src="../script.js"></script>
+  <script src="../table.js"></script>
 
   <script>
+
+    cekToken();
     
     document.addEventListener('DOMContentLoaded', function () {
-      const token = localStorage.getItem('accessToken');
 
-      if (!token) {
-        redirectToLogin();
-      } else {
-        // Bisa tambahkan fungsi lain seperti fetch data pengguna atau pengaturan lainnya
-        const name = localStorage.getItem('name');
-        const bpCode = localStorage.getItem('bpCode');
-        
-        document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
-  
-        fetchSuppliers();
-  
-        initializeForm();
-      }
+      fetchSuppliers();
+
+      initializeForm();
+      
     });
 
     async function fetchSuppliers() {
@@ -184,9 +177,6 @@
         
         if (response.ok) {
           const data = await response.json();
-          console.log('API Response for Suppliers:', data);
-          
-          // Map data to filteredData and update table
           if (data.success) {
             suppliersData = data.data;
             populateSupplierDropdown(suppliersData);
