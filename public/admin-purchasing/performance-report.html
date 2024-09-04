@@ -518,8 +518,8 @@
   function displayTableData(page) {
     const tableBody = document.getElementById('table-body-detail');
     if (!tableBody) {
-      console.error('Table body element not found!');
-      return;
+        console.error('Table body element not found!');
+        return;
     }
 
     tableBody.innerHTML = '';
@@ -529,20 +529,21 @@
     const paginatedData = filteredData.slice(start, end);
 
     paginatedData.forEach(row => {
-      const tableRow = document.createElement('tr');
-      tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b');
-      tableRow.innerHTML = `
-        <td class="px-2 py-4 text-center font-medium text-gray-900">${row.no}</td>
-        <td class="px-2 py-4 text-center">${row.periode}</td>
-        <td class="px-1 py-2 text-center flex items-center justify-center">
-          <a href="${row.attachedFile}" target="_blank">
-            <img src="../assets/icon_pdf.svg" alt="PDF Icon" class="w-6 h-6"/>
-          </a>
-        </td>
-      `;
-      tableBody.appendChild(tableRow);
+        const tableRow = document.createElement('tr');
+        tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b');
+        tableRow.innerHTML = `
+            <td class="px-2 py-4 text-center font-medium text-gray-900">${row.no}</td>
+            <td class="px-2 py-4 text-center">${row.periode}</td>
+            <td class="px-1 py-2 text-center flex items-center justify-center">
+                <a href="${row.attachedFile}" download>
+                    <img src="../assets/icon_pdf.svg" alt="PDF Icon" class="w-6 h-6"/>
+                </a>
+            </td>
+        `;
+        tableBody.appendChild(tableRow);
     });
-  }
+}
+
 
   function updatePagination() {
     const paginationContainer = document.querySelector('.pagination');
