@@ -118,7 +118,6 @@
             <label for="username" class="text-base 2xl:text-lg font-medium dark:text-black w-[15%] 2xl:w-[10%]">Username</label>
             <input type="text" id="username" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[32%] p-3 dark:text-black" placeholder="Username" required />
           </div>
-
           <div class="flex items-center gap-4 mb-6 2xl:mb-8">
             <label for="email" class="text-base 2xl:text-lg font-medium dark:text-black w-[15%] 2xl:w-[10%]">Email</label>
             <input type="email" id="email" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[32%] p-3 dark:text-black" placeholder="example@example.com" required />
@@ -148,33 +147,27 @@
   <!-- Select2 JS -->
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   <script src="script.js"></script>
+  <script src="../api.js"></script>
   <script src="../script.js"></script>
+  <script src="../table.js"></script>
 
   <script>
+
+    cekToken();
     
     document.addEventListener('DOMContentLoaded', function () {
-      const token = localStorage.getItem('accessToken');
 
-      if (!token) {
-        redirectToLogin();
-      } else {
-        // Bisa tambahkan fungsi lain seperti fetch data pengguna atau pengaturan lainnya
-        const name = localStorage.getItem('name');
-        const bpCode = localStorage.getItem('bpCode');
-        
-        document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
-  
-        fetchSuppliers();
-  
-        initializeForm();
-      }
+      fetchSuppliers();
+
+      initializeForm();
+      
     });
 
     async function fetchSuppliers() {
       const token = localStorage.getItem('accessToken');
       
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/partner4', {
+        const response = await fetch(APIpartner4, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -184,9 +177,6 @@
         
         if (response.ok) {
           const data = await response.json();
-          console.log('API Response for Suppliers:', data);
-          
-          // Map data to filteredData and update table
           if (data.success) {
             suppliersData = data.data;
             populateSupplierDropdown(suppliersData);
@@ -255,7 +245,7 @@
 
         try {
           const token = localStorage.getItem('accessToken');
-          const response = await fetch('http://127.0.0.1:8000/api/create4', {
+          const response = await fetch(APIcreateuser, {
             method: 'POST',
             headers: {
               'Authorization': `Bearer ${token}`,
@@ -268,8 +258,6 @@
 
           if (response.ok && result.success) {
             displayNotification('User successfully created!', 'success');
-            // Tidak ada redirect setelah sukses, tetap di halaman
-            // Reset form setelah berhasil menambah user
 
             document.getElementById('user-form').reset();
 
@@ -288,114 +276,7 @@
         }
       });
     });
-
-    function displayNotification(message, type) {
-      const notification = document.getElementById('notification');
-      notification.textContent = message;
-
-      notification.className = 'fixed bottom-4 right-4 p-4 rounded-lg shadow-lg ';
-      notification.className += type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white';
-      notification.classList.remove('hidden');
-
-      setTimeout(() => {
-        notification.classList.add('hidden');
-      }, 3000);
-    }
     
-    function initializeForm() {
-
-      const roleSelect = document.getElementById('role');
-      const emailInput = document.getElementById('email');
-      const passwordInput = document.getElementById('password');
-      const togglePasswordButton = document.getElementById('toggle_password');
-  
-  
-      // Email validation
-      emailInput.addEventListener('input', () => {
-        if (!emailInput.value.includes('@')) {
-          document.getElementById('email_error').classList.remove('hidden');
-        } else {
-          document.getElementById('email_error').classList.add('hidden');
-        }
-      });
-  
-      // Toggle Password Visibility
-      togglePasswordButton.addEventListener('click', () => {
-        const isPasswordVisible = passwordInput.type === 'text';
-        passwordInput.type = isPasswordVisible ? 'password' : 'text';
-        togglePasswordButton.src = isPasswordVisible ? '../assets/icon_see.svg' : '../assets/icon_hide.svg';
-      });
-  
-      // Generate Random Password
-      const generatePasswordButton = document.getElementById('generate_password');
-  
-      generatePasswordButton.addEventListener('click', () => {
-        const password = generateRandomPassword();
-        passwordInput.value = password;
-      });
-  
-      function generateRandomPassword(maxLength = 8) {
-        const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890";
-        
-        const selectedSupplierId = $('#supplier_id').val(); // Ambil bp_code yang dipilih
-        
-        // Hitung sisa panjang setelah bp_code
-        const remainingLength = maxLength - selectedSupplierId.length;
-        
-        let randomPart = '';
-        
-        for (let i = 0; i < remainingLength; i++) {
-          const randomIndex = Math.floor(Math.random() * charset.length);
-          randomPart += charset[randomIndex];
-        }
-
-        return selectedSupplierId + randomPart; // Password akan dihasilkan berdasarkan bp_code + karakter random
-
-      }
-  
-      // Form Validation on Submit
-      const form = document.getElementById('user-form');
-  
-      form.addEventListener('submit', (e) => {
-        let valid = true;
-  
-  
-        // Role must be selected
-        if (!roleSelect.value) {
-          valid = false;
-        }
-  
-        // Email must contain "@" symbol
-        if (!emailInput.value.includes('@')) {
-          document.getElementById('email_error').classList.remove('hidden');
-          valid = false;
-        } else {
-          document.getElementById('email_error').classList.add('hidden');
-        }
-  
-        if (!valid) {
-          e.preventDefault(); // Prevent form submission if validation fails
-        } else {
-          // Store user data in local storage
-          const user = {
-            userId: userIdInput.value,
-            supplierId: document.getElementById('supplier_id').value,
-            firstName: document.getElementById('first_name').value,
-            role: roleSelect.value,
-            username: document.getElementById('username').value,
-            email: emailInput.value,
-            password: passwordInput.value
-          };
-  
-          let users = JSON.parse(localStorage.getItem('users')) || [];
-          users.push(user);
-          localStorage.setItem('users', JSON.stringify(users));
-  
-          // Redirect to manage-user.html
-          window.location.href = 'manage-user.html';
-        }
-      });
-    };
   </script>
 
 </body>
