@@ -123,20 +123,9 @@
     <script src="../script.js"></script>
     
     <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const token = localStorage.getItem('accessToken');
-        const expiryDate = localStorage.getItem('tokenExpiry');
 
-        if (!token) {
-          redirectToLogin();
-        } else {
-          // Bisa tambahkan fungsi lain seperti fetch data pengguna atau pengaturan lainnya
-          const name = localStorage.getItem('name');
-          const bpCode = localStorage.getItem('bpCode');
-  
-          document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
-        }
-      });
+      cekToken();
+      
     </script>
 
 </body>

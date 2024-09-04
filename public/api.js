@@ -33,7 +33,7 @@ const dummyData = [
     },
 ];
 
-const API = 'http://127.0.0.1:8000/api';
+const API = 'https://api.edutrashgo.com/api';
 
 function saveLogout() {
   localStorage.setItem('APIlogout', API + '/logout');
