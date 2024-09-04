@@ -191,13 +191,13 @@
 
   // Adjust rows per page based on screen size
   function adjustRowsPerPage() {
-    if (window.innerWidth <= 1280) {
-        rowsPerPage = 6;
-    } else if (window.innerWidth <= 1600) {
-        rowsPerPage = 8;
-    } else {
-        rowsPerPage = 10;
-    }
+      if (window.innerWidth <= 1280) {
+          rowsPerPage = 6;
+      } else if (window.innerWidth <= 1600) {
+          rowsPerPage = 8;
+      } else {
+          rowsPerPage = 10;
+      }
   }
 
   function displayTableData(page) {
@@ -233,7 +233,7 @@
       updatePagination();
   }
 
-  // New sort function based on the pattern from the first code
+  // Sort function based on the column key
   function sortTable(columnKey) {
       sortOrder[columnKey] = sortOrder[columnKey] === 'asc' ? 'desc' : 'asc'; // Toggle sort order
 
@@ -377,6 +377,5 @@
       });
   });
 </script>
-
 
 </html>

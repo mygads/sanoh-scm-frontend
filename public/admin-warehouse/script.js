@@ -1,4 +1,4 @@
-const baseURL = 'http://127.0.0.1:8000/api';
+const baseURL = 'https://api.edutrashgo.com/api';
 let deliveryNote = [];
 let filteredDnData = [];
 let currentPage = 1;
