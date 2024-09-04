@@ -1,30 +1,19 @@
-const baseURL = 'https://api.edutrashgo.com/api/indexpoheader1/'; // Ensure this URL is correct
-
-// Dynamically include the {sp_code} in the URL
-const sp_code = 'APFEY'; // Example of how to dynamically include a code (replace this with actual value)
-const apiURL = `${baseURL}${sp_code}`; // Constructs full API URL
-
+const apiURL = 'https://api.edutrashgo.com/api/indexpoheader1';
 let purchaseOrder = [];
 let filteredData = [];
 
-// Function to fetch purchase orders
 async function fetchPurchaseOrders() {
     try {
-        console.log("Fetching data from:", apiURL);
-        
-        // Fetch data from API
+        console.log("Fetching data...");
         const response = await fetch(apiURL);
 
-        // Check if the response is OK (status 200-299)
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        // Parse the JSON response
         const data = await response.json();
         console.log("Data fetched:", data);
 
-        // Map the data into the purchaseOrder array
         purchaseOrder = data.data.map(po => ({
             noPO: po.po_no.toString(),
             poDate: po.po_date,
@@ -33,7 +22,7 @@ async function fetchPurchaseOrders() {
             revisionDate: po.po_revision_date,
             status: po.po_status,
             response: po.response,
-            note: po.references_1,
+            note: po.reference_2,
             details: po.detail.map((detail, index) => ({
                 no: (index + 1).toString(),
                 partNumber: detail.bp_part_no,
@@ -43,20 +32,16 @@ async function fetchPurchaseOrders() {
             }))
         }));
 
-        // Initialize filtered data with purchase orders
+        // Set filteredData to match purchaseOrder initially
         filteredData = purchaseOrder;
 
         // Call functions to display data and setup pagination
-        displayTableData(1); // Assuming displayTableData is defined elsewhere
-        updatePagination();  // Assuming updatePagination is defined elsewhere
-
+        displayTableData(1);
+        updatePagination();
     } catch (error) {
         console.error('Error fetching purchase orders:', error);
     }
 }
-
-// Call the function to fetch purchase orders
-fetchPurchaseOrders();
 
 async function fetchPODetails(po_no) {
     try {
