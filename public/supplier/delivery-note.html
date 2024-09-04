@@ -174,23 +174,69 @@
 <!-- Add the script to handle table sorting and pagination -->
 <script>
 
-  
+  cekToken(); 
+
   let rowsPerPage = 10;
   let currentPage = 1;
-  // let filteredData = deliveryNote; // Initialize filteredData with all data
   let pendingResponseIndex = null;
   let pendingResponseAction = '';
+  let deliveryNote = [];
+  let filteredDnData = [];
 
-  // Adjust rows per page based on screen size
-  function adjustRowsPerPage() {
-    if (window.innerWidth <= 1280) {
-        rowsPerPage = 6;
-    } else if (window.innerWidth <= 1600) {
-        rowsPerPage = 8;
-    } else {
-        rowsPerPage = 10;
+  /*async function fetchDeliveryNotes() {
+    const token = localStorage.getItem('accessToken');
+    try {
+        const response = await fetch(`https://api.edutrashgo.com/api/indexdnheader1`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("Data fetched:", data);
+
+        // Map and manipulate your data accordingly here
+        deliveryNote = data.data.map(dn => {
+            console.log(dn);
+
+            return {
+                noDN: dn.no_dn ? dn.no_dn.toString() : '',
+                noPO: dn.po_no ? dn.po_no.toString() : '',
+                planDNDate: dn.plan_delivery_date || '',
+                statusDN: dn.status_desc || '',
+                details: dn.detail ? dn.detail.map((detail, index) => ({
+                    no: (index + 1).toString(),
+                    planDelivery: detail.plan_delivery_date || '',
+                    partNumber: detail.part_no || '',
+                    partName: detail.item_desc_a || '',
+                    UoM: detail.dn_unit || '',
+                    QTY: detail.dn_qty || 0,
+                    qtyLabel: detail.dn_snp || '',
+                    qtyRequested: detail.dn_qty || 0,
+                    qtyConfirm: detail.qty_confirm || 0,
+                    qtyDelivered: detail.receipt_qty || 0,
+                    qtyReceived: detail.receipt_qty || 0,
+                    qtyMinus: (detail.dn_qty - (detail.receipt_qty || 0)).toString()
+                })) : []
+            };
+        });
+
+        // Set filteredDnData to match deliveryNote initially
+        filteredDnData = deliveryNote;
+
+        // Call functions to display data and setup pagination
+        displayTableData(1);
+        updatePagination();
+    } catch (error) {
+        console.error(`Error fetching delivery notes:`, error);
     }
-  }
+  }*/
 
   function displayTableData(page) {
       const tableBody = document.getElementById('table-body');
@@ -344,9 +390,7 @@
 
       document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
 
-      adjustRowsPerPage(); // Set rows per page based on initial screen size
       window.addEventListener('resize', () => {
-          adjustRowsPerPage(); // Adjust rows per page on screen resize
           displayTableData(currentPage); // Re-render table data
           updatePagination(); // Re-render pagination
       });

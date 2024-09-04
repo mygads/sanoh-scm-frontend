@@ -215,51 +215,102 @@
     const token = localStorage.getItem('accessToken');
 
     try {
-      // console.log("Fetching data...");
-      const response = await fetch(`https://api.edutrashgo.com/api/indexpoheader1/${bpCode}`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
+        const response = await fetch(`https://api.edutrashgo.com/api/indexpoheader1/${bpCode}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
-      const data = await response.json();
-      console.log("Data fetched:", data);
+        const data = await response.json();
+        console.log("Data fetched:", data);
 
-      purchaseOrder = data.data.map(po => ({
-          noPO: po.po_no.toString(),
-          poDate: po.po_date,
-          planDelivery: po.planned_receipt_date,
-          poRevision: `Rev ${po.po_revision_no.toString().padStart(2, '0')}`,
-          revisionDate: po.po_revision_date,
-          status: po.po_status,
-          response: po.response,
-          note: po.reference_2,
-          details: po.detail.map((detail, index) => ({
-              no: (index + 1).toString(),
-              partNumber: detail.bp_part_no,
-              partName: detail.item_desc_a,
-              UoM: detail.purchase_unit,
-              QTY: detail.po_qty,
-          }))
-      }));
+        purchaseOrder = data.data.map(po => ({
+            noPO: po.po_no ? po.po_no.toString() : "",
+            poDate: po.po_date || "",
+            planDelivery: po.planned_receipt_date || "",
+            poRevision: po.po_revision_no !== null && po.po_revision_no !== undefined ? 
+                `Rev ${po.po_revision_no.toString().padStart(2, '0')}` : "Rev 00",
+            revisionDate: po.po_revision_date || "",
+            status: po.po_status || "",
+            response: po.response || "",
+            note: po.reference_2 || "",
+            details: (po.detail || []).map((detail, index) => ({
+                no: (index + 1).toString(),
+                partNumber: detail.bp_part_no || "",
+                partName: detail.item_desc_a || "",
+                UoM: detail.purchase_unit || "",
+                QTY: detail.po_qty || "",
+            }))
+        }));
 
-      // Set filteredData to match purchaseOrder initially
-      filteredData = purchaseOrder;
+        // Set filteredData to match purchaseOrder initially
+        filteredData = purchaseOrder;
 
-      // Call functions to display data and setup pagination
-      displayTableData(1);
-      updatePagination();
+        // Call functions to display data and setup pagination
+        displayTableData(1);
+        updatePagination();
     } catch (error) {
         console.error('Error fetching purchase orders:', error);
     }
   }
 
+  async function updateResponse(po_no, response) {
+    const token = localStorage.getItem('accessToken');
+    
+    try {
+        const updateURL = `https://api.edutrashgo.com/api/updatepoheader1/${po_no}`;
+        const responseBody = JSON.stringify({ response });
+
+        console.log(`Sending request to ${updateURL} with body: ${responseBody}`);
+
+        const updateResponse = await fetch(updateURL, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` // Add the authorization header
+            },
+            body: responseBody,
+        });
+
+        console.log(`Response status: ${updateResponse.status}`);
+
+        if (!updateResponse.ok) {
+            throw new Error(`HTTP error! status: ${updateResponse.status}`);
+        }
+
+        const result = await updateResponse.json();
+        console.log(`Response updated for PO ${po_no}:`, result);
+
+        if (result.status === 'success') {
+            updatePOStatusInUI(po_no, response);
+        } else {
+            console.error('Failed to update response. API returned:', result);
+        }
+    } catch (error) {
+        console.error('Error updating response:', error);
+    }
+  }
+
+  function updatePOStatusInUI(po_no, response) {  
+    const poIndex = filteredData.findIndex(po => po.noPO === po_no);
+    
+    if (poIndex !== -1) {
+        filteredData[poIndex].response = response;
+        displayTableData(currentPage);
+    } else {
+        console.error('PO not found in filteredData:', po_no);
+    }
+  }
+
+  function handleResponse(po_no, response) {  
+    updateResponse(po_no, response);
+  }
 
   function displayTableData(page) {
     const tableBody = document.getElementById('table-body');
