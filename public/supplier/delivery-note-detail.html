@@ -265,41 +265,86 @@
 <!-- Add the script to handle table sorting and pagination -->
 <script>
 
+
   let rowsPerPage = 10;
   let currentPage = 1;
-  let filteredData = [];
-  
+  let details = [];
+  let filteredDnDetailData = [];
 
-  // Adjust rows per page based on screen size
-  adjustRowsPerPage(); 
+  document.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const noDN = params.get('noDN');
+    const planDelivery = params.get('planDelivery');
+    const noPO = params.get('noPO');
 
-  const params = new URLSearchParams(window.location.search);
-  const noDN = params.get('noDN');
+    console.log('Plan Delivery Date from URL:', planDelivery);
+    console.log('PO Number from URL:', noPO);
 
-  if (noDN) {
-      const dn = deliveryNote.find(dn => dn.noDN === noDN);
-      if (dn) {
-        document.getElementById('dnNumber').textContent = dn.noDN;
-        document.getElementById('poNumber').textContent = dn.noPO;        
-        document.getElementById('planDelivery').textContent = dn.planDNDate;
-        filteredData = dn.details;
-        displayDNDetails(dn.details);
+    if (noDN) {
+        fetchDNDetails(noDN).then(dnDetails => {
+            if (dnDetails && dnDetails.length > 0) {
+                document.getElementById('dnNumber').textContent = noDN;
+
+                const dn = dnDetails[0];
+                console.log("DN found:", dn);
+
+                let finalNoPO = noPO;
+                if (!finalNoPO && dn) {
+                    finalNoPO = dn.noPO || dn.po_no;
+                }
+
+                if (finalNoPO) {
+                    document.getElementById('poNumber').textContent = finalNoPO;
+                } else {
+                    document.getElementById('poNumber').textContent = "No PO Number";
+                    console.error("No PO Number found.");
+                }
+
+                let finalPlanDelivery = planDelivery;
+                if (!finalPlanDelivery && dn) {
+                    finalPlanDelivery = dn.planDelivery || dn.plan_delivery_date;
+                }
+
+                if (finalPlanDelivery) {
+                    document.getElementById('planDelivery').textContent = finalPlanDelivery;
+                } else {
+                    document.getElementById('planDelivery').textContent = "No Plan Delivery Date";
+                    console.error("No Plan Delivery Date found.");
+                }
+
+                deliveryNote = dnDetails;
+                filteredDnDetailData = dnDetails;
+                displayDNDetails(dnDetails);
+                updatePagination();
+                updateButtonState();  // Update the button state after rendering
+            } else {
+                console.error('Data DN tidak ditemukan.');
+            }
+        }).catch(error => {
+            console.error('Error fetching DN details:', error);
+        });
+    } else {
+        console.error('Parameter noDN tidak ditemukan dalam URL.');
+    }
+
+    adjustRowsPerPage();
+    window.addEventListener('resize', () => {
+        adjustRowsPerPage();
+        displayDNDetails(filteredDnDetailData);
         updatePagination();
-      } else {
-        console.error('Data DN tidak ditemukan dalam array data.');
-      }
-  } else {
-      console.error('Parameter noDN tidak ditemukan dalam URL.');
-  }
+    });
+
+    document.getElementById('search-input').addEventListener('input', searchTable);
+  });
 
   function adjustRowsPerPage() {
     if (window.innerWidth <= 1280) {
         rowsPerPage = 7;
-      } else if (window.innerWidth <= 1600) {
+    } else if (window.innerWidth <= 1600) {
         rowsPerPage = 9;
-      } else {
+    } else {
         rowsPerPage = 10;
-      }
+    }
   }
 
   function displayDNDetails(details) {
@@ -311,122 +356,128 @@
     const paginatedData = details.slice(start, end);
 
     paginatedData.forEach((row, index) => {
-      const tableRow = document.createElement('tr');
-      tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
-      tableRow.innerHTML = `
-        <td class="px-2 py-4 text-center font-medium text-gray-900">${row.no}</td>
-        <td class="px-2 py-4 text-center">${row.partNumber}</td>
-        <td class="px-2 py-4 text-center">${row.partName}</td>
-        <td class="px-2 py-4 text-center">${row.UoM}</td>
-        <td class="px-2 py-4 text-center">${row.QTY}</td>
-        <td class="px-2 py-4 text-center">${row.qtyLabel}</td>
-        <td class="px-2 py-4 text-center">${row.qtyRequested}</td>
-        <td class="px-2 py-4 text-center">
-          <input type="text" class="qty-confirm-input border border-gray-300 rounded px-2 py-1 text-center w-full ${row.qtyConfirm ? 'input-enabled' : ''}" value="${row.qtyConfirm || '-'}" disabled>
-        </td>
-        <td class="px-2 py-4 text-center">${row.qtyDelivered}</td>
-        <td class="px-2 py-4 text-center">${row.qtyMinus}</td>
-      `;
-      tableBody.appendChild(tableRow);
+        const tableRow = document.createElement('tr');
+        tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
+        tableRow.innerHTML = `
+            <td class="px-2 py-4 text-center font-medium text-gray-900">${row.no}</td>
+            <td class="px-2 py-4 text-center">${row.partNumber}</td>
+            <td class="px-2 py-4 text-center">${row.partName}</td>
+            <td class="px-2 py-4 text-center">${row.UoM}</td>
+            <td class="px-2 py-4 text-center">${row.QTY}</td>
+            <td class="px-2 py-4 text-center">${row.qtyLabel}</td>
+            <td class="px-2 py-4 text-center">${row.qtyRequested}</td>
+            <td class="px-2 py-4 text-center">
+                <input type="text" class="qty-confirm-input border border-gray-300 rounded px-2 py-1 text-center w-full ${row.qtyConfirm ? 'input-enabled' : ''}" value="${row.qtyConfirm || '-'}" data-dn-detail-no="${row.dnDetailNo}" disabled>
+            </td>
+            <td class="px-2 py-4 text-center">${row.qtyDelivered}</td>
+            <td class="px-2 py-4 text-center">${row.qtyMinus}</td>
+        `;
+        tableBody.appendChild(tableRow);
     });
-    updateButtonState(); // Update button state after displaying data
   }
 
-  document.getElementById('confirm-button').addEventListener('click', () => {
+  document.getElementById('confirm-button').addEventListener('click', async () => {
     const confirmButton = document.getElementById('confirm-button');
     const confirmationSection = document.getElementById('confirmation-section');
 
     if (confirmButton.textContent === 'Confirm Order' || confirmButton.textContent === 'Edit') {
-      // Enable qtyConfirm inputs
-      document.querySelectorAll('.qty-confirm-input').forEach(input => {
-        input.disabled = false;
-        input.classList.add('border-black'); // Add border when enabled
-      });
+        document.querySelectorAll('.qty-confirm-input').forEach(input => {
+            input.disabled = false;
+            input.classList.add('border-black');
+        });
 
-      // Change button text to "Submit" and display the Cancel button and Checkbox
-      confirmButton.textContent = 'Submit';
+        confirmButton.textContent = 'Submit';
 
-      const cancelButton = document.createElement('button');
-      cancelButton.id = 'cancel-button';
-      cancelButton.className = 'ml-[1%] px-4 2xl:px-6 py-2 2xl:py-3 my-auto bg-red-500 rounded cursor-pointer pointer-events-auto max-md:px-5 text-white text-xs 2xl:text-sm';
-      cancelButton.textContent = 'Cancel';
-      document.getElementById('confirm-button-section').appendChild(cancelButton);
+        const cancelButton = document.createElement('button');
+        cancelButton.id = 'cancel-button';
+        cancelButton.className = 'ml-[1%] px-4 2xl:px-6 py-2 2xl:py-3 my-auto bg-red-500 rounded cursor-pointer pointer-events-auto max-md:px-5 text-white text-xs 2xl:text-sm';
+        cancelButton.textContent = 'Cancel';
+        document.getElementById('confirm-button-section').appendChild(cancelButton);
 
-      confirmationSection.classList.remove('hidden'); // Show the checkbox confirmation section
+        confirmationSection.classList.remove('hidden');
 
-      document.getElementById('confirmation-checkbox').addEventListener('change', (e) => {
-        confirmButton.disabled = !e.target.checked;
-      });
+        document.getElementById('confirmation-checkbox').addEventListener('change', (e) => {
+            confirmButton.disabled = !e.target.checked;
+        });
 
-    
+        cancelButton.addEventListener('click', () => {
+            displayDNDetails(filteredDnDetailData);
+            confirmationSection.classList.add('hidden');
+            cancelButton.remove();
+            confirmButton.textContent = 'Edit';
+        });
 
-      // Handle Cancel button
-      cancelButton.addEventListener('click', () => {
-        displayDNDetails(filteredData);
-        confirmationSection.classList.add('hidden');
-        cancelButton.remove();
-        confirmButton.textContent = 'Edit';
-      });
-
-      confirmButton.disabled = true; // Disable Submit button initially until checkbox is checked
+        confirmButton.disabled = true;
     } else if (confirmButton.textContent === 'Submit') {
-      // Submit logic
-      const inputs = document.querySelectorAll('.qty-confirm-input');
-      inputs.forEach((input, index) => {
-        filteredData[index].qtyConfirm = input.value;
-      });
+        const inputs = document.querySelectorAll('.qty-confirm-input');
+        for (let i = 0; i < inputs.length; i++) {
+            const input = inputs[i];
+            const dn_detail_no = input.getAttribute('data-dn-detail-no');
+            let qtyConfirm = input.value;
 
-      alert('Data submitted successfully!');
-      displayDNDetails(filteredData);
-      updateButtonState();
+            if (isNaN(qtyConfirm) || qtyConfirm === '' || qtyConfirm < 0) {
+                alert(`Invalid quantity at line ${i + 1}. Please enter a valid number.`);
+                return;
+            }
 
-      confirmationSection.classList.add('hidden');
-      document.getElementById('cancel-button').remove();
+            qtyConfirm = parseInt(qtyConfirm);
+
+            try {
+                await editDNDetail(dn_detail_no, qtyConfirm);
+                await updateDNDetail(dn_detail_no, qtyConfirm);
+            } catch (error) {
+                console.error(`Failed to update DN detail ${dn_detail_no}:`, error);
+                alert(`Failed to update DN detail ${dn_detail_no}. Please try again.`);
+                return;
+            }
+
+            const dataIndex = filteredDnDetailData.findIndex(detail => detail.dnDetailNo === dn_detail_no);
+            if (dataIndex !== -1) {
+                filteredDnDetailData[dataIndex].qtyConfirm = qtyConfirm;
+            }
+        }
+
+        alert('Data submitted successfully!');
+        displayDNDetails(filteredDnDetailData);
+        updateButtonState();
+
+        confirmationSection.classList.add('hidden');
+        document.getElementById('cancel-button').remove();
     }
-  });
-
-  document.addEventListener('DOMContentLoaded', () => {
-
-    const name = localStorage.getItem('name');
-    const bpCode = localStorage.getItem('bpCode');
-
-    document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
-    
-    adjustRowsPerPage(); // Set rows per page based on initial screen size
-    window.addEventListener('resize', () => {
-      adjustRowsPerPage(); // Adjust rows per page on screen resize
-      displayDNDetails(filteredData); // Re-render table data
-      updatePagination(); // Re-render pagination
-    });
-
-    document.getElementById('search-input').addEventListener('input', searchTable);
-
-    displayDNDetails(filteredData);
-    updatePagination();
-    updateButtonState();
   });
 
   function updateButtonState() {
-    const hasUnconfirmedQty = filteredData.some(detail => !detail.qtyConfirm);
     const confirmButton = document.getElementById('confirm-button');
+    const hasData = filteredDnDetailData.length > 0;
+    const hasUnconfirmedQty = filteredDnDetailData.some(detail => !detail.qtyConfirm);
 
-    if (hasUnconfirmedQty) {
-      confirmButton.textContent = 'Confirm Order';
-      confirmButton.classList.remove('hidden');
+    console.log('Checking button state...');
+    console.log('Has data:', hasData);
+    console.log('Has unconfirmed quantity:', hasUnconfirmedQty);
+
+    if (hasData) {
+        confirmButton.disabled = false; 
+        confirmButton.classList.remove('hidden');
+
+        if (hasUnconfirmedQty) {
+            confirmButton.textContent = 'Confirm Order';
+        } else {
+            confirmButton.textContent = 'Edit';
+        }
     } else {
-      confirmButton.textContent = 'Edit';
-      confirmButton.classList.remove('hidden');
+        confirmButton.classList.add('hidden');
     }
+
+    console.log('Button state set to:', confirmButton.textContent);
   }
 
   function updatePagination() {
     const paginationContainer = document.querySelector('.pagination');
     paginationContainer.innerHTML = '';
 
-    const totalPages = Math.ceil(filteredData.length / rowsPerPage);
-    const maxPageNumbersToShow = 4; // Number of page buttons to display (including current)
+    const totalPages = Math.ceil(filteredDnDetailData.length / rowsPerPage);
+    const maxPageNumbersToShow = 4;
 
-    // Previous button
     const prevButton = document.createElement('button');
     prevButton.className = 'px-3 py-3 2xl:px-4 2xl:py-4 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
     prevButton.innerHTML = `
@@ -437,61 +488,58 @@
     prevButton.disabled = currentPage === 1;
     prevButton.addEventListener('click', () => {
         if (currentPage > 1) {
-        currentPage--;
-        displayDNDetails(filteredData);
-        updatePagination();
+            currentPage--;
+            displayDNDetails(filteredDnDetailData);
+            updatePagination();
+            updateButtonState();
         }
     });
     paginationContainer.appendChild(prevButton);
 
-    // Calculate page numbers to show
     const pageNumbers = [];
     if (totalPages <= maxPageNumbersToShow) {
-        // If total pages is less than or equal to maxPageNumbersToShow, show all page numbers
         for (let i = 1; i <= totalPages; i++) {
-        pageNumbers.push(i);
+            pageNumbers.push(i);
         }
     } else {
-        // Otherwise, calculate which page numbers to show
-        pageNumbers.push(1); // Always show the first page
+        pageNumbers.push(1);
 
         const startPage = Math.max(2, currentPage - 1);
         const endPage = Math.min(totalPages - 1, currentPage + 1);
 
         if (startPage > 2) {
-        pageNumbers.push('...');
+            pageNumbers.push('...');
         }
 
         for (let i = startPage; i <= endPage; i++) {
-        pageNumbers.push(i);
+            pageNumbers.push(i);
         }
 
         if (endPage < totalPages - 1) {
-        pageNumbers.push('...');
+            pageNumbers.push('...');
         }
 
-        pageNumbers.push(totalPages); // Always show the last page
+        pageNumbers.push(totalPages);
     }
 
-    // Page numbers buttons
     pageNumbers.forEach(number => {
         const pageButton = document.createElement('button');
         if (number === '...') {
-        pageButton.className = 'px-4 py-2 2xl:px-6 2xl:py-4 text-gray-900 bg-gray-200 rounded-md cursor-default';
-        pageButton.textContent = '...';
+            pageButton.className = 'px-4 py-2 2xl:px-6 2xl:py-4 text-gray-900 bg-gray-200 rounded-md cursor-default';
+            pageButton.textContent = '...';
         } else {
-        pageButton.className = `px-4 py-2 2xl:px-6 2xl:py-4 ${number === currentPage ? 'bg-blue-900 text-white' : 'bg-gray-200 text-gray-900'} rounded-md hover:bg-gray-300`;
-        pageButton.textContent = number;
-        pageButton.addEventListener('click', () => {
-            currentPage = number;
-            displayDNDetails(filteredData);
-            updatePagination();
-        });
+            pageButton.className = `px-4 py-2 2xl:px-6 2xl:py-4 ${number === currentPage ? 'bg-blue-900 text-white' : 'bg-gray-200 text-gray-900'} rounded-md hover:bg-gray-300`;
+            pageButton.textContent = number;
+            pageButton.addEventListener('click', () => {
+                currentPage = number;
+                displayDNDetails(filteredDnDetailData);
+                updatePagination();
+                updateButtonState();
+            });
         }
         paginationContainer.appendChild(pageButton);
     });
 
-    // Next button
     const nextButton = document.createElement('button');
     nextButton.className = '2xl:px-4 2xl:py-4 px-3 py-3 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
     nextButton.innerHTML = `
@@ -502,50 +550,50 @@
     nextButton.disabled = currentPage === totalPages;
     nextButton.addEventListener('click', () => {
         if (currentPage < totalPages) {
-        currentPage++;
-        displayDNDetails(filteredData);
-        updatePagination();
+            currentPage++;
+            displayDNDetails(filteredDnDetailData);
+            updatePagination();
+            updateButtonState();
         }
     });
     paginationContainer.appendChild(nextButton);
   }
 
-  // Function to sort table based on column index
   function sortTable(columnIndex) {
     const table = document.querySelector('table');
     const tbody = table.querySelector('tbody');
     const rows = Array.from(tbody.querySelectorAll('tr'));
     const isAscending = table.querySelectorAll('th')[columnIndex].classList.toggle('asc');
     table.querySelectorAll('th').forEach((th, index) => {
-      if (index !== columnIndex) th.classList.remove('asc', 'desc');
+        if (index !== columnIndex) th.classList.remove('asc', 'desc');
     });
 
     rows.sort((a, b) => {
-      const cellA = a.querySelectorAll('td')[columnIndex].textContent.trim();
-      const cellB = b.querySelectorAll('td')[columnIndex].textContent.trim();
+        const cellA = a.querySelectorAll('td')[columnIndex].textContent.trim();
+        const cellB = b.querySelectorAll('td')[columnIndex].textContent.trim();
 
-      return cellA.localeCompare(cellB, undefined, { numeric: true, sensitivity: 'base' });
+        return cellA.localeCompare(cellB, undefined, { numeric: true, sensitivity: 'base' });
     });
 
     if (!isAscending) {
-      rows.reverse();
+        rows.reverse();
     }
 
     tbody.innerHTML = '';
     tbody.append(...rows);
   }
 
-  // Function to handle search
   function searchTable() {
     const searchInput = document.getElementById('search-input').value.toLowerCase();
-    filteredData = deliveryNote.find(dn => dn.noDN === noDN).details.filter(row => 
-      row.partNumber.toLowerCase().includes(searchInput) || 
-      row.partName.toLowerCase().includes(searchInput)
+    filteredDnDetailData = deliveryNote.filter(row => 
+        row.partNumber.toLowerCase().includes(searchInput) || 
+        row.partName.toLowerCase().includes(searchInput)
     );
     currentPage = 1;
-    displayDNDetails(filteredData);
+    displayDNDetails(filteredDnDetailData);
     updatePagination();
   }
+  
 
 </script>
 

@@ -170,9 +170,8 @@
 <script>
 
   
-  let rowsPerPage = 12;
+  let rowsPerPage = 8;
   let currentPage = 1;
-  let filteredData = historyPurchaseOrder; // Initialize filteredData with all data
   let pendingResponseIndex = null;
   let pendingResponseAction = '';
 
@@ -180,39 +179,54 @@
   function adjustRowsPerPage() {
     if (window.innerWidth <= 1280) {
         rowsPerPage = 8;
-      } else if (window.innerWidth <= 1600) {
+    } else if (window.innerWidth <= 1600) {
         rowsPerPage = 10;
-      } else {
+    } else {
         rowsPerPage = 12;
-      }
+    }
   }
 
   function displayTableData(page) {
     const tableBody = document.getElementById('table-body');
     tableBody.innerHTML = '';
 
+    if (filteredHistoryPOData.length === 0) {
+        // Display a message if no data is available
+        const noDataRow = document.createElement('tr');
+        noDataRow.innerHTML = `
+            <td colspan="3" class="px-2 py-4 text-center font-medium text-gray-900">
+                No purchase orders available.
+            </td>
+        `;
+        tableBody.appendChild(noDataRow);
+        return;
+    }
+
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
-    const paginatedData = filteredData.slice(start, end);
+    const paginatedData = filteredHistoryPOData.slice(start, end);
 
     paginatedData.forEach((row, index) => {
-      const tableRow = document.createElement('tr');
-      tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
-      tableRow.innerHTML = `
-        <td class="px-2 py-4 text-center font-medium text-gray-900">
-            <a href="history-purchase-order-detail.html?noPO=${row.noPO}" class="text-blue-600 underline">${row.noPO}</a>
-        </td>
-        <td class="px-2 py-4 text-center">${row.poDate}</td>
-        <td class="px-2 py-4 text-center">${row.status}</td>
-      `;
-      tableBody.appendChild(tableRow);
+        const tableRow = document.createElement('tr');
+        tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
+        tableRow.innerHTML = `
+            <td class="px-2 py-4 text-center font-medium text-gray-900">
+                <a href="history-purchase-order-detail.html?noPO=${row.noPO}" class="text-blue-600 underline">${row.noPO}</a> <!-- Corrected key used here -->
+            </td>
+            <td class="px-2 py-4 text-center">${row.poDate}</td>
+            <td class="px-2 py-4 text-center">${row.status}</td>
+        `;
+        tableBody.appendChild(tableRow);
     });
   }
 
+  // Ensure to call adjustRowsPerPage() on page load and window resize
+  window.onload = adjustRowsPerPage;
+  window.onresize = adjustRowsPerPage;
 
   function searchTable() {
     const searchInput = document.getElementById('search-input').value.toLowerCase();
-    filteredData = historyPurchaseOrder.filter(row => row.noPO.toLowerCase().includes(searchInput));
+    filteredHistoryPOData = historyPurchaseOrder.filter(row => row.noPO.toLowerCase().includes(searchInput)); // Use historyPurchaseOrder for filtering
     currentPage = 1;
     displayTableData(currentPage);
     updatePagination();
@@ -225,22 +239,22 @@
     const rows = Array.from(tbody.querySelectorAll('tr'));
     const isAscending = table.querySelectorAll('th')[columnIndex].classList.toggle('asc');
     table.querySelectorAll('th').forEach((th, index) => {
-      if (index !== columnIndex) th.classList.remove('asc', 'desc');
+        if (index !== columnIndex) th.classList.remove('asc', 'desc');
     });
 
     rows.sort((a, b) => {
-      const cellA = a.querySelectorAll('td')[columnIndex].textContent.trim();
-      const cellB = b.querySelectorAll('td')[columnIndex].textContent.trim();
+        const cellA = a.querySelectorAll('td')[columnIndex].textContent.trim();
+        const cellB = b.querySelectorAll('td')[columnIndex].textContent.trim();
 
-      if (columnIndex === 1) { // For Revision Date, handle date sorting
-        return new Date(cellA) - new Date(cellB);
-      }
+        if (columnIndex === 1) { // For poDate, handle date sorting
+            return new Date(cellA) - new Date(cellB);
+        }
 
-      return cellA.localeCompare(cellB, undefined, { numeric: true, sensitivity: 'base' });
+        return cellA.localeCompare(cellB, undefined, { numeric: true, sensitivity: 'base' });
     });
 
     if (!isAscending) {
-      rows.reverse();
+        rows.reverse();
     }
 
     tbody.innerHTML = '';
@@ -251,7 +265,7 @@
     const paginationContainer = document.querySelector('.pagination');
     paginationContainer.innerHTML = '';
 
-    const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+    const totalPages = Math.ceil(filteredHistoryPOData.length / rowsPerPage); // Use filteredHistoryPOData
     const maxPageNumbersToShow = 4; // Number of page buttons to display (including current)
 
     // Previous button
@@ -265,9 +279,9 @@
     prevButton.disabled = currentPage === 1;
     prevButton.addEventListener('click', () => {
         if (currentPage > 1) {
-        currentPage--;
-        displayTableData(currentPage);
-        updatePagination();
+            currentPage--;
+            displayTableData(currentPage);
+            updatePagination();
         }
     });
     paginationContainer.appendChild(prevButton);
@@ -277,7 +291,7 @@
     if (totalPages <= maxPageNumbersToShow) {
         // If total pages is less than or equal to maxPageNumbersToShow, show all page numbers
         for (let i = 1; i <= totalPages; i++) {
-        pageNumbers.push(i);
+            pageNumbers.push(i);
         }
     } else {
         // Otherwise, calculate which page numbers to show
@@ -287,15 +301,15 @@
         const endPage = Math.min(totalPages - 1, currentPage + 1);
 
         if (startPage > 2) {
-        pageNumbers.push('...');
+            pageNumbers.push('...');
         }
 
         for (let i = startPage; i <= endPage; i++) {
-        pageNumbers.push(i);
+            pageNumbers.push(i);
         }
 
         if (endPage < totalPages - 1) {
-        pageNumbers.push('...');
+            pageNumbers.push('...');
         }
 
         pageNumbers.push(totalPages); // Always show the last page
@@ -305,16 +319,16 @@
     pageNumbers.forEach(number => {
         const pageButton = document.createElement('button');
         if (number === '...') {
-        pageButton.className = 'px-4 py-2 2xl:px-6 2xl:py-4 text-gray-900 bg-gray-200 rounded-md cursor-default';
-        pageButton.textContent = '...';
+            pageButton.className = 'px-4 py-2 2xl:px-6 2xl:py-4 text-gray-900 bg-gray-200 rounded-md cursor-default';
+            pageButton.textContent = '...';
         } else {
-        pageButton.className = `px-4 py-2 2xl:px-6 2xl:py-4 ${number === currentPage ? 'bg-blue-900 text-white' : 'bg-gray-200 text-gray-900'} rounded-md hover:bg-gray-300`;
-        pageButton.textContent = number;
-        pageButton.addEventListener('click', () => {
-            currentPage = number;
-            displayTableData(currentPage);
-            updatePagination();
-        });
+            pageButton.className = `px-4 py-2 2xl:px-6 2xl:py-4 ${number === currentPage ? 'bg-blue-900 text-white' : 'bg-gray-200 text-gray-900'} rounded-md hover:bg-gray-300`;
+            pageButton.textContent = number;
+            pageButton.addEventListener('click', () => {
+                currentPage = number;
+                displayTableData(currentPage);
+                updatePagination();
+            });
         }
         paginationContainer.appendChild(pageButton);
     });
@@ -330,31 +344,34 @@
     nextButton.disabled = currentPage === totalPages;
     nextButton.addEventListener('click', () => {
         if (currentPage < totalPages) {
-        currentPage++;
-        displayTableData(currentPage);
-        updatePagination();
+            currentPage++;
+            displayTableData(currentPage);
+            updatePagination();
         }
     });
     paginationContainer.appendChild(nextButton);
-}
+  }
 
+  // Ensure the event listeners and initial data load are set
   document.addEventListener('DOMContentLoaded', () => {
     const name = localStorage.getItem('name');
     const bpCode = localStorage.getItem('bpCode');
 
     document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
-    
+
     adjustRowsPerPage(); // Set rows per page based on initial screen size
     window.addEventListener('resize', () => {
-      adjustRowsPerPage(); // Adjust rows per page on screen resize
-      displayTableData(currentPage); // Re-render table data
-      updatePagination(); // Re-render pagination
+        adjustRowsPerPage(); // Adjust rows per page on screen resize
+        displayTableData(currentPage); // Re-render table data
+        updatePagination(); // Re-render pagination
     });
 
     document.getElementById('search-input').addEventListener('input', searchTable);
     displayTableData(currentPage);
     updatePagination();
   });
+
+
 </script>
 
 </html>

@@ -1,1072 +1,355 @@
-const purchaseOrder = [
-    {
-        noPO: 'PL2401657',
-        poDate: '1-1-2018',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'In Process',
-        response: 'Accepted',
-        note: 'Urgent Delivery',
-        details: [
-            { 
-                no: '1', 
-                partNumber: 'RL1ST08976487200C000', 
-                partName: 'asaasdafaf', 
-                UoM: 'PCS', 
-                QTY: '12000' },
-            {   no: '2', 
-                partNumber: 'RL1ST08914261J00B101', 
-                partName: 'BRC, OIL asdasdasasdaO1', 
-                UoM: 'PCS', 
-                QTY: '12000' },
-        ],
-    },
-    
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Opened',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: '24100009',
-        poDate: '3-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '',
-        status: 'In Process',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J02B100', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'sad', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1asdaJ00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1STasdaJ00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST0asdaJ00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1STasda61J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST0qwdq1J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1S1e1e1J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1e21101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: '12e00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL12e01', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: '1261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL112e61J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST01e200B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: '1eB101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'R1e1J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: '1261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL112e61J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST01e200B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: '1eB101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'R1e1J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: '1261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL112e61J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST01e200B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: '1eB101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'R1e1J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: '1261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL112e61J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST01e200B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: '1eB101', partName: 'nia', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'R1e1J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B101', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-];
+const apiURL = 'http://127.0.0.1:8000/api/indexpoheader';
+let purchaseOrder = [];
+let filteredData = [];
 
+async function fetchPurchaseOrders() {
+    try {
+        console.log("Fetching data...");
+        const response = await fetch(apiURL);
 
-const deliveryNote = [
-    {
-        noDN: 'DN001',
-        noPO: 'PL2401658',
-        planDNDate: '14-11-2025 11.00',
-        planDNDate: '14-11-2025 11.00',
-        statusDN: 'Opened',
-        details: [
-            {   
-                no: '1', 
-                partNumber: 'RL1ST08914261J00B104', 
-                partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1 BRC, OIL LEVEL GAUGE GUIDE NO1', 
-                UoM: 'PCS', 
-                QTY: '12', 
-                qtyLabel: '100', 
-                qtyRequested: '1200', 
-                qtyConfirm: '1200', 
-                qtyDelivered: '1200', 
-                qtyReceived: '1200', 
-                qtyMinus: '0' },
-            { 
-                no: '2', 
-                partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO2', 
-                UoM: 'PCS', 
-                QTY: '1000', 
-                qtyLabel: '100', 
-                qtyRequested: '100000', 
-                qtyConfirm: '', 
-                qtyDelivered: '90000', 
-                qtyReceived: '1200', 
-                qtyMinus: '10000' },
-        ]
-    },
-    {
-        noDN: 'DN002',
-        noPO: 'PL2401658',
-        planDNDate: '15-11-2025',
-        statusDN: 'Delivered',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B106', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO3', UoM: 'PCS', QTY: '15000', qtyLabel: '15000', qtyRequested: '13000', qtyConfirm: '13000', qtyDelivered: '12800', qtyMinus: '200' },
-            { no: '2', partNumber: 'RL1ST08914261J00B107', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO4', UoM: 'PCS', QTY: '15000', qtyLabel: '15000', qtyRequested: '14000', qtyConfirm: '14000', qtyDelivered: '13900', qtyMinus: '100' },
-        ]
-    },
-    {
-        noDN: 'DN003',
-        noPO: 'PL2401659',
-        planDNDate: '16-11-2025',
-        statusDN: 'In Transit',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B108', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO5', UoM: 'PCS', QTY: '10000', qtyLabel: '10000', qtyRequested: '9000', qtyConfirm: '9000', qtyDelivered: '8500', qtyMinus: '500' },
-            { no: '2', partNumber: 'RL1ST08914261J00B109', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO6', UoM: 'PCS', QTY: '10000', qtyLabel: '10000', qtyRequested: '10000', qtyConfirm: '10000', qtyDelivered: '9700', qtyMinus: '300' },
-        ]
-    },
-    {
-        noDN: 'DN004',
-        noPO: 'PL2401659',
-        planDNDate: '17-11-2025',
-        statusDN: 'Opened',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B110', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO7', UoM: 'PCS', QTY: '13000', qtyLabel: '13000', qtyRequested: '12000', qtyConfirm: '12000', qtyDelivered: '11900', qtyMinus: '100' },
-            { no: '2', partNumber: 'RL1ST08914261J00B111', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO8', UoM: 'PCS', QTY: '13000', qtyLabel: '13000', qtyRequested: '13000', qtyConfirm: '13000', qtyDelivered: '12500', qtyMinus: '500' },
-        ]
-    },
-    {
-        noDN: 'DN005',
-        noPO: 'PL2401660',
-        planDNDate: '18-11-2025',
-        statusDN: 'Delivered',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B112', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO9', UoM: 'PCS', QTY: '14000', qtyLabel: '14000', qtyRequested: '13000', qtyConfirm: '13000', qtyDelivered: '12500', qtyMinus: '500' },
-            { no: '2', partNumber: 'RL1ST08914261J00B113', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO10', UoM: 'PCS', QTY: '14000', qtyLabel: '14000', qtyRequested: '14000', qtyConfirm: '14000', qtyDelivered: '13950', qtyMinus: '50' },
-        ]
-    },
-    {
-        noDN: 'DN006',
-        noPO: 'PL2401660',
-        planDNDate: '19-11-2025',
-        statusDN: 'In Transit',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B114', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO11', UoM: 'PCS', QTY: '16000', qtyLabel: '16000', qtyRequested: '15000', qtyConfirm: '15000', qtyDelivered: '14800', qtyMinus: '200' },
-            { no: '2', partNumber: 'RL1ST08914261J00B115', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO12', UoM: 'PCS', QTY: '16000', qtyLabel: '16000', qtyRequested: '16000', qtyConfirm: '16000', qtyDelivered: '15800', qtyMinus: '200' },
-        ]
-    },
-    {
-        noDN: 'DN007',
-        noPO: 'PL2401661',
-        planDNDate: '20-11-2025',
-        statusDN: 'Opened',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B116', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO13', UoM: 'PCS', QTY: '17000', qtyLabel: '17000', qtyRequested: '16000', qtyConfirm: '16000', qtyDelivered: '15800', qtyMinus: '200' },
-            { no: '2', partNumber: 'RL1ST08914261J00B117', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO14', UoM: 'PCS', QTY: '17000', qtyLabel: '17000', qtyRequested: '17000', qtyConfirm: '17000', qtyDelivered: '16500', qtyMinus: '500' },
-        ]
-    },
-    {
-        noDN: 'DN008',
-        noPO: 'PL2401661',
-        planDNDate: '21-11-2025',
-        statusDN: 'Delivered',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B118', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO15', UoM: 'PCS', QTY: '18000', qtyLabel: '18000', qtyRequested: '17000', qtyConfirm: '17000', qtyDelivered: '16800', qtyMinus: '200' },
-            { no: '2', partNumber: 'RL1ST08914261J00B119', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO16', UoM: 'PCS', QTY: '18000', qtyLabel: '18000', qtyRequested: '18000', qtyConfirm: '18000', qtyDelivered: '17500', qtyMinus: '500' },
-        ]
-    },
-    {
-        noDN: 'DN009',
-        noPO: 'PL2401662',
-        planDNDate: '22-11-2025',
-        statusDN: 'In Transit',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B120', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO17', UoM: 'PCS', QTY: '19000', qtyLabel: '19000', qtyRequested: '18000', qtyConfirm: '18000', qtyDelivered: '17800', qtyMinus: '200' },
-            { no: '2', partNumber: 'RL1ST08914261J00B121', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO18', UoM: 'PCS', QTY: '19000', qtyLabel: '19000', qtyRequested: '19000', qtyConfirm: '19000', qtyDelivered: '18500', qtyMinus: '500' },
-        ]
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("Data fetched:", data);
+
+        purchaseOrder = data.data.map(po => ({
+            noPO: po.po_no.toString(),
+            poDate: po.po_date,
+            planDelivery: po.planned_receipt_date,
+            poRevision: `Rev ${po.po_revision_no.toString().padStart(2, '0')}`,
+            revisionDate: po.po_revision_date,
+            status: po.po_status,
+            response: po.response,
+            note: po.references_1,
+            details: po.detail.map((detail, index) => ({
+                no: (index + 1).toString(),
+                partNumber: detail.bp_part_no,
+                partName: detail.item_desc_a,
+                UoM: detail.purchase_unit,
+                QTY: detail.po_qty,
+            }))
+        }));
+
+        // Set filteredData to match purchaseOrder initially
+        filteredData = purchaseOrder;
+
+        // Call functions to display data and setup pagination
+        displayTableData(1);
+        updatePagination();
+    } catch (error) {
+        console.error('Error fetching purchase orders:', error);
     }
-];
+}
 
+async function fetchPODetails(po_no) {
+    try {
+        const detailsURL = `http://127.0.0.1:8000/api/indexpodetail/${po_no}`;
+        const response = await fetch(detailsURL);
 
-const historyPurchaseOrder = [
-    {
-        noPO: 'PL2401657',
-        poDate: '1-1-2018',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Closed',
-        response: 'Accepted',
-        note: 'Urgent Delivery',
-        details: [
-            { 
-                no: '1',
-                partNumber: 'RL1ST08976487200C000', 
-                partName: 'asaasdafaf', 
-                UoM: 'PCS', 
-                QTY: '12000',
-                QTYDelivered: '12000'
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log(`Details fetched for PO ${po_no}:`, data); // Debug: Log the fetched data
+
+        if (data.success && data.data) {
+            const processedDetails = data.data.map((detail, index) => ({
+                no: (index + 1).toString(),
+                partNumber: detail.bp_part_no,
+                partName: detail.item_desc_a,
+                UoM: detail.purchase_unit,
+                QTY: detail.po_qty,
+            }));
+            console.log('Processed PO Details:', processedDetails); // Debug: Log the processed details
+            return processedDetails;
+        } else {
+            console.error('No data found or unexpected format.');
+            return [];
+        }
+    } catch (error) {
+        console.error(`Error fetching details for PO ${po_no}:`, error);
+        return [];
+    }
+}
+
+async function updateResponse(po_no, response) {
+    try {
+        const updateURL = `http://127.0.0.1:8000/api/updatepoheader/${po_no}`;
+        const responseBody = JSON.stringify({ response });
+
+        console.log(`Sending request to ${updateURL} with body: ${responseBody}`);
+
+        const updateResponse = await fetch(updateURL, {
+            method: 'PUT', // or 'POST', depending on your API design
+            headers: {
+                'Content-Type': 'application/json',
             },
-            { 
-                no: '2', 
-                partNumber: 'RL1ST08914261J00B101', 
-                partName: 'BRC, OIL asdasdasasdaO1', 
-                UoM: 'PCS', 
-                QTY: '100000',
-                QTYDelivered: '100000'
-            },
-        ],
-    },
+            body: responseBody,
+        });
+
+        console.log(`Response status: ${updateResponse.status}`);
+
+        if (!updateResponse.ok) {
+            throw new Error(`HTTP error! status: ${updateResponse.status}`);
+        }
+
+        const result = await updateResponse.json();
+        console.log(`Response updated for PO ${po_no}:`, result);
+
+        // Check the status field in the result
+        if (result.status === 'success') {
+            updatePOStatusInUI(po_no, response);
+        } else {
+            console.error('Failed to update response. API returned:', result);
+        }
+    } catch (error) {
+        console.error('Error updating response:', error);
+    }
+}
+
+function updatePOStatusInUI(po_no, response) {
+    const poIndex = filteredData.findIndex(po => po.noPO === po_no);
     
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Closed',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { 
-                no: '1',
-                partNumber: 'RL1ST08976487200C000', 
-                partName: 'asaasdafaf', 
-                UoM: 'PCS', 
-                QTY: '12000',
-                QTYDelivered: '12000'
+    if (poIndex !== -1) {
+        filteredData[poIndex].response = response;
+        displayTableData(currentPage);
+    } else {
+        console.error('PO not found in filteredData:', po_no);
+    }
+}
+
+function handleResponse(po_no, response) {
+    updateResponse(po_no, response);
+}
+
+const apiDNURL = 'http://127.0.0.1:8000/api/indexdnheader/${po_no}';
+let deliveryNote = [];
+let filteredDnData = [];
+
+async function fetchDeliveryNotes(po_no) {
+    try {
+        console.log("Fetching data...");
+        // Construct the correct API URL with po_no
+        const apiDNURL = `http://127.0.0.1:8000/api/indexdnheader/${po_no}`;
+        const response = await fetch(apiDNURL); // Corrected URL
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log(`Data fetched for PO ${po_no}:`, data);
+
+        // Map and manipulate your data accordingly here
+        deliveryNote = data.data.map(dn => {
+            console.log(dn);
+
+            return {
+                noDN: dn.dn_no ? dn.dn_no.toString() : '',
+                noPO: dn.po_no ? dn.po_no.toString() : '',
+                planDNDate: dn.plan_delivery_date || '',
+                statusDN: dn.status_desc || '',
+                details: dn.detail ? dn.detail.map((detail, index) => ({
+                    no: (index + 1).toString(),
+                    planDelivery: detail.plan_delivery_date,
+                    partNumber: detail.part_no || '',
+                    partName: detail.item_desc_a || '',
+                    UoM: detail.dn_unit || '',
+                    QTY: detail.dn_qty || 0,
+                    qtyLabel: detail.dn_snp || '',
+                    qtyRequested: detail.dn_qty || 0,
+                    qtyConfirm: detail.qty_confirm || 0,
+                    qtyDelivered: detail.receipt_qty || 0,
+                    qtyReceived: detail.receipt_qty || 0,
+                    qtyMinus: (detail.dn_qty - (detail.receipt_qty || 0)).toString()
+                })) : []
+            };
+        });
+
+        // Set filteredDnData to match deliveryNote initially
+        filteredDnData = deliveryNote;
+
+        // Call functions to display data and setup pagination
+        displayTableData(1);
+        updatePagination();
+    } catch (error) {
+        console.error(`Error fetching delivery notes for PO ${po_no}:`, error);
+    }
+}
+
+async function fetchDNDetails(dn_no) {
+    try {
+        const detailsDNURL = `http://127.0.0.1:8000/api/indexdndetail/${dn_no}`;
+        const response = await fetch(detailsDNURL);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log(`Details fetched for DN ${dn_no}:`, data);
+
+        if (data.success && data.data) {
+            const processedDetails = data.data.map((detail, index) => ({
+                no: (index + 1).toString(),
+                dnDetailNo: detail.dn_detail_no,
+                planDelivery: detail.plan_delivery_date,
+                partNumber: detail.part_no || '',
+                partName: detail.item_desc_a || '',
+                UoM: detail.dn_unit || '',
+                QTY: detail.dn_qty || 0,
+                qtyLabel: detail.dn_snp || '',
+                qtyRequested: detail.dn_qty || 0,
+                qtyConfirm: detail.qty_confirm || 0,
+                qtyDelivered: detail.receipt_qty || 0,
+                qtyReceived: detail.receipt_qty || 0,
+                qtyMinus: (detail.dn_qty - (detail.receipt_qty || 0)).toString()
+            }));
+            console.log('Processed DN Details:', processedDetails);
+            return processedDetails;
+        } else {
+            console.error('No data found or unexpected format.');
+            return [];
+        }
+    } catch (error) {
+        console.error(`Error fetching details for DN ${dn_no}:`, error);
+        alert(`Failed to fetch delivery note details. Please try again later.`);
+        return [];
+    }
+}
+
+// Async function to edit DN detail (if needed, you might not need this depending on your API)
+async function editDNDetail(dn_detail_no, qtyConfirm) {
+    const response = await fetch(`http://127.0.0.1:8000/api/edit/${dn_detail_no}`, {
+        method: 'PUT',  // Changed from POST to PUT
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ qtyConfirm: qtyConfirm }),
+    });
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return response.json();
+}
+
+// Async function to update DN detail and refresh UI
+async function updateDNDetail(dn_detail_no, qtyConfirm) {
+    try {
+        // Log the payload being sent
+        console.log(`Updating DN Detail No: ${dn_detail_no}, Qty Confirm: ${qtyConfirm}`);
+
+        const response = await fetch(`http://127.0.0.1:8000/api/updatedndetail/${dn_detail_no}`, {
+            method: 'PUT',  // Ensure the correct HTTP method is used
+            headers: {
+                'Content-Type': 'application/json',
             },
-            { 
-                no: '2', 
-                partNumber: 'RL1ST08914261J00B101', 
-                partName: 'BRC, OIL asdasdasasdaO1', 
-                UoM: 'PCS', 
-                QTY: '100000',
-                QTYDelivered: '100000'
-            },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Closed',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { 
-                no: '1',
-                partNumber: 'RL1ST08976487200C000', 
-                partName: 'asaasdafaf', 
-                UoM: 'PCS', 
-                QTY: '12000',
-                QTYDelivered: '12000'
-            },
-            { 
-                no: '2', 
-                partNumber: 'RL1ST08914261J00B101', 
-                partName: 'BRC, OIL asdasdasasdaO1', 
-                UoM: 'PCS', 
-                QTY: '100000',
-                QTYDelivered: '100000'
-            },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Closed',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { 
-                no: '1',
-                partNumber: 'RL1ST08976487200C000', 
-                partName: 'asaasdafaf', 
-                UoM: 'PCS', 
-                QTY: '12000',
-                QTYDelivered: '12000'
-            },
-            { 
-                no: '2', 
-                partNumber: 'RL1ST08914261J00B101', 
-                partName: 'BRC, OIL asdasdasasdaO1', 
-                UoM: 'PCS', 
-                QTY: '100000',
-                QTYDelivered: '100000'
-            },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Closed',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { 
-                no: '1',
-                partNumber: 'RL1ST08976487200C000', 
-                partName: 'asaasdafaf', 
-                UoM: 'PCS', 
-                QTY: '12000',
-                QTYDelivered: '12000'
-            },
-            { 
-                no: '2', 
-                partNumber: 'RL1ST08914261J00B101', 
-                partName: 'BRC, OIL asdasdasasdaO1', 
-                UoM: 'PCS', 
-                QTY: '100000',
-                QTYDelivered: '100000'
-            },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Closed',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Closed',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { 
-                no: '1',
-                partNumber: 'RL1ST08976487200C000', 
-                partName: 'asaasdafaf', 
-                UoM: 'PCS', 
-                QTY: '12000',
-                QTYDelivered: '12000'
-            },
-            { 
-                no: '2', 
-                partNumber: 'RL1ST08914261J00B101', 
-                partName: 'BRC, OIL asdasdasasdaO1', 
-                UoM: 'PCS', 
-                QTY: '100000',
-                QTYDelivered: '100000'
-            },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Closed',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Closed',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { 
-                no: '1',
-                partNumber: 'RL1ST08976487200C000', 
-                partName: 'asaasdafaf', 
-                UoM: 'PCS', 
-                QTY: '12000',
-                QTYDelivered: '12000'
-            },
-            { 
-                no: '2', 
-                partNumber: 'RL1ST08914261J00B101', 
-                partName: 'BRC, OIL asdasdasasdaO1', 
-                UoM: 'PCS', 
-                QTY: '100000',
-                QTYDelivered: '100000'
-            },
-        ],
-    },
-    {
-        noPO: 'PL2401658',
-        poDate: '2-2-2023',
-        planDelivery: '2024-08-01',
-        poRevision: 'Rev 02',
-        revisionDate: '1-2-2023',
-        status: 'Closed',
-        response: '',
-        note: 'Urgent Delivery',
-        details: [
-            { no: '1', partNumber: 'RL1ST08914261J00B104', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-            { no: '2', partNumber: 'RL1ST08914261J00B105', partName: 'BRC, OIL LEVEL GAUGE GUIDE NO1', UoM: 'PCS', QTY: '12000' },
-        ],
-    },
-];
+            // Send the field as "qty_confirm" to match the server's expectation
+            body: JSON.stringify({ qty_confirm: parseInt(qtyConfirm) }),  // Ensure qty_confirm is an integer
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error(`Error details:`, errorData);
+            // Log each field error if present
+            if (errorData.errors) {
+                for (const [field, error] of Object.entries(errorData.errors)) {
+                    console.error(`Validation error in field "${field}": ${error}`);
+                }
+            }
+            throw new Error(`HTTP error! status: ${response.status}, message: ${errorData.message || 'Unknown error'}`);
+        }
+
+        const updatedData = await response.json();
+        console.log(`Successfully updated DN Detail No: ${dn_detail_no}`, updatedData);
+
+        // Update the UI with the new data
+        updateUIDetail(dn_detail_no, qtyConfirm);
+
+        return updatedData;
+    } catch (error) {
+        console.error(`Failed to update DN detail ${dn_detail_no}:`, error);
+        throw error;
+    }
+}
+
+function updateUIDetail(dn_detail_no, qtyConfirm) {
+    // Find the row corresponding to dn_detail_no
+    const inputField = document.querySelector(`input[data-dn-detail-no='${dn_detail_no}']`);
+    if (inputField) {
+        inputField.value = qtyConfirm;
+        // Optionally, you could update other parts of the UI here, if needed.
+        console.log(`UI updated for DN Detail No: ${dn_detail_no} with Qty Confirm: ${qtyConfirm}`);
+    }
+}
+
+const bp_code = 'APFEY';  // Define bp_code as a constant
+const apiHistoryPoURL = `http://127.0.0.1:8000/api/pohistory/${bp_code}`;
+let historyPurchaseOrder = [];
+let filteredHistoryPOData = [];
+
+// Function to fetch purchase orders from the API
+async function fetchHistoryPurchaseOrders() {
+    try {
+        console.log("Fetching data...");
+        const response = await fetch(apiHistoryPoURL);
+
+        if (!response.ok) {
+            const errorText = await response.text(); // Get the response body text for more details
+            throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
+        }
+
+        const data = await response.json();
+        console.log("Data fetched:", data);
+
+        // Log the data to see the structure
+        data.data.forEach(po => console.log("PO Data:", po));
+
+        // Check if data and data.data exist
+        if (data.success && data.data) {
+            historyPurchaseOrder = data.data
+                .filter(po => po.po_status && po.po_status.toLowerCase() === 'closed')  // Filter by status
+                .map(po => ({
+                    noPO: po.po_number ? po.po_number.toString() : 'No PO Number',
+                    poDate: po.po_date || 'No Date Provided',                  
+                    status: po.po_status || 'Unknown Status',
+                    details: po.detail ? po.detail.map((detail, index) => ({
+                        no: (index + 1).toString(),
+                        partNumber: detail.bp_part_no || 'No Part Number',
+                        partName: detail.item_desc_a || 'No Item Description',
+                        UoM: detail.purchase_unit || 'No UoM',
+                        QTY: detail.po_qty || 'No Quantity'
+                    })) : []
+                }));
+
+            // Set filteredHistoryPOData to match historyPurchaseOrder initially
+            filteredHistoryPOData = historyPurchaseOrder;
+            filteredHistoryPODetailData = historyPurchaseOrder;
+
+            // Call functions to display data and setup pagination
+            if (typeof displayTableData === 'function') {
+                displayTableData(1);
+            } else {
+                console.error('displayTableData function is not defined.');
+            }
+            
+            if (typeof updatePagination === 'function') {
+                updatePagination();
+            } else {
+                console.error('updatePagination function is not defined.');
+            }
+        } else {
+            console.error('No data found or unexpected format.');
+        }
+    } catch (error) {
+        console.error('Error fetching purchase orders:', error);
+    }
+}
+
+// Call fetchHistoryPurchaseOrders to initiate the data fetch when the page loads
+fetchHistoryPurchaseOrders();
