@@ -1,4 +1,3 @@
-Google One subscription was canceled … Update your payment method to restore your storage subscription
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -266,6 +265,14 @@ Google One subscription was canceled … Update your payment method to restore y
             .page-info {
                 display: block !important;
             }
+
+
+            footer {
+        display: none;
+      }
+    .page-break {
+        page-break-before: always;
+    }
         }
 
     </style>
@@ -273,452 +280,226 @@ Google One subscription was canceled … Update your payment method to restore y
 </head>
 
 <body>
-    <!-- Page 1 -->
-    <div class="container">
-        <div class="header">
-            <div class="logo">
-                <img src="../../assets/logo_sanoh_address.png" alt="Sanoh Logo">
-            </div>
-            <div class="company-info">
-                <h3>Purchase Order</h3>
-            </div>
-            <div class="page-info">
-                <span class="page-number"></span>
-            </div>              
-        </div>
-        <div class="details">
-            <div class="details-left">
-                <div><strong>To</strong> <span>: <strong>PT. DELA CEMARA INDAH</strong></span></div>
-                <div><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>SLSDELA-1</strong></span></div>
-                <div><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Jl Balak H Saimun RW01 Cibuntu Cibitung</strong></span></div>
-                <br>
-                <div><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Phone Number:</span></div>
-                <div><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fax Number:</span></div>
-                <br>
-                <div><strong>Attn</strong> <span>: MR. STEPHANSON</span></div>
-                <br>
-                <div><span>Please supply the following</span></div>
-                <br>
-            </div>
 
-            <div class="details-right">
-                <div class="row">
-                    <div class="label">P/O NO</div>
-                    <div class="value">: PL2300834</div>
-                </div>
-                <div class="row">
-                    <div class="label">Date</div>
-                    <div class="value">: 27-March-2023</div>
-                </div>
-                <div class="row">
-                    <div class="label">P/O Type</div>
-                    <div class="value">: PO LOCAL</div>
-                </div>
-                <div class="row">
-                    <div class="label">PR</div>
-                    <div class="value">: PP2300337</div>
-                </div>
-                <div class="row">
-                    <div class="label">Planned Receipt</div>
-                    <div class="value">: 03-April-2023</div>
-                </div>
-                <div class="row">
-                    <div class="label">Delivery Terms</div>
-                    <div class="value">:</div>
-                </div>
-                <div class="row">
-                    <div class="label">Currency</div>
-                    <div class="value">: IDR</div>
-                </div>
-            </div>
-        </div>
+    <!-- Page Content Container -->
+<div id="page-content"></div>
+<script>
+    async function fetchPurchaseOrderData(po_no) {
+        try {
+            const response = await fetch(`http://127.0.0.1:8000/api/pohview/${po_no}`);
+            const poData = await response.json();
 
-        <table>
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Seq</th>
-                    <th>Description <br>Part No.</th>
-                    <th>Delivery Date</th>
-                    <th>Qty</th>
-                    <th>Unit</th>
-                    <th>Unit Price</th>
-                    <th>Amount</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- First Page Data -->
-                <tr>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>15144-E0030 & 15144-E0040 <br> SUPPORT, OIL STRAINER</td>
-                    <td>03-April-2023</td>
-                    <td>450</td>
-                    <td>PCS</td>
-                    <td>3,614.00</td>
-                    <td>1,626,300.00</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>2</td>
-                    <td>15832-52500-B1 <br> BRACKET NO 1</td>
-                    <td>03-April-2023</td>
-                    <td>2,700</td>
-                    <td>PCS</td>
-                    <td>993.00</td>
-                    <td>2,681,100.00</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>15833-52500-B2 <br> BRACKET NO 2</td>
-                    <td>03-April-2023</td>
-                    <td>2,800</td>
-                    <td>PCS</td>
-                    <td>929.00</td>
-                    <td>2,601,200.00</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>16507-BZ320-B1 <br> BRACKET 1</td>
-                    <td>03-April-2023</td>
-                    <td>900</td>
-                    <td>PCS</td>
-                    <td>4,148.00</td>
-                    <td>3,733,200.00</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>5</td>
-                    <td>16507-BZ320-B2 <br> BRACKET 2</td>
-                    <td>03-April-2023</td>
-                    <td>900</td>
-                    <td>PCS</td>
-                    <td>5,137.00</td>
-                    <td>4,623,300.00</td>
-                </tr>
-                <tr>
-                    <td>6</td>
-                    <td>6</td>
-                    <td>16507-BZ320-B3 <br> BRACKET 3</td>
-                    <td>03-April-2023</td>
-                    <td>700</td>
-                    <td>PCS</td>
-                    <td>1,112.00</td>
-                    <td>778,400.00</td>
-                </tr>
-                <tr>
-                    <td>7</td>
-                    <td>7</td>
-                    <td>16507-BZ320-B4 <br> BRACKET 4</td>
-                    <td>03-April-2023</td>
-                    <td>800</td>
-                    <td>PCS</td>
-                    <td>1,056.00</td>
-                    <td>844,800.00</td>
-                </tr>
-                <tr>
-                    <td>8</td>
-                    <td>8</td>
-                    <td>16930-52500-B1 <br> BRC, OIL LEVEL GAUGE GUIDE NO1</td>
-                    <td>03-April-2023</td>
-                    <td>2,800</td>
-                    <td>PCS</td>
-                    <td>2,807.00</td>
-                    <td>7,859,600.00</td>
-                </tr>
-                <tr>
-                    <td>9</td>
-                    <td>9</td>
-                    <td>17550-52500-S1 <br> STOPPER</td>
-                    <td>03-April-2023</td>
-                    <td>2,300</td>
-                    <td>PCS</td>
-                    <td>788.00</td>
-                    <td>1,812,400.00</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>10</td>
-                    <td>17580-52500-B1 <br> BRACKET</td>
-                    <td>03-April-2023</td>
-                    <td>2,900</td>
-                    <td>PCS</td>
-                    <td>959.00</td>
-                    <td>2,781,100.00</td>
-                </tr>
-                <tr>
-                    <td>11</td>
-                    <td>11</td>
-                    <td>17580-52500-S1 <br> BRACKET STOPER</td>
-                    <td>03-April-2023</td>
-                    <td>2,900</td>
-                    <td>PCS</td>
-                    <td>358.00</td>
-                    <td>1,038,200.00</td>
-                </tr>
-                <tr>
-                    <td>12</td>
-                    <td>12</td>
-                    <td>32909-BZ030 <br> BRG TUBE</td>
-                    <td>03-April-2023</td>
-                    <td>4,500</td>
-                    <td>PCS</td>
-                    <td>703.00</td>
-                    <td>3,163,500.00</td>
-                </tr>
-                <tr>
-                    <td>13</td>
-                    <td>13</td>
-                    <td>32909-BZ060-A <br> BRG 1 TUBE S/A OIL COOLER W/C</td>
-                    <td>03-April-2023</td>
-                    <td>50</td>
-                    <td>PCS</td>
-                    <td>1,372.00</td>
-                    <td>68,600.00</td>
-                </tr>
-                <tr>
-                    <td>14</td>
-                    <td>14</td>
-                    <td>BRC 1 TUBE S/A <br> OIL COOLER W/C</td>
-                    <td>03-April-2023</td>
-                    <td>50</td>
-                    <td>PCS</td>
-                    <td>6,311.00</td>
-                    <td>315,550.00</td>
-                </tr>
-                <tr>
-                    <td>15</td>
-                    <td>15</td>
-                    <td>BRC 2 TUBE S/A <br> OIL COOLER W/C</td>
-                    <td>03-April-2023</td>
-                    <td>50</td>
-                    <td>PCS</td>
-                    <td>1,528.00</td>
-                    <td>76,400.00</td>
-                </tr>
-                <tr>
-                    <td>16</td>
-                    <td>16</td>
-                    <td>BRC 1 TUBE S/A <br> OIL COOLER W/C</td>
-                    <td>03-April-2023</td>
-                    <td>50</td>
-                    <td>PCS</td>
-                    <td>1,769.00</td>
-                    <td>88,450.00</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+            if (poData.success) {
+                const header = {
+                    po_no: poData.data[0].po_no,
+                    po_date: poData.data[0].po_date,
+                    po_type_desc: poData.data[0].po_type_desc,
+                    pr_no: poData.data[0].pr_no,
+                    delivery_term: calculateDeliveryTerm(poData.data[0].po_date, poData.data[0].planned_receipt_date),
+                    po_currency: poData.data[0].po_currency,
+                    reference_2: poData.data[0].reference_2,
+                    supplier_name: poData.data[0].supplier_name,
+                    supplier_code: poData.data[0].supplier_code,
+                    planned_receipt_date: poData.data[0].planned_receipt_date,
+                    total_amount: poData.data[0].total_amount,
+                    supplier_address: concatAddress(poData.data[0].supplier_address),
+                    bp_phone: poData.data[0].bp_phone,
+                    bp_fax: poData.data[0].bp_fax,
+                    planned_receipt_date: poData.data[0].planned_receipt_date,
+                    bp_name: poData.data[0].bp_name,
+                    payment_term: poData.data[0].payment_term,
+                    attn_name: poData.data[0].attn_name,
+                    po_printed_at: poData.data[0].po_printed_at
+                };
 
-    <!-- Page 2 -->
-    <div class="container">
-        <div class="header">
-            <div class="logo">
-                <img src="../../assets/logo_sanoh_address.png" alt="Sanoh Logo">
-            </div>
-            <div class="company-info">
-                <h3>Purchase Order</h3>
-            </div>
-            <div class="page-info">
-                <span class="page-number"></span>
-            </div>        
-        </div>
-        <div class="details">
-            <div class="details-left">
-                <div><strong>To</strong>: <strong>PT. DELA CEMARA INDAH</strong></div>
-                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>SLSDELA-1</strong></div>
-                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Jl Balak H Saimun RW01 Cibuntu Cibitung</strong></div>
-                <br>
-                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Phone Number:</div>
-                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fax Number:</div>
-                <br>
-                <div><strong>Attn</strong>: MR. STEPHANSON</div>
-                <br>
-                <div>Please supply the following</div>
-                <br>
-            </div>
-    
-            <div class="details-right">
-                <div class="row">
-                    <div class="label">P/O NO</div>
-                    <div class="value">: PL2300834</div>
-                </div>
-                <div class="row">
-                    <div class="label">Date</div>
-                    <div class="value">: 27-March-2023</div>
-                </div>
-                <div class="row">
-                    <div class="label">P/O Type</div>
-                    <div class="value">: PO LOCAL</div>
-                </div>
-                <div class="row">
-                    <div class="label">PR</div>
-                    <div class="value">: PP2300337</div>
-                </div>
-                <div class="row">
-                    <div class="label">Planned Receipt</div>
-                    <div class="value">: 03-April-2023</div>
-                </div>
-                <div class="row">
-                    <div class="label">Delivery Terms</div>
-                    <div class="value">:</div>
-                </div>
-                <div class="row">
-                    <div class="label">Currency</div>
-                    <div class="value">: IDR</div>
-                </div>
-            </div>
-        </div>
-    
-        <table>
-            <thead>
+                const details = poData.data[0].detail.map(item => ({
+                    po_detail_no: item.po_detail_no,
+                    po_no: item.po_no,
+                    po_line: item.po_line,
+                    po_sequence: item.po_sequence,
+                    bp_part_no: item.bp_part_no,
+                    bp_part_name: item.bp_part_name,
+                    planned_receipt_date: item.planned_receipt_date,
+                    po_qty: item.po_qty,
+                    purchase_unit: item.purchase_unit,
+                    price: item.price,
+                    amount: item.amount
+                }));
+
+                return { header, details };
+            } else {
+                console.error("Failed to fetch PO data:", poData.message);
+            }
+        } catch (error) {
+            console.error("Error fetching PO data:", error);
+        }
+    }
+
+    // Function to calculate delivery term
+    function calculateDeliveryTerm(po_date, planned_receipt_date) {
+        const date1 = new Date(po_date);
+        const date2 = new Date(planned_receipt_date);
+        const diffTime = Math.abs(date2 - date1);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        return diffDays;
+    }
+
+    // Function to concatenate address
+    function concatAddress(address) {
+        return address;
+    }
+
+    // Render table content for the purchase order
+    function renderTable(data, items) {
+        let pageContent = '';
+        let rowsPerPage = 16;
+        var subtotal = 0;
+
+        items.forEach((item, index) => {
+            if (index % rowsPerPage === 0) {
+                if (index !== 0) {
+                    pageContent += `</tbody></table></div>
+                    <div class="page-break"></div>`;
+                }
+                pageContent += `
+                    <div class="container">
+                        <div class="header">
+                            <div class="logo">
+                                <img src="../../assets/logo_sanoh_address.png" alt="Sanoh Logo">
+                            </div>
+                            <div class="company-info">
+                                <h3>Purchase Order</h3>
+                            </div>
+                            <div class="page-info">
+                                <span class="page-number"></span>
+                            </div>             
+                        </div>
+                        <div class="details">
+                            <div class="details-left">
+                                <div><strong>To</strong> <span>: <strong>${data.supplier_name}</strong></span></div>
+                                <div><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>${data.supplier_code}</strong></span></div>
+                                <div><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>${data.supplier_address}</strong></span></div>
+                                <br>
+                                <div><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Phone Number: ${data.bp_phone}</span></div>
+                                <div><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fax Number: ${data.bp_fax}</span></div>
+                                <br>
+                                <div><strong>Attn</strong> <span>: ${data.attn_name}</span></div>
+                                <br>
+                                <div><span>Please supply the following</span></div>
+                                <br>
+                            </div>
+
+                            <div class="details-right">
+                                <div class="row">
+                                    <div class="label">P/O NO</div>
+                                    <div class="value">: ${data.po_no}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="label">Date</div>
+                                    <div class="value">: ${data.po_date}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="label">P/O Type</div>
+                                    <div class="value">: ${data.po_type_desc}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="label">PR</div>
+                                    <div class="value">: ${data.pr_no}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="label">Planned Receipt</div>
+                                    <div class="value">: ${data.planned_receipt_date}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="label">Delivery Terms</div>
+                                    <div class="value">: ${data.delivery_term}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="label">Currency</div>
+                                    <div class="value">: ${data.po_currency}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Seq</th>
+                                    <th>Description <br>Part No.</th>
+                                    <th>Delivery Date</th>
+                                    <th>Qty</th>
+                                    <th>Unit</th>
+                                    <th>Unit Price</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                        `;
+            }
+
+            // Add item rows
+            pageContent += `
                 <tr>
-                    <th style="text-align: center;">No</th>
-                    <th style="text-align: center;">Seq</th>
-                    <th style="text-align: center;">Description <br>Part No.</th>
-                    <th style="text-align: center;">Delivery Date</th>
-                    <th style="text-align: center;">Qty</th>
-                    <th style="text-align: center;">Unit</th>
-                    <th style="text-align: center;">Unit Price</th>
-                    <th style="text-align: center;">Amount</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Continuation of Data on Second Page -->
-                <tr>
-                    <td>1</td>
-                    <td>17</td>
-                    <td>32909-BZ060-A <br> BRG 1 TUBE S/A OIL COOLER W/C</td>
-                    <td>03-April-2023</td>
-                    <td>50</td>
-                    <td>PCS</td>
-                    <td>1,372.00</td>
-                    <td>68,600.00</td>
-                </tr>
-                <tr>
-                    <td>18</td>
-                    <td>18</td>
-                    <td>BRC 1 TUBE S/A <br> OIL COOLER W/C</td>
-                    <td>03-April-2023</td>
-                    <td>50</td>
-                    <td>PCS</td>
-                    <td>6,311.00</td>
-                    <td>315,550.00</td>
-                </tr>
-                <tr>
-                    <td>19</td>
-                    <td>19</td>
-                    <td>BRC 2 TUBE S/A <br> OIL COOLER W/C</td>
-                    <td>03-April-2023</td>
-                    <td>50</td>
-                    <td>PCS</td>
-                    <td>1,528.00</td>
-                    <td>76,400.00</td>
-                </tr>
-                <tr>
-                    <td>20</td>
-                    <td>20</td>
-                    <td>BRC 1 TUBE S/A <br> OIL COOLER W/C</td>
-                    <td>03-April-2023</td>
-                    <td>50</td>
-                    <td>PCS</td>
-                    <td>1,769.00</td>
-                    <td>88,450.00</td>
-                </tr>
-                <tr>
-                    <td>21</td>
-                    <td>21</td>
-                    <td>BRC 2 TUBE S/A <br> OIL COOLER W/C</td>
-                    <td>03-April-2023</td>
-                    <td>50</td>
-                    <td>PCS</td>
-                    <td>1,528.00</td>
-                    <td>76,400.00</td>
-                </tr>
-                <tr>
-                    <td>22</td>
-                    <td>22</td>
-                    <td>BRC 1 TUBE S/A <br> OIL COOLER W/C</td>
-                    <td>03-April-2023</td>
-                    <td>50</td>
-                    <td>PCS</td>
-                    <td>1,769.00</td>
-                    <td>88,450.00</td>
-                </tr>
+                    <td>${index + 1}</td>
+                    <td>${item.po_sequence}</td>
+                    <td>${item.bp_part_name} <br> ${item.bp_part_no}</td>
+                    <td>${item.planned_receipt_date}</td>
+                    <td>${item.po_qty}</td>
+                    <td>${item.purchase_unit}</td>
+                    <td>${item.price}</td>
+                    <td>${item.amount}</td>
+                </tr>`;
+            subtotal += item.amount;
+        });
+
+        // Add subtotal, PPN, and total
+        if (items.length > 0) {
+            pageContent += `
+            <tr>
+                <th colspan="6"></th>
+                <th style="text-align: right;">Subtotal</th>
+                <th style="text-align: right;">${subtotal}</th>
             </tr>
-    
-                <!-- Subtotal, PPN, and Total Rows -->
-                <tr class="summary-row">
-                    <td colspan="6"></td>
-                    <td class="summary-label"><strong>SUB TOTAL</strong></td>
-                    <td class="summary-value">95,909,950.00</td>
-                </tr>
-                <tr class="summary-row">
-                    <td colspan="6"></td>
-                    <td class="summary-label"><strong>PPN 11%</strong></td>
-                    <td class="summary-value">10,550,094.00</td>
-                </tr>
-                <tr class="summary-row">
-                    <td colspan="6"></td>
-                    <td class="summary-label"><strong>TOTAL</strong></td>
-                    <td class="summary-value">106,460,044.00</td>
-                </tr>
-            </tbody>
-        </table>
-    
-        <div class="terms" style="margin-top: 20px;">
-            <div style="display: flex; margin-bottom: 5px;">
-                <div style="min-width: 100px; font-weight: bold;">Note</div>
-                <div style="min-width: 10px;">:</div>
-                <div>DN APR 2023</div>
-            </div>
-            <div style="display: flex; margin-bottom: 5px;">
-                <div style="min-width: 100px; font-weight: bold;">Delivery</div>
-                <div style="min-width: 10px;">:</div>
-                <div></div>
-            </div>
-            <div style="display: flex; margin-bottom: 5px;">
-                <div style="min-width: 100px; font-weight: bold;">Terms</div>
-                <div style="min-width: 10px;">:</div>
-                <div>45D</div>
-            </div>
-            <div style="display: flex;">
-                <div style="min-width: 100px; font-weight: bold;">Delivery Place</div>
-                <div style="min-width: 10px;">:</div>
-                <div>
-                    PT. SANOH INDONESIA <br>
-                    JL. INTI II BLOK C4 NO. 10 KAWASAN INDUSTRI HYUNDAI, <br>
-                    LEMAH ABANG - BEKASI 17750 <br>
-                    Phone: 89907965, Fax: 8974449
+            <tr>
+                <th colspan="6"></th>
+                <th style="text-align: right;">PPN 11%</th>
+                <th style="text-align: right;">${(subtotal * 0.11).toFixed(2)}</th>
+            </tr>
+            <tr>
+                <th colspan="6"></th>
+                <th style="text-align: right;">Total</th>
+                <th style="text-align: right;">${(subtotal * 1.11).toFixed(2)}</th>
+            </tr>
+
+                </tbody>
+                </table>
+                <div class="terms" style="margin-top: 20px;">
+                <div style="display: flex; margin-bottom: 5px;">
+                    <div style="min-width: 100px; font-weight: bold;">Note</div>
+                    <div style="min-width: 10px;">:</div>
+                    <div>${data.reference_2}</div>
+                </div>
+                <div style="display: flex; margin-bottom: 5px;">
+                    <div style="min-width: 100px; font-weight: bold;">Delivery</div>
+                    <div style="min-width: 10px;">:</div>
+                </div>
+                <div style="display: flex; margin-bottom: 5px;">
+                    <div style="min-width: 100px; font-weight: bold;">Terms</div>
+                    <div style="min-width: 10px;">:</div>
+                    <div>${data.payment_term}</div>
+                </div>
+                <div style="display: flex;">
+                    <div style="min-width: 100px; font-weight: bold;">Delivery Place</div>
+                    <div style="min-width: 10px;">:</div>
+                    <div>
+                        PT. SANOH INDONESIA <br>
+                        JL. INTI II BLOK C4 NO. 10 KAWASAN INDUSTRI HYUNDAI, <br>
+                        LEMAH ABANG - BEKASI 17750 <br> 
+                        <div>${data.bp_phone} ${data.bp_fax}</div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-   <!-- Page 3 -->
-   <div class="container">
-    <div class="page-info">
-        <span class="page-number"></span>
-    </div>  
-    <!-- Table Column -->
-        <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
-            <thead>
-                <tr>
-                    <th style="width: 3%; border: 1px solid rgb(222, 222, 222); text-align: center;">No</th>
-                    <th style="width: 3%; border: 1px solid rgb(222, 222, 222); text-align: center;">Seq</th>
-                    <th style="width: 40%; border: 1px solid rgb(222, 222, 222); text-align: center;">Description <br>Part No.</th>
-                    <th style="width: 15%; border: 1px solid rgb(222, 222, 222); text-align: center;">Delivery Date</th>
-                    <th style="width: 7%; border: 1px solid rgb(222, 222, 222); text-align: center;">Qty</th>
-                    <th style="width: 7%; border: 1px solid rgb(222, 222, 222); text-align: center;">Unit</th>
-                    <th style="width: 10%; border: 1px solid rgb(222, 222, 222); text-align: center;">Unit Price</th>
-                    <th style="width: 15%; border: 1px solid rgb(222, 222, 222); text-align: center;">Amount</th>
-                </tr>
-            </thead>
-        </table>
-    
-        <!-- Signature Section -->
+            <!-- Signature Section -->
         <div style="display: flex; justify-content: space-between; margin-top: 150px;">
             <div style="text-align: left; font-size: 12px;">
                 <p>Accepted and Confirmed</p>
@@ -751,113 +532,40 @@ Google One subscription was canceled … Update your payment method to restore y
                     </tr>
                 </tbody>
             </table>
-        </div>
-
-    <script>
-        // JavaScript to handle page numbering
-        window.onload = function() {
-            const containers = document.querySelectorAll('.container');
-            containers.forEach((container, index) => {
-                const pageNumberElement = container.querySelector('.page-number');
-                if (pageNumberElement) {
-                    pageNumberElement.textContent = `Page ${index + 1}/${containers.length}`;
-                }
-            });
-
-            // Open print dialog after page numbering is set
-            window.print();
-        };
-
-        // JavaScript to apply custom styles for Safari
-        if (navigator.userAgent.includes("Safari") && !navigator.userAgent.includes("Chrome")) {
-            document.querySelectorAll('.container').forEach(function(container) {
-                container.style.width = "209.9mm";
-                container.style.height = "296.9mm";
-            });
+            </div>`;
         }
 
-        const purchaseOrderData = {
-            companyInfo: {
-                name: "PT. DELA CEMARA INDAH",
-                address: "Jl Balak H Saimun RW01 Cibuntu Cibitung",
-                phoneNumber: "",
-                faxNumber: "",
-                attn: "MR. STEPHANSON"
-            },
-            orderDetails: {
-                poNumber: "PL2300834",
-                date: "27-March-2023",
-                poType: "PO LOCAL",
-                prNumber: "PP2300337",
-                plannedReceipt: "03-April-2023",
-                deliveryTerms: "",
-                currency: "IDR"
-            },
-            items: [
-                { no: 1, seq: 1, description: "15144-E0030 & 15144-E0040 SUPPORT, OIL STRAINER", deliveryDate: "03-April-2023", qty: 450, unit: "PCS", unitPrice: 3614, amount: 1626300 },
-                { no: 2, seq: 2, description: "15832-52500-B1 BRACKET NO 1", deliveryDate: "03-April-2023", qty: 2700, unit: "PCS", unitPrice: 993, amount: 2681100 },
-                { no: 3, seq: 3, description: "15833-52500-B2 BRACKET NO 2", deliveryDate: "03-April-2023", qty: 2800, unit: "PCS", unitPrice: 929, amount: 2601200 },
-                { no: 4, seq: 4, description: "16507-BZ320-B1 BRACKET 1", deliveryDate: "03-April-2023", qty: 900, unit: "PCS", unitPrice: 4148, amount: 3733200 },
-                { no: 5, seq: 5, description: "16507-BZ320-B2 BRACKET 2", deliveryDate: "03-April-2023", qty: 900, unit: "PCS", unitPrice: 5137, amount: 4623300 },
-                { no: 6, seq: 6, description: "16507-BZ320-B3 BRACKET 3", deliveryDate: "03-April-2023", qty: 700, unit: "PCS", unitPrice: 1112, amount: 778400 },
-                { no: 7, seq: 7, description: "16507-BZ320-B4 BRACKET 4", deliveryDate: "03-April-2023", qty: 800, unit: "PCS", unitPrice: 1056, amount: 844800 },
-                { no: 8, seq: 8, description: "16930-52500-B1 BRC, OIL LEVEL GAUGE GUIDE NO1", deliveryDate: "03-April-2023", qty: 2800, unit: "PCS", unitPrice: 2807, amount: 7859600 },
-                { no: 9, seq: 9, description: "17550-52500-S1 STOPPER", deliveryDate: "03-April-2023", qty: 2300, unit: "PCS", unitPrice: 788, amount: 1812400 },
-                { no: 10, seq: 10, description: "17580-52500-B1 BRACKET", deliveryDate: "03-April-2023", qty: 2900, unit: "PCS", unitPrice: 959, amount: 2781100 },
-                { no: 11, seq: 11, description: "17580-52500-S1 BRACKET STOPER", deliveryDate: "03-April-2023", qty: 2900, unit: "PCS", unitPrice: 358, amount: 1038200 },
-                { no: 12, seq: 12, description: "32909-BZ030 BRG TUBE", deliveryDate: "03-April-2023", qty: 4500, unit: "PCS", unitPrice: 703, amount: 3163500 },
-                { no: 13, seq: 13, description: "32909-BZ060-A BRG 1 TUBE S/A OIL COOLER W/C", deliveryDate: "03-April-2023", qty: 50, unit: "PCS", unitPrice: 1372, amount: 68600 },
-                { no: 14, seq: 14, description: "BRC 1 TUBE S/A OIL COOLER W/C", deliveryDate: "03-April-2023", qty: 50, unit: "PCS", unitPrice: 6311, amount: 315550 },
-                { no: 15, seq: 15, description: "BRC 2 TUBE S/A OIL COOLER W/C", deliveryDate: "03-April-2023", qty: 50, unit: "PCS", unitPrice: 1528, amount: 76400 },
-                { no: 16, seq: 16, description: "BRC 1 TUBE S/A OIL COOLER W/C", deliveryDate: "03-April-2023", qty: 50, unit: "PCS", unitPrice: 1769, amount: 88450 },
-                { no: 17, seq: 17, description: "BRC 2 TUBE S/A OIL COOLER W/C", deliveryDate: "03-April-2023", qty: 50, unit: "PCS", unitPrice: 1849, amount: 92450 },
-                { no: 18, seq: 18, description: "BRC 3 TUBE S/A OIL COOLER W/C", deliveryDate: "03-April-2023", qty: 50, unit: "PCS", unitPrice: 1849, amount: 92450 },
-                { no: 19, seq: 19, description: "44761-BZ040 BRACKET INTAKE", deliveryDate: "03-April-2023", qty: 700, unit: "PCS", unitPrice: 842, amount: 589400 }
-            ],
-            summary: {
-                subTotal: 95909950,
-                ppn: 10550094,
-                total: 106460044
-            },
-            terms: {
-                note: "DN APR 2023",
-                delivery: "",
-                terms: "45D",
-                deliveryPlace: "PT. SANOH INDONESIA, JL. INTI II BLOK C4 NO. 10 KAWASAN INDUSTRI HYUNDAI, LEMAH ABANG - BEKASI 17750, Phone: 89907965, Fax: 8974449"
-            },
-            signatures: {
-                preparedBy: "",
-                checkedBy: "FADLI YUSRAL",
-                approvedBy: "MISBAHUL MUNIR",
-                roles: {
-                    prepared: "Purchasing",
-                    checked: "Dept. Manager",
-                    approved: "Vice President"
-                }
+        return pageContent;
+    }
+
+    // Render the purchase order content on the page
+    function renderPurchaseOrder(data) {
+        const items = data.details;
+        const pageContent = renderTable(data.header, items);
+
+        // Inject the rendered content into the page
+        document.getElementById('page-content').innerHTML = pageContent;
+
+        // Add page numbers
+        const containers = document.querySelectorAll('.container');
+        containers.forEach((container, index) => {
+            const pageNumberElement = container.querySelector('.page-number');
+            if (pageNumberElement) {
+                pageNumberElement.textContent = `Page ${index + 1}/${containers.length}`;
             }
-        };
+        });
 
-        // Function to send data to the backend
-        function sendDataToBackend(data) {
-            fetch('https://your-backend-api-endpoint.com/api/purchase-order', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-        }
+        // Print the page
+        window.print();
+    }
 
-        // Call the function to send the purchaseOrderData to the backend
-        sendDataToBackend(purchaseOrderData);
-    </script>
+    // Initialize
+    const po_no = 'PI2400200';
+    fetchPurchaseOrderData(po_no).then(data => {
+        renderPurchaseOrder(data);
+    });
+</script>
+
 </body>
 
 </html>
