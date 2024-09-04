@@ -93,6 +93,22 @@
             <h1 class="self-stretch my-auto text-[80%] 2xl:text-[120%]">History Purchase Order (PO)</h1>
           </header>
 
+          <article class="flex flex-col items-start w-full text-base">
+            <h1 class="text-base 2xl:text-xl font-semibold text-black mt-4">Select Supplier</h1>
+          </article>
+          
+            <form id="supplierForm" class="flex flex-col w-full text-neutral-500">
+              <div class="flex flex-col xl:w-[500px] 2xl:w-[600px]">
+                <label for="Supplier" class="block xl:mb-6 2xl:mb-8 xl:text-base 2xl:text-lg text-neutral-500"></label>
+                <select id="Supplier"
+                  class="scrollable-select bg-transparent border border-neutral-300 rounded-lg block w-full p-4 2xl:p-7 text-neutral-500 text-sm 2xl:text-lg">
+                  <option value="">Cari Supplier</option>
+                  <!-- Options will be added here by JavaScript -->
+                </select>
+              </div>
+            </form>
+          </article>
+
           <div class="flex flex-col mt-4 2xl:mt-6 w-full 2xl:text-base text-xs font-medium">
 
             <div class="flex flex-wrap gap-10 justify-end items-center w-full">
@@ -157,193 +173,191 @@
 <script src="script.js"></script>
 <!-- Add the script to handle table sorting and pagination -->
 <script>
+  const name = localStorage.getItem('name');
+  const bpCode = localStorage.getItem('bpCode');
 
+  document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
   
   let rowsPerPage = 12;
   let currentPage = 1;
-  let filteredData = historyPurchaseOrder; // Initialize filteredData with all data
-  let pendingResponseIndex = null;
-  let pendingResponseAction = '';
+  let suppliersData = [];
+  let filteredData = [];
+  let originalData = [];  // Menyimpan data asli
+  let sortOrder = {}; // Object to keep track of sort order for each column
 
-  // Adjust rows per page based on screen size
-  function adjustRowsPerPage() {
-    if (window.innerWidth <= 1280) {
-        rowsPerPage = 8;
-      } else if (window.innerWidth <= 1600) {
-        rowsPerPage = 10;
+  // Fungsi untuk mengambil data supplier
+  async function fetchSuppliers() {
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      console.error('No access token found');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:8000/api/partner3', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      
+      const data = await response.json();
+      console.log('API Response for Suppliers:', data); // Debugging log untuk memeriksa data
+  
+      if (data.success) { // Sesuaikan dengan respons API
+        suppliersData = data.data;
+        populateSupplierDropdown();
       } else {
-        rowsPerPage = 12;
+        console.error('Failed to fetch suppliers:', data.message);
       }
+    } catch (error) {
+      console.error('Error fetching suppliers:', error);
+    }
   }
 
-  function displayTableData(page) {
-    const tableBody = document.getElementById('table-body');
-    tableBody.innerHTML = '';
-
-    const start = (page - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
-    const paginatedData = filteredData.slice(start, end);
-
-    paginatedData.forEach((row, index) => {
-      const tableRow = document.createElement('tr');
-      tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
-      tableRow.innerHTML = `
-        <td class="px-2 py-4 text-center font-medium text-gray-900">
-            <a href="history-purchase-order-detail.html?noPO=${row.noPO}" class="text-blue-600 underline">${row.noPO}</a>
-        </td>
-        <td class="px-2 py-4 text-center">${row.poDate}</td>
-        <td class="px-2 py-4 text-center">${row.status}</td>
-      `;
-      tableBody.appendChild(tableRow);
-    });
-  }
-
-
-  function searchTable() {
-    const searchInput = document.getElementById('search-input').value.toLowerCase();
-    filteredData = historyPurchaseOrder.filter(row => row.noPO.toLowerCase().includes(searchInput));
-    currentPage = 1;
-    displayTableData(currentPage);
-    updatePagination();
-  }
-
-  // Function to sort table based on column index
-  function sortTable(columnIndex) {
-    const table = document.querySelector('table');
-    const tbody = table.querySelector('tbody');
-    const rows = Array.from(tbody.querySelectorAll('tr'));
-    const isAscending = table.querySelectorAll('th')[columnIndex].classList.toggle('asc');
-    table.querySelectorAll('th').forEach((th, index) => {
-      if (index !== columnIndex) th.classList.remove('asc', 'desc');
-    });
-
-    rows.sort((a, b) => {
-      const cellA = a.querySelectorAll('td')[columnIndex].textContent.trim();
-      const cellB = b.querySelectorAll('td')[columnIndex].textContent.trim();
-
-      if (columnIndex === 1) { // For Revision Date, handle date sorting
-        return new Date(cellA) - new Date(cellB);
-      }
-
-      return cellA.localeCompare(cellB, undefined, { numeric: true, sensitivity: 'base' });
-    });
-
-    if (!isAscending) {
-      rows.reverse();
+  // Fungsi untuk mengisi dropdown supplier
+  function populateSupplierDropdown() {
+    const supplierSelect = document.getElementById('Supplier');
+    if (!supplierSelect) {
+      console.error('Supplier select element not found!');
+      return;
     }
 
-    tbody.innerHTML = '';
-    tbody.append(...rows);
+    supplierSelect.innerHTML = '<option value="">Select a supplier</option>'; // Reset dropdown
+
+    suppliersData.forEach(supplier => {
+      const option = document.createElement('option');
+      option.value = supplier.bp_code;
+      option.textContent = supplier.bp_name;
+      supplierSelect.appendChild(option);
+    });
   }
 
-  function updatePagination() {
-    const paginationContainer = document.querySelector('.pagination');
-    paginationContainer.innerHTML = '';
+  // Event listener untuk pemilihan supplier dan pengambilan data purchase order
+document.addEventListener('DOMContentLoaded', () => {
+  const supplierSelect = document.getElementById('Supplier');
+  if (!supplierSelect) {
+    console.error('Supplier select element not found during DOMContentLoaded!');
+    return;
+  }
 
-    const totalPages = Math.ceil(filteredData.length / rowsPerPage);
-    const maxPageNumbersToShow = 4; // Number of page buttons to display (including current)
+  supplierSelect.addEventListener('change', async () => {
+    const selectedSupplier = supplierSelect.value;
+    if (selectedSupplier) {
+      const token = localStorage.getItem('accessToken');
+      if (!token) {
+        console.error('No access token found');
+        return;
+      }
 
-    // Previous button
-    const prevButton = document.createElement('button');
-    prevButton.className = 'px-3 py-3 2xl:px-4 2xl:py-4 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
-    prevButton.innerHTML = `
-        <svg class="2xl:w-4 2xl:h-4 w-3 h-3 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
-        <path d="M8.766.566A2 2 0 0 0 6.586 1L1 6.586a2 2 0 0 0 0 2.828L6.586 15A2 2 0 0 0 10 13.586V2.414A2 2 0 0 0 8.766.566Z" />
-        </svg>
-    `;
-    prevButton.disabled = currentPage === 1;
-    prevButton.addEventListener('click', () => {
-        if (currentPage > 1) {
-        currentPage--;
-        displayTableData(currentPage);
-        updatePagination();
-        }
-    });
-    paginationContainer.appendChild(prevButton);
+      try {
+        const response = await fetch(`http://localhost:8000/api/pohistory3/${selectedSupplier}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
+        const data = await response.json();
 
-    // Calculate page numbers to show
-    const pageNumbers = [];
-    if (totalPages <= maxPageNumbersToShow) {
-        // If total pages is less than or equal to maxPageNumbersToShow, show all page numbers
-        for (let i = 1; i <= totalPages; i++) {
-        pageNumbers.push(i);
-        }
-    } else {
-        // Otherwise, calculate which page numbers to show
-        pageNumbers.push(1); // Always show the first page
+        console.log('API Response for PO History:', data); // Debugging log untuk memeriksa data
 
-        const startPage = Math.max(2, currentPage - 1);
-        const endPage = Math.min(totalPages - 1, currentPage + 1);
-
-        if (startPage > 2) {
-        pageNumbers.push('...');
-        }
-
-        for (let i = startPage; i <= endPage; i++) {
-        pageNumbers.push(i);
-        }
-
-        if (endPage < totalPages - 1) {
-        pageNumbers.push('...');
-        }
-
-        pageNumbers.push(totalPages); // Always show the last page
-    }
-
-    // Page numbers buttons
-    pageNumbers.forEach(number => {
-        const pageButton = document.createElement('button');
-        if (number === '...') {
-        pageButton.className = 'px-4 py-2 2xl:px-6 2xl:py-4 text-gray-900 bg-gray-200 rounded-md cursor-default';
-        pageButton.textContent = '...';
-        } else {
-        pageButton.className = `px-4 py-2 2xl:px-6 2xl:py-4 ${number === currentPage ? 'bg-blue-900 text-white' : 'bg-gray-200 text-gray-900'} rounded-md hover:bg-gray-300`;
-        pageButton.textContent = number;
-        pageButton.addEventListener('click', () => {
-            currentPage = number;
+        if (data.success) { // Sesuaikan dengan respons API
+          if (data.data && data.data.length > 0) {
+            originalData = data.data.map(po => ({
+              noPO: po.po_no,
+              poDate: po.po_date,
+              planDelivery: po.planned_receipt_date,
+              poRevision: po.po_revision_no,
+              revisionDate: po.po_revision_date,
+              status: po.po_status,
+              response: po.response
+            }));
+            filteredData = [...originalData]; // Salin data asli ke data yang akan ditampilkan
+            adjustRowsPerPage(); // Panggil fungsi ini setelah mengambil data
             displayTableData(currentPage);
             updatePagination();
-        });
+
+            // Tampilkan elemen-elemen yang terkait dengan tabel
+            const searchBar = document.getElementById('search-bar');
+            const tableContainer = document.getElementById('table-container');
+            const pagination = document.querySelector('.pagination');
+            
+            if (searchBar && tableContainer && pagination) {
+              searchBar.style.display = 'block';
+              tableContainer.style.display = 'block';
+              pagination.style.display = 'flex';
+            }
+          } else {
+            console.log('No PO history available for the selected supplier.');
+            // Pastikan elemen ada sebelum mengubah style
+            const searchBar = document.getElementById('search-bar');
+            const tableContainer = document.getElementById('table-container');
+            const pagination = document.querySelector('.pagination');
+            
+            if (searchBar && tableContainer && pagination) {
+              searchBar.style.display = 'none';
+              tableContainer.style.display = 'none';
+              pagination.style.display = 'none';
+            }
+          }
+        } else {
+          console.error('Failed to fetch PO history:', data.message);
         }
-        paginationContainer.appendChild(pageButton);
-    });
+      } catch (error) {
+        console.error('Error fetching PO history:', error);
+      }
+    } else {
+      // Sembunyikan elemen-elemen jika tidak ada supplier yang dipilih
+      const searchBar = document.getElementById('search-bar');
+      const tableContainer = document.getElementById('table-container');
+      const pagination = document.querySelector('.pagination');
+      
+      if (searchBar && tableContainer && pagination) {
+        searchBar.style.display = 'none';
+        tableContainer.style.display = 'none';
+        pagination.style.display = 'none';
+      }
+    }
+  });
 
-    // Next button
-    const nextButton = document.createElement('button');
-    nextButton.className = '2xl:px-4 2xl:py-4 px-3 py-3 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
-    nextButton.innerHTML = `
-        <svg class="2xl:w-4 2xl:h-4 w-3 h-3 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
-        <path d="M1.234 15.434A2 2 0 0 0 3.414 15L9 9.414a2 2 0 0 0 0-2.828L3.414 1A2 2 0 0 0 1 2.414v11.172a2 2 0 0 0 1.234 1.848Z" />
-        </svg>
-    `;
-    nextButton.disabled = currentPage === totalPages;
-    nextButton.addEventListener('click', () => {
-        if (currentPage < totalPages) {
-        currentPage++;
-        displayTableData(currentPage);
-        updatePagination();
-        }
-    });
-    paginationContainer.appendChild(nextButton);
-}
+  fetchSuppliers(); // Memanggil fungsi untuk mengambil data supplier saat halaman dimuat
+  adjustRowsPerPage(); // Inisialisasi jumlah baris per halaman berdasarkan ukuran layar
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const name = localStorage.getItem('name');
-    const bpCode = localStorage.getItem('bpCode');
-
-    document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
-    
-    adjustRowsPerPage(); // Set rows per page based on initial screen size
-    window.addEventListener('resize', () => {
-      adjustRowsPerPage(); // Adjust rows per page on screen resize
-      displayTableData(currentPage); // Re-render table data
-      updatePagination(); // Re-render pagination
-    });
-
-    document.getElementById('search-input').addEventListener('input', searchTable);
+  // Setel ulang tabel dan paginasi saat ukuran layar berubah
+  window.addEventListener('resize', () => {
+    adjustRowsPerPage();
     displayTableData(currentPage);
     updatePagination();
   });
-</script>
 
+  document.getElementById('search-input').addEventListener('input', searchTable);
+
+  // Tambahkan event listener untuk pengurutan
+  addSortingListeners();
+});
+
+// Fungsi untuk pengurutan data
+function sortData(sortKey) {
+  // Toggle sort order
+  sortOrder[sortKey] = sortOrder[sortKey] === 'asc' ? 'desc' : 'asc';
+
+  filteredData.sort((a, b) => {
+    if (a[sortKey] < b[sortKey]) {
+      return sortOrder[sortKey] === 'asc' ? -1 : 1;
+    } else if (a[sortKey] > b[sortKey]) {
+      return sortOrder[sortKey] === 'asc' ? 1 : -1;
+    } else {
+      return 0;
+    }
+  });
+
+  // Update table after sorting
+  currentPage = 1; // Reset to the first page after sorting
+  displayTableData(currentPage);
+  updatePagination();
+}
+
+</script>
 </html>
