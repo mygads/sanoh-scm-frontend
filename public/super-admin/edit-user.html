@@ -160,7 +160,6 @@
     
     const passwordInput = document.getElementById('password');
     const togglePasswordButton = document.getElementById('toggle_password');
-    const generatePasswordButton = document.getElementById('generate_password');
     const form = document.getElementById('edit-user-form');
     
     // Toggle Password Visibility
@@ -171,6 +170,7 @@
     });
     
     // Generate Random Password
+    const generatePasswordButton = document.getElementById('generate_password');
     generatePasswordButton.addEventListener('click', () => {
       const password = generateRandomPassword();
       passwordInput.value = password;
@@ -246,7 +246,7 @@
   async function fetchUserData(userId) {
     try {
       const response = await fetch(`${APIedit4}${userId}`, {
-        method: 'POST',
+        method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -254,9 +254,9 @@
       });
 
       if (response.ok) {
-        const data = await response.json();
-        if (data.data) {
-          populateForm(data.data); // Pindahkan ini agar hanya dipanggil setelah supplier dimuat
+        const dataResponse = await response.json();
+        if (dataResponse.data) {
+          populateForm(dataResponse.data); // Pindahkan ini agar hanya dipanggil setelah supplier dimuat
         } else {
           console.error('Failed to fetch user data:', data.message);
           displayNotification(`Failed to fetch user data:, ${data.message}`);
@@ -272,10 +272,11 @@
   }
 
   function populateForm(data) {
-    // if (!data) {
-    //   console.error('Cannot populate form: data is undefined');
-    //   return;
-    // }
+    // console.log(data);
+    if (!data) {
+      console.error('Cannot populate form: data is undefined');
+      return;
+    }
 
     // Set supplier select sesuai dengan user data
     $('#supplier_id').val(data.bp_code).trigger('change'); // Pastikan untuk memicu Select2 agar meng-update tampilan
