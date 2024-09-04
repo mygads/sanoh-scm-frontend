@@ -99,7 +99,6 @@ async function handleLogout() {
 }
 
 
-
 function displayNotification(message, type) {
   const notification = document.createElement('div');
   if (Array.isArray(message)) {
