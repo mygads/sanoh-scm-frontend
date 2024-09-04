@@ -94,7 +94,7 @@
           
           <article class="flex flex-col items-start w-full text-base">
             <h1 class="text-base 2xl:text-xl font-semibold text-black mt-4">Select Supplier</h1>
-          </article>
+  
           
             <form id="supplierForm" class="flex flex-col w-full text-neutral-500">
               <div class="flex flex-col xl:w-[500px] 2xl:w-[600px]">
@@ -104,12 +104,6 @@
                   <option value="">Cari Supplier</option>
                   <!-- Options will be added here by JavaScript -->
                 </select>
-              </div>
-              <div
-                class="flex gap-2 items-center xl:mt-6 2xl:mt-8 justify-end text-white whitespace-nowrap xl:h-[50px] 2xl:h-[100px] xl:w-[500px] 2xl:w-[600px]">
-                <button type="button" id="submitBtn"
-                  class="gap-2 xl:px-5 xl:py-3 2xl:px-8 2xl:py-4 rounded bg-zinc-400 xl:text-sm 2xl:text-lg hover:bg-blue-600"
-                  disabled>Submit</button>
               </div>
             </form>
           </article>
@@ -189,254 +183,200 @@
 <script>
   let rowsPerPage = 10;
   let currentPage = 1;
-  let filteredData = deliveryNote; // Initialize filteredData with all data
   let pendingResponseIndex = null;
   let pendingResponseAction = '';
+  let deliveryNote = [];
+  let filteredDnData = [];
+  let sortOrder = {}; // Object to keep track of sort order for each column
 
   // Adjust rows per page based on screen size
   function adjustRowsPerPage() {
     if (window.innerWidth <= 1280) {
         rowsPerPage = 6;
-      } else if (window.innerWidth <= 1600) {
+    } else if (window.innerWidth <= 1600) {
         rowsPerPage = 8;
-      } else {
+    } else {
         rowsPerPage = 10;
-      }
+    }
   }
 
   function displayTableData(page) {
-    const tableBody = document.getElementById('table-body');
-    tableBody.innerHTML = '';
+      const tableBody = document.getElementById('table-body');
+      tableBody.innerHTML = '';
 
-    const start = (page - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
-    const paginatedData = filteredData.slice(start, end);
+      const start = (page - 1) * rowsPerPage;
+      const end = start + rowsPerPage;
+      const paginatedData = filteredDnData.slice(start, end);
 
-    paginatedData.forEach((row, index) => {
-      const tableRow = document.createElement('tr');
-      tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
-      tableRow.innerHTML = `
-        <td class="px-2 py-4 text-center font-medium text-gray-900">
-            <a href="delivery-note-detail.html?noDN=${row.noDN}" class="text-blue-600 underline">${row.noDN}</a>
-        </td>
-        <td class="px-2 py-4 text-center font-medium text-gray-900">
-            <a noPO=${row.noPO}" class="text-black">${row.noPO}</a>
-        </td>
-        <td class="px-2 py-4 text-center">${row.planDNDate}</td>
-        <td class="px-2 py-4 text-center">${row.statusDN}</td>
-      `;
-      tableBody.appendChild(tableRow);
-    });
+      paginatedData.forEach((row) => {
+          const tableRow = document.createElement('tr');
+          tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
+          tableRow.innerHTML = `
+              <td class="px-2 py-4 text-center font-medium text-gray-900">
+                  <a href="delivery-note-detail.html?noDN=${row.noDN}" class="text-blue-600 underline">${row.noDN}</a>
+              </td>
+              <td class="px-2 py-4 text-center font-medium text-gray-900">
+                  <a href="purchase-order-detail.html?noPO=${row.noPO}" class="text-blue-600 underline">${row.noPO}</a>
+              </td>
+              <td class="px-2 py-4 text-center">${row.planDNDate}</td>
+              <td class="px-2 py-4 text-center">${row.statusDN}</td>
+          `;
+          tableBody.appendChild(tableRow);
+      });
   }
-
 
   function searchTable() {
-    const searchInput = document.getElementById('search-input').value.toLowerCase();
-    filteredData = deliveryNote.filter(row => row.noDN.toLowerCase().includes(searchInput));
-    currentPage = 1;
-    displayTableData(currentPage);
-    updatePagination();
+      const searchInput = document.getElementById('search-input').value.toLowerCase();
+      filteredDnData = deliveryNote.filter(row => row.noDN.toLowerCase().includes(searchInput));
+      currentPage = 1;
+      displayTableData(currentPage);
+      updatePagination();
   }
 
-  // Function to sort table based on column index
-  function sortTable(columnIndex) {
-    const table = document.querySelector('table');
-    const tbody = table.querySelector('tbody');
-    const rows = Array.from(tbody.querySelectorAll('tr'));
-    const isAscending = table.querySelectorAll('th')[columnIndex].classList.toggle('asc');
-    table.querySelectorAll('th').forEach((th, index) => {
-      if (index !== columnIndex) th.classList.remove('asc', 'desc');
-    });
+  // New sort function based on the pattern from the first code
+  function sortTable(columnKey) {
+      sortOrder[columnKey] = sortOrder[columnKey] === 'asc' ? 'desc' : 'asc'; // Toggle sort order
 
-    rows.sort((a, b) => {
-      const cellA = a.querySelectorAll('td')[columnIndex].textContent.trim();
-      const cellB = b.querySelectorAll('td')[columnIndex].textContent.trim();
+      filteredDnData.sort((a, b) => {
+          if (a[columnKey] < b[columnKey]) {
+              return sortOrder[columnKey] === 'asc' ? -1 : 1;
+          } else if (a[columnKey] > b[columnKey]) {
+              return sortOrder[columnKey] === 'asc' ? 1 : -1;
+          } else {
+              return 0;
+          }
+      });
 
-
-      if (columnIndex === 3) { // For Revision Date, handle date sorting
-        return new Date(cellA) - new Date(cellB);
-      }
-
-      return cellA.localeCompare(cellB, undefined, { numeric: true, sensitivity: 'base' });
-    });
-
-    if (!isAscending) {
-      rows.reverse();
-    }
-
-    tbody.innerHTML = '';
-    tbody.append(...rows);
+      // Update table after sorting
+      currentPage = 1; // Reset to the first page after sorting
+      displayTableData(currentPage);
+      updatePagination();
   }
 
   function updatePagination() {
-    const paginationContainer = document.querySelector('.pagination');
-    paginationContainer.innerHTML = '';
+      const paginationContainer = document.querySelector('.pagination');
+      paginationContainer.innerHTML = '';
 
-    const totalPages = Math.ceil(filteredData.length / rowsPerPage);
-    const maxPageNumbersToShow = 4; // Number of page buttons to display (including current)
+      const totalPages = Math.ceil(filteredDnData.length / rowsPerPage);
+      const maxPageNumbersToShow = 4;
 
-    // Previous button
-    const prevButton = document.createElement('button');
-    prevButton.className = 'px-3 py-3 2xl:px-4 2xl:py-4 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
-    prevButton.innerHTML = `
-        <svg class="2xl:w-4 2xl:h-4 w-3 h-3 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
-        <path d="M8.766.566A2 2 0 0 0 6.586 1L1 6.586a2 2 0 0 0 0 2.828L6.586 15A2 2 0 0 0 10 13.586V2.414A2 2 0 0 0 8.766.566Z" />
-        </svg>
-    `;
-    prevButton.disabled = currentPage === 1;
-    prevButton.addEventListener('click', () => {
-        if (currentPage > 1) {
-        currentPage--;
-        displayTableData(currentPage);
-        updatePagination();
-        }
-    });
-    paginationContainer.appendChild(prevButton);
+      const prevButton = document.createElement('button');
+      prevButton.className = 'px-3 py-3 2xl:px-4 2xl:py-4 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
+      prevButton.innerHTML = `
+          <svg class="2xl:w-4 2xl:h-4 w-3 h-3 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
+          <path d="M8.766.566A2 2 0 0 0 6.586 1L1 6.586a2 2 0 0 0 0 2.828L6.586 15A2 2 0 0 0 10 13.586V2.414A2 2 0 0 0 8.766.566Z" />
+          </svg>
+      `;
+      prevButton.disabled = currentPage === 1;
+      prevButton.addEventListener('click', () => {
+          if (currentPage > 1) {
+              currentPage--;
+              displayTableData(currentPage);
+              updatePagination();
+          }
+      });
+      paginationContainer.appendChild(prevButton);
 
-    // Calculate page numbers to show
-    const pageNumbers = [];
-    if (totalPages <= maxPageNumbersToShow) {
-        // If total pages is less than or equal to maxPageNumbersToShow, show all page numbers
-        for (let i = 1; i <= totalPages; i++) {
-        pageNumbers.push(i);
-        }
-    } else {
-        // Otherwise, calculate which page numbers to show
-        pageNumbers.push(1); // Always show the first page
+      const pageNumbers = [];
+      if (totalPages <= maxPageNumbersToShow) {
+          for (let i = 1; i <= totalPages; i++) {
+              pageNumbers.push(i);
+          }
+      } else {
+          pageNumbers.push(1);
 
-        const startPage = Math.max(2, currentPage - 1);
-        const endPage = Math.min(totalPages - 1, currentPage + 1);
+          const startPage = Math.max(2, currentPage - 1);
+          const endPage = Math.min(totalPages - 1, currentPage + 1);
 
-        if (startPage > 2) {
-        pageNumbers.push('...');
-        }
+          if (startPage > 2) {
+              pageNumbers.push('...');
+          }
 
-        for (let i = startPage; i <= endPage; i++) {
-        pageNumbers.push(i);
-        }
+          for (let i = startPage; i <= endPage; i++) {
+              pageNumbers.push(i);
+          }
 
-        if (endPage < totalPages - 1) {
-        pageNumbers.push('...');
-        }
+          if (endPage < totalPages - 1) {
+              pageNumbers.push('...');
+          }
 
-        pageNumbers.push(totalPages); // Always show the last page
-    }
+          pageNumbers.push(totalPages);
+      }
 
-    // Page numbers buttons
-    pageNumbers.forEach(number => {
-        const pageButton = document.createElement('button');
-        if (number === '...') {
-        pageButton.className = 'px-4 py-2 2xl:px-6 2xl:py-4 text-gray-900 bg-gray-200 rounded-md cursor-default';
-        pageButton.textContent = '...';
-        } else {
-        pageButton.className = `px-4 py-2 2xl:px-6 2xl:py-4 ${number === currentPage ? 'bg-blue-900 text-white' : 'bg-gray-200 text-gray-900'} rounded-md hover:bg-gray-300`;
-        pageButton.textContent = number;
-        pageButton.addEventListener('click', () => {
-            currentPage = number;
-            displayTableData(currentPage);
-            updatePagination();
-        });
-        }
-        paginationContainer.appendChild(pageButton);
-    });
+      pageNumbers.forEach(number => {
+          const pageButton = document.createElement('button');
+          if (number === '...') {
+              pageButton.className = 'px-4 py-2 2xl:px-6 2xl:py-4 text-gray-900 bg-gray-200 rounded-md cursor-default';
+              pageButton.textContent = '...';
+          } else {
+              pageButton.className = `px-4 py-2 2xl:px-6 2xl:py-4 ${number === currentPage ? 'bg-blue-900 text-white' : 'bg-gray-200 text-gray-900'} rounded-md hover:bg-gray-300`;
+              pageButton.textContent = number;
+              pageButton.addEventListener('click', () => {
+                  currentPage = number;
+                  displayTableData(currentPage);
+                  updatePagination();
+              });
+          }
+          paginationContainer.appendChild(pageButton);
+      });
 
-    // Next button
-    const nextButton = document.createElement('button');
-    nextButton.className = '2xl:px-4 2xl:py-4 px-3 py-3 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
-    nextButton.innerHTML = `
-        <svg class="2xl:w-4 2xl:h-4 w-3 h-3 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
-        <path d="M1.234 15.434A2 2 0 0 0 3.414 15L9 9.414a2 2 0 0 0 0-2.828L3.414 1A2 2 0 0 0 1 2.414v11.172a2 2 0 0 0 1.234 1.848Z" />
-        </svg>
-    `;
-    nextButton.disabled = currentPage === totalPages;
-    nextButton.addEventListener('click', () => {
-        if (currentPage < totalPages) {
-        currentPage++;
-        displayTableData(currentPage);
-        updatePagination();
-        }
-    });
-    paginationContainer.appendChild(nextButton);
-}
+      const nextButton = document.createElement('button');
+      nextButton.className = '2xl:px-4 2xl:py-4 px-3 py-3 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
+      nextButton.innerHTML = `
+          <svg class="2xl:w-4 2xl:h-4 w-3 h-3 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
+          <path d="M1.234 15.434A2 2 0 0 0 3.414 15L9 9.414a2 2 0 0 0 0-2.828L3.414 1A2 2 0 0 0 1 2.414v11.172a2 2 0 0 0 1.234 1.848Z" />
+          </svg>
+      `;
+      nextButton.disabled = currentPage === totalPages;
+      nextButton.addEventListener('click', () => {
+          if (currentPage < totalPages) {
+              currentPage++;
+              displayTableData(currentPage);
+              updatePagination();
+          }
+      });
+      paginationContainer.appendChild(nextButton);
+  }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const name = localStorage.getItem('name');
-  const bpCode = localStorage.getItem('bpCode');
+  document.addEventListener('DOMContentLoaded', () => {
+      const name = localStorage.getItem('name');
+      const bpCode = localStorage.getItem('bpCode');
 
-  document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
-  
-  adjustRowsPerPage(); // Set rows per page based on initial screen size
-  window.addEventListener('resize', () => {
-    adjustRowsPerPage(); // Adjust rows per page on screen resize
-    displayTableData(currentPage); // Re-render table data
-    updatePagination(); // Re-render pagination
+      const userInfoElement = document.getElementById('user-info');
+      const searchInputElement = document.getElementById('search-input');
+
+      if (userInfoElement) {
+          userInfoElement.textContent = `${name} - ${bpCode}`;
+      }
+
+      adjustRowsPerPage(); // Set rows per page based on initial screen size
+
+      window.addEventListener('resize', () => {
+          adjustRowsPerPage(); // Adjust rows per page on screen resize
+          displayTableData(currentPage); // Re-render table data
+          updatePagination(); // Re-render pagination
+      });
+
+      if (searchInputElement) {
+          searchInputElement.addEventListener('input', searchTable);
+      }
+
+      if (typeof fetchDeliveryNotes === 'function') {
+          fetchDeliveryNotes(); // Fetch data and initialize display
+      } else {
+          console.error('fetchDeliveryNotes function is not defined.');
+      }
+
+      // Add sorting listeners for each sortable column
+      const sortableHeaders = document.querySelectorAll('th[data-sort]');
+      sortableHeaders.forEach(header => {
+          header.addEventListener('click', () => {
+              const sortKey = header.getAttribute('data-sort');
+              sortTable(sortKey);
+          });
+      });
   });
-
-  // Initially hide the search bar, table, and pagination
-  document.getElementById('search-bar').style.display = 'none';
-  document.getElementById('table-container').style.display = 'none';
-  document.querySelector('.pagination').style.display = 'none';
-  });
-
-  // Populate the dropdown with supplier options
-  const supplierSelect = document.getElementById('Supplier');
-  selectSupplier.forEach(supplier => {
-    const option = document.createElement('option');
-    option.value = supplier.BPCode;
-    option.textContent = supplier.supplierName;
-    supplierSelect.appendChild(option);
-  });
-
-  // Enable submit button if a supplier is selected
-  supplierSelect.addEventListener('change', () => {
-    const submitBtn = document.getElementById('submitBtn');
-    submitBtn.disabled = !supplierSelect.value;
-  });
-
-  // Select Supplier
-  
-   // Handle form submission and display the table data
-   document.getElementById('submitBtn').addEventListener('click', () => {
-    const selectedSupplier = selectSupplier.find(supplier => supplier.BPCode === supplierSelect.value);
-    const tableBody = document.getElementById('table-body');
-    tableBody.innerHTML = ''; // Clear previous data
-
-    if (selectedSupplier) {
-       selectedSupplier.deliveryNotes.forEach(note => {
-         const row = document.createElement('tr');
-         row.innerHTML = `
-           <td class="px-2 2xl:px-4 py-2 text-center border-b border-b-gray-300">${note.noDN}</td>
-           <td class="px-2 2xl:px-4 py-2 text-center border-b border-b-gray-300">${note.noPO}</td>
-           <td class="px-2 2xl:px-4 py-2 text-center border-b border-b-gray-300">${note.planDNDate}</td>
-           <td class="px-2 2xl:px-4 py-2 text-center border-b border-b-gray-300">
-             ${note.details.map(detail => `${detail.partNumber} (${detail.partName})`).join('<br>')}
-           </td>
-         `;
-         tableBody.appendChild(row);
-       });
-     }
-   });
-
-   // Handle form submission and display the table data
-   document.getElementById('submitBtn').addEventListener('click', () => {
-    const selectedSupplier = selectSupplier.find(supplier => supplier.BPCode === supplierSelect.value);
-    const tableBody = document.getElementById('table-body');
-    tableBody.innerHTML = ''; // Clear previous data
-
-    if (selectedSupplier) {
-      filteredData = selectedSupplier.deliveryNotes;
-      displayTableData(currentPage); // Display data for the current page
-      updatePagination(); // Update pagination
-
-      // Show the search bar, table, and pagination
-      document.getElementById('search-bar').style.display = 'block';
-      document.getElementById('table-container').style.display = 'block';
-      document.querySelector('.pagination').style.display = 'flex'; // Adjust as needed
-    }
-  });
-
-  document.getElementById('search-input').addEventListener('input', searchTable);
-
 </script>
+
 
 </html>
