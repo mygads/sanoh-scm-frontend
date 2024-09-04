@@ -206,7 +206,7 @@
   
   let rowsPerPage = 8;
   let currentPage = 1;
-  let filteredData = purchaseOrder; // Initialize filteredData with all data
+  // let filteredData = purchaseOrder; // Initialize filteredData with all data
   let pendingResponseIndex = null;
   let pendingResponseAction = '';
 
@@ -230,28 +230,28 @@
     const paginatedData = filteredData.slice(start, end);
 
     paginatedData.forEach((row, index) => {
-      const tableRow = document.createElement('tr');
-      tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
-      tableRow.innerHTML = `
-        <td class="px-2 py-4 text-center font-medium text-gray-900">
-            <a href="purchase-order-detail.html?noPO=${row.noPO}" class="text-blue-600 underline">${row.noPO}</a>
-        </td>
-        <td class="px-2 py-4 text-center">${row.poDate}</td>
-        <td class="px-2 py-4 text-center">${row.planDelivery}</td>
-        <td class="px-2 py-4 text-center">${row.poRevision}</td>
-        <td class="px-2 py-4 text-center">${row.revisionDate}</td>
-        <td class="px-2 py-4 text-center">${row.status}</td>
-        <td class="text-center ${row.response === 'Accepted' ? 'bg-green-400' : row.response === 'Declined' ? 'bg-red-500' : ''}">
-          <div class="flex gap-2 justify-center">
-            ${row.response ? `
-              <span class="${row.response === 'Accepted' ? 'text-black' : 'text-white'}">${row.response}</span>` : `
-              <button class="px-3 py-2 bg-green-400 text-black rounded" onclick="showConfirmation(${start + index}, 'Accepted')">Accept</button>
-              <button class="px-3 py-2 bg-red-500 text-white rounded" onclick="showConfirmation(${start + index}, 'Declined')">Decline</button>
-            `}
-          </div>
-        </td>
-      `;
-      tableBody.appendChild(tableRow);
+        const tableRow = document.createElement('tr');
+        tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
+        tableRow.innerHTML = `
+            <td class="px-2 py-4 text-center font-medium text-gray-900">
+                <a href="purchase-order-detail.html?noPO=${row.noPO}" class="text-blue-600 underline">${row.noPO}</a>
+            </td>
+            <td class="px-2 py-4 text-center">${row.poDate}</td>
+            <td class="px-2 py-4 text-center">${row.planDelivery}</td>
+            <td class="px-2 py-4 text-center">${row.poRevision}</td>
+            <td class="px-2 py-4 text-center">${row.revisionDate}</td>
+            <td class="px-2 py-4 text-center">${row.status}</td>
+            <td class="text-center ${row.response === 'Accepted' ? 'bg-green-400' : row.response === 'Declined' ? 'bg-red-500' : ''}">
+                <div class="flex gap-2 justify-center">
+                    ${row.response ? `
+                        <span class="${row.response === 'Accepted' ? 'text-black' : 'text-white'}">${row.response}</span>` : `
+                        <button class="px-3 py-2 bg-green-400 text-black rounded" onclick="handleResponse('${row.noPO}', 'Accepted')">Accept</button>
+                        <button class="px-3 py-2 bg-red-500 text-white rounded" onclick="handleResponse('${row.noPO}', 'Declined')">Decline</button>
+                    `}
+                </div>
+            </td>
+        `;
+        tableBody.appendChild(tableRow);
     });
   }
 
@@ -406,7 +406,7 @@
         }
     });
     paginationContainer.appendChild(nextButton);
-}
+  }
 
   document.addEventListener('DOMContentLoaded', () => {
     const token = localStorage.getItem('accessToken');
@@ -435,6 +435,8 @@
     
 
   });
+
+  
 </script>
 
 </html>
