@@ -1,19 +1,30 @@
-const apiURL = 'http://127.0.0.1:8000/api/indexpoheader';
+const baseURL = 'https://api.edutrashgo.com/api/indexpoheader1/'; // Ensure this URL is correct
+
+// Dynamically include the {sp_code} in the URL
+const sp_code = 'APFEY'; // Example of how to dynamically include a code (replace this with actual value)
+const apiURL = `${baseURL}${sp_code}`; // Constructs full API URL
+
 let purchaseOrder = [];
 let filteredData = [];
 
+// Function to fetch purchase orders
 async function fetchPurchaseOrders() {
     try {
-        console.log("Fetching data...");
+        console.log("Fetching data from:", apiURL);
+        
+        // Fetch data from API
         const response = await fetch(apiURL);
 
+        // Check if the response is OK (status 200-299)
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
+        // Parse the JSON response
         const data = await response.json();
         console.log("Data fetched:", data);
 
+        // Map the data into the purchaseOrder array
         purchaseOrder = data.data.map(po => ({
             noPO: po.po_no.toString(),
             poDate: po.po_date,
@@ -32,16 +43,20 @@ async function fetchPurchaseOrders() {
             }))
         }));
 
-        // Set filteredData to match purchaseOrder initially
+        // Initialize filtered data with purchase orders
         filteredData = purchaseOrder;
 
         // Call functions to display data and setup pagination
-        displayTableData(1);
-        updatePagination();
+        displayTableData(1); // Assuming displayTableData is defined elsewhere
+        updatePagination();  // Assuming updatePagination is defined elsewhere
+
     } catch (error) {
         console.error('Error fetching purchase orders:', error);
     }
 }
+
+// Call the function to fetch purchase orders
+fetchPurchaseOrders();
 
 async function fetchPODetails(po_no) {
     try {
