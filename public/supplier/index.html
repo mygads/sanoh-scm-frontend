@@ -165,42 +165,35 @@
   </div>
 </section>
 
-<script src="../script.js"></script>
-<script src="../api.js"></script>
-<script src="script.js"></script>
-
-  <script>
-    // Data dummy
-    const data = {
-      poActive: 5,
-      poInProgress: 3,
-      dnActive: 8,
-      dnInProgress: 2
-    };
-
-    // Update the HTML with data
-    document.getElementById('po-active').querySelector('span').textContent = data.poActive;
-    document.getElementById('po-in-progress').querySelector('span').textContent = data.poInProgress;
-    document.getElementById('dn-active').querySelector('span').textContent = data.dnActive;
-    document.getElementById('dn-in-progress').querySelector('span').textContent = data.dnInProgress;
-
-
-    document.addEventListener('DOMContentLoaded', () => {
-
-      const token = localStorage.getItem('accessToken');
-
-      if (!token) {
-        redirectToLogin();
-      } else {
-        // Bisa tambahkan fungsi lain seperti fetch data pengguna atau pengaturan lainnya
-        const name = localStorage.getItem('name');
-        const bpCode = localStorage.getItem('bpCode');
-
-        document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
-      }
-    });
-  </script>
 </body>
 
+<script src="script.js"></script>
+<script src="../api.js"></script>
+<script src="../script.js"></script>
+<script src="../table.js"></script>
+
+<script>
+  cekToken();
+  
+  // Data dummy
+  const data = {
+    poActive: 5,
+    poInProgress: 3,
+    dnActive: 8,
+    dnInProgress: 2
+  };
+
+  // Update the HTML with data
+  document.getElementById('po-active').querySelector('span').textContent = data.poActive;
+  document.getElementById('po-in-progress').querySelector('span').textContent = data.poInProgress;
+  document.getElementById('dn-active').querySelector('span').textContent = data.dnActive;
+  document.getElementById('dn-in-progress').querySelector('span').textContent = data.dnInProgress;
+
+
+  document.addEventListener('DOMContentLoaded', () => {
+
+    
+  });
+</script>
 
 </html>
