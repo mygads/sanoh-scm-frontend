@@ -4,7 +4,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>History Delivery Note Supplier</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,81 +18,83 @@
     <div class="flex h-screen">
 
       <!-- nav-side bar -->
-      <aside class="flex flex-col w-[20%]">
-        <nav class="flex flex-col grow py-9 2xl:py-14 w-full h-screen text-base font-medium border-r border-solid bg-stone-300 border-r-neutral-400 ">
-          
-          <!-- Logo Sanoh -->
-          <img loading="lazy" src="../assets/logosanoh.svg" class="object-contain self-center w-30 2xl:w-48 max-w-full cursor-pointer pointer-events-auto aspect-[2.79]" />
-          
-          <!-- Menu Items -->
-          <ul class="flex flex-col mt-7 2xl:mt-10 w-full text-gray-500">
-            
-            <!-- Dashboard -->
-            <li> 
-              <a href="index.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 w-full whitespace-nowrap cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../assets/icon_home_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Dashboard</span>
-              </a>
-            </li>
-            
-            <!-- Purchase Order -->
-            <li>
-              <a href="purchase-order.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 ">
-                <img loading="lazy" src="../assets/icon_po_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-[0.89] fill-blue-950" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Purchase Order</span>
-              </a>
-            </li>
-            
-            <!-- Delivery Note -->
-            <li>
-              <a href="delivery-note.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 ">
-                <img loading="lazy" src="../assets/icon_dn_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square " />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Delivery Note</span>
-              </a>
-            </li>
-            
-            <!-- History Purchase Order -->
-            <li>
-              <a href="history-purchase-order.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../assets/icon_history_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">History Purchase Order</span>
-              </a>
-            </li>
-            
-            <!-- History Delivery Note -->
-            <li>
-              <a href="history-delivery-note.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 active">
-                <img loading="lazy" src="../assets/icon_history_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-5 2xl:w-6 aspect-square icon-history-active" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">History Delivery Note</span>
-              </a>
-            </li>
-            
-            <!-- Performance Report -->
-            <li>
-              <a href="performance-report.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../assets/icon_performance_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Performance Report</span>
-              </a>
-            </li>
-          </ul>
+    <aside class="flex flex-col w-[20%] h-screen border-r border-r-neutral-400 bg-stone-300">
+      <nav class="flex flex-col grow py-9 2xl:py-14 text-base font-medium">
 
-          <!-- User and Logout Section at the Bottom -->
-          <div class="mt-auto flex flex-col w-full">
-            
-            <!-- User Info -->
-            <div class="flex gap-4 items-center p-2 2xl:p-4 w-full bg-blue-950 bg-opacity-10 text-blue-950">
-              <img loading="lazy" src="../assets/icon_people.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-              <span id="user-info" class="self-stretch my-auto text-sm 2xl:text-xl"></span>
-            </div>
-            
-            <!-- Logout Button -->
-            <a href="javascript:void(0)" onclick="handleLogout()" class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
-              <img loading="lazy" src="../assets/icon_logout.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square logout-icon hover:icon_logout_white.svg" />
-              <span class="self-stretch my-auto text-sm 2xl:text-xl">Logout</span>
+        <!-- Logo Sanoh -->
+        <img loading="lazy" src="../assets/logosanoh.svg"
+          class="object-contain self-center w-30 2xl:w-48 max-w-full cursor-pointer" />
+
+        <!-- Menu Items -->
+        <ul class="flex flex-col mt-7 2xl:mt-10 w-full text-gray-500">
+          <!-- Dashboard -->
+          <li>
+            <a href="index.html"
+              class="flex gap-4 items-center p-[9px] 2xl:p-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
+              <img loading="lazy" src="../assets/icon_home_default.svg" alt="Dashboard"
+                class="object-contain w-4 2xl:w-6" />
+              <span class="text-sm 2xl:text-xl">Dashboard</span>
             </a>
+          </li>
+
+          <!-- Purchase Order -->
+          <li class="hidden">
+            <a href="purchase-order.html"
+              class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 ">
+              <img loading="lazy" src="../assets/icon_po_default.svg" alt="Purchase Order"
+                class="object-contain w-4 2xl:w-6 " />
+              <span class="text-sm 2xl:text-xl">Purchase Order</span>
+            </a>
+          </li>
+
+          <!-- Delivery Note -->
+          <li>
+            <a href="delivery-note.html"
+              class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
+              <img loading="lazy" src="../assets/icon_dn_default.svg" alt="Purchase Order"
+                class="object-contain w-4 2xl:w-6" />
+              <span class="text-sm 2xl:text-xl">Delivery Note</span>
+            </a>
+          </li>
+
+          <!-- History Purchase Order -->
+          <li class="hidden">
+            <a href="history-purchase-order.html"
+              class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
+              <img loading="lazy" src="../assets/icon_history_default.svg" alt="History Purchase Order"
+                class="object-contain w-4 2xl:w-6"/>
+              <span class="text-sm 2xl:text-xl">History Purchase Order</span>
+            </a>
+          </li>
+
+          <!-- History Delivery Note -->
+          <li>
+            <a href="history-delivery-note.html"
+              class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 active">
+              <img loading="lazy" src="../assets/icon_history_default.svg" alt="History Purchase Order"
+                class="object-contain w-4 2xl:w-6 icon-history-active" />
+              <span class="text-sm 2xl:text-xl">History Delivery Note</span>
+            </a>
+          </li>
+        </ul>
+
+        <!-- User and Logout Section at the Bottom -->
+        <div class="mt-auto flex flex-col w-full">
+          <!-- User Info -->
+          <div class="flex gap-4 items-center p-2 2xl:p-4 w-full bg-blue-950 bg-opacity-10 text-blue-950">
+            <img loading="lazy" src="../assets/icon_people.svg" alt="User Info" class="object-contain w-4 2xl:w-6" />
+            <span id="user-info" class="text-sm 2xl:text-xl"></span>
           </div>
-        </nav>
-      </aside>
+
+          <!-- Logout Button -->
+          <a href="javascript:void(0)" onclick="handleLogout()"
+            class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 cursor-pointer bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50">
+            <img loading="lazy" src="../assets/icon_logout.svg" alt="Logout" class="object-contain w-4 2xl:w-6" />
+            <span class="text-sm 2xl:text-xl">Logout</span>
+          </a>
+        </div>
+      </nav>
+    </aside>
 
       <!-- Main Content -->
       <main class="flex flex-col w-[80%] mb-[100%] mt-[3%] mx-auto px-6 2xl:px-10">
@@ -213,7 +214,7 @@
             <a href="history-delivery-note-detail.html?noDN=${row.noDN}" class="text-blue-600 underline">${row.noDN}</a>
         </td>
         <td class="px-2 py-4 text-center font-medium text-gray-900">
-            <a href="history-purchase-order-detail.html?noPO=${row.noPO}" class="text-blue-600 underline">${row.noPO}</a>
+            <a?noPO=${row.noPO}" class="text-black">${row.noPO}</a>
         </td>        
         <td class="px-2 py-4 text-center">${row.statusDN}</td>
         <td class="px-2 py-4 text-center">${row.planDNDate}</td>
@@ -358,6 +359,7 @@
     const bpCode = localStorage.getItem('bpCode');
 
     document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
+    
     adjustRowsPerPage(); // Set rows per page based on initial screen size
     window.addEventListener('resize', () => {
       adjustRowsPerPage(); // Adjust rows per page on screen resize

@@ -15,7 +15,7 @@
 
 <body class="font-poppins bg-white">
   <section class="overflow-hidden w-screen h-screen bg-white">
-    <div class="flex">
+    <div class="flex h-screen">
 
       <!-- nav-side bar -->
       <aside class="flex flex-col w-[20%] h-screen">
@@ -97,7 +97,7 @@
             </div>
 
             <!-- Logout Button -->
-            <a href="../index.html"
+            <a href="javascript:void(0)" onclick="handleLogout()"
               class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
               <img loading="lazy" src="../assets/icon_logout.svg" alt=""
                 class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square logout-icon hover:icon_logout_white.svg" />
@@ -153,8 +153,7 @@
             <table class="w-full text-[11px] 2xl:text-base text-left text-gray-700 dark:text-gray-700">
               <thead class="text-[14px] 2xl:text-[20px] text-gray-700">
                 <tr>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
-                    onclick="sortTable(0)">
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(0)">
                     ID User
                     <img loading="lazy" src="../assets/icon_sort.svg" alt=""
                       class="w-3 2xl:w-4 inline-block text-gray-600" />
@@ -163,29 +162,20 @@
                   <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer">
                     Name
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
-                    onclick="sortTable(1)">
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer">
                     Supplier ID
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
-                      class="w-3 2xl:w-4 inline-block text-gray-600" />
-                    <span class="sort-indicator"></span>
                   </th>
                   <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer">
                     Username
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
-                    onclick="sortTable(3)">
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer">
                     Role
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
-                      class="w-3 2xl:w-4 inline-block text-gray-600" />
-                    <span class="sort-indicator"></span>
+                    
                   </th>
                   <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
-                    onclick="sortTable(4)">
+                    >
                     Status
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
-                      class="w-3 2xl:w-4 inline-block text-gray-600" />
-                    <span class="sort-indicator"></span>
+                    
                   </th>
                   <th scope="col" class="px-0 2xl:py-4 py-0 text-center border-b border-b-gray-400 cursor-pointer"
                     onclick="sortTable(5)">
@@ -217,18 +207,37 @@
   </section>
 </body>
 
-<!-- Add the script to handle table sorting and pagination -->
+<script src="script.js"></script>
+<script src="../api.js"></script>
+<script src="../script.js"></script>
+<script src="../table.js"></script>
+
+
 <script>
-  let rowsPerPage = 7;
-  let currentPage = 1;
-  let filteredData = [];
-  let originalData= [];
+
+  cekToken();
+
+  document.addEventListener('DOMContentLoaded', () => {
+
+    fetchProtectedData();
+    
+    document.getElementById('search-input').addEventListener('input', searchTable);
+      
+    document.querySelectorAll('.icon-edit').forEach((editBtn) => {
+      editBtn.addEventListener('click', function () {
+        const userId = this.closest('tr').querySelector('td').textContent;
+        redirectToEditPage(userId);
+      });
+    });
+      
+  });
+
 
   async function fetchProtectedData() {
     const token = localStorage.getItem('accessToken');
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/index', {
+      const response = await fetch(APIlistuser, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -238,7 +247,7 @@
 
       if (response.ok) {
         const data = await response.json();
-        console.log('Data berhasil diambil:', data);
+        // console.log('Data berhasil diambil:', data);
 
         // Map data to filteredData and update table
         if (data.success) {
@@ -259,12 +268,13 @@
         
       } else {
         console.error('Kesalahan saat mengambil data:', response.status, response.statusText);
+        displayNotification(`Kesalahan saat mengambil data: ${response.status}`,'error')
       }
     } catch (error) {
       console.error('Kesalahan fetch:', error);
+      displayNotification(`Kesalahan fetch: ${error}`,'error')
     }
   }
-
 
   function displayTableData(page) {
     const tableBody = document.getElementById('table-body');
@@ -287,139 +297,29 @@
 
         <td class="px-2 py-3 text-center border-b">
          <label class="inline-flex items-center cursor-pointer">
-            <input type="checkbox" ${row.StatusValue === "1" ? 'checked' : ''} class="sr-only peer" data-user-id="${row.UserID}" onchange="updateStatus(this)">
+            <input type="checkbox" ${row.StatusValue === "1" ? 'checked' : ''} class="sr-only peer" data-user-id="${row.UserID}" username="${row.Username}" onchange="updateStatus(this)">
             <div class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring- peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
           </label>
         </td>
 
         <td class="px-2 py-4 text-center">
-          <a href="edit-user.html" class="flex justify-center items-center p-1 rounded hover:bg-blue-200">
-            <img src="../assets/icon_pencil.svg" alt="Edit" class="w-4 h-4 cursor-pointer icon-edit" />
-          </a>
-        </td>
+            <a href="edit-user.html" onclick="redirectToEditPage(${row.UserID})" class="flex justify-center items-center p-1 rounded hover:bg-blue-200">
+              <img src="../assets/icon_pencil.svg" alt="Edit" class="w-4 h-4 cursor-pointer icon-edit" />
+            </a>
+          </td>
       `;
       tableBody.appendChild(tableRow);
     });
 
     // Initialize toggle status
-    initializeTable();
-  }
-
-
-  function searchTable() {
-    const searchInput = document.getElementById('search-input').value.toLowerCase();
-    if (searchInput === "") {
-      // Jika input kosong, kembalikan data ke originalData
-      filteredData = originalData;
-    } else {
-      // Filter data berdasarkan input
-      filteredData = originalData.filter(row =>
-        row.Username.toLowerCase().includes(searchInput) ||
-        row.Name.toLowerCase().includes(searchInput) ||
-        row.SupplierID.toLowerCase().includes(searchInput)
-      );
-    }
-
-    currentPage = 1;
-    displayTableData(currentPage);
-    updatePagination();
-  }
-
-  function updatePagination() {
-    const paginationContainer = document.querySelector('.pagination');
-    paginationContainer.innerHTML = '';
-
-    const totalPages = Math.ceil(filteredData.length / rowsPerPage);
-    const maxPageNumbersToShow = 4; // Number of page buttons to display (including current)
-
-    // Previous button
-    const prevButton = document.createElement('button');
-    prevButton.className = 'px-3 py-3 2xl:px-4 2xl:py-4 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
-    prevButton.innerHTML = `
-        <svg class="2xl:w-4 2xl:h-4 w-3 h-3 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
-        <path d="M8.766.566A2 2 0 0 0 6.586 1L1 6.586a2 2 0 0 0 0 2.828L6.586 15A2 2 0 0 0 10 13.586V2.414A2 2 0 0 0 8.766.566Z" />
-        </svg>
-    `;
-    prevButton.disabled = currentPage === 1;
-    prevButton.addEventListener('click', () => {
-        if (currentPage > 1) {
-        currentPage--;
-        displayTableData(currentPage);
-        updatePagination();
-        }
-    });
-    paginationContainer.appendChild(prevButton);
-
-    // Calculate page numbers to show
-    const pageNumbers = [];
-    if (totalPages <= maxPageNumbersToShow) {
-        // If total pages is less than or equal to maxPageNumbersToShow, show all page numbers
-        for (let i = 1; i <= totalPages; i++) {
-        pageNumbers.push(i);
-        }
-    } else {
-        // Otherwise, calculate which page numbers to show
-        pageNumbers.push(1); // Always show the first page
-
-        const startPage = Math.max(2, currentPage - 1);
-        const endPage = Math.min(totalPages - 1, currentPage + 1);
-
-        if (startPage > 2) {
-        pageNumbers.push('...');
-        }
-
-        for (let i = startPage; i <= endPage; i++) {
-        pageNumbers.push(i);
-        }
-
-        if (endPage < totalPages - 1) {
-        pageNumbers.push('...');
-        }
-
-        pageNumbers.push(totalPages); // Always show the last page
-    }
-
-    // Page numbers buttons
-    pageNumbers.forEach(number => {
-        const pageButton = document.createElement('button');
-        if (number === '...') {
-        pageButton.className = 'px-4 py-2 2xl:px-6 2xl:py-4 text-gray-900 bg-gray-200 rounded-md cursor-default';
-        pageButton.textContent = '...';
-        } else {
-        pageButton.className = `px-4 py-2 2xl:px-6 2xl:py-4 ${number === currentPage ? 'bg-blue-900 text-white' : 'bg-gray-200 text-gray-900'} rounded-md hover:bg-gray-300`;
-        pageButton.textContent = number;
-        pageButton.addEventListener('click', () => {
-            currentPage = number;
-            displayTableData(currentPage);
-            updatePagination();
-        });
-        }
-        paginationContainer.appendChild(pageButton);
-    });
-
-    // Next button
-    const nextButton = document.createElement('button');
-    nextButton.className = '2xl:px-4 2xl:py-4 px-3 py-3 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
-    nextButton.innerHTML = `
-        <svg class="2xl:w-4 2xl:h-4 w-3 h-3 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
-        <path d="M1.234 15.434A2 2 0 0 0 3.414 15L9 9.414a2 2 0 0 0 0-2.828L3.414 1A2 2 0 0 0 1 2.414v11.172a2 2 0 0 0 1.234 1.848Z" />
-        </svg>
-    `;
-    nextButton.disabled = currentPage === totalPages;
-    nextButton.addEventListener('click', () => {
-      if (currentPage < totalPages) {
-      currentPage++;
-      displayTableData(currentPage);
-      updatePagination();
-      }
-    });
-    paginationContainer.appendChild(nextButton);
+    initializeTableStatus();
   }
 
   // Function to update the status and store it in localStorage
   function updateStatus(toggle) {
     const userId = toggle.getAttribute('data-user-id');
     const status = toggle.checked ? "1" : "0";  // This defines the new status
+    const username = toggle.getAttribute('username')
     // localStorage.setItem(`user-status-${userId}`, status);
 
     // Update status in the row
@@ -428,37 +328,39 @@
     statusCell.textContent = status === "1" ? 'Active' : 'Deactive';  // Use 'status' here
 
     // Call API to update status
-    updateStatusAPI(userId, status);  // Pass 'status' to the API function
+    updateStatusAPI(userId, status, username);  // Pass 'status' to the API function
   }
 
-  // Function to call API and update status
-  // async function updateStatusAPI(userId, newStatus) {
-  //   const token = localStorage.getItem('accessToken');
-  //   try {
-  //     const response = await fetch(`http://127.0.0.1:8000/api/update/${userId}`, {
-  //       method: 'PUT',
-  //       headers: {
-  //         'Authorization': `Bearer ${token}`,
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({
-  //         status: newStatus
-  //       }),
-  //     });
+  function updateStatusAPI(userId, status, username) {
+    const token = localStorage.getItem('accessToken');
 
-  //     if (response.ok) {
-  //       console.log(`Status berhasil diupdate untuk User ID: ${userId}`);
-  //     } else {
-  //       console.error('Kesalahan saat mengupdate status:', response.status, response.statusText);
-  //     }
-  //   } catch (error) {
-  //     console.error('Kesalahan fetch:', error);
-  //   }
-  // }
+    fetch(`${APIupdatestatus} `+` ${userId}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ status: status }), // Sending status in JSON format
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.json(); // Parse JSON response if successful
+      } else {
+        throw new Error(`Failed to update status for "${username}": ${response.status} ${response.statusText}`);
+      }
+    })
+    .then(data => {
+      displayNotification(`Status for "${username}" successfully updated`, 'success');
+    })
+    .catch(error => {
+      console.error(`Error updating status for "${username}":`, error);
+      displayNotification(`Failed to update status for "${username}"`, 'error');
+    });
+  }
 
 
   // Function to initialize the table with the saved statuses from localStorage
-  function initializeTable() {
+  function initializeTableStatus() {
     const toggles = document.querySelectorAll('input[type="checkbox"]');
     toggles.forEach(toggle => {
       const userId = toggle.getAttribute('data-user-id');
@@ -477,22 +379,13 @@
     });
   }
 
+  function redirectToEditPage(userId) {
+    localStorage.setItem('editUserId', userId);
+    window.location.href = 'edit-user.html';
+  }
 
-  // Panggil fungsi initializeTable saat halaman dimuat
-  document.addEventListener('DOMContentLoaded', () => {
-      
-    const name = localStorage.getItem('name');
-    const bpCode = localStorage.getItem('bpCode');
-
-    document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
-    
-    fetchProtectedData();
-
-    document.getElementById('search-input').addEventListener('input', searchTable);
-
-  });
 </script>
 
-<script src="script.js"></script>
+
 
 </html>

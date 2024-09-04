@@ -18,7 +18,7 @@
 
 <body class="font-poppins bg-white">
   <section class="overflow-hidden w-screen h-screen bg-white ]">
-    <div class="flex">
+    <div class="flex h-screen">
 
       <!-- nav-side bar -->
       <aside class="flex flex-col w-[20%] h-screen">
@@ -56,7 +56,7 @@
             </div>
 
             <!-- Logout Button -->
-            <a href="../index.html"
+            <a href="javascript:void(0)" onclick="handleLogout()"
               class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
               <img loading="lazy" src="../assets/icon_logout.svg" alt=""
                 class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square logout-icon hover:icon_logout_white.svg" />
@@ -141,100 +141,181 @@
 </body>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- Select2 JS -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="script.js"></script>
+<script src="../api.js"></script>
+<script src="../script.js"></script>
+<script src="../table.js"></script>
 
-<!-- Add the script to handle table sorting and pagination -->
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const name = localStorage.getItem('name');
-    const bpCode = localStorage.getItem('bpCode');
 
-    document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
-  });
+  cekToken();
+  const userId = localStorage.getItem('editUserId');
 
-  $(document).ready(function () {
-
-    const supplierSelect = $('#supplier_id');
-
-    // Populate supplier select options
-    suppliers.forEach(supplier => {
-      const option = new Option(`${supplier.name} (${supplier.code})`, supplier.id, false, false);
-      supplierSelect.append(option);
-    });
-
-    // Initialize Select2
-    supplierSelect.select2({
-      placeholder: 'Search Supplier',
-      allowClear: true
-    });
-
-    // Form submission
-    $('#user-form').on('submit', function (e) {
-      e.preventDefault();
-      const selectedSupplierId = supplierSelect.val();
-      if (!selectedSupplierId) {
-        alert('Please select a supplier!');
-        return;
-      }
-      console.log('Selected Supplier ID:', selectedSupplierId);
-      // Proceed with form submission or additional processing
-    });
-  });
+  if (userId) {
+    fetchUserData(userId).then(data => populateForm(data)).catch(err => console.error(err));
+  }
 
   document.addEventListener('DOMContentLoaded', function () {
+    
     const passwordInput = document.getElementById('password');
     const togglePasswordButton = document.getElementById('toggle_password');
     const generatePasswordButton = document.getElementById('generate_password');
     const form = document.getElementById('edit-user-form');
-    const userIdInput = document.getElementById('user_id');
-
-
-    // Populate form with dummy data
-    function populateForm(data) {
-      document.getElementById('user_id').value = data.user_id;
-      document.getElementById('supplier_id').value = data.supplier_id;
-      document.getElementById('first_name').value = data.first_name;
-      document.getElementById('role').value = data.role;
-      document.getElementById('username').value = data.username;
-      document.getElementById('email').value = data.email;
-      document.getElementById('password').value = data.password;
-    }
-
-    populateForm(user);
-
+    
     // Toggle Password Visibility
     togglePasswordButton.addEventListener('click', () => {
       const isPasswordVisible = passwordInput.type === 'text';
       passwordInput.type = isPasswordVisible ? 'password' : 'text';
       togglePasswordButton.src = isPasswordVisible ? '../assets/icon_see.svg' : '../assets/icon_hide.svg';
     });
-
+    
     // Generate Random Password
     generatePasswordButton.addEventListener('click', () => {
       const password = generateRandomPassword();
       passwordInput.value = password;
     });
-
-    function generateRandomPassword(length = 12) {
-      const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+[]{}|;:,.<>?";
-      let password = '';
-      for (let i = 0; i < length; i++) {
-        const randomIndex = Math.floor(Math.random() * charset.length);
-        password += charset[randomIndex];
-      }
-      return password;
-    }
-
+    
+    
     // Form submission
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      alert('User data saved successfully!');
-      window.location.href = 'manage-user.html';
+      const data = {
+        bp_code: document.getElementById('supplier_id').value,
+        name: document.getElementById('first_name').value,
+        role: document.getElementById('role').value,
+        password: document.getElementById('password').value,
+        email: document.getElementById('email').value
+      };
+      updateUser(userId, data);
     });
-  });
-</script>
+    
+    // Fetch and populate suppliers
+    fetchSuppliers();
 
-<script src="script.js"></script>
+  });
+
+  async function fetchSuppliers() {
+    try {
+      const response = await fetch(APIpartner4, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          populateSupplierSelect(data.data);
+          const userId = localStorage.getItem('editUserId');
+          if (userId) {
+            fetchUserData(userId); // Panggil ini setelah supplier dimuat
+          }
+        } else {
+          console.error('Failed to fetch suppliers:', data.message);
+          displayNotification(`Failed to fetch suppliers:, ${data.message}`,'error');
+        }
+      } else {
+        console.error('Failed to fetch suppliers:', response.statusText);
+        displayNotification(`Failed to fetch suppliers:, ${response.statusText}`,'error');
+      }
+    } catch (error) {
+      console.error('Error fetching suppliers:', error);
+      displayNotification(`Error fetching suppliers:, ${error}`,'error');
+    }
+  }
+
+  function populateSupplierSelect(suppliers) {
+    const supplierSelect = $('#supplier_id');
+    supplierSelect.empty(); // Kosongkan opsi sebelumnya
+
+    suppliers.forEach(supplier => {
+      const option = new Option(`${supplier.bp_name} (${supplier.bp_code})`, supplier.bp_code, false, false);
+      supplierSelect.append(option);
+    });
+
+    // Initialize Select2
+    supplierSelect.select2({
+      placeholder: 'Search Supplier',
+      allowClear: true,
+    });
+  }
+
+  async function fetchUserData(userId) {
+    try {
+      const response = await fetch(`${APIedit4}${userId}`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.data) {
+          populateForm(data.data); // Pindahkan ini agar hanya dipanggil setelah supplier dimuat
+        } else {
+          console.error('Failed to fetch user data:', data.message);
+          displayNotification(`Failed to fetch user data:, ${data.message}`);
+        }
+      } else {
+        console.error('Failed to fetch user data:', response.statusText);
+        displayNotification(`Failed to fetch user data:, ${response.statusText}`);
+      }
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      displayNotification(`Error fetching user data::, ${error}`);
+    }
+  }
+
+  function populateForm(data) {
+    // if (!data) {
+    //   console.error('Cannot populate form: data is undefined');
+    //   return;
+    // }
+
+    // Set supplier select sesuai dengan user data
+    $('#supplier_id').val(data.bp_code).trigger('change'); // Pastikan untuk memicu Select2 agar meng-update tampilan
+
+    document.getElementById('first_name').value = data.name || '';
+    document.getElementById('role').value = data.role || '';
+    document.getElementById('username').value = data.username || '';
+    document.getElementById('email').value = data.email || '';
+    document.getElementById('password').value = data.password || '';
+  }
+
+  async function updateUser(userId, data) {
+    try {
+      const response = await fetch(`${APIupdate4}${userId}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        if (result.success) {
+          window.location.href = 'manage-user.html';
+          displayNotification('User updated successfully!', 'success');
+        } else {
+          handleErrorsPassword(result.errors);
+        }
+      } else {
+        const errorResult = await response.json();
+        handleErrorsPassword(errorResult.errors);
+      }
+    } catch (error) {
+      displayNotification('Error updating user: ' + error.message, 'error');
+    }
+  }
+
+  
+</script>
 
 </html>

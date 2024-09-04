@@ -4,14 +4,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>History Delivery Note Supplier</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
+  <link
+    href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
     rel="stylesheet">
+
+   <!-- Select2 CSS -->
+   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+
+   <!-- Custom Styles -->
   <link rel="stylesheet" href="../style.css">
-  
+
 </head>
 
 <body class="font-poppins bg-white">
@@ -19,77 +24,59 @@
     <div class="flex h-screen">
 
       <!-- nav-side bar -->
-      <aside class="flex flex-col w-[20%]">
-        <nav class="flex flex-col grow py-9 2xl:py-14 w-full h-screen text-base font-medium border-r border-solid bg-stone-300 border-r-neutral-400 ">
-          
+      <aside class="flex flex-col w-[20%] h-screen border-r border-r-neutral-400 bg-stone-300">
+        <nav class="flex flex-col grow py-9 2xl:py-14 text-base font-medium">
+
           <!-- Logo Sanoh -->
-          <img loading="lazy" src="../assets/logosanoh.svg" class="object-contain self-center w-30 2xl:w-48 max-w-full cursor-pointer pointer-events-auto aspect-[2.79]" />
-          
+          <img loading="lazy" src="../assets/logosanoh.svg"
+            class="object-contain self-center w-30 2xl:w-48 max-w-full cursor-pointer" />
+
           <!-- Menu Items -->
           <ul class="flex flex-col mt-7 2xl:mt-10 w-full text-gray-500">
-            
             <!-- Dashboard -->
-            <li> 
-              <a href="index.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 w-full whitespace-nowrap cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../assets/icon_home_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Dashboard</span>
-              </a>
-            </li>
-            
-            <!-- Purchase Order -->
             <li>
-              <a href="purchase-order.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 ">
-                <img loading="lazy" src="../assets/icon_po_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-[0.89] fill-blue-950" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Purchase Order</span>
+              <a href="index.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
+                <img loading="lazy" src="../assets/icon_home_default.svg" alt="Dashboard"
+                  class="object-contain w-4 2xl:w-6" />
+                <span class="text-sm 2xl:text-xl">Dashboard</span>
               </a>
             </li>
-            
+
             <!-- Delivery Note -->
             <li>
-              <a href="delivery-note.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 ">
-                <img loading="lazy" src="../assets/icon_dn_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square " />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Delivery Note</span>
+              <a href="delivery-note.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 active">
+                <img loading="lazy" src="../assets/icon_dn_default.svg" alt="Purchase Order"
+                  class="object-contain w-4 2xl:w-6 icon-dn-active" />
+                <span class="text-sm 2xl:text-xl">Delivery Note</span>
               </a>
             </li>
-            
-            <!-- History Purchase Order -->
-            <li>
-              <a href="history-purchase-order.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../assets/icon_history_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">History Purchase Order</span>
-              </a>
-            </li>
-            
+
             <!-- History Delivery Note -->
             <li>
-              <a href="history-delivery-note.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 active">
-                <img loading="lazy" src="../assets/icon_history_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-5 2xl:w-6 aspect-square icon-history-active" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">History Delivery Note</span>
-              </a>
-            </li>
-            
-            <!-- Performance Report -->
-            <li>
-              <a href="performance-report.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../assets/icon_performance_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Performance Report</span>
+              <a href="history-delivery-note.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
+                <img loading="lazy" src="../assets/icon_history_default.svg" alt="History Purchase Order"
+                  class="object-contain w-4 2xl:w-6" />
+                <span class="text-sm 2xl:text-xl">History Delivery Note</span>
               </a>
             </li>
           </ul>
 
           <!-- User and Logout Section at the Bottom -->
           <div class="mt-auto flex flex-col w-full">
-            
             <!-- User Info -->
             <div class="flex gap-4 items-center p-2 2xl:p-4 w-full bg-blue-950 bg-opacity-10 text-blue-950">
-              <img loading="lazy" src="../assets/icon_people.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-              <span id="user-info" class="self-stretch my-auto text-sm 2xl:text-xl"></span>
+              <img loading="lazy" src="../assets/icon_people.svg" alt="User Info" class="object-contain w-4 2xl:w-6" />
+              <span id="user-info" class="text-sm 2xl:text-xl"></span>
             </div>
-            
+
             <!-- Logout Button -->
-            <a href="javascript:void(0)" onclick="handleLogout()" class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
-              <img loading="lazy" src="../assets/icon_logout.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square logout-icon hover:icon_logout_white.svg" />
-              <span class="self-stretch my-auto text-sm 2xl:text-xl">Logout</span>
+            <a href="javascript:void(0)" onclick="handleLogout()"
+              class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 cursor-pointer bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50">
+              <img loading="lazy" src="../assets/icon_logout.svg" alt="Logout" class="object-contain w-4 2xl:w-6" />
+              <span class="text-sm 2xl:text-xl">Logout</span>
             </a>
           </div>
         </nav>
@@ -98,11 +85,35 @@
       <!-- Main Content -->
       <main class="flex flex-col w-[80%] mb-[100%] mt-[3%] mx-auto px-6 2xl:px-10">
 
+
         <section class="flex flex-col self-stretch py-px my-auto w-full max-md:mt-10 max-md:max-w-full">
 
           <header class="flex items-center self-start text-2xl font-semibold text-black">
-            <h1 class="self-stretch my-auto text-[80%] 2xl:text-[120%]">History Delivery Note (DN)</h1>
+            <h1 class="self-stretch my-auto text-[80%] 2xl:text-[120%]">Delivery Note (DN)</h1>
           </header>
+          
+          <article class="flex flex-col items-start w-full text-base">
+            <h1 class="text-base 2xl:text-xl font-semibold text-black mt-4">Select Supplier</h1>
+          </article>
+          
+            <form id="supplierForm" class="flex flex-col w-full text-neutral-500">
+              <div class="flex flex-col xl:w-[500px] 2xl:w-[600px]">
+                <label for="Supplier" class="block xl:mb-6 2xl:mb-8 xl:text-base 2xl:text-lg text-neutral-500"></label>
+                <select id="Supplier"
+                  class="scrollable-select bg-transparent border border-neutral-300 rounded-lg block w-full p-4 2xl:p-7 text-neutral-500 text-sm 2xl:text-lg">
+                  <option value="">Cari Supplier</option>
+                  <!-- Options will be added here by JavaScript -->
+                </select>
+              </div>
+              <div
+                class="flex gap-2 items-center xl:mt-6 2xl:mt-8 justify-end text-white whitespace-nowrap xl:h-[50px] 2xl:h-[100px] xl:w-[500px] 2xl:w-[600px]">
+                <button type="button" id="submitBtn"
+                  class="gap-2 xl:px-5 xl:py-3 2xl:px-8 2xl:py-4 rounded bg-zinc-400 xl:text-sm 2xl:text-lg hover:bg-blue-600"
+                  disabled>Submit</button>
+              </div>
+            </form>
+          </article>
+      
 
           <div class="flex flex-col mt-4 2xl:mt-6 w-full 2xl:text-base text-xs font-medium">
 
@@ -111,11 +122,11 @@
               <!-- Search Bar -->
               <div class="flex flex-wrap items-center self-stretch my-auto  text-neutral-500">
                 <div class="flex items-center px-4 2xl:px-6 py-2 2xl:py-4 bg-neutral-100 rounded w-full ml-auto">
-                  <input id="search-input" type="text" placeholder="Search no delivery note" class="flex-1 bg-neutral-100 outline-none 2xl:text-base">
+                  <input id="search-input" type="text" placeholder="Search no purchase order here" class="flex-1 bg-neutral-100 outline-none 2xl:text-base">
                   <img src="../assets/icon_search.svg" alt="Search Icon" class="w-4 2xl:w-5 h-4 2xl:h-5 ml-3">
                 </div>
               </div>
-          </div>
+            </div>
 
         </section>
 
@@ -135,22 +146,17 @@
                     No. PO
                     <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
-                  </th>                  
+                  </th>
                   <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(2)">
+                    Plan DN Date
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <span class="sort-indicator"></span>
+                  </th>
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(3)">
                     Status DN
                     <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
-                  </th> 
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(3)">
-                    Sent Date
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
-                    <span class="sort-indicator"></span>
-                  </th> 
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(4)">
-                    Received Date
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
-                    <span class="sort-indicator"></span>
-                  </th>  
+                  </th>    
                 </tr>
               </thead>
               <tbody id="table-body">
@@ -159,7 +165,6 @@
             </table>
           </div>
         </div>
-
         
         <!-- Pagination -->
         <div class="flex justify-end my-6">
@@ -171,15 +176,17 @@
 
     </div>
   </section>
-
 </body>
 
 <script src="../script.js"></script>
 <script src="script.js"></script>
+ <!-- jQuery for Select2 -->
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ <!-- Select2 JS -->
+ <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <!-- Add the script to handle table sorting and pagination -->
 <script>
-
-  
   let rowsPerPage = 10;
   let currentPage = 1;
   let filteredData = deliveryNote; // Initialize filteredData with all data
@@ -210,14 +217,13 @@
       tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
       tableRow.innerHTML = `
         <td class="px-2 py-4 text-center font-medium text-gray-900">
-            <a href="history-delivery-note-detail.html?noDN=${row.noDN}" class="text-blue-600 underline">${row.noDN}</a>
+            <a href="delivery-note-detail.html?noDN=${row.noDN}" class="text-blue-600 underline">${row.noDN}</a>
         </td>
         <td class="px-2 py-4 text-center font-medium text-gray-900">
-            <a href="history-purchase-order-detail.html?noPO=${row.noPO}" class="text-blue-600 underline">${row.noPO}</a>
-        </td>        
-        <td class="px-2 py-4 text-center">${row.statusDN}</td>
+            <a noPO=${row.noPO}" class="text-black">${row.noPO}</a>
+        </td>
         <td class="px-2 py-4 text-center">${row.planDNDate}</td>
-        <td class="px-2 py-4 text-center">${row.receivedDNDate}</td>
+        <td class="px-2 py-4 text-center">${row.statusDN}</td>
       `;
       tableBody.appendChild(tableRow);
     });
@@ -353,22 +359,84 @@
     paginationContainer.appendChild(nextButton);
 }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const name = localStorage.getItem('name');
-    const bpCode = localStorage.getItem('bpCode');
+document.addEventListener('DOMContentLoaded', () => {
+  const name = localStorage.getItem('name');
+  const bpCode = localStorage.getItem('bpCode');
 
-    document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
-    adjustRowsPerPage(); // Set rows per page based on initial screen size
-    window.addEventListener('resize', () => {
-      adjustRowsPerPage(); // Adjust rows per page on screen resize
-      displayTableData(currentPage); // Re-render table data
-      updatePagination(); // Re-render pagination
-    });
-
-    document.getElementById('search-input').addEventListener('input', searchTable);
-    displayTableData(currentPage);
-    updatePagination();
+  document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
+  
+  adjustRowsPerPage(); // Set rows per page based on initial screen size
+  window.addEventListener('resize', () => {
+    adjustRowsPerPage(); // Adjust rows per page on screen resize
+    displayTableData(currentPage); // Re-render table data
+    updatePagination(); // Re-render pagination
   });
+
+  // Initially hide the search bar, table, and pagination
+  document.getElementById('search-bar').style.display = 'none';
+  document.getElementById('table-container').style.display = 'none';
+  document.querySelector('.pagination').style.display = 'none';
+  });
+
+  // Populate the dropdown with supplier options
+  const supplierSelect = document.getElementById('Supplier');
+  selectSupplier.forEach(supplier => {
+    const option = document.createElement('option');
+    option.value = supplier.BPCode;
+    option.textContent = supplier.supplierName;
+    supplierSelect.appendChild(option);
+  });
+
+  // Enable submit button if a supplier is selected
+  supplierSelect.addEventListener('change', () => {
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.disabled = !supplierSelect.value;
+  });
+
+  // Select Supplier
+  
+   // Handle form submission and display the table data
+   document.getElementById('submitBtn').addEventListener('click', () => {
+    const selectedSupplier = selectSupplier.find(supplier => supplier.BPCode === supplierSelect.value);
+    const tableBody = document.getElementById('table-body');
+    tableBody.innerHTML = ''; // Clear previous data
+
+    if (selectedSupplier) {
+       selectedSupplier.deliveryNotes.forEach(note => {
+         const row = document.createElement('tr');
+         row.innerHTML = `
+           <td class="px-2 2xl:px-4 py-2 text-center border-b border-b-gray-300">${note.noDN}</td>
+           <td class="px-2 2xl:px-4 py-2 text-center border-b border-b-gray-300">${note.noPO}</td>
+           <td class="px-2 2xl:px-4 py-2 text-center border-b border-b-gray-300">${note.planDNDate}</td>
+           <td class="px-2 2xl:px-4 py-2 text-center border-b border-b-gray-300">
+             ${note.details.map(detail => `${detail.partNumber} (${detail.partName})`).join('<br>')}
+           </td>
+         `;
+         tableBody.appendChild(row);
+       });
+     }
+   });
+
+   // Handle form submission and display the table data
+   document.getElementById('submitBtn').addEventListener('click', () => {
+    const selectedSupplier = selectSupplier.find(supplier => supplier.BPCode === supplierSelect.value);
+    const tableBody = document.getElementById('table-body');
+    tableBody.innerHTML = ''; // Clear previous data
+
+    if (selectedSupplier) {
+      filteredData = selectedSupplier.deliveryNotes;
+      displayTableData(currentPage); // Display data for the current page
+      updatePagination(); // Update pagination
+
+      // Show the search bar, table, and pagination
+      document.getElementById('search-bar').style.display = 'block';
+      document.getElementById('table-container').style.display = 'block';
+      document.querySelector('.pagination').style.display = 'flex'; // Adjust as needed
+    }
+  });
+
+  document.getElementById('search-input').addEventListener('input', searchTable);
+
 </script>
 
 </html>

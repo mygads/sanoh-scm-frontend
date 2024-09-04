@@ -1,0 +1,971 @@
+Google One subscription was canceled … Update your payment method to restore your storage subscription
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Label Sample</title>
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            box-sizing: border-box;
+            page-break-inside: avoid;
+            font-size: 10px;
+        }
+
+        .page {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 0;
+            box-sizing: border-box;
+            margin: 0; /* Menghapus margin di container */
+        }
+
+        .label {
+            width: 50%; /* Mengatur lebar 50% untuk memastikan dua label per baris */
+            height: auto;
+            border: 1px solid rgb(131, 131, 131);
+            box-sizing: border-box;
+            margin: 0; /* Menghapus margin untuk menghilangkan ruang antar label */
+            padding: 4px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .table td, .table th {
+            border: 1px solid rgb(162, 162, 162);
+            padding: 4px;
+            vertical-align: middle;
+            word-wrap: break-word;
+            overflow: hidden;
+        }
+
+        /* Mengatur ukuran kolom secara spesifik */
+        .table td:nth-child(1), .table th:nth-child(1) {
+            width: 5%;
+            height: 25px;
+        }
+
+        .table td:nth-child(2), .table th:nth-child(2) {
+            width: 18%;
+        }
+
+        .table td:nth-child(3), .table th:nth-child(3) {
+            width: 12%;
+        }
+
+        .table td:nth-child(4), .table th:nth-child(4) {
+            width: 20%;
+        }
+
+        .table td:nth-child(5), .table th:nth-child(5) {
+            width: 10%;
+        }
+
+        .table td:nth-child(6), .table th:nth-child(6) {
+            width: 10%;
+        }
+
+        .table td:nth-child(7), .table th:nth-child(7) {
+            width: 13%;
+        }
+
+        .header-text {
+            font-size: 8px; /* Mengatur ukuran font */
+            text-align: left;
+            height: 25px;
+            margin-bottom: 8px;
+        }
+
+        .large-text {
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .right-text {
+            text-align: right;
+        }
+
+        .left-text {
+            text-align: left;
+        }
+
+        .part-no-container {
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .part-no-label {
+            font-size: 8px;
+            text-align: center;
+            font-weight: normal;
+            margin-right: 10px;
+            line-height: 2;
+            height: 30px;
+            margin-bottom: 5px;
+        }
+
+        .part-no-value {
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 10px;
+            line-height: 1;
+        }
+
+        .part-name-container {
+            display: flex;
+            align-items: flex-end;
+            height: 30px;
+            margin-bottom: 5px;
+            padding: 0px 0;
+        }
+
+        .part-name-label {
+            font-size: 8px;
+            text-align: center;
+            font-weight: normal;
+            margin-right: 8px;
+            margin-bottom: 5px;
+            line-height: 4;
+        }
+
+        .part-name-value {
+            font-size: 14px;
+            text-align: center;
+            font-weight: bold;
+            margin-top: 10px;
+            line-height: 1;
+        }
+
+        .lot-no-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .lot-no-label {
+            font-size: 8px;
+            font-weight: normal;
+            text-align: left;
+            line-height: 3;
+            border: none;
+            background: none;
+            padding: 0;
+            margin-bottom: 8px;
+        }
+
+        .lot-no-value {
+            font-size: 12px;
+            font-weight: bold;
+            text-align: right;
+            letter-spacing: 0px;
+            margin-top: 10px;
+        }
+
+        .company-name {
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+            padding: 0px 0;
+            height: 20px;
+            margin-top: 2px;
+        }
+
+        .quality-label {
+            font-size: 8px;
+            text-align: left;
+            height: 2px;
+            margin-bottom: 5px;
+        }
+
+        .inspection-label {
+            font-size: 8px;
+            text-align: center;
+            height: 2px;
+        }
+
+        .printed-date-label {
+            font-size: 8px;
+            text-align: left;
+            border: none;
+        }
+
+        .printed-date-value {
+            font-size: 7px;
+            color: #555;
+            text-align: left;
+            border: none;
+        }
+
+        .quantity-container {
+            display: flex;
+            padding: 0px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            height: 100%;
+            margin-bottom: 0px;
+        }
+
+        .quantity-label {
+            padding: 0px;
+            height: 3px;
+            font-size: 8px;
+            font-weight: normal;
+            text-align: left;
+            margin-bottom: 0px;
+            width: 100%;
+        }
+
+        .quantity-value {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            letter-spacing: 0px;
+        }
+
+        .company-name {
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+            display: block;
+            margin-top: 1px;
+            margin-bottom: 2px;
+            
+        }
+
+        .pl-number {
+            font-size: 11px;
+            font-weight: bold;
+            text-align: center;
+            display: block;
+            margin-top: 12px;
+            margin-bottom: 2px;
+            border-bottom: #ffffff;
+        }
+
+        .delivery-date-label {
+            font-size: 8px;
+            font-weight: normal;
+            text-align: left;
+            display: block;
+            margin-bottom: 0px;
+        }
+
+        .delivery-date-value {
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+            display: block;
+            margin-top: 0px;
+        }
+
+        .qr-code-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 0px 0;
+        }
+
+        .qr-code {
+            display: flex;
+            align-items: center;
+            margin-left: 0px;
+        }
+
+        .qr-code-right {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            margin-left: 10px;
+        }
+
+        .qr-code span {
+            font-size: 8px;
+            margin-left: 10px;
+        }
+
+        .qr-code-right span {
+            font-size: 9px;
+            text-align: center;
+            margin-left: 50px;
+            margin-top: 5px;
+            margin-right: 50px;
+        }
+
+        .footer {
+            font-size: 0.8em;
+            text-align: center;
+            padding: 5px;
+        }
+
+        .date {
+            font-size: 1.2em;
+            text-align: center;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+
+    <div class="page">
+        <!-- Label 1 -->
+        <div class="label">
+            <table class="table">
+                <tr>
+                    <td class="header-text">MODEL</td>
+                    <td colspan="5" class="header-text">
+                        <div class="part-no-container">
+                            <span class="part-no-label">PART NO</span>
+                            <span class="part-no-value">RL1ST015144E00304000</span>
+                        </div>
+                    </td>
+                    <td class="header-text left-text">
+                        <div class="lot-no-container">
+                            <span class="lot-no-label">LOT NO</span>
+                            <span class="lot-no-value">*********073100030</span>
+                        </div>
+                    </td>                
+                </tr>
+                <tr>
+                    <td class="header-text">CUSTOMER</td>
+                    <td colspan="5" class="header-text">
+                        <div class="part-name-container">
+                            <span class="part-name-label">PART NAME</span>
+                            <span class="part-name-value">SUPPORT, OIL STRAINER </span>
+                        </div>
+                    </td>
+                    <td class="header-text">
+                        <div class="quantity-container">
+                            <span class="quantity-label">QUANTITY</span><br>
+                            <span class="quantity-value">50</span>
+                        </div>
+                    </td>                
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <span class="company-name">DELA CEMARA INDAH PT.</span>
+                    </td>
+                    <td colspan="2" class="header-text right-text">
+                        <span class="pl-number">PL2300834</span>
+                    </td>
+                    <td class="header-text right-text">
+                        <span class="delivery-date-label">DATE DELIVERY</span><br>
+                        <span class="delivery-date-value">03 Apr 2023</span>
+                    </td>                
+                </tr>
+                <tr>
+                    <td class="header-text">
+                        <span class="quality-label">QUALITY</span>
+                    </td>
+                    <td colspan="3" class="header-text center-text">
+                        <span class="inspection-label">INSPECTION</span>
+                    </td>
+                    <td colspan="2" class="header-text left-text no-border">
+                        <span class="printed-date-label">PRINTED DATE</span><br>
+                        <span class="printed-date-value">310724 14:23</span>               
+                </tr>
+                <tr>
+                    <td colspan="7">
+                        <div class="qr-code-container">
+                            <div class="qr-code">
+                                <div id="qrcode-left-1"></div>
+                                <span>RL1ST015144E00304000;50;*********073100030;1;0</span>
+                            </div>
+                            <div class="qr-code-right">
+                                <div id="qrcode-right-1"></div>
+                                <span>PL2300834</span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>                                 
+            </table>
+        </div>
+
+        <!-- Label 2 -->
+        <div class="label">
+            <table class="table">
+                <tr>
+                    <td class="header-text">MODEL</td>
+                    <td colspan="5" class="header-text">
+                        <div class="part-no-container">
+                            <span class="part-no-label">PART NO</span>
+                            <span class="part-no-value">RL1ST015144E00304001</span>
+                        </div>
+                    </td>
+                    <td class="header-text left-text">
+                        <div class="lot-no-container">
+                            <span class="lot-no-label">LOT NO</span>
+                            <span class="lot-no-value">*********073100031</span>
+                        </div>
+                    </td>                
+                </tr>
+                <tr>
+                    <td class="header-text">CUSTOMER</td>
+                    <td colspan="5" class="header-text">
+                        <div class="part-name-container">
+                            <span class="part-name-label">PART NAME</span>
+                            <span class="part-name-value">SUPPORT, OIL STRAINER </span>
+                        </div>
+                    </td>
+                    <td class="header-text">
+                        <div class="quantity-container">
+                            <span class="quantity-label">QUANTITY</span><br>
+                            <span class="quantity-value">50</span>
+                        </div>
+                    </td>                
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <span class="company-name">DELA CEMARA INDAH PT.</span>
+                    </td>
+                    <td colspan="2" class="header-text right-text">
+                        <span class="pl-number">PL2300835</span>
+                    </td>
+                    <td class="header-text right-text">
+                        <span class="delivery-date-label">DATE DELIVERY</span><br>
+                        <span class="delivery-date-value">03 Apr 2023</span>
+                    </td>                
+                </tr>
+                <tr>
+                    <td class="header-text">
+                        <span class="quality-label">QUALITY</span>
+                    </td>
+                    <td colspan="3" class="header-text center-text">
+                        <span class="inspection-label">INSPECTION</span>
+                    </td>
+                    <td colspan="2" class="header-text left-text no-border">
+                        <span class="printed-date-label">PRINTED DATE</span><br>
+                        <span class="printed-date-value">310724 14:23</span>               
+                </tr>
+                <tr>
+                    <td colspan="7">
+                        <div class="qr-code-container">
+                            <div class="qr-code">
+                                <div id="qrcode-left-2"></div>
+                                <span>RL1ST015144E00304001;50;*********073100031;1;0</span>
+                            </div>
+                            <div class="qr-code-right">
+                                <div id="qrcode-right-2"></div>
+                                <span>PL2300835</span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>                                 
+            </table>
+        </div>
+
+        <!-- Label 3 -->
+        <div class="label">
+            <table class="table">
+                <tr>
+                    <td class="header-text">MODEL</td>
+                    <td colspan="5" class="header-text">
+                        <div class="part-no-container">
+                            <span class="part-no-label">PART NO</span>
+                            <span class="part-no-value">RL1ST015144E00304002</span>
+                        </div>
+                    </td>
+                    <td class="header-text left-text">
+                        <div class="lot-no-container">
+                            <span class="lot-no-label">LOT NO</span>
+                            <span class="lot-no-value">*********073100032</span>
+                        </div>
+                    </td>                
+                </tr>
+                <tr>
+                    <td class="header-text">CUSTOMER</td>
+                    <td colspan="5" class="header-text">
+                        <div class="part-name-container">
+                            <span class="part-name-label">PART NAME</span>
+                            <span class="part-name-value">SUPPORT, OIL STRAINER </span>
+                        </div>
+                    </td>
+                    <td class="header-text">
+                        <div class="quantity-container">
+                            <span class="quantity-label">QUANTITY</span><br>
+                            <span class="quantity-value">50</span>
+                        </div>
+                    </td>                
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <span class="company-name">DELA CEMARA INDAH PT.</span>
+                    </td>
+                    <td colspan="2" class="header-text right-text">
+                        <span class="pl-number">PL2300836</span>
+                    </td>
+                    <td class="header-text right-text">
+                        <span class="delivery-date-label">DATE DELIVERY</span><br>
+                        <span class="delivery-date-value">03 Apr 2023</span>
+                    </td>                
+                </tr>
+                <tr>
+                    <td class="header-text">
+                        <span class="quality-label">QUALITY</span>
+                    </td>
+                    <td colspan="3" class="header-text center-text">
+                        <span class="inspection-label">INSPECTION</span>
+                    </td>
+                    <td colspan="2" class="header-text left-text no-border">
+                        <span class="printed-date-label">PRINTED DATE</span><br>
+                        <span class="printed-date-value">310724 14:23</span>               
+                </tr>
+                <tr>
+                    <td colspan="7">
+                        <div class="qr-code-container">
+                            <div class="qr-code">
+                                <div id="qrcode-left-3"></div>
+                                <span>RL1ST015144E00304002;50;*********073100032;1;0</span>
+                            </div>
+                            <div class="qr-code-right">
+                                <div id="qrcode-right-3"></div>
+                                <span>PL2300836</span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>                                 
+            </table>
+        </div>
+
+        <!-- Label 4 -->
+        <div class="label">
+            <table class="table">
+                <tr>
+                    <td class="header-text">MODEL</td>
+                    <td colspan="5" class="header-text">
+                        <div class="part-no-container">
+                            <span class="part-no-label">PART NO</span>
+                            <span class="part-no-value">RL1ST015144E00304003</span>
+                        </div>
+                    </td>
+                    <td class="header-text left-text">
+                        <div class="lot-no-container">
+                            <span class="lot-no-label">LOT NO</span>
+                            <span class="lot-no-value">*********073100033</span>
+                        </div>
+                    </td>                
+                </tr>
+                <tr>
+                    <td class="header-text">CUSTOMER</td>
+                    <td colspan="5" class="header-text">
+                        <div class="part-name-container">
+                            <span class="part-name-label">PART NAME</span>
+                            <span class="part-name-value">SUPPORT, OIL STRAINER </span>
+                        </div>
+                    </td>
+                    <td class="header-text">
+                        <div class="quantity-container">
+                            <span class="quantity-label">QUANTITY</span><br>
+                            <span class="quantity-value">50</span>
+                        </div>
+                    </td>                
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <span class="company-name">DELA CEMARA INDAH PT.</span>
+                    </td>
+                    <td colspan="2" class="header-text right-text">
+                        <span class="pl-number">PL2300837</span>
+                    </td>
+                    <td class="header-text right-text">
+                        <span class="delivery-date-label">DATE DELIVERY</span><br>
+                        <span class="delivery-date-value">03 Apr 2023</span>
+                    </td>                
+                </tr>
+                <tr>
+                    <td class="header-text">
+                        <span class="quality-label">QUALITY</span>
+                    </td>
+                    <td colspan="3" class="header-text center-text">
+                        <span class="inspection-label">INSPECTION</span>
+                    </td>
+                    <td colspan="2" class="header-text left-text no-border">
+                        <span class="printed-date-label">PRINTED DATE</span><br>
+                        <span class="printed-date-value">310724 14:23</span>               
+                </tr>
+                <tr>
+                    <td colspan="7">
+                        <div class="qr-code-container">
+                            <div class="qr-code">
+                                <div id="qrcode-left-4"></div>
+                                <span>RL1ST015144E00304003;50;*********073100033;1;0</span>
+                            </div>
+                            <div class="qr-code-right">
+                                <div id="qrcode-right-4"></div>
+                                <span>PL2300837</span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>                                 
+            </table>
+        </div>
+
+        <!-- Label 5 -->
+        <div class="label">
+            <table class="table">
+                <tr>
+                    <td class="header-text">MODEL</td>
+                    <td colspan="5" class="header-text">
+                        <div class="part-no-container">
+                            <span class="part-no-label">PART NO</span>
+                            <span class="part-no-value">RL1ST015144E00304004</span>
+                        </div>
+                    </td>
+                    <td class="header-text left-text">
+                        <div class="lot-no-container">
+                            <span class="lot-no-label">LOT NO</span>
+                            <span class="lot-no-value">*********073100034</span>
+                        </div>
+                    </td>                
+                </tr>
+                <tr>
+                    <td class="header-text">CUSTOMER</td>
+                    <td colspan="5" class="header-text">
+                        <div class="part-name-container">
+                            <span class="part-name-label">PART NAME</span>
+                            <span class="part-name-value">SUPPORT, OIL STRAINER </span>
+                        </div>
+                    </td>
+                    <td class="header-text">
+                        <div class="quantity-container">
+                            <span class="quantity-label">QUANTITY</span><br>
+                            <span class="quantity-value">50</span>
+                        </div>
+                    </td>                
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <span class="company-name">DELA CEMARA INDAH PT.</span>
+                    </td>
+                    <td colspan="2" class="header-text right-text">
+                        <span class="pl-number">PL2300838</span>
+                    </td>
+                    <td class="header-text right-text">
+                        <span class="delivery-date-label">DATE DELIVERY</span><br>
+                        <span class="delivery-date-value">03 Apr 2023</span>
+                    </td>                
+                </tr>
+                <tr>
+                    <td class="header-text">
+                        <span class="quality-label">QUALITY</span>
+                    </td>
+                    <td colspan="3" class="header-text center-text">
+                        <span class="inspection-label">INSPECTION</span>
+                    </td>
+                    <td colspan="2" class="header-text left-text no-border">
+                        <span class="printed-date-label">PRINTED DATE</span><br>
+                        <span class="printed-date-value">310724 14:23</span>               
+                </tr>
+                <tr>
+                    <td colspan="7">
+                        <div class="qr-code-container">
+                            <div class="qr-code">
+                                <div id="qrcode-left-5"></div>
+                                <span>RL1ST015144E00304004;50;*********073100034;1;0</span>
+                            </div>
+                            <div class="qr-code-right">
+                                <div id="qrcode-right-5"></div>
+                                <span>PL2300838</span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>                                 
+            </table>
+        </div>
+
+        <!-- Label 6 -->
+        <div class="label">
+            <table class="table">
+                <tr>
+                    <td class="header-text">MODEL</td>
+                    <td colspan="5" class="header-text">
+                        <div class="part-no-container">
+                            <span class="part-no-label">PART NO</span>
+                            <span class="part-no-value">RL1ST015144E00304005</span>
+                        </div>
+                    </td>
+                    <td class="header-text left-text">
+                        <div class="lot-no-container">
+                            <span class="lot-no-label">LOT NO</span>
+                            <span class="lot-no-value">*********073100035</span>
+                        </div>
+                    </td>                
+                </tr>
+                <tr>
+                    <td class="header-text">CUSTOMER</td>
+                    <td colspan="5" class="header-text">
+                        <div class="part-name-container">
+                            <span class="part-name-label">PART NAME</span>
+                            <span class="part-name-value">SUPPORT, OIL STRAINER </span>
+                        </div>
+                    </td>
+                    <td class="header-text">
+                        <div class="quantity-container">
+                            <span class="quantity-label">QUANTITY</span><br>
+                            <span class="quantity-value">50</span>
+                        </div>
+                    </td>                
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <span class="company-name">DELA CEMARA INDAH PT.</span>
+                    </td>
+                    <td colspan="2" class="header-text right-text">
+                        <span class="pl-number">PL2300839</span>
+                    </td>
+                    <td class="header-text right-text">
+                        <span class="delivery-date-label">DATE DELIVERY</span><br>
+                        <span class="delivery-date-value">03 Apr 2023</span>
+                    </td>                
+                </tr>
+                <tr>
+                    <td class="header-text">
+                        <span class="quality-label">QUALITY</span>
+                    </td>
+                    <td colspan="3" class="header-text center-text">
+                        <span class="inspection-label">INSPECTION</span>
+                    </td>
+                    <td colspan="2" class="header-text left-text no-border">
+                        <span class="printed-date-label">PRINTED DATE</span><br>
+                        <span class="printed-date-value">310724 14:23</span>               
+                </tr>
+                <tr>
+                    <td colspan="7">
+                        <div class="qr-code-container">
+                            <div class="qr-code">
+                                <div id="qrcode-left-6"></div>
+                                <span>RL1ST015144E00304005;50;*********073100035;1;0</span>
+                            </div>
+                            <div class="qr-code-right">
+                                <div id="qrcode-right-6"></div>
+                                <span>PL2300839</span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>                                 
+            </table>
+        </div>
+    </div>
+    
+    <script>
+        window.onload = function() {
+            // Automatically open the print dialog on page load
+            window.print();
+
+        const labels = [
+    {
+    model: "MODEL",
+    partNo: "RL1ST015144E00304000",
+    lotNo: "*********073100030",
+    customer: "CUSTOMER",
+    partName: "SUPPORT, OIL STRAINER",
+    quantity: 50,
+    companyName: "DELA CEMARA INDAH PT.",
+    plNumber: "PL2300834",
+    deliveryDate: "03 Apr 2023",
+    quality: "QUALITY",
+    inspection: "INSPECTION",
+    printedDate: "310724 14:23",
+    qrCodes: {
+    left: "RL1ST015144E00304000;50;*********073100030;1;0",
+    right: "PL2300834"
+    }
+    },
+    {
+    model: "MODEL",
+    partNo: "RL1ST015144E00304001",
+    lotNo: "*********073100031",
+    customer: "CUSTOMER",
+    partName: "SUPPORT, OIL STRAINER",
+    quantity: 50,
+    companyName: "DELA CEMARA INDAH PT.",
+    plNumber: "PL2300835",
+    deliveryDate: "03 Apr 2023",
+    quality: "QUALITY",
+    inspection: "INSPECTION",
+    printedDate: "310724 14:23",
+    qrCodes: {
+    left: "RL1ST015144E00304001;50;*********073100031;1;0",
+    right: "PL2300835"
+    }
+    },
+    {
+    model: "MODEL",
+    partNo: "RL1ST015144E00304002",
+    lotNo: "*********073100032",
+    customer: "CUSTOMER",
+    partName: "SUPPORT, OIL STRAINER",
+    quantity: 50,
+    companyName: "DELA CEMARA INDAH PT.",
+    plNumber: "PL2300836",
+    deliveryDate: "03 Apr 2023",
+    quality: "QUALITY",
+    inspection: "INSPECTION",
+    printedDate: "310724 14:23",
+    qrCodes: {
+    left: "RL1ST015144E00304002;50;*********073100032;1;0",
+    right: "PL2300836"
+    }
+    },
+    {
+    model: "MODEL",
+    partNo: "RL1ST015144E00304003",
+    lotNo: "*********073100033",
+    customer: "CUSTOMER",
+    partName: "SUPPORT, OIL STRAINER",
+    quantity: 50,
+    companyName: "DELA CEMARA INDAH PT.",
+    plNumber: "PL2300837",
+    deliveryDate: "03 Apr 2023",
+    quality: "QUALITY",
+    inspection: "INSPECTION",
+    printedDate: "310724 14:23",
+    qrCodes: {
+    left: "RL1ST015144E00304003;50;*********073100033;1;0",
+    right: "PL2300837"
+    }
+    },
+    {
+    model: "MODEL",
+    partNo: "RL1ST015144E00304004",
+    lotNo: "*********073100034",
+    customer: "CUSTOMER",
+    partName: "SUPPORT, OIL STRAINER",
+    quantity: 50,
+    companyName: "DELA CEMARA INDAH PT.",
+    plNumber: "PL2300838",
+    deliveryDate: "03 Apr 2023",
+    quality: "QUALITY",
+    inspection: "INSPECTION",
+    printedDate: "310724 14:23",
+    qrCodes: {
+    left: "RL1ST015144E00304004;50;*********073100034;1;0",
+    right: "PL2300838"
+    }
+    },
+    {
+    model: "MODEL",
+    partNo: "RL1ST015144E00304005",
+    lotNo: "*********073100035",
+    customer: "CUSTOMER",
+    partName: "SUPPORT, OIL STRAINER",
+    quantity: 50,
+    companyName: "DELA CEMARA INDAH PT.",
+    plNumber: "PL2300839",
+    deliveryDate: "03 Apr 2023",
+    quality: "QUALITY",
+    inspection: "INSPECTION",
+    printedDate: "310724 14:23",
+    qrCodes: {
+    left: "RL1ST015144E00304005;50;*********073100035;1;0",
+    right: "PL2300839"
+    }
+    }
+    ];
+    
+    // Example of how to fetch this data via an API in a backend system:
+    function fetchLabels() {
+    return labels; // Replace this with actual API fetch logic if needed.
+    }
+    
+    // Generate QR Codes for Label 1
+    // isi QRCode -> part number;quantity;lot number;nomor line PO;sequence //
+    
+    new QRCode(document.getElementById("qrcode-left-1"), {
+    text: "RL1ST015144E00304000;50;*********073100030;1;0",
+    width: 30,
+    height: 30
+    });
+    
+    new QRCode(document.getElementById("qrcode-right-1"), {
+    text: "PL2300834",
+    width: 30,
+    height: 30
+    });
+    
+    // Generate QR Codes for Label 2
+    new QRCode(document.getElementById("qrcode-left-2"), {
+    text: "RL1ST015144E00304001;50;*********073100031;1;0",
+    width: 30,
+    height: 30
+    });
+    
+    new QRCode(document.getElementById("qrcode-right-2"), {
+    text: "PL2300835",
+    width: 30,
+    height: 30
+    });
+    
+    // Generate QR Codes for Label 3
+    new QRCode(document.getElementById("qrcode-left-3"), {
+    text: "RL1ST015144E00304002;50;*********073100032;1;0",
+    width: 30,
+    height: 30
+    });
+    
+    new QRCode(document.getElementById("qrcode-right-3"), {
+    text: "PL2300836",
+    width: 30,
+    height: 30
+    });
+    
+    // Generate QR Codes for Label 4
+    new QRCode(document.getElementById("qrcode-left-4"), {
+    text: "RL1ST015144E00304003;50;*********073100033;1;0",
+    width: 30,
+    height: 30
+    });
+    
+    new QRCode(document.getElementById("qrcode-right-4"), {
+    text: "PL2300837",
+    width: 30,
+    height: 30
+    });
+    
+    // Generate QR Codes for Label 5
+    new QRCode(document.getElementById("qrcode-left-5"), {
+    text: "RL1ST015144E00304004;50;*********073100034;1;0",
+    width: 30,
+    height: 30
+    });
+    
+    new QRCode(document.getElementById("qrcode-right-5"), {
+    text: "PL2300838",
+    width: 30,
+    height: 30
+    });
+    
+    // Generate QR Codes for Label 6
+    new QRCode(document.getElementById("qrcode-left-6"), {
+    text: "RL1ST015144E00304005;50;*********073100035;1;0",
+    width: 30,
+    height: 30
+    });
+    
+    new QRCode(document.getElementById("qrcode-right-6"), {
+    text: "PL2300839",
+    width: 30,
+    height: 30
+    });
+};
+    </script>
+
+</body>
+</html>

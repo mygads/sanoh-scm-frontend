@@ -18,7 +18,7 @@
 
 <body class="font-poppins bg-white">
   <section class="overflow-hidden w-screen h-screen bg-white ]">
-    <div class="flex">
+    <div class="flex h-screen">
 
       <!-- nav-side bar -->
       <aside class="flex flex-col w-[20%] h-screen">
@@ -42,52 +42,8 @@
               </a>
             </li>
 
-            <!-- Hidden Menu Items -->
-            <li class="hidden">
-              <a href="purchase-order.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../../assets/icon_po_default.svg" alt=""
-                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-[0.89] fill-blue-950 icon-po-active" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Purchase Order</span>
-              </a>
-            </li>
-
-            <li class="hidden">
-              <a href="delivery-note.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../../assets/icon_dn_default.svg" alt=""
-                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Delivery Note</span>
-              </a>
-            </li>
-
-            <li class="hidden">
-              <a href="history-purchase-order.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../../assets/icon_history_default.svg" alt=""
-                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">History Purchase Order</span>
-              </a>
-            </li>
-
-            <li class="hidden">
-              <a href="history-delivery-note.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../../assets/icon_history_default.svg" alt=""
-                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">History Delivery Note</span>
-              </a>
-            </li>
-
-            <li class="hidden">
-              <a href="listing-report"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../../assets/icon_listing_default.svg" alt=""
-                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Listing Report</span>
-              </a>
-            </li>
-            </ul>
+          </ul>
+            
 
           <!-- User and Logout Section at the Bottom -->
           <div class="mt-auto flex flex-col w-full">
@@ -100,7 +56,7 @@
             </div>
 
             <!-- Logout Button -->
-            <a href="../index.html"
+            <a href="javascript:void(0)" onclick="handleLogout()"
               class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
               <img loading="lazy" src="../assets/icon_logout.svg" alt=""
                 class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square logout-icon hover:icon_logout_white.svg" />
@@ -162,7 +118,6 @@
             <label for="username" class="text-base 2xl:text-lg font-medium dark:text-black w-[15%] 2xl:w-[10%]">Username</label>
             <input type="text" id="username" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[32%] p-3 dark:text-black" placeholder="Username" required />
           </div>
-
           <div class="flex items-center gap-4 mb-6 2xl:mb-8">
             <label for="email" class="text-base 2xl:text-lg font-medium dark:text-black w-[15%] 2xl:w-[10%]">Email</label>
             <input type="email" id="email" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[32%] p-3 dark:text-black" placeholder="example@example.com" required />
@@ -180,6 +135,8 @@
             <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-base 2xl:text-xl px-6 2xl:px-8 py-3 2xl:py-4 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
           </div>
         </form>
+        <!-- Notification Area -->
+        <div id="notification" class="fixed bottom-4 right-4 hidden p-4 rounded-lg shadow-lg"></div>
       </main>
 
     </div>
@@ -189,132 +146,138 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <!-- Select2 JS -->
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <script src="script.js"></script>
+  <script src="../api.js"></script>
+  <script src="../script.js"></script>
+  <script src="../table.js"></script>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const name = localStorage.getItem('name');
-        const bpCode = localStorage.getItem('bpCode');
+
+    cekToken();
+    
+    document.addEventListener('DOMContentLoaded', function () {
+
+      fetchSuppliers();
+
+      initializeForm();
+      
+    });
+
+    async function fetchSuppliers() {
+      const token = localStorage.getItem('accessToken');
+      
+      try {
+        const response = await fetch(APIpartner4, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
         
-        document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
+        if (response.ok) {
+          const data = await response.json();
+          if (data.success) {
+            suppliersData = data.data;
+            populateSupplierDropdown(suppliersData);
+          } else {
+            console.error('Failed to fetch suppliers:', data.message);
+          }
+          
+        } else {
+          console.error('Kesalahan saat mengambil data supplier:', response.status, response.statusText);
+        }
+      } catch (error) {        
+        console.error('Error Token Not Valid', error);
+      }
+    }
+
+    // Fungsi untuk mengisi dropdown supplier
+    function populateSupplierDropdown(suppliersData) {
+      const supplierSelect = document.getElementById('supplier_id');
+
+      if (!supplierSelect) {
+        console.error('Supplier select element not found!');
+        return;
+      }
+
+      supplierSelect.innerHTML = '<option value="">Search Supplier</option>'; // Reset dropdown
+
+      suppliersData.forEach(supplier => {
+        const option = document.createElement('option');
+        option.value = supplier.bp_code;
+        option.textContent = `${supplier.bp_code} | ${supplier.bp_name}`;
+        supplierSelect.appendChild(option);
       });
 
-    $(document).ready(function () {
-
-      const supplierSelect = $('#supplier_id');
-
-      // Populate supplier select options
-      suppliers.forEach(supplier => {
-        const option = new Option(`${supplier.name} (${supplier.code})`, supplier.id, false, false);
-        supplierSelect.append(option);
-      });
-
-      // Initialize Select2
-      supplierSelect.select2({
+      // Initialize Select2 again after options are populated
+      $(supplierSelect).select2({
         placeholder: 'Search Supplier',
         allowClear: true
       });
+    }
 
-      // Form submission
-      $('#user-form').on('submit', function (e) {
+    $(document).ready(function () {
+
+      $('#user-form').on('submit', async function (e) {
         e.preventDefault();
-        const selectedSupplierId = supplierSelect.val();
+        const selectedSupplierId = $('#supplier_id').val();
+        const roleValue = $('#role').val();
+        const usernameValue = $('#username').val();
+        const passwordValue = $('#password').val();
+        const emailValue = $('#email').val();
+        const firstNameValue = $('#first_name').val();
+
         if (!selectedSupplierId) {
-          alert('Please select a supplier!');
+          displayNotification('Please select a supplier!', 'error');
           return;
         }
-        console.log('Selected Supplier ID:', selectedSupplierId);
-        // Proceed with form submission or additional processing
-      });
-    });
 
-    document.addEventListener('DOMContentLoaded', function () {
-      const roleSelect = document.getElementById('role');
-      const emailInput = document.getElementById('email');
-      const passwordInput = document.getElementById('password');
-      const togglePasswordButton = document.getElementById('toggle_password');
-  
-  
-      // Email validation
-      emailInput.addEventListener('input', () => {
-        if (!emailInput.value.includes('@')) {
-          document.getElementById('email_error').classList.remove('hidden');
-        } else {
-          document.getElementById('email_error').classList.add('hidden');
-        }
-      });
-  
-      // Toggle Password Visibility
-      togglePasswordButton.addEventListener('click', () => {
-        const isPasswordVisible = passwordInput.type === 'text';
-        passwordInput.type = isPasswordVisible ? 'password' : 'text';
-        togglePasswordButton.src = isPasswordVisible ? '../assets/icon_see.svg' : '../assets/icon_hide.svg';
-      });
-  
-      // Generate Random Password
-      const generatePasswordButton = document.getElementById('generate_password');
-  
-      generatePasswordButton.addEventListener('click', () => {
-        const password = generateRandomPassword();
-        passwordInput.value = password;
-      });
-  
-      function generateRandomPassword(length = 8) {
-        const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890";
-        let password = '';
-        for (let i = 0; i < length; i++) {
-          const randomIndex = Math.floor(Math.random() * charset.length);
-          password += charset[randomIndex];
-        }
-        return password;
-      }
-  
-      // Form Validation on Submit
-      const form = document.getElementById('user-form');
-  
-      form.addEventListener('submit', (e) => {
-        let valid = true;
-  
-  
-        // Role must be selected
-        if (!roleSelect.value) {
-          valid = false;
-        }
-  
-        // Email must contain "@" symbol
-        if (!emailInput.value.includes('@')) {
-          document.getElementById('email_error').classList.remove('hidden');
-          valid = false;
-        } else {
-          document.getElementById('email_error').classList.add('hidden');
-        }
-  
-        if (!valid) {
-          e.preventDefault(); // Prevent form submission if validation fails
-        } else {
-          // Store user data in local storage
-          const user = {
-            userId: userIdInput.value,
-            supplierId: document.getElementById('supplier_id').value,
-            firstName: document.getElementById('first_name').value,
-            role: roleSelect.value,
-            username: document.getElementById('username').value,
-            email: emailInput.value,
-            password: passwordInput.value
-          };
-  
-          let users = JSON.parse(localStorage.getItem('users')) || [];
-          users.push(user);
-          localStorage.setItem('users', JSON.stringify(users));
-  
-          // Redirect to manage-user.html
-          window.location.href = 'manage-user.html';
+        const payload = {
+          bp_code: selectedSupplierId,
+          name: firstNameValue,
+          role: roleValue,
+          status: "1",  // Default status for new users, can be adjusted as needed
+          username: usernameValue,
+          password: passwordValue,
+          email: emailValue
+        };
+
+        try {
+          const token = localStorage.getItem('accessToken');
+          const response = await fetch(APIcreateuser, {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+          });
+
+          const result = await response.json();
+
+          if (response.ok && result.success) {
+            displayNotification('User successfully created!', 'success');
+
+            document.getElementById('user-form').reset();
+
+            // Redirect after successful creation
+
+            // setTimeout(() => {
+            //   window.location.href = 'manage-user.html';  
+            // }, 1500);
+            
+          } else {
+            displayNotification('Failed to create user: ' + result.message, 'error');
+          }
+        } catch (error) {
+          console.error('Error during user creation:', error);
+          displayNotification('An error occurred while creating the user.', 'error');
         }
       });
     });
+    
   </script>
-  
-
-<script src="script.js"></script>
 
 </body>
 

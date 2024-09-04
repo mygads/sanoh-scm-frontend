@@ -4,7 +4,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>History Delivery Note Supplier</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,77 +18,79 @@
     <div class="flex h-screen">
 
       <!-- nav-side bar -->
-      <aside class="flex flex-col w-[20%]">
-        <nav class="flex flex-col grow py-9 2xl:py-14 w-full h-screen text-base font-medium border-r border-solid bg-stone-300 border-r-neutral-400 ">
-          
+      <aside class="flex flex-col w-[20%] h-screen border-r border-r-neutral-400 bg-stone-300">
+        <nav class="flex flex-col grow py-9 2xl:py-14 text-base font-medium">
+
           <!-- Logo Sanoh -->
-          <img loading="lazy" src="../assets/logosanoh.svg" class="object-contain self-center w-30 2xl:w-48 max-w-full cursor-pointer pointer-events-auto aspect-[2.79]" />
-          
+          <img loading="lazy" src="../assets/logosanoh.svg"
+            class="object-contain self-center w-30 2xl:w-48 max-w-full cursor-pointer" />
+
           <!-- Menu Items -->
           <ul class="flex flex-col mt-7 2xl:mt-10 w-full text-gray-500">
-            
             <!-- Dashboard -->
-            <li> 
-              <a href="index.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 w-full whitespace-nowrap cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../assets/icon_home_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Dashboard</span>
-              </a>
-            </li>
-            
-            <!-- Purchase Order -->
             <li>
-              <a href="purchase-order.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 ">
-                <img loading="lazy" src="../assets/icon_po_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-[0.89] fill-blue-950" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Purchase Order</span>
+              <a href="index.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
+                <img loading="lazy" src="../assets/icon_home_default.svg" alt="Dashboard"
+                  class="object-contain w-4 2xl:w-6" />
+                <span class="text-sm 2xl:text-xl">Dashboard</span>
               </a>
             </li>
-            
+
+            <!-- Purchase Order -->
+            <li class="hidden">
+              <a
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
+                <img loading="lazy" src="../assets/icon_po_default.svg" alt="Purchase Order"
+                  class="object-contain w-4 2xl:w-6 " />
+                <span class="text-sm 2xl:text-xl">Purchase Order</span>
+              </a>
+            </li>
+
             <!-- Delivery Note -->
             <li>
-              <a href="delivery-note.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 ">
-                <img loading="lazy" src="../assets/icon_dn_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Delivery Note</span>
+              <a href="delivery-note.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 active">
+                <img loading="lazy" src="../assets/icon_dn_default.svg" alt="Purchase Order"
+                  class="object-contain w-4 2xl:w-6 icon-dn-active" />
+                <span class="text-sm 2xl:text-xl">Delivery Note</span>
               </a>
             </li>
-            
+
             <!-- History Purchase Order -->
-            <li>
-              <a href="history-purchase-order.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../assets/icon_history_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">History Purchase Order</span>
+            <li class="hidden">
+              <a href="history-purchase-order.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
+                <img loading="lazy" src="../assets/icon_history_default.svg" alt="History Purchase Order"
+                  class="object-contain w-4 2xl:w-6" />
+                <span class="text-sm 2xl:text-xl">History Purchase Order</span>
               </a>
             </li>
-            
+
             <!-- History Delivery Note -->
             <li>
-              <a href="history-delivery-note.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 active">
-                <img loading="lazy" src="../assets/icon_history_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-5 2xl:w-6 aspect-square icon-history-active" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">History Delivery Note</span>
-              </a>
-            </li>
-            
-            <!-- Performance Report -->
-            <li>
-              <a href="performance-report.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../assets/icon_performance_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Performance Report</span>
+              <a href="history-delivery-note.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
+                <img loading="lazy" src="../assets/icon_history_default.svg" alt="History Purchase Order"
+                  class="object-contain w-4 2xl:w-6" />
+                <span class="text-sm 2xl:text-xl">History Delivery Note</span>
               </a>
             </li>
           </ul>
 
           <!-- User and Logout Section at the Bottom -->
           <div class="mt-auto flex flex-col w-full">
-            
             <!-- User Info -->
             <div class="flex gap-4 items-center p-2 2xl:p-4 w-full bg-blue-950 bg-opacity-10 text-blue-950">
-              <img loading="lazy" src="../assets/icon_people.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-              <span id="user-info" class="self-stretch my-auto text-sm 2xl:text-xl"></span>
+              <img loading="lazy" src="../assets/icon_people.svg" alt="User Info" class="object-contain w-4 2xl:w-6" />
+              <span id="user-info" class="text-sm 2xl:text-xl"></span>
             </div>
-            
+
             <!-- Logout Button -->
-            <a href="javascript:void(0)" onclick="handleLogout()" class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
-              <img loading="lazy" src="../assets/icon_logout.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square logout-icon hover:icon_logout_white.svg" />
-              <span class="self-stretch my-auto text-sm 2xl:text-xl">Logout</span>
+            <a href="javascript:void(0)" onclick="handleLogout()"
+              class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 cursor-pointer bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50">
+              <img loading="lazy" src="../assets/icon_logout.svg" alt="Logout" class="object-contain w-4 2xl:w-6" />
+              <span class="text-sm 2xl:text-xl">Logout</span>
             </a>
           </div>
         </nav>
@@ -101,11 +102,11 @@
         <section class="flex flex-col self-stretch py-px my-auto w-full ">
 
           <header class="flex gap-3 items-center self-start text-2xl font-semibold text-black">
-            <a href="history-delivery-note.html">
+            <a href="delivery-note.html">
                 <img loading="lazy" src="../assets/icon_back.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-5 2xl:w-7 cursor-pointer pointer-events-auto aspect-square" />
             </a>
             
-            <h1 class="self-stretch my-auto text-[80%] 2xl:text-[120%]">History Delivery Note (DN) Detail</h1>
+            <h1 class="self-stretch my-auto text-[80%] 2xl:text-[120%]">Delivery Note (DN) Detail</h1>
           </header>
 
           <div class="flex flex-col mt-4 2xl:mt-6 w-full 2xl:text-base text-xs font-medium">
@@ -130,29 +131,21 @@
 
             <div class="flex flex-wrap gap-[10%] justify-between items-center mt-4 2xl:mt-6 w-full">
               
-              <div class="flex gap-5">
-                <!-- No PO -->
-                <!-- <div class="flex gap-[13px] 2xl:gap-10 items-center self-stretch my-auto text-black min-w-[10%]">
-                  <div class="self-stretch my-auto ">No. PO</div>
-                  <div id="poNumber" type="text" class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap ounded border border-solid border-neutral-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
-                </div> -->
-
-                <div class="flex gap-3 2xl:gap-6 items-center self-stretch my-auto text-black min-w-[10%]">
-                  <div class="self-stretch my-auto ">No. PO</div>
-                  <div id="poNumber" class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap rounded bg-stone-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
-                </div>
-
-                <div class="flex gap-3 2xl:gap-6 items-center self-stretch my-auto text-black min-w-[10%]">
-                  <div class="self-stretch my-auto ">Plan Delivery Date</div>
-                  <div id="planDelivery" class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap rounded bg-stone-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
-                </div>
+              <!-- No PO -->
+              <div class="flex gap-[13px] 2xl:gap-10 items-center self-stretch my-auto text-black min-w-[10%]">
+                <div class="self-stretch my-auto ">No. PO</div>
+                <div id="poNumber" type="text" class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap ounded border border-solid border-neutral-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
               </div>
+              
               <div class="flex gap-3 2xl:gap-6 items-center self-stretch my-auto text-white 2xl:min-w-[240px] text-[10px] 2xl:text-lg">
-                <a href="print/export-csv-dn.html" target="_blank" class="flex gap-2 2xl:gap-4 items-center self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5">
+                <a href="export-csv.html" class="flex gap-2 2xl:gap-4 items-center self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5">
                   <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-5 aspect-square" />
                   <span class="flex-1 shrink self-stretch my-auto ">Export CSV</span>
                 </a>
-                
+                <a href="print-po.html" class="flex gap-2 2xl:gap-4 items-center self-stretch px-6 2xl:px-9 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5">
+                  <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-5 aspect-square" />
+                  <span class="flex-1 shrink self-stretch my-auto basis-0">Print PO </span>
+                </a>
               </div>
             </div>
 
@@ -179,23 +172,11 @@
                   <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(2)">
                     Part Name
                   </th>
-                  <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer w-[13%]" onclick="sortTable(3)">
-                    Quantiy Order
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
-                    <span class="sort-indicator"></span>
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(3)">
+                    UoM
                   </th>
-                  <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer w-[13%]" onclick="sortTable(4)">
-                    Quantity Label
-                    <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" /> -->
-                    <!-- <span class="sort-indicator"></span> -->
-                  </th>
-                  <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer w-[15%]" onclick="sortTable(5)">
-                    Quantity Delivered
-                    <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" /> -->
-                    <!-- <span class="sort-indicator"></span> -->
-                  </th>
-                  <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer w-[15%]" onclick="sortTable(6)">
-                    Quantity Received
+                  <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(4)">
+                    QTY
                     <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" /> -->
                     <!-- <span class="sort-indicator"></span> -->
                   </th>
@@ -215,7 +196,16 @@
           </div>
         </div>
 
-        
+        <div id="confirm-section" class="flex flex-col justify-start mt-6">
+          <!-- Checkbox Confirmation -->
+          <div id="confirmation-section" class="hidden">
+            <label class="flex items-center mb-4 text-sm">
+              <input type="checkbox" id="confirmation-checkbox" class="mr-2">
+              <span>I confirm that the data I provided is correct</span>
+            </label>
+          </div>
+        </div>
+
       </main>
     </div>
   </section>
@@ -245,7 +235,6 @@
       if (dn) {
         document.getElementById('dnNumber').textContent = dn.noDN;
         document.getElementById('poNumber').textContent = dn.noPO;
-        document.getElementById('planDelivery').textContent = dn.planDNDate;
         filteredData = dn.details;
         displayDNDetails(dn.details);
         updatePagination();
@@ -281,14 +270,63 @@
         <td class="px-2 py-4 text-center font-medium text-gray-900">${row.no}</td>
         <td class="px-2 py-4 text-center">${row.partNumber}</td>
         <td class="px-2 py-4 text-center">${row.partName}</td>
+        <td class="px-2 py-4 text-center">${row.UoM}</td>
         <td class="px-2 py-4 text-center">${row.QTY}</td>
-        <td class="px-2 py-4 text-center">${row.qtyLabel}</td>
-        <td class="px-2 py-4 text-center">${row.qtyDelivered}</td>
-        <td class="px-2 py-4 text-center">${row.qtyReceived}</td>
       `;
       tableBody.appendChild(tableRow);
     });
+    updateButtonState(); // Update button state after displaying data
   }
+
+  document.getElementById('confirm-button') 
+    const confirmButton = document.getElementById('confirm-button');
+    const confirmationSection = document.getElementById('confirmation-section');
+
+    if (confirmButton) {
+      // Enable qtyConfirm inputs
+      document.querySelectorAll('.qty-confirm-input').forEach(input => {
+        input.disabled = false;
+        input.classList.add('border-black'); // Add border when enabled
+      });
+
+      // Change button text to "Submit" and display the Cancel button and Checkbox
+      confirmButton.textContent = 'Submit';
+
+      const cancelButton = document.createElement('button');
+      cancelButton.id = 'cancel-button';
+      cancelButton.className = 'ml-[1%] px-4 2xl:px-6 py-2 2xl:py-3 my-auto bg-red-500 rounded cursor-pointer pointer-events-auto max-md:px-5 text-white text-xs 2xl:text-sm';
+      cancelButton.textContent = 'Cancel';
+      document.getElementById('confirm-button-section').appendChild(cancelButton);
+
+      confirmationSection.classList.remove('hidden'); // Show the checkbox confirmation section
+
+      document.getElementById('confirmation-checkbox').addEventListener('change', (e) => {
+        confirmButton.disabled = !e.target.checked;
+      });
+
+      // Handle Cancel button
+      cancelButton.addEventListener('click', () => {
+        displayDNDetails(filteredData);
+        confirmationSection.classList.add('hidden');
+        cancelButton.remove();
+        confirmButton.textContent = 'Edit';
+      });
+
+      confirmButton.disabled = true; // Disable Submit button initially until checkbox is checked
+    } else if (confirmButton) {
+      // Submit logic
+      const inputs = document.querySelectorAll('.qty-confirm-input');
+      inputs.forEach((input, index) => {
+        filteredData[index].qtyConfirm = input.value;
+      });
+
+      alert('Data submitted successfully!');
+      displayDNDetails(filteredData);
+      updateButtonState();
+
+      confirmationSection.classList.add('hidden');
+      document.getElementById('cancel-button').remove();
+    }
 
   document.addEventListener('DOMContentLoaded', () => {
     const name = localStorage.getItem('name');
@@ -307,8 +345,20 @@
 
     displayDNDetails(filteredData);
     updatePagination();
+    updateButtonState();
   });
 
+  function updateButtonState() {
+    const hasUnconfirmedQty = filteredData.some(detail => !detail.qtyConfirm);
+    const confirmButton = document.getElementById('confirm-button');
+
+    if (hasUnconfirmedQty) {
+      
+    } else {
+      confirmButton;
+      confirmButton;
+    }
+  }
 
   function updatePagination() {
     const paginationContainer = document.querySelector('.pagination');
@@ -327,59 +377,59 @@
     `;
     prevButton.disabled = currentPage === 1;
     prevButton.addEventListener('click', () => {
-      if (currentPage > 1) {
-      currentPage--;
-      displayDNDetails(filteredData);
-      updatePagination();
-      }
+        if (currentPage > 1) {
+        currentPage--;
+        displayDNDetails(filteredData);
+        updatePagination();
+        }
     });
     paginationContainer.appendChild(prevButton);
 
     // Calculate page numbers to show
     const pageNumbers = [];
     if (totalPages <= maxPageNumbersToShow) {
-      // If total pages is less than or equal to maxPageNumbersToShow, show all page numbers
-      for (let i = 1; i <= totalPages; i++) {
-      pageNumbers.push(i);
-      }
+        // If total pages is less than or equal to maxPageNumbersToShow, show all page numbers
+        for (let i = 1; i <= totalPages; i++) {
+        pageNumbers.push(i);
+        }
     } else {
-      // Otherwise, calculate which page numbers to show
-      pageNumbers.push(1); // Always show the first page
+        // Otherwise, calculate which page numbers to show
+        pageNumbers.push(1); // Always show the first page
 
-      const startPage = Math.max(2, currentPage - 1);
-      const endPage = Math.min(totalPages - 1, currentPage + 1);
+        const startPage = Math.max(2, currentPage - 1);
+        const endPage = Math.min(totalPages - 1, currentPage + 1);
 
-      if (startPage > 2) {
-      pageNumbers.push('...');
-      }
+        if (startPage > 2) {
+        pageNumbers.push('...');
+        }
 
-      for (let i = startPage; i <= endPage; i++) {
-      pageNumbers.push(i);
-      }
+        for (let i = startPage; i <= endPage; i++) {
+        pageNumbers.push(i);
+        }
 
-      if (endPage < totalPages - 1) {
-      pageNumbers.push('...');
-      }
+        if (endPage < totalPages - 1) {
+        pageNumbers.push('...');
+        }
 
-      pageNumbers.push(totalPages); // Always show the last page
+        pageNumbers.push(totalPages); // Always show the last page
     }
 
     // Page numbers buttons
     pageNumbers.forEach(number => {
-      const pageButton = document.createElement('button');
-      if (number === '...') {
-      pageButton.className = 'px-4 py-2 2xl:px-6 2xl:py-4 text-gray-900 bg-gray-200 rounded-md cursor-default';
-      pageButton.textContent = '...';
-      } else {
-      pageButton.className = `px-4 py-2 2xl:px-6 2xl:py-4 ${number === currentPage ? 'bg-blue-900 text-white' : 'bg-gray-200 text-gray-900'} rounded-md hover:bg-gray-300`;
-      pageButton.textContent = number;
-      pageButton.addEventListener('click', () => {
-          currentPage = number;
-          displayDNDetails(filteredData);
-          updatePagination();
-      });
-      }
-      paginationContainer.appendChild(pageButton);
+        const pageButton = document.createElement('button');
+        if (number === '...') {
+        pageButton.className = 'px-4 py-2 2xl:px-6 2xl:py-4 text-gray-900 bg-gray-200 rounded-md cursor-default';
+        pageButton.textContent = '...';
+        } else {
+        pageButton.className = `px-4 py-2 2xl:px-6 2xl:py-4 ${number === currentPage ? 'bg-blue-900 text-white' : 'bg-gray-200 text-gray-900'} rounded-md hover:bg-gray-300`;
+        pageButton.textContent = number;
+        pageButton.addEventListener('click', () => {
+            currentPage = number;
+            displayDNDetails(filteredData);
+            updatePagination();
+        });
+        }
+        paginationContainer.appendChild(pageButton);
     });
 
     // Next button
