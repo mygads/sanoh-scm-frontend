@@ -75,10 +75,6 @@
             </button>
             
           </form>
-
-          <!-- <div id="loading-spinner" class="hidden fixed inset-0 flex items-center justify-center bg-gray-700 bg-opacity-50 z-50">
-            <div class="w-16 h-16 border-4 border-blue-500 border-solid border-t-transparent rounded-full animate-spin"></div>
-          </div> -->
           
           <p class="self-center mt-56 mb-5 text-xs font-medium text-center text-slate-800 w-[259px] max-md:mt-10">
             <span class="text-zinc-400">By login an account I accept Company's</span>
@@ -167,7 +163,7 @@ async function handleLogin(event) {
       setTimeout(() => {
         saveLogout();
         redirectToDashboardIndex(data.role);
-      }, 1500);
+      }, 1000);
 
     } else {
       displayNotification(`Invalid username or password`);
