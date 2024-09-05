@@ -210,13 +210,51 @@
 
 <!-- Add the script to handle table sorting and pagination -->
 <script>
+
+  cekToken();
+
   let rowsPerPage = 10;
   let currentPage = 1;
   let details = [];
   let filteredDataDetail = []; // Initialize this to hold the filtered data
 
-  // Adjust rows per page based on screen size
-  adjustRowsPerPage();
+  async function fetchPODetails(po_no) {
+    const token = localStorage.getItem('accessToken');
+    try {
+        const response = await fetch(`https://api.edutrashgo.com/api/indexpodetail1/${po_no}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("Data fetched:", data);
+
+        if (data.success && data.data) {
+            const processedDetails = data.data.map((detail, index) => ({
+                no: (index + 1).toString(),
+                partNumber: detail.bp_part_no,
+                partName: detail.item_desc_a,
+                UoM: detail.purchase_unit,
+                QTY: detail.po_qty,
+            }));
+            console.log('Processed PO Details:', processedDetails); // Debug: Log the processed details
+            return processedDetails;
+        } else {
+            console.error('No data found or unexpected format.');
+            return [];
+        }
+    } catch (error) {
+        console.error(`Error fetching details for PO ${po_no}:`, error);
+        return [];
+    }
+  }
 
   document.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
@@ -263,7 +301,6 @@
     window.addEventListener('resize', () => {
         adjustRowsPerPage();
         displayPODetails(filteredDataDetail);
-        updatePagination();
     });
 
     document.getElementById('search-input').addEventListener('input', searchTable);

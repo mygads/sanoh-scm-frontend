@@ -49,6 +49,10 @@ APIpartner2 = API + `/partner2`;
 APIindexdnheader2 = API + `/indexdnheader2`;
 APIindexdndetail2 = API + '/indexdndetail2/';
 APIpartner3 = API + `/partner3`;
+APIindexlistingreport = API + `/indexlistingreport3`;
+APIuploadlisting = API + `/createlistingreport3`;
+APIpartner3 = API + `/partner3`;
+APIreadfile = API + '/listingreport1/file/'
 
 
 
