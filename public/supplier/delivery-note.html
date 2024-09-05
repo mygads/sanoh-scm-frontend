@@ -175,137 +175,103 @@
 <script src="../table.js"></script>
 <!-- Add the script to handle table sorting and pagination -->
 <script>
-  cekToken(); 
+  cekToken();
 
   let pendingResponseIndex = null;
   let pendingResponseAction = '';
   let deliveryNote = [];
   let filteredDnData = [];
 
-  // Fetch delivery notes on page load
-  document.addEventListener('DOMContentLoaded', () => {
-    const params = new URLSearchParams(window.location.search);
-    const po_no = params.get('po_no'); // Ensure the PO number is fetched from URL
+  // Function to fetch delivery notes from the API
+  async function fetchDeliveryNotes() {
+      const token = localStorage.getItem('accessToken');
+      const bpCode = localStorage.getItem('bpCode');
 
-    if (po_no) {
-        console.log(`PO number from URL: ${po_no}`);
-        fetchDeliveryNotes(po_no);
-    } else {
-        console.error('PO number not found in the URL.');
-        displayNoDataMessage(); // Call this when PO number is missing
-    }
-  });
+      try {
+          const response = await fetch(`https://api.edutrashgo.com/api/indexdnheader1`, {
+              method: 'GET',
+              headers: {
+                  'Authorization': `Bearer ${token}`,
+                  'Content-Type': 'application/json',
+              },
+          });
 
-  // Define the function to display no data message
-  function displayNoDataMessage() {
-      const tableBody = document.getElementById('table-body-detail');
-      tableBody.innerHTML = `
-        <tr>
-          <td colspan="5" class="px-2 py-4 text-center font-medium text-gray-500">
-              No delivery notes available or PO number is missing.
-          </td>
-        </tr>
-      `;
-  }
+          if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+          }
 
-  async function fetchDeliveryNotes(po_no) {
-    const token = localStorage.getItem('accessToken');
-    
-    // Debugging: Check if `po_no` is undefined or null
-    if (!po_no) {
-        console.error('PO number is undefined or null.');
-        return;
-    }
+          const data = await response.json();
+          console.log(`Data fetched for DN:`, data);
 
-    try {
-        const response = await fetch(`https://api.edutrashgo.com/api/indexdnheader1/${po_no}`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
-            },
-        });
+          // Ensure data exists and is in expected format
+          if (data && data.data && Array.isArray(data.data)) {
+              // Map and manipulate your data accordingly
+              deliveryNote = data.data.map(dn => ({
+                  noDN: dn.no_dn ? dn.no_dn.toString() : '',
+                  noPO: dn.po_no ? dn.po_no.toString() : '',
+                  planDNDate: dn.plan_delivery_date || '',
+                  statusDN: dn.status_desc || '',
+                  details: dn.detail ? dn.detail.map((detail, index) => ({
+                      no: (index + 1).toString(),
+                      planDelivery: detail.plan_delivery_date || '',
+                      partNumber: detail.part_no || '',
+                      partName: detail.item_desc_a || '',
+                      UoM: detail.dn_unit || '',
+                      QTY: detail.dn_qty || 0,
+                      qtyLabel: detail.dn_snp || '',
+                      qtyRequested: detail.dn_qty || 0,
+                      qtyConfirm: detail.qty_confirm || 0,
+                      qtyDelivered: detail.receipt_qty || 0,
+                      qtyReceived: detail.receipt_qty || 0,
+                      qtyMinus: (detail.dn_qty - (detail.receipt_qty || 0)).toString()
+                  })) : []
+              }));
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
+              // Set filteredDnData to match deliveryNote initially
+              filteredDnData = deliveryNote;
 
-        const data = await response.json();
-        console.log(`Data fetched for PO ${po_no}:`, data);
-
-        // Check if data array is empty
-        if (!data.data || data.data.length === 0) {
-            console.log(`No delivery notes found for PO ${po_no}`);
-            displayNoDataMessage(); // Display no data message if no results
-            return;
-        }
-
-        // Map and manipulate your data accordingly
-        deliveryNote = data.data.map(dn => ({
-            noDN: dn.no_dn ? dn.no_dn.toString() : '',
-            noPO: dn.po_no ? dn.po_no.toString() : '',
-            planDNDate: dn.plan_delivery_date || '',
-            statusDN: dn.status_desc || '',
-            details: dn.detail ? dn.detail.map((detail, index) => ({
-                no: (index + 1).toString(),
-                planDelivery: detail.plan_delivery_date || '',
-                partNumber: detail.part_no || '',
-                partName: detail.item_desc_a || '',
-                UoM: detail.dn_unit || '',
-                QTY: detail.dn_qty || 0,
-                qtyLabel: detail.dn_snp || '',
-                qtyRequested: detail.dn_qty || 0,
-                qtyConfirm: detail.qty_confirm || 0,
-                qtyDelivered: detail.receipt_qty || 0,
-                qtyReceived: detail.receipt_qty || 0,
-                qtyMinus: (detail.dn_qty - (detail.receipt_qty || 0)).toString()
-            })) : []
-        }));
-
-        // Set filteredDnData to match deliveryNote initially
-        filteredDnData = deliveryNote;
-
-        // Display data and setup pagination
-        displayTableData(currentPage);
-        updatePagination();
-    } catch (error) {
-        console.error(`Error fetching delivery notes:`, error);
-        displayNoDataMessage(); // Display a message in case of an error
-    }
+              // Display data immediately after fetching
+              displayTableData();
+          } else {
+              console.error('No valid data found for the specified PO.');
+          }
+      } catch (error) {
+          console.error(`Error fetching delivery notes:`, error);
+      }
   }
 
   // Function to display data in the table
-  function displayTableData(page) {
-    const tableBody = document.getElementById('table-body-detail');
-    tableBody.innerHTML = '';
+  function displayTableData() {
+      const tableBody = document.getElementById('table-body');
 
-    const start = (page - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
-    const paginatedData = filteredDnData.slice(start, end);
+      if (!tableBody) {
+          console.error('table-body element not found.');
+          return;
+      }
 
-    if (paginatedData.length === 0) {
-        displayNoDataMessage();
-        return;
-    }
+      tableBody.innerHTML = '';
 
-    paginatedData.forEach(row => {
-        const tableRow = document.createElement('tr');
-        tableRow.innerHTML = `
-            <td class="px-2 py-4 text-center">${row.noDN}</td>
-            <td class="px-2 py-4 text-center">${row.noPO}</td>
-            <td class="px-2 py-4 text-center">${row.planDNDate}</td>
-            <td class="px-2 py-4 text-center">${row.statusDN}</td>
-        `;
-        tableBody.appendChild(tableRow);
-    });
+      // Iterate through filteredDnData to display in the table
+      filteredDnData.forEach(row => {
+          const tableRow = document.createElement('tr');
+          tableRow.innerHTML = `
+              <td class="px-2 py-4 text-center">
+                  <a href="delivery-note-detail.html?noDN=${row.noDN}" class="text-blue-600 underline">${row.noDN}</a>
+              </td>
+              <td class="px-2 py-4 text-center">
+                  <a href="purchase-order-detail.html?noPO=${row.noPO}" class="text-blue-600 underline">${row.noPO}</a>
+              </td>
+              <td class="px-2 py-4 text-center">${row.planDNDate}</td>
+              <td class="px-2 py-4 text-center">${row.statusDN}</td>
+          `;
+          tableBody.appendChild(tableRow);
+      });
   }
 
   function searchTable() {
       const searchInput = document.getElementById('search-input').value.toLowerCase();
       filteredDnData = deliveryNote.filter(row => row.noDN.toLowerCase().includes(searchInput));
-      currentPage = 1;
-      displayTableData(currentPage);
-      updatePagination();
+      displayTableData(); // Re-display data after searching
   }
 
   function sortTable(columnIndex) {
@@ -336,19 +302,19 @@
       tbody.append(...rows);
   }
 
+  // Execute after DOM is loaded
   document.addEventListener('DOMContentLoaded', () => {
       const name = localStorage.getItem('name');
       const bpCode = localStorage.getItem('bpCode');
 
       document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
 
-      window.addEventListener('resize', () => {
-          displayTableData(currentPage); // Re-render table data
-          updatePagination(); // Re-render pagination
-      });
+      // Fetch and display delivery notes
+      fetchDeliveryNotes();
 
       document.getElementById('search-input').addEventListener('input', searchTable);
   });
+
 </script>
 
 </html>

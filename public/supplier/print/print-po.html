@@ -285,16 +285,14 @@
 <div id="page-content"></div>
 <script src="../../api.js"></script>
 <script src="../../script.js"></script>
-<script>
+<script>    
 
-    cekToken();
-    
-
-    async function fetchPurchaseOrderData(po_no) {
+    async function fetchPurchaseOrderData() {
         const token = localStorage.getItem('accessToken');
+        const noPO = localStorage.getItem('noPO');
 
         try {
-            const response = await fetch(`https://api.edutrashgo.com/api/pohview1/${po_no}`, {
+            const response = await fetch(`https://api.edutrashgo.com/api/pohview1/${noPO}`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,
