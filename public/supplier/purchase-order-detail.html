@@ -15,7 +15,7 @@
 
 <body class="font-poppins bg-white">
   <section class="overflow-hidden w-screen h-screen bg-white">
-    <div class="flex">
+    <div class="flex h-screen">
 
       <!-- nav-side bar -->
       <aside class="flex flex-col w-[20%]">
@@ -77,16 +77,16 @@
           </ul>
 
           <!-- User and Logout Section at the Bottom -->
-          <div class="mt-[80%] flex flex-col w-full">
+          <div class="mt-auto flex flex-col w-full">
             
             <!-- User Info -->
             <div class="flex gap-4 items-center p-2 2xl:p-4 w-full bg-blue-950 bg-opacity-10 text-blue-950">
               <img loading="lazy" src="../assets/icon_people.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-              <span class="self-stretch my-auto text-sm 2xl:text-xl">PT Kawasaki</span>
+              <span id="user-info" class="self-stretch my-auto text-sm 2xl:text-xl"></span>
             </div>
             
             <!-- Logout Button -->
-            <a href="javascript:void(0)" onclick="handleLogout()" class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
+            <a href="../index.html" class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
               <img loading="lazy" src="../assets/icon_logout.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square logout-icon hover:icon_logout_white.svg" />
               <span class="self-stretch my-auto text-sm 2xl:text-xl">Logout</span>
             </a>
@@ -136,14 +136,11 @@
               </div>
               
               <div class="flex gap-3 2xl:gap-6 items-center self-stretch my-auto text-white 2xl:min-w-[240px] text-[10px] 2xl:text-lg">
-                <a href="print/export-csv-po.html" target="_blank" class="flex gap-2 2xl:gap-4 items-center self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5">
+                <a id="printLink" class="flex gap-2 2xl:gap-4 items-center self-stretch px-6 2xl:px-9 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5">
                   <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-5 aspect-square" />
-                  <span class="flex-1 shrink self-stretch my-auto ">Export CSV</span>
-                </a>
-                <a href="print/print-po.html" target="_blank" class="flex gap-2 2xl:gap-4 items-center self-stretch px-6 2xl:px-9 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5">
-                  <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-5 aspect-square" />
-                  <span class="flex-1 shrink self-stretch my-auto basis-0">Print PO </span>
-                </a>
+                  <span class="flex-1 shrink self-stretch my-auto basis-0">Print PO</span>
+                </a>    
+                
               </div>
             </div>
 
@@ -205,16 +202,17 @@
 
 </body>
 
-<script src="../script.js"></script>
 <script src="script.js"></script>
+<script src="../api.js"></script>
+<script src="../script.js"></script>
+<script src="../table.js"></script>
 
 <!-- Add the script to handle table sorting and pagination -->
 <script>
 
   cekToken();
 
-  let rowsPerPage = 10;
-  let currentPage = 1;
+
   let details = [];
   let filteredDataDetail = []; // Initialize this to hold the filtered data
 
@@ -260,6 +258,16 @@
     const params = new URLSearchParams(window.location.search);
     const noPO = params.get('noPO');
     const noteFromURL = params.get('note');
+    
+      // Set href untuk Print PO link secara dinamis
+      if (noPO) {
+        const printLink = document.getElementById('printLink');
+        printLink.href = `print/print-po.html?noPO=${noPO}`;  // Update href
+        console.log("Href updated with noPO:", printLink.href);  // Debugging
+      } else {
+        console.error('Parameter noPO tidak ditemukan dalam URL.');
+      }
+
 
     console.log("noPO from URL:", noPO);
     console.log("Note from URL:", noteFromURL);
