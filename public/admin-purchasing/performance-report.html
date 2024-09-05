@@ -12,6 +12,7 @@
     rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
 </head>
 
 <body class="font-poppins bg-white">
@@ -103,7 +104,7 @@
             <form id="supplierForm" class="flex flex-col w-full text-neutral-500">
               <div class="flex flex-col xl:w-[500px] 2xl:w-[600px]">
                 <label for="Supplier" class="block xl:mb-6 2xl:mb-8 xl:text-base 2xl:text-lg text-neutral-500"></label>
-                <select id="Supplier"
+                <select id="supplier_id"
                   class="scrollable-select bg-transparent border border-neutral-300 rounded-lg block w-full p-4 2xl:p-7 text-neutral-500 text-sm 2xl:text-lg">
                   <option value="">Cari Supplier</option>
                   <!-- Options will be added here by JavaScript -->
@@ -195,34 +196,26 @@
 
 </body>
 
+<script src="script.js"></script>
+<script src="../api.js"></script>
 <script src="../script.js"></script>
+<script src="../table.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<!-- jQuery for Select2 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <!-- Add the script to handle table sorting and pagination -->
 <script>
-  let currentPage = 1;
-  let rowsPerPage = 4;  // Default jumlah data per halaman
-  let filteredData = [];
-  let originalData = [];  // Menyimpan data asli
+
   let sortOrder = {}; // Object to keep track of sort order for each column
 
-  const apiUrl = 'http://localhost:8000/api/indexlistingreport3';
-  const uploadApiUrl = 'http://localhost:8000/api/createlistingreport3';
-  const supplierApiUrl = 'http://localhost:8000/api/partner3';
+  cekToken();
 
   document.addEventListener('DOMContentLoaded', () => {
-    const name = localStorage.getItem('name');
-    const bpCode = localStorage.getItem('bpCode');
-    const token = localStorage.getItem('accessToken');
-    
-    document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
-  
-    if (!token) {
-      alert("Authentication token not found. Please log in again.");
-      return;
-    }
-  
-    fetchSuppliers(token);
+
+    fetchSuppliers();
     adjustRowsPerPage(); // Atur jumlah data per halaman berdasarkan ukuran layar
     window.addEventListener('resize', () => {
       adjustRowsPerPage();
@@ -230,14 +223,18 @@
       updatePagination();
     });
 
-    const supplierSelect = document.getElementById('Supplier');
+    const supplierSelect = document.getElementById('supplier_id');
     const form = document.getElementById('upload-file');
     const uploadButton = document.getElementById('upload-button');
     const fileUpload = document.getElementById('file-upload');
     const monthPicker = document.getElementById('month-picker');
 
+    // const selectedSupplierId = $('#supplier_id').val(); 
+
     supplierSelect.addEventListener('change', async (event) => {
       const selectedSupplierId = event.target.value;
+      console.log('Supplier dipilih:', selectedSupplierId); // Debugging
+
       if (selectedSupplierId) {
         // Tampilkan section setelah supplier dipilih
         document.getElementById('addFileSection').classList.remove('hidden');
@@ -248,7 +245,7 @@
         localStorage.setItem('selectedSupplierId', selectedSupplierId);
 
         // Panggil fetchPerformanceReport untuk memperbarui data tabel berdasarkan supplier yang dipilih
-        await fetchPerformanceReport(token);
+        await fetchPerformanceReport(selectedSupplierId);
         displayTableData(currentPage);
         updatePagination();
       } else {
@@ -279,10 +276,11 @@
       const file = fileUpload.files[0];
       const period = monthPicker.value;
       const supplierId = localStorage.getItem('selectedSupplierId');
-      const bpCode = localStorage.getItem('bpCode'); // Ensure bpCode is obtained
+      const valid = validateForm(file, period, supplierId);
+      // const supplierSelectedCode = localStorage.getItem('selectedSupplierId');
+      
 
       // Validate form fields
-      let valid = true;
       if (!file) {
         alert('Silakan pilih file untuk diunggah.');
         valid = false;
@@ -291,25 +289,22 @@
         alert('Silakan pilih periode.');
         valid = false;
       }
-      if (!supplierId) {
+      if (!supplierSelectedCode) {
         alert('Silakan pilih supplier.');
-        valid = false;
-      }
-      if (!bpCode) {
-        alert('Silakan ambil kode BP dari localStorage.');
         valid = false;
       }
 
       if (valid) {
-        await uploadFile(token, bpCode); // Tambahkan bpCode saat memanggil uploadFile
+        await uploadFile(token, supplierId, file, period); // Tambahkan bpCode saat memanggil uploadFile
       }
     });
 
     document.getElementById('search-button').addEventListener('click', async () => {
       const selectedMonth = document.getElementById('month-input').value;
+      const supplierId = localStorage.getItem('selectedSupplierId');
 
       if (selectedMonth) {
-        await fetchPerformanceReport(token, selectedMonth);  // Panggil fetchPerformanceReport dengan parameter bulan yang dipilih
+        await fetchPerformanceReport(supplierId, selectedMonth);  // Panggil fetchPerformanceReport dengan parameter bulan yang dipilih
         displayTableData(currentPage);
         updatePagination();
       } else {
@@ -317,49 +312,60 @@
       }
     });
 
-    addSortingListeners(); // Tambahkan event listener untuk sorting
+    // addSortingListeners(); // Tambahkan event listener untuk sorting
   });
 
-  async function fetchSuppliers(token) {
+
+  async function fetchSuppliers() {
+    const token = localStorage.getItem('accessToken');
     try {
-      const response = await fetch(supplierApiUrl, {
+      const response = await fetch(APIpartner3, {
+        method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
+          'Content-Type': 'application/json',
+        },
       });
-  
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-  
-      const result = await response.json();
-      if (result.success) {
-        populateSupplierDropdown(result.data);
+      
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          // suppliersData = data.data;
+          // populateSupplierDropdown(suppliersData);
+          populateSupplierDropdown(data.data);
+        } else {
+          console.error('Failed to fetch suppliers:', data.message);
+        }
+        
       } else {
-        console.error('Gagal mengambil data supplier:', result.message);
-        alert(`Gagal mengambil data supplier: ${result.message}`);
+        console.error('Kesalahan saat mengambil data supplier:', response.status, response.statusText);
       }
-    } catch (error) {
-      console.error('Error fetching suppliers:', error);
-      alert(`Error fetching suppliers: ${error.message}`);
+    } catch (error) {        
+      console.error('Error Token Not Valid', error);
     }
   }
-  
-  function populateSupplierDropdown(suppliers) {
-    const supplierSelect = document.getElementById('Supplier');
-    supplierSelect.innerHTML = '<option value="">Cari Supplier</option>'; // Reset dropdown
-  
-    suppliers.forEach(supplier => {
+
+  // Fungsi untuk mengisi dropdown supplier
+  function populateSupplierDropdown(suppliersData) {
+    const supplierSelect = document.getElementById('supplier_id');
+    supplierSelect.innerHTML = '<option value="">Search Supplier</option>'; // Reset dropdown
+
+    suppliersData.forEach(supplier => {
       const option = document.createElement('option');
-      option.value = supplier.bp_code; // Menggunakan bp_code sebagai value
-      option.textContent = supplier.bp_name; // Menggunakan bp_name sebagai text
+      option.value = supplier.bp_code;
+      option.textContent = `${supplier.bp_code} | ${supplier.bp_name}`;
       supplierSelect.appendChild(option);
     });
+
+    // Initialize Select2 again after options are populated
+    // $(supplierSelect).select2({
+    //   placeholder: 'Search Supplier',
+    //   allowClear: true
+    // });
   }
 
-  async function fetchPerformanceReport(token, selectedMonth = null) {
-    const supplierId = localStorage.getItem('selectedSupplierId');
+  async function fetchPerformanceReport(supplierId, selectedMonth = null) {
+    const token = localStorage.getItem('accessToken');
   
     if (!supplierId) {
       alert('Supplier belum dipilih.');
@@ -367,7 +373,7 @@
     }
   
     try {
-      const response = await fetch(`${apiUrl}?supplierId=${supplierId}`, {
+      const response = await fetch(`${APIindexlistingreport}/${supplierId}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -379,10 +385,13 @@
       }
   
       const result = await response.json();
+      console.log('Data listing report:', result); // Debugging
+
       if (result.success) {
         originalData = result.data.map(item => ({
           no: item.po_listing_no,
           periode: formatDate(item.date),
+          upload_at: item.upload_at,
           attachedFile: item.file
         }));
 
@@ -408,48 +417,16 @@
     }
   }
   
-  async function uploadFile(token, bpCode) {
-    const fileUpload = document.getElementById('file-upload');
-    const file = fileUpload.files[0];
-    const period = document.getElementById('month-picker').value;
-    const supplierId = localStorage.getItem('selectedSupplierId');
-  
-    if (!token) {
-      alert("Token otentikasi tidak ditemukan. Silakan masuk lagi.");
-      return;
-    }
-  
-    if (!file) {
-      alert('Silakan pilih file untuk diunggah.');
-      return;
-    }
-  
-    if (!period) {
-      alert('Silakan pilih periode.');
-      return;
-    }
-  
-    if (!supplierId) {
-      alert('Silakan pilih supplier.');
-      return;
-    }
-  
-    if (!bpCode) {
-      alert('Silakan ambil kode BP dari localStorage.');
-      return;
-    }
+  async function uploadFile(token, supplierId, file, period) {
+    
   
     const formData = new FormData();
     formData.append('file', file);
     formData.append('date', period);
-    formData.append('bp_code', bpCode);
-  
-    formData.forEach((value, key) => {
-        console.log(key + ': ' + value);
-    });
+    formData.append('bp_code', supplierId);
   
     try {
-      const response = await fetch(uploadApiUrl, {
+      const response = await fetch(APIuploadlisting, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -457,27 +434,13 @@
         body: formData
       });
 
-      const responseText = await response.text();
-      console.log("Response Text:", responseText);
+      const result = await response.json();
 
-      try {
-        const result = JSON.parse(responseText);
-        
-        if (response.ok) {
-          if (result.status) {
-            displayNotification(result.message);
-            addFileToTable(result.data);
-          } else {
-            console.error('Gagal mengunggah file:', result.message);
-            alert(`Error: ${result.message}`);
-          }
-        } else {
-          console.error('Error Details:', result);
-          alert(`HTTP error! Status: ${response.status}`);
-        }
-      } catch (jsonError) {
-        console.error('Error parsing JSON:', jsonError);
-        alert("Error parsing response JSON: " + jsonError.message);
+      if (response.ok && result.status) {
+        displayNotification(result.message);
+        addFileToTable(result.data);
+      } else {
+        alert(`Error: ${result.message}`);
       }
     } catch (error) {
       console.error('Error uploading file:', error);
@@ -485,30 +448,48 @@
     }
   }
 
-  function displayNotification(message) {
-    const notification = document.getElementById('notification');
-    notification.textContent = message;
-    notification.classList.remove('hidden');
-    setTimeout(() => {
-      notification.classList.add('hidden');
-    }, 3000);
-  }
-
   function addFileToTable(fileData) {
     const tableBody = document.getElementById('table-body-detail');
     const tableRow = document.createElement('tr');
     tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b');
+
+    const fileUrl = `${APIreadfile}${fileData.file}`; // Generate file URL dynamically
+
     tableRow.innerHTML = `
       <td class="px-2 py-4 text-center font-medium text-gray-900">${fileData.po_listing_no}</td>
       <td class="px-2 py-4 text-center">${formatDate(fileData.date)}</td>
       <td class="px-1 py-2 text-center flex items-center justify-center">
-        <a href="${fileData.file}" target="_blank">
-          <img src="../assets/icon_pdf.svg" alt="PDF Icon" class="w-6 h-6"/>
+        <a href="${fileUrl}" target="_blank">
+          ${getFileIcon(fileData.file)}
         </a>
       </td>
     `;
     tableBody.appendChild(tableRow);
   }
+
+  function getFileIcon(filename) {
+    const extension = filename.split('.').pop().toLowerCase(); // Get the file extension
+
+    switch (extension) {
+        case 'pdf':
+            return `<img src="../assets/icon_pdf.svg" alt="PDF Icon" class="w-6 h-6" />`;
+        case 'doc':
+            return `<img src="../assets/icon_doc.svg" alt="png Icon" class="w-6 h-6" />`;
+        case 'docx':
+            return `<img src="../assets/icon_docx.svg" alt="Word Icon" class="w-6 h-6" />`;
+        case 'jpg':
+        case 'jpeg':
+            return `<img src="../assets/icon_jpg.svg" alt="png Icon" class="w-6 h-6" />`;
+        case 'png':
+            return `<img src="../assets/icon_png.svg" alt="png Icon" class="w-6 h-6" />`;
+        case 'xls':
+        case 'xlsx':
+            return `<img src="../assets/icon_excel.svg" alt="Excel Icon" class="w-6 h-6" />`;
+        default:
+            return `<img src="../assets/icon_file.svg" alt="File Icon" class="w-6 h-6" />`;
+    }
+  }
+
 
   function formatDate(dateString) {
     const date = new Date(dateString);
@@ -532,148 +513,75 @@
         const tableRow = document.createElement('tr');
         tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b');
         tableRow.innerHTML = `
-            <td class="px-2 py-4 text-center font-medium text-gray-900">${row.no}</td>
-            <td class="px-2 py-4 text-center">${row.periode}</td>
-            <td class="px-1 py-2 text-center flex items-center justify-center">
-                <a href="${row.attachedFile}" download>
-                    <img src="../assets/icon_pdf.svg" alt="PDF Icon" class="w-6 h-6"/>
-                </a>
-            </td>
+          <td class="px-2 py-4 text-center font-medium text-gray-900">${row.no}</td>
+          <td class="px-2 py-4 text-center">${row.periode}</td>
+          <td class="px-1 py-2 text-center flex items-center justify-center">
+            <a href="${APIreadfile}${row.attachedFile}" download>
+              ${getFileIcon(row.attachedFile)}
+            </a>
+          </td>
         `;
         tableBody.appendChild(tableRow);
     });
 }
-
-
-  function updatePagination() {
-    const paginationContainer = document.querySelector('.pagination');
-    if (!paginationContainer) {
-      console.error('Pagination container not found!');
-      return;
-    }
-    
-    paginationContainer.innerHTML = '';
-
-    const totalPages = Math.ceil(filteredData.length / rowsPerPage);
-    const maxPageNumbersToShow = 4;
-
-    const prevButton = document.createElement('button');
-    prevButton.className = 'px-3 py-3 2xl:px-4 2xl:py-4 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
-    prevButton.innerHTML = `
-      <svg class="2xl:w-4 2xl:h-4 w-3 h-3 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
-        <path d="M8.766.566A2 2 0 0 0 6.586 1L1 6.586a2 2 0 0 0 0 2.828L6.586 15A2 2 0 0 0 10 13.586V2.414A2 2 0 0 0 8.766.566Z" />
-      </svg>
-    `;
-    prevButton.disabled = currentPage === 1;
-    prevButton.addEventListener('click', () => {
-      if (currentPage > 1) {
-        currentPage--;
-        displayTableData(currentPage);
-        updatePagination();
-      }
-    });
-    paginationContainer.appendChild(prevButton);
-
-    const pageNumbers = [];
-    if (totalPages <= maxPageNumbersToShow) {
-      for (let i = 1; i <= totalPages; i++) {
-        pageNumbers.push(i);
-      }
-    } else {
-      pageNumbers.push(1);
-
-      const startPage = Math.max(2, currentPage - 1);
-      const endPage = Math.min(totalPages - 1, currentPage + 1);
-
-      if (startPage > 2) {
-        pageNumbers.push('...');
-      }
-
-      for (let i = startPage; i <= endPage; i++) {
-        pageNumbers.push(i);
-      }
-
-      if (endPage < totalPages - 1) {
-        pageNumbers.push('...');
-      }
-
-      pageNumbers.push(totalPages);
-    }
-
-    pageNumbers.forEach(number => {
-      const pageButton = document.createElement('button');
-      if (number === '...') {
-        pageButton.className = 'px-4 py-2 2xl:px-6 2xl:py-4 text-gray-900 bg-gray-200 rounded-md cursor-default';
-        pageButton.textContent = '...';
-      } else {
-        pageButton.className = `px-4 py-2 2xl:px-6 2xl:py-4 ${number === currentPage ? 'bg-blue-900 text-white' : 'bg-gray-200 text-gray-900'} rounded-md hover:bg-gray-300`;
-        pageButton.textContent = number;
-        pageButton.addEventListener('click', () => {
-          currentPage = number;
-          displayTableData(currentPage);
-          updatePagination();
-        });
-      }
-      paginationContainer.appendChild(pageButton);
-    });
-
-    const nextButton = document.createElement('button');
-    nextButton.className = 'px-3 py-3 2xl:px-4 2xl:py-4 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
-    nextButton.innerHTML = `
-      <svg class="2xl:w-4 2xl:h-4 w-3 h-3 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
-        <path d="M1.234 15.434a2 2 0 0 0 2.18-1.414L9 9.414a2 2 0 0 0 0-2.828L3.414.586A2 2 0 0 0 1.234 2.414v11.172z" />
-      </svg>
-    `;
-    nextButton.disabled = currentPage === totalPages;
-    nextButton.addEventListener('click', () => {
-      if (currentPage < totalPages) {
-        currentPage++;
-        displayTableData(currentPage);
-        updatePagination();
-      }
-    });
-    paginationContainer.appendChild(nextButton);
-  }
 
   function adjustRowsPerPage() {
     if (window.innerWidth < 768) {
       rowsPerPage = 3; // Atur menjadi 3 jika ukuran layar < 768
     } else if (window.innerWidth < 1280) {
       rowsPerPage = 4; // Atur menjadi 4 jika ukuran layar >= 768
+    } else {
+      rowsPerPage = 5;
     }
   }
 
-  // Fungsi untuk menambahkan event listener untuk sorting
-  function addSortingListeners() {
-    const headers = document.querySelectorAll('th[data-sort]');
-    headers.forEach(header => {
-      header.addEventListener('click', () => {
-        const sortKey = header.getAttribute('data-sort');
-        sortData(sortKey);
-      });
-    });
+  function validateForm(file, period, supplierId) {
+    if (!file) {
+      alert('Silakan pilih file untuk diunggah.');
+      return false;
+    }
+    if (!period) {
+      alert('Silakan pilih periode.');
+      return false;
+    }
+    if (!supplierId) {
+      alert('Silakan pilih supplier.');
+      return false;
+    }
+    return true;
   }
+
+  // Fungsi untuk menambahkan event listener untuk sorting
+  // function addSortingListeners() {
+  //   const headers = document.querySelectorAll('th[data-sort]');
+  //   headers.forEach(header => {
+  //     header.addEventListener('click', () => {
+  //       const sortKey = header.getAttribute('data-sort');
+  //       sortData(sortKey);
+  //     });
+  //   });
+  // }
 
   // Fungsi untuk mengurutkan data
-  function sortData(sortKey) {
-    // Toggle sort order
-    sortOrder[sortKey] = sortOrder[sortKey] === 'asc' ? 'desc' : 'asc';
+  // function sortData(sortKey) {
+  //   // Toggle sort order
+  //   sortOrder[sortKey] = sortOrder[sortKey] === 'asc' ? 'desc' : 'asc';
 
-    filteredData.sort((a, b) => {
-      if (a[sortKey] < b[sortKey]) {
-        return sortOrder[sortKey] === 'asc' ? -1 : 1;
-      } else if (a[sortKey] > b[sortKey]) {
-        return sortOrder[sortKey] === 'asc' ? 1 : -1;
-      } else {
-        return 0;
-      }
-    });
+  //   filteredData.sort((a, b) => {
+  //     if (a[sortKey] < b[sortKey]) {
+  //       return sortOrder[sortKey] === 'asc' ? -1 : 1;
+  //     } else if (a[sortKey] > b[sortKey]) {
+  //       return sortOrder[sortKey] === 'asc' ? 1 : -1;
+  //     } else {
+  //       return 0;
+  //     }
+  //   });
 
-    // Update table after sorting
-    currentPage = 1; // Reset to the first page after sorting
-    displayTableData(currentPage);
-    updatePagination();
-  }
+  //   // Update table after sorting
+
+  //   displayTableData(currentPage);
+  //   updatePagination();
+  // }
 </script>
 
 </html>
