@@ -238,7 +238,7 @@
             revisionDate: po.po_revision_date || "",
             status: po.po_status || "",
             response: po.response || "",
-            note: po.reference_2 || "",
+            note: po.note || "",
             details: (po.detail || []).map((detail, index) => ({
                 no: (index + 1).toString(),
                 partNumber: detail.bp_part_no || "",

@@ -283,11 +283,31 @@
 
     <!-- Page Content Container -->
 <div id="page-content"></div>
+<script src="../../api.js"></script>
+<script src="../../script.js"></script>
 <script>
+
+    cekToken();
+    
+
     async function fetchPurchaseOrderData(po_no) {
+        const token = localStorage.getItem('accessToken');
+
         try {
-            const response = await fetch(`http://127.0.0.1:8000/api/pohview/${po_no}`);
-            const poData = await response.json();
+            const response = await fetch(`https://api.edutrashgo.com/api/pohview1/${po_no}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log("Data fetched:", data);
 
             if (poData.success) {
                 const header = {
@@ -503,7 +523,7 @@
         <div style="display: flex; justify-content: space-between; margin-top: 150px;">
             <div style="text-align: left; font-size: 12px;">
                 <p>Accepted and Confirmed</p>
-                <p>PT. DELA CEMARA INDAH</p>
+                <p>${data.supplier_name}</p>
             </div>
     
             <table style="border-collapse: collapse; text-align: center; width: 60%;">
@@ -560,7 +580,8 @@
     }
 
     // Initialize
-    const po_no = 'PI2400200';
+    const params = new URLSearchParams(window.location.search);
+    const po_no = params.get('noPO');
     fetchPurchaseOrderData(po_no).then(data => {
         renderPurchaseOrder(data);
     });
