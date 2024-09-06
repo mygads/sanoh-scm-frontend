@@ -118,7 +118,7 @@
            <div id="addFileSection" class="flex flex-col mt-6 2xl:mt-8 w-full 2xl:text-base text-xs font-medium hidden">
             <div class="flex items-center mb-4">
               <label for="month-picker" class="mr-4 text-base 2xl:text-xl">Periode :</label>
-              <input type="date" id="month-picker" class="w-32 2xl:w-40 h-8 2xl:h-10 pl-4 pr-4 border rounded-md">
+              <input type="month" id="month-picker" class="w-32 2xl:w-40 h-8 2xl:h-10 pl-4 pr-4 border rounded-md">
             </div>
 
             <div class="flex items-center mb-4">
@@ -168,6 +168,11 @@
                     Periode
                     <img loading="lazy" src="../assets/icon_sort.svg" alt=""
                       class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <span class="sort-indicator"></span>
+                  </th>
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer">
+                    Created At
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
                   <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
@@ -274,7 +279,7 @@
       e.preventDefault(); // Prevent form from submitting traditionally
 
       const file = fileUpload.files[0];
-      const period = monthPicker.value;
+      let period = monthPicker.value;
       const supplierId = localStorage.getItem('selectedSupplierId');
       const valid = validateForm(file, period, supplierId);
       // const supplierSelectedCode = localStorage.getItem('selectedSupplierId');
@@ -295,6 +300,8 @@
       }
 
       if (valid) {
+        // Tambahkan hari default "00" untuk period yang dipilih
+        period = `${period}-00`;
         await uploadFile(token, supplierId, file, period); // Tambahkan bpCode saat memanggil uploadFile
       }
     });
@@ -519,6 +526,7 @@
         tableRow.innerHTML = `
           <td class="px-2 py-4 text-center font-medium text-gray-900">${row.no}</td>
           <td class="px-2 py-4 text-center">${row.periode}</td>
+          <td class="px-2 py-4 text-center">${row.upload_at}</td> <!-- Kolom Created At -->
           <td class="px-1 py-2 text-center flex items-center justify-center">
             <a href="${APIreadfile}${row.attachedFile}" download>
               ${getFileIcon(row.attachedFile)}
