@@ -171,10 +171,7 @@
 
 <script src="script.js"></script>
 <script src="../api.js"></script>
-<script src="script.js"></script>
-<script src="../api.js"></script>
 <script src="../script.js"></script>
-<script src="../table.js"></script>
 <script src="../table.js"></script>
 <!-- Add the script to handle table sorting and pagination -->
 <script>
@@ -216,6 +213,7 @@
                   statusDN: dn.status_desc || '',
                   details: dn.detail ? dn.detail.map((detail, index) => ({
                       no: (index + 1).toString(),
+                      dnDetail: detail.detail_no || '',
                       planDelivery: detail.plan_delivery_date || '',
                       partNumber: detail.part_no || '',
                       partName: detail.item_desc_a || '',
@@ -233,8 +231,8 @@
               // Set filteredDnData to match deliveryNote initially
               filteredDnData = deliveryNote;
 
-              // Display data immediately after fetching
-              displayTableData();
+              displayTableData(1);
+              updatePagination();
           } else {
               console.error('No valid data found for the specified PO.');
           }
@@ -243,19 +241,19 @@
       }
   }
 
+  fetchDeliveryNotes();
+
   // Function to display data in the table
-  function displayTableData() {
+  function displayTableData(page) {
       const tableBody = document.getElementById('table-body');
-
-      if (!tableBody) {
-          console.error('table-body element not found.');
-          return;
-      }
-
       tableBody.innerHTML = '';
 
+      const start = (page - 1) * rowsPerPage;
+      const end = start + rowsPerPage;
+      const paginatedData = filteredDnData.slice(start, end);
+
       // Iterate through filteredDnData to display in the table
-      filteredDnData.forEach(row => {
+      paginatedData.forEach(row => {
           const tableRow = document.createElement('tr');
           tableRow.innerHTML = `
               <td class="px-2 py-4 text-center">

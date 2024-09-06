@@ -262,10 +262,7 @@
 
 <script src="script.js"></script>
 <script src="../api.js"></script>
-<script src="script.js"></script>
-<script src="../api.js"></script>
 <script src="../script.js"></script>
-<script src="../table.js"></script>
 <script src="../table.js"></script>
 
 <!-- Add the script to handle table sorting and pagination -->
@@ -284,11 +281,11 @@
 
     try {
         const response = await fetch(`https://api.edutrashgo.com/api/indexdnheader1`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
-            },
+          method: 'GET',
+          headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json',
+          },
         });
 
         if (!response.ok) {
@@ -313,6 +310,7 @@
                     // Ensure dn.detail exists and is an array, otherwise use an empty array
                     details: Array.isArray(dn.detail) && dn.detail.length > 0 ? dn.detail.map((detail, index) => ({
                         no: (index + 1).toString(),
+                        dnDetail: detail.detail_no || '',
                         planDelivery: detail.plan_delivery_date || '',
                         partNumber: detail.part_no || '',
                         partName: detail.item_desc_a || '',
@@ -332,12 +330,86 @@
 
             // Once data is fetched, call the function to process the DN details
             DNDetails();
+
         } else {
             console.error('No delivery note data found in the expected format.');
         }
     } catch (error) {
         console.error('Error fetching delivery notes:', error);
     }
+  }
+
+  async function editDNDetail(dnDetail, qtyConfirm) {
+    const token = localStorage.getItem('accessToken');
+    const bpCode = localStorage.getItem('bpCode');
+    const noDN = localStorage.getItem('noDN');
+    const noPO = localStorage.getItem('noPO');
+    // const dnDetail = localStorage.getItem('dnDetail');
+
+    const response = await fetch(`https://api.edutrashgo.com/api/edit1/${dnDetail}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return response.json();
+  }
+
+  // Async function to update DN detail and refresh UI
+  async function updateDNDetail(dnDetail, qtyConfirm) {
+      try {
+          // Log the payload being sent
+          console.log(`Updating DN Detail No: ${dnDetail}, Qty Confirm: ${qtyConfirm}`);
+
+          const response = await fetch(`https://api.edutrashgo.com/api/updatedndetail/${dnDetail}`, {
+              method: 'PUT',  // Ensure the correct HTTP method is used
+              headers: {
+                  'Authorization': `Bearer ${token}`,
+                  'Content-Type': 'application/json',
+              },
+              // Send the field as "qty_confirm" to match the server's expectation
+              body: JSON.stringify({ qty_confirm: parseInt(qtyConfirm) }),  // Ensure qty_confirm is an integer
+          });
+
+          if (!response.ok) {
+              const errorData = await response.json();
+              console.error(`Error details:`, errorData);
+              // Log each field error if present
+              if (errorData.errors) {
+                  for (const [field, error] of Object.entries(errorData.errors)) {
+                      console.error(`Validation error in field "${field}": ${error}`);
+                  }
+              }
+              throw new Error(`HTTP error! status: ${response.status}, message: ${errorData.message || 'Unknown error'}`);
+          }
+
+          const updatedData = await response.json();
+          console.log(`Successfully updated DN Detail No: ${dnDetail}`, updatedData);
+
+          // Update the UI with the new data
+          updateUIDetail(dnDetail, qtyConfirm);
+
+          return updatedData;
+      } catch (error) {
+          console.error(`Failed to update DN detail ${dnDetail}:`, error);
+          throw error;
+      }
+  }
+
+  function updateUIDetail(dnDetail, qtyConfirm) {
+      // Find the row corresponding to dnDetailNo
+      const inputField = document.querySelector(`input[data-dn-detail-no='${dnDetail}']`);
+      if (inputField) {
+          inputField.value = qtyConfirm;
+          // Optionally, you could update other parts of the UI here, if needed.
+          console.log(`UI updated for DN Detail No: ${dnDetail} with Qty Confirm: ${qtyConfirm}`);
+      }
   }
 
   // Call the function to fetch data on page load
@@ -457,7 +529,7 @@
         const inputs = document.querySelectorAll('.qty-confirm-input');
         for (let i = 0; i < inputs.length; i++) {
             const input = inputs[i];
-            const dn_detail_no = input.getAttribute('data-dn-detail-no');
+            const dnDetail = input.getAttribute('data-dn-detail-no');
             let qtyConfirm = input.value;
 
             if (isNaN(qtyConfirm) || qtyConfirm === '' || qtyConfirm < 0) {
@@ -468,15 +540,15 @@
             qtyConfirm = parseInt(qtyConfirm);
 
             try {
-                await editDNDetail(dn_detail_no, qtyConfirm);
-                await updateDNDetail(dn_detail_no, qtyConfirm);
+                await editDNDetail(dnDetail, qtyConfirm);
+                await updateDNDetail(dnDetail, qtyConfirm);
             } catch (error) {
-                console.error(`Failed to update DN detail ${dn_detail_no}:`, error);
-                alert(`Failed to update DN detail ${dn_detail_no}. Please try again.`);
+                console.error(`Failed to update DN detail ${dnDetail}:`, error);
+                alert(`Failed to update DN detail ${dnDetail}. Please try again.`);
                 return;
             }
 
-            const dataIndex = filteredDnDetailData.findIndex(detail => detail.dnDetailNo === dn_detail_no);
+            const dataIndex = filteredDnDetailData.findIndex(detail => detail.dnDetail === dn_detail_no);
             if (dataIndex !== -1) {
                 filteredDnDetailData[dataIndex].qtyConfirm = qtyConfirm;
             }
