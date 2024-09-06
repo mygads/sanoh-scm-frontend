@@ -169,20 +169,16 @@
 
 </body>
 
-<script src="../script.js"></script>
 <script src="script.js"></script>
-<!-- Add the script to handle table sorting and pagination -->
-<script>
-  const name = localStorage.getItem('name');
-  const bpCode = localStorage.getItem('bpCode');
+<script src="../api.js"></script>
+<script src="../script.js"></script>
+<script src="../table.js"></script>
 
-  document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
+<script>
   
-  let rowsPerPage = 12;
-  let currentPage = 1;
+cekToken();
+
   let suppliersData = [];
-  let filteredData = [];
-  let originalData = [];  // Menyimpan data asli
   let sortOrder = {}; // Object to keep track of sort order for each column
 
   // Fungsi untuk mengambil data supplier

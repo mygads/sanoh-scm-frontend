@@ -192,15 +192,16 @@
 
 </body>
 
-<script src="../script.js"></script>
 <script src="script.js"></script>
+<script src="../api.js"></script>
+<script src="../script.js"></script>
+<script src="../table.js"></script>
 
 <!-- Add the script to handle table sorting and pagination -->
 <script>
 
-  let rowsPerPage = 10;
-  let currentPage = 1;
-  let filteredData = [];
+  cekTOken();
+
   
 
   // Adjust rows per page based on screen size
@@ -349,10 +350,6 @@
 }
 
   document.addEventListener('DOMContentLoaded', () => {
-    const name = localStorage.getItem('name');
-    const bpCode = localStorage.getItem('bpCode');
-
-    document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
     
     adjustRowsPerPage(); // Set rows per page based on initial screen size
     window.addEventListener('resize', () => {
