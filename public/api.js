@@ -46,7 +46,7 @@ function saveLogout() {
     } else if (userRole === '3') {
       role = '/purchasing'
     } else if (userRole === '4') {
-      role = '/admin'
+      role = '/adming'
     }
   }
   localStorage.setItem('APIlogout', API + role + '/logout');
@@ -67,6 +67,7 @@ APIindexlistingreport = API + `/indexlistingreport3`;
 APIuploadlisting = API + `/createlistingreport3`;
 APIpartner3 = API + `/partner3`;
 APIreadfile = API + '/listingreporttest/file/'
+APIindexlistingreportSupplier = API + `/indexlistingreport1`;
 
 
 

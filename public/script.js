@@ -15,7 +15,7 @@ const bpCode = localStorage.getItem('bpCode');
 
 function cekToken() {
   if (token) {
-    checkSession()
+    checkSession();
   } 
   else {
     redirectToLogin();
@@ -75,7 +75,7 @@ async function handleLogout() {
     const result = await response.json();
 
     if (response.ok && result.success) {
-      displayNotification(`User "${name}" successfully logged out!`, 'success');
+      displayNotification(`User successfully logged out!`, 'success');
       clearSession();  // Hapus token dari localStorage 
       console.log(result)
       setTimeout(() => {
@@ -107,7 +107,7 @@ function displayNotification(message, type) {
 
   notification.textContent = message;
   notification.className = 'fixed bottom-4 right-4 p-4 rounded-lg shadow-lg text-white ';
-  notification.className += type === 'success' ? 'bg-green-500' : 'bg-red-500';
+  notification.className += type === 'success' ? 'bg-green-600' : 'bg-red-600';
 
   document.body.appendChild(notification);
 
