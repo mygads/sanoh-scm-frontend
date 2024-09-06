@@ -49,6 +49,7 @@ APIindexdndetail2 = API + '/indexdndetail2/';
 
 
 // supplier
+API_dashboardSupplier = API + `/dashboard`;
 API_indexPOSupplier = API + `/indexpoheader1/`;
 API_updatePOSupplier = API + `/updatepoheader1/`;
 API_indexPerformanceReportSupplier = API + `/indexlistingreport1`;
