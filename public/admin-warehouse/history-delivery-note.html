@@ -7,10 +7,15 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
+  <link
+    href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
     rel="stylesheet">
+
+  <!-- Select2 CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
-  
+
 </head>
 
 <body class="font-poppins bg-white">
@@ -18,83 +23,83 @@
     <div class="flex h-screen">
 
       <!-- nav-side bar -->
-    <aside class="flex flex-col w-[20%] h-screen border-r border-r-neutral-400 bg-stone-300">
-      <nav class="flex flex-col grow py-9 2xl:py-14 text-base font-medium">
+      <aside class="flex flex-col w-[20%] h-screen border-r border-r-neutral-400 bg-stone-300">
+        <nav class="flex flex-col grow py-9 2xl:py-14 text-base font-medium">
 
-        <!-- Logo Sanoh -->
-        <img loading="lazy" src="../assets/logosanoh.svg"
-          class="object-contain self-center w-30 2xl:w-48 max-w-full cursor-pointer" />
+          <!-- Logo Sanoh -->
+          <img loading="lazy" src="../assets/logosanoh.svg"
+            class="object-contain self-center w-30 2xl:w-48 max-w-full cursor-pointer" />
 
-        <!-- Menu Items -->
-        <ul class="flex flex-col mt-7 2xl:mt-10 w-full text-gray-500">
-          <!-- Dashboard -->
-          <li>
-            <a href="index.html"
-              class="flex gap-4 items-center p-[9px] 2xl:p-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
-              <img loading="lazy" src="../assets/icon_home_default.svg" alt="Dashboard"
-                class="object-contain w-4 2xl:w-6" />
-              <span class="text-sm 2xl:text-xl">Dashboard</span>
+          <!-- Menu Items -->
+          <ul class="flex flex-col mt-7 2xl:mt-10 w-full text-gray-500">
+            <!-- Dashboard -->
+            <li>
+              <a href="index.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
+                <img loading="lazy" src="../assets/icon_home_default.svg" alt="Dashboard"
+                  class="object-contain w-4 2xl:w-6" />
+                <span class="text-sm 2xl:text-xl">Dashboard</span>
+              </a>
+            </li>
+
+            <!-- Purchase Order -->
+            <li class="hidden">
+              <a href="purchase-order.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 ">
+                <img loading="lazy" src="../assets/icon_po_default.svg" alt="Purchase Order"
+                  class="object-contain w-4 2xl:w-6 " />
+                <span class="text-sm 2xl:text-xl">Purchase Order</span>
+              </a>
+            </li>
+
+            <!-- Delivery Note -->
+            <li>
+              <a href="delivery-note.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
+                <img loading="lazy" src="../assets/icon_dn_default.svg" alt="Purchase Order"
+                  class="object-contain w-4 2xl:w-6" />
+                <span class="text-sm 2xl:text-xl">Delivery Note</span>
+              </a>
+            </li>
+
+            <!-- History Purchase Order -->
+            <li class="hidden">
+              <a href="history-purchase-order.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
+                <img loading="lazy" src="../assets/icon_history_default.svg" alt="History Purchase Order"
+                  class="object-contain w-4 2xl:w-6" />
+                <span class="text-sm 2xl:text-xl">History Purchase Order</span>
+              </a>
+            </li>
+
+            <!-- History Delivery Note -->
+            <li>
+              <a href="history-delivery-note.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 active">
+                <img loading="lazy" src="../assets/icon_history_default.svg" alt="History Purchase Order"
+                  class="object-contain w-4 2xl:w-6 icon-history-active" />
+                <span class="text-sm 2xl:text-xl">History Delivery Note</span>
+              </a>
+            </li>
+          </ul>
+
+          <!-- User and Logout Section at the Bottom -->
+          <div class="mt-auto flex flex-col w-full">
+            <!-- User Info -->
+            <div class="flex gap-4 items-center p-2 2xl:p-4 w-full bg-blue-950 bg-opacity-10 text-blue-950">
+              <img loading="lazy" src="../assets/icon_people.svg" alt="User Info" class="object-contain w-4 2xl:w-6" />
+              <span id="user-info" class="text-sm 2xl:text-xl"></span>
+            </div>
+
+            <!-- Logout Button -->
+            <a href="javascript:void(0)" onclick="handleLogout()"
+              class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 cursor-pointer bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50">
+              <img loading="lazy" src="../assets/icon_logout.svg" alt="Logout" class="object-contain w-4 2xl:w-6" />
+              <span class="text-sm 2xl:text-xl">Logout</span>
             </a>
-          </li>
-
-          <!-- Purchase Order -->
-          <li class="hidden">
-            <a href="purchase-order.html"
-              class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 ">
-              <img loading="lazy" src="../assets/icon_po_default.svg" alt="Purchase Order"
-                class="object-contain w-4 2xl:w-6 " />
-              <span class="text-sm 2xl:text-xl">Purchase Order</span>
-            </a>
-          </li>
-
-          <!-- Delivery Note -->
-          <li>
-            <a href="delivery-note.html"
-              class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
-              <img loading="lazy" src="../assets/icon_dn_default.svg" alt="Purchase Order"
-                class="object-contain w-4 2xl:w-6" />
-              <span class="text-sm 2xl:text-xl">Delivery Note</span>
-            </a>
-          </li>
-
-          <!-- History Purchase Order -->
-          <li class="hidden">
-            <a href="history-purchase-order.html"
-              class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
-              <img loading="lazy" src="../assets/icon_history_default.svg" alt="History Purchase Order"
-                class="object-contain w-4 2xl:w-6"/>
-              <span class="text-sm 2xl:text-xl">History Purchase Order</span>
-            </a>
-          </li>
-
-          <!-- History Delivery Note -->
-          <li>
-            <a href="history-delivery-note.html"
-              class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 active">
-              <img loading="lazy" src="../assets/icon_history_default.svg" alt="History Purchase Order"
-                class="object-contain w-4 2xl:w-6 icon-history-active" />
-              <span class="text-sm 2xl:text-xl">History Delivery Note</span>
-            </a>
-          </li>
-        </ul>
-
-        <!-- User and Logout Section at the Bottom -->
-        <div class="mt-auto flex flex-col w-full">
-          <!-- User Info -->
-          <div class="flex gap-4 items-center p-2 2xl:p-4 w-full bg-blue-950 bg-opacity-10 text-blue-950">
-            <img loading="lazy" src="../assets/icon_people.svg" alt="User Info" class="object-contain w-4 2xl:w-6" />
-            <span id="user-info" class="text-sm 2xl:text-xl"></span>
           </div>
-
-          <!-- Logout Button -->
-          <a href="javascript:void(0)" onclick="handleLogout()"
-            class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 cursor-pointer bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50">
-            <img loading="lazy" src="../assets/icon_logout.svg" alt="Logout" class="object-contain w-4 2xl:w-6" />
-            <span class="text-sm 2xl:text-xl">Logout</span>
-          </a>
-        </div>
-      </nav>
-    </aside>
+        </nav>
+      </aside>
 
       <!-- Main Content -->
       <main class="flex flex-col w-[80%] mb-[100%] mt-[3%] mx-auto px-6 2xl:px-10">
@@ -107,11 +112,12 @@
 
           <article class="flex flex-col items-start w-full text-base">
             <h1 class="text-base 2xl:text-xl font-semibold text-black mt-4">Select Supplier</h1>
-  
+
             <form id="supplierForm" class="flex flex-col w-full text-neutral-500">
               <div class="flex flex-col xl:w-[500px] 2xl:w-[600px]">
-                <label for="Supplier" class="block xl:mb-6 2xl:mb-8 xl:text-base 2xl:text-lg text-neutral-500"></label>
-                <select id="Supplier"
+                <label for="supplier_id"
+                  class="block xl:mb-6 2xl:mb-8 xl:text-base 2xl:text-lg text-neutral-500"></label>
+                <select id="supplier_id"
                   class="scrollable-select bg-transparent border border-neutral-300 rounded-lg block w-full p-4 2xl:p-7 text-neutral-500 text-sm 2xl:text-lg">
                   <option value="">Cari Supplier</option>
                   <!-- Options will be added here by JavaScript -->
@@ -119,7 +125,7 @@
               </div>
             </form>
           </article>
-      
+
 
           <div class="flex flex-col mt-4 2xl:mt-6 w-full 2xl:text-base text-xs font-medium">
 
@@ -128,11 +134,12 @@
               <!-- Search Bar -->
               <div class="flex flex-wrap items-center self-stretch my-auto  text-neutral-500">
                 <div class="flex items-center px-4 2xl:px-6 py-2 2xl:py-4 bg-neutral-100 rounded w-full ml-auto">
-                  <input id="search-input" type="text" placeholder="Search no delivery note" class="flex-1 bg-neutral-100 outline-none 2xl:text-base">
+                  <input id="search-input" type="text" placeholder="Search no delivery note"
+                    class="flex-1 bg-neutral-100 outline-none 2xl:text-base">
                   <img src="../assets/icon_search.svg" alt="Search Icon" class="w-4 2xl:w-5 h-4 2xl:h-5 ml-3">
                 </div>
               </div>
-          </div>
+            </div>
 
         </section>
 
@@ -143,31 +150,41 @@
             <table class="w-full text-[11px] 2xl:text-base text-left text-gray-700 dark:text-gray-700">
               <thead class="text-[14px] 2xl:text-[20px] text-gray-700">
                 <tr>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(0)">
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                    onclick="sortTable(0)">
                     No. DN
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
+                      class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(1)">
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                    onclick="sortTable(1)">
                     No. PO
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
+                      class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
-                  </th>                  
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(2)">
+                  </th>
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                    onclick="sortTable(2)">
                     Status DN
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
+                      class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
-                  </th> 
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(3)">
+                  </th>
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                    onclick="sortTable(3)">
                     Sent Date
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
+                      class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
-                  </th> 
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(4)">
+                  </th>
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                    onclick="sortTable(4)">
                     Received Date
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
+                      class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
-                  </th>  
+                  </th>
                 </tr>
               </thead>
               <tbody id="table-body">
@@ -177,7 +194,7 @@
           </div>
         </div>
 
-        
+
         <!-- Pagination -->
         <div class="flex justify-end my-6">
           <div class="flex gap-2 2xl:gap-4 items-center pagination">
@@ -195,24 +212,200 @@
 <script src="../api.js"></script>
 <script src="../script.js"></script>
 <script src="../table.js"></script>
+<!-- jQuery for Select2 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <script>
 
   cekToken();
 
-  let deliveryNote = []; // Initialize filteredData with all data
-  let pendingResponseIndex = null;
-  let pendingResponseAction = '';
+  let sortOrder = {}; // Object to keep track of sort order for each columnrray untuk data yang sudah difilter
 
-  // Adjust rows per page based on screen size
-  function adjustRowsPerPage() {
-    if (window.innerWidth <= 1280) {
-        rowsPerPage = 6;
-      } else if (window.innerWidth <= 1600) {
-        rowsPerPage = 8;
+  document.addEventListener('DOMContentLoaded', () => {
+    // Adjust rows per page based on screen size
+    fetchSuppliers();
+    adjustRowsPerPage(); // Atur jumlah data per halaman berdasarkan ukuran layar
+
+    window.addEventListener('resize', () => {
+      adjustRowsPerPage();
+      displayTableData(currentPage);
+      updatePagination(); // Call updatePagination() from table.js
+    });
+
+    const supplierSelect = document.getElementById('supplier_id');
+    const searchButton = document.getElementById('search-button');
+
+    // Event listener for supplier dropdown change
+    supplierSelect.addEventListener('change', async (event) => {
+      const selectedSupplierId = event.target.value;
+      console.log('Supplier dipilih:', selectedSupplierId); // Debugging
+
+      if (selectedSupplierId) {
+        // Tampilkan section setelah supplier dipilih
+        document.getElementById('periodeSection').classList.remove('hidden');
+
+        localStorage.setItem('selectedSupplierId', selectedSupplierId);
+
+        // Fetch performance report based on selected supplier
+        await fetchPerformanceReport(selectedSupplierId);
       } else {
-        rowsPerPage = 10;
+        // Sembunyikan section jika tidak ada supplier yang dipilih
+        document.getElementById('periodeSection').classList.add('hidden');
       }
+    });
+
+    if (searchButton) {
+      searchButton.addEventListener('input', searchTable);
+    }
+
+    // Initialize data
+    filteredDnData = [...deliveryNote]; // Copy data ke filteredDnData untuk diproses
+    displayTableData(currentPage); // Tampilkan data
+    updatePagination(); // Call updatePagination from table.js
+
+    // Add sorting listeners for each sortable column using data-sort
+    const sortableHeaders = document.querySelectorAll('th[data-sort]');
+    sortableHeaders.forEach(header => {
+      header.addEventListener('click', () => {
+        const columnIndex = header.getAttribute('data-sort');
+        sortTable(columnIndex); // Call the sorting function with the correct index
+      });
+    });
+  });
+
+  // Function to fetch suppliers and populate the dropdown
+  async function fetchSuppliers() {
+    const token = localStorage.getItem('accessToken');
+    try {
+      const response = await fetch(APIpartner2, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          populateSupplierDropdown(data.data);
+        } else {
+          console.error('Failed to fetch suppliers:', data.message);
+        }
+      } else {
+        console.error('Kesalahan saat mengambil data supplier:', response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error('Error Token Not Valid', error);
+    }
   }
+
+  async function fetchHistoryDeliveryNotes() {
+    const token = localStorage.getItem('accessToken');
+    const bpCode = localStorage.getItem('bpCode');
+
+    if (!bpCode) {
+      console.error('bpCode not found in localStorage.');
+      return;
+    }
+
+    try {
+      const response = await fetch(`${APIdnhistory2}/${bpCode}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Data fetched:", data);
+
+      if (data.success && data.data) {
+        deliveryNote = data.data.map(dn => ({
+          // Data delivery note dipetakan menjadi format yang diinginkan
+          noDN: dn.dn_number ? dn.dn_number.toString() : 'No DN Number',
+          noPO: dn.po_number ? dn.po_number.toString() : 'No PO Number',
+          statusDN: dn.dn_status || 'Unknown Status',
+          planDNDate: dn.send_date || 'Date Unknown',
+          receivedDNDate: dn.receive_date || 'Date Unknown',
+          details: dn.detail ? dn.detail.map((detail, index) => ({
+            // Detail item lainnya
+          })) : []
+        }));
+
+        // Set filteredHistoryDNData to match deliveryNote initially
+        filteredHistoryDNData = deliveryNote;
+
+        // Panggil fungsi displayTableData untuk menampilkan data
+        displayTableData();
+
+      } else {
+        console.error('No data found or unexpected format.');
+      }
+    } catch (error) {
+      console.error('Error fetching delivery notes:', error);
+    }
+  }
+
+  function displayTableData() {
+    const tableBody = document.getElementById('table-body');
+
+    if (!tableBody) {
+      console.error('Table body element not found.');
+      return;
+    }
+
+    // Kosongkan tabel sebelum memasukkan data baru
+    tableBody.innerHTML = '';
+
+    // Iterasi melalui setiap row dalam filteredHistoryDNData
+    filteredHistoryDNData.forEach((row) => {
+      const tableRow = document.createElement('tr');
+      tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
+      tableRow.innerHTML = `
+        <td class="px-2 py-4 text-center font-medium text-gray-900">
+          <a href="history-delivery-note-detail.html?noDN=${row.noDN}" class="text-blue-600 underline">${row.noDN}</a>
+        </td>
+        <td class="px-2 py-4 text-center font-medium text-gray-900">
+          <a href="history-purchase-order-detail.html?noPO=${row.noPO}" class="text-blue-600 underline">${row.noPO}</a>
+        </td>        
+        <td class="px-2 py-4 text-center">${row.statusDN}</td>
+        <td class="px-2 py-4 text-center">${row.planDNDate}</td>
+        <td class="px-2 py-4 text-center">${row.receivedDNDate}</td>
+      `;
+      tableBody.appendChild(tableRow);
+    });
+  }
+
+
+  // Populate the dropdown with suppliers
+  function populateSupplierDropdown(suppliersData) {
+    const supplierSelect = document.getElementById('supplier_id');
+    supplierSelect.innerHTML = '<option value="">Search Supplier</option>'; // Reset dropdown
+
+    suppliersData.forEach(supplier => {
+      const option = document.createElement('option');
+      option.value = supplier.bp_code;
+      option.textContent = `${supplier.bp_code} | ${supplier.bp_name}`;
+      supplierSelect.appendChild(option);
+    });
+
+    // Initialize Select2 again after options are populated
+    $(supplierSelect).select2({
+      placeholder: 'Search Supplier',
+      allowClear: true
+    });
+  }
+
+
+
 
   function displayTableData(page) {
     const tableBody = document.getElementById('table-body');
@@ -296,59 +489,59 @@
     `;
     prevButton.disabled = currentPage === 1;
     prevButton.addEventListener('click', () => {
-        if (currentPage > 1) {
+      if (currentPage > 1) {
         currentPage--;
         displayTableData(currentPage);
         updatePagination();
-        }
+      }
     });
     paginationContainer.appendChild(prevButton);
 
     // Calculate page numbers to show
     const pageNumbers = [];
     if (totalPages <= maxPageNumbersToShow) {
-        // If total pages is less than or equal to maxPageNumbersToShow, show all page numbers
-        for (let i = 1; i <= totalPages; i++) {
+      // If total pages is less than or equal to maxPageNumbersToShow, show all page numbers
+      for (let i = 1; i <= totalPages; i++) {
         pageNumbers.push(i);
-        }
+      }
     } else {
-        // Otherwise, calculate which page numbers to show
-        pageNumbers.push(1); // Always show the first page
+      // Otherwise, calculate which page numbers to show
+      pageNumbers.push(1); // Always show the first page
 
-        const startPage = Math.max(2, currentPage - 1);
-        const endPage = Math.min(totalPages - 1, currentPage + 1);
+      const startPage = Math.max(2, currentPage - 1);
+      const endPage = Math.min(totalPages - 1, currentPage + 1);
 
-        if (startPage > 2) {
+      if (startPage > 2) {
         pageNumbers.push('...');
-        }
+      }
 
-        for (let i = startPage; i <= endPage; i++) {
+      for (let i = startPage; i <= endPage; i++) {
         pageNumbers.push(i);
-        }
+      }
 
-        if (endPage < totalPages - 1) {
+      if (endPage < totalPages - 1) {
         pageNumbers.push('...');
-        }
+      }
 
-        pageNumbers.push(totalPages); // Always show the last page
+      pageNumbers.push(totalPages); // Always show the last page
     }
 
     // Page numbers buttons
     pageNumbers.forEach(number => {
-        const pageButton = document.createElement('button');
-        if (number === '...') {
+      const pageButton = document.createElement('button');
+      if (number === '...') {
         pageButton.className = 'px-4 py-2 2xl:px-6 2xl:py-4 text-gray-900 bg-gray-200 rounded-md cursor-default';
         pageButton.textContent = '...';
-        } else {
+      } else {
         pageButton.className = `px-4 py-2 2xl:px-6 2xl:py-4 ${number === currentPage ? 'bg-blue-900 text-white' : 'bg-gray-200 text-gray-900'} rounded-md hover:bg-gray-300`;
         pageButton.textContent = number;
         pageButton.addEventListener('click', () => {
-            currentPage = number;
-            displayTableData(currentPage);
-            updatePagination();
+          currentPage = number;
+          displayTableData(currentPage);
+          updatePagination();
         });
-        }
-        paginationContainer.appendChild(pageButton);
+      }
+      paginationContainer.appendChild(pageButton);
     });
 
     // Next button
@@ -361,17 +554,17 @@
     `;
     nextButton.disabled = currentPage === totalPages;
     nextButton.addEventListener('click', () => {
-        if (currentPage < totalPages) {
+      if (currentPage < totalPages) {
         currentPage++;
         displayTableData(currentPage);
         updatePagination();
-        }
+      }
     });
     paginationContainer.appendChild(nextButton);
-}
+  }
 
   document.addEventListener('DOMContentLoaded', () => {
-    
+
     adjustRowsPerPage(); // Set rows per page based on initial screen size
     window.addEventListener('resize', () => {
       adjustRowsPerPage(); // Adjust rows per page on screen resize
