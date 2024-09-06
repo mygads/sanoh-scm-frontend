@@ -1,4 +1,8 @@
 // p
+const noPO = localStorage.getItem('noPO'); // gw tambahin yog -kiki
+const note = localStorage.getItem('note'); // gw tambahin yog -kiki
+const noDN = localStorage.getItem('noDN'); // gw tambahin yog -kiki
+
 
 async function fetchDNDetails(dn_no) {
     try {

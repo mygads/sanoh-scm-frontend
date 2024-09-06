@@ -175,15 +175,15 @@
 
 </body>
 
-<script src="../script.js"></script>
 <script src="script.js"></script>
-<!-- Add the script to handle table sorting and pagination -->
+<script src="../api.js"></script>
+<script src="../script.js"></script>
+<script src="../table.js"></script>
 <script>
 
-  
-  let rowsPerPage = 10;
-  let currentPage = 1;
-  let filteredData = deliveryNote; // Initialize filteredData with all data
+  cekToken();
+
+  let deliveryNote = []; // Initialize filteredData with all data
   let pendingResponseIndex = null;
   let pendingResponseAction = '';
 
@@ -355,10 +355,6 @@
 }
 
   document.addEventListener('DOMContentLoaded', () => {
-    const name = localStorage.getItem('name');
-    const bpCode = localStorage.getItem('bpCode');
-
-    document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
     
     adjustRowsPerPage(); // Set rows per page based on initial screen size
     window.addEventListener('resize', () => {
