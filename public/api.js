@@ -66,7 +66,7 @@ APIpartner3 = API + `/partner3`;
 APIindexlistingreport = API + `/indexlistingreport3`;
 APIuploadlisting = API + `/createlistingreport3`;
 APIpartner3 = API + `/partner3`;
-APIreadfile = API + '/listingreporttes/file/'
+APIreadfile = API + '/listingreporttest/file/'
 
 
 

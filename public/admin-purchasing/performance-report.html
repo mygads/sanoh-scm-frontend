@@ -289,7 +289,7 @@
         alert('Silakan pilih periode.');
         valid = false;
       }
-      if (!supplierSelectedCode) {
+      if (!supplierId) {
         alert('Silakan pilih supplier.');
         valid = false;
       }
@@ -434,17 +434,21 @@
         body: formData
       });
 
-      const result = await response.json();
+      // Cek status respons
+      const textResponse = await response.text();
+      console.log("Response from server:", textResponse); // Log respons lengkap
 
+      // Ubah kembali ke JSON jika respons valid
+      const result = JSON.parse(textResponse);
       if (response.ok && result.status) {
-        displayNotification(result.message);
+        displayNotification(result.message,'success');
         addFileToTable(result.data);
       } else {
-        alert(`Error: ${result.message}`);
+        displayNotification(`Error: ${result.message}`);
       }
     } catch (error) {
       console.error('Error uploading file:', error);
-      alert(`Error uploading file: ${error.message}`);
+      displayNotification(`Error uploading file: ${error.message}`);
     }
   }
 
@@ -551,37 +555,6 @@
     return true;
   }
 
-  // Fungsi untuk menambahkan event listener untuk sorting
-  // function addSortingListeners() {
-  //   const headers = document.querySelectorAll('th[data-sort]');
-  //   headers.forEach(header => {
-  //     header.addEventListener('click', () => {
-  //       const sortKey = header.getAttribute('data-sort');
-  //       sortData(sortKey);
-  //     });
-  //   });
-  // }
-
-  // Fungsi untuk mengurutkan data
-  // function sortData(sortKey) {
-  //   // Toggle sort order
-  //   sortOrder[sortKey] = sortOrder[sortKey] === 'asc' ? 'desc' : 'asc';
-
-  //   filteredData.sort((a, b) => {
-  //     if (a[sortKey] < b[sortKey]) {
-  //       return sortOrder[sortKey] === 'asc' ? -1 : 1;
-  //     } else if (a[sortKey] > b[sortKey]) {
-  //       return sortOrder[sortKey] === 'asc' ? 1 : -1;
-  //     } else {
-  //       return 0;
-  //     }
-  //   });
-
-  //   // Update table after sorting
-
-  //   displayTableData(currentPage);
-  //   updatePagination();
-  // }
 </script>
 
 </html>
