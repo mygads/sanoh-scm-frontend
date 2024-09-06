@@ -118,7 +118,7 @@
            <div id="addFileSection" class="flex flex-col mt-6 2xl:mt-8 w-full 2xl:text-base text-xs font-medium hidden">
             <div class="flex items-center mb-4">
               <label for="month-picker" class="mr-4 text-base 2xl:text-xl">Periode :</label>
-              <input type="date" id="month-picker" class="w-32 2xl:w-40 h-8 2xl:h-10 pl-4 pr-4 border rounded-md">
+              <input type="month" id="month-picker" class="w-32 2xl:w-40 h-8 2xl:h-10 pl-4 pr-4 border rounded-md">
             </div>
 
             <div class="flex items-center mb-4">
@@ -168,6 +168,11 @@
                     Periode
                     <img loading="lazy" src="../assets/icon_sort.svg" alt=""
                       class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <span class="sort-indicator"></span>
+                  </th>
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer">
+                    Created At
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
                   <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
@@ -274,7 +279,7 @@
       e.preventDefault(); // Prevent form from submitting traditionally
 
       const file = fileUpload.files[0];
-      const period = monthPicker.value;
+      let period = monthPicker.value;
       const supplierId = localStorage.getItem('selectedSupplierId');
       const valid = validateForm(file, period, supplierId);
       // const supplierSelectedCode = localStorage.getItem('selectedSupplierId');
@@ -289,12 +294,14 @@
         alert('Silakan pilih periode.');
         valid = false;
       }
-      if (!supplierSelectedCode) {
+      if (!supplierId) {
         alert('Silakan pilih supplier.');
         valid = false;
       }
 
       if (valid) {
+        // Tambahkan hari default "00" untuk period yang dipilih
+        period = `${period}-00`;
         await uploadFile(token, supplierId, file, period); // Tambahkan bpCode saat memanggil uploadFile
       }
     });
@@ -434,17 +441,21 @@
         body: formData
       });
 
-      const result = await response.json();
+      // Cek status respons
+      const textResponse = await response.text();
+      console.log("Response from server:", textResponse); // Log respons lengkap
 
+      // Ubah kembali ke JSON jika respons valid
+      const result = JSON.parse(textResponse);
       if (response.ok && result.status) {
-        displayNotification(result.message);
+        displayNotification(result.message,'success');
         addFileToTable(result.data);
       } else {
-        alert(`Error: ${result.message}`);
+        displayNotification(`Error: ${result.message}`);
       }
     } catch (error) {
       console.error('Error uploading file:', error);
-      alert(`Error uploading file: ${error.message}`);
+      displayNotification(`Error uploading file: ${error.message}`);
     }
   }
 
@@ -515,6 +526,7 @@
         tableRow.innerHTML = `
           <td class="px-2 py-4 text-center font-medium text-gray-900">${row.no}</td>
           <td class="px-2 py-4 text-center">${row.periode}</td>
+          <td class="px-2 py-4 text-center">${row.upload_at}</td> <!-- Kolom Created At -->
           <td class="px-1 py-2 text-center flex items-center justify-center">
             <a href="${APIreadfile}${row.attachedFile}" download>
               ${getFileIcon(row.attachedFile)}
@@ -551,37 +563,6 @@
     return true;
   }
 
-  // Fungsi untuk menambahkan event listener untuk sorting
-  // function addSortingListeners() {
-  //   const headers = document.querySelectorAll('th[data-sort]');
-  //   headers.forEach(header => {
-  //     header.addEventListener('click', () => {
-  //       const sortKey = header.getAttribute('data-sort');
-  //       sortData(sortKey);
-  //     });
-  //   });
-  // }
-
-  // Fungsi untuk mengurutkan data
-  // function sortData(sortKey) {
-  //   // Toggle sort order
-  //   sortOrder[sortKey] = sortOrder[sortKey] === 'asc' ? 'desc' : 'asc';
-
-  //   filteredData.sort((a, b) => {
-  //     if (a[sortKey] < b[sortKey]) {
-  //       return sortOrder[sortKey] === 'asc' ? -1 : 1;
-  //     } else if (a[sortKey] > b[sortKey]) {
-  //       return sortOrder[sortKey] === 'asc' ? 1 : -1;
-  //     } else {
-  //       return 0;
-  //     }
-  //   });
-
-  //   // Update table after sorting
-
-  //   displayTableData(currentPage);
-  //   updatePagination();
-  // }
 </script>
 
 </html>
