@@ -11,10 +11,10 @@
     href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
     rel="stylesheet">
 
-   <!-- Select2 CSS -->
-   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
-
-   <!-- Custom Styles -->
+  <!-- Select2 CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+  <!-- Custom Styles -->
   <link rel="stylesheet" href="../style.css">
 
 </head>
@@ -88,14 +88,14 @@
           <header class="flex items-center self-start text-2xl font-semibold text-black">
             <h1 class="self-stretch my-auto text-[80%] 2xl:text-[120%]">Delivery Note (DN)</h1>
           </header>
-          
+
           <article class="flex flex-col items-start w-full text-base">
             <h1 class="text-base 2xl:text-xl font-semibold text-black mt-4">Select Supplier</h1>
-  
+
             <form id="supplierForm" class="flex flex-col w-full text-neutral-500">
               <div class="flex flex-col xl:w-[500px] 2xl:w-[600px]">
-                <label for="Supplier" class="block xl:mb-6 2xl:mb-8 xl:text-base 2xl:text-lg text-neutral-500"></label>
-                <select id="Supplier"
+                <label for="supplier_id" class="block xl:mb-6 2xl:mb-8 xl:text-base 2xl:text-lg text-neutral-500"></label>
+                <select id="supplier_id"
                   class="scrollable-select bg-transparent border border-neutral-300 rounded-lg block w-full p-4 2xl:p-7 text-neutral-500 text-sm 2xl:text-lg">
                   <option value="">Cari Supplier</option>
                   <!-- Options will be added here by JavaScript -->
@@ -103,13 +103,14 @@
               </div>
             </form>
           </article>
-      
+
           <div class="flex flex-col mt-4 2xl:mt-6 w-full 2xl:text-base text-xs font-medium">
             <div class="flex flex-wrap gap-10 justify-end items-center w-full">
               <!-- Search Bar -->
               <div class="flex flex-wrap items-center self-stretch my-auto text-neutral-500">
                 <div class="flex items-center px-4 2xl:px-6 py-2 2xl:py-4 bg-neutral-100 rounded w-full ml-auto">
-                  <input id="search-input" type="text" placeholder="Search no purchase order here" class="flex-1 bg-neutral-100 outline-none 2xl:text-base">
+                  <input id="search-input" type="text" placeholder="Search no purchase order here"
+                    class="flex-1 bg-neutral-100 outline-none 2xl:text-base">
                   <img src="../assets/icon_search.svg" alt="Search Icon" class="w-4 2xl:w-5 h-4 2xl:h-5 ml-3">
                 </div>
               </div>
@@ -123,24 +124,32 @@
             <table class="w-full text-[11px] 2xl:text-base text-left text-gray-700 dark:text-gray-700">
               <thead class="text-[14px] 2xl:text-[20px] text-gray-700">
                 <tr>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" data-sort="0">
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                    data-sort="0">
                     No. DN
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
+                      class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" data-sort="1">
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                    data-sort="1">
                     No. PO
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
+                      class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" data-sort="2">
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                    data-sort="2">
                     Plan DN Date
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
+                      class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" data-sort="3">
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                    data-sort="3">
                     Status DN
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
+                      class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
                 </tr>
@@ -151,7 +160,7 @@
             </table>
           </div>
         </div>
-        
+
         <!-- Pagination -->
         <div class="flex justify-end my-6">
           <div class="flex gap-2 2xl:gap-4 items-center pagination">
@@ -168,188 +177,59 @@
 <script src="../api.js"></script>
 <script src="../script.js"></script>
 <script src="../table.js"></script>
- <!-- jQuery for Select2 -->
- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
- <!-- Select2 JS -->
- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<!-- jQuery for Select2 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <!-- Add the script to handle table sorting and pagination -->
 <script>
-  let rowsPerPage = 10;
-  let currentPage = 1;
-  let pendingResponseIndex = null;
-  let pendingResponseAction = '';
-  let deliveryNote = [];
-  let filteredDnData = [];
-  let sortOrder = {}; // Object to keep track of sort order for each column
+  
+  cekToken();
 
-  // Adjust rows per page based on screen size
-  function adjustRowsPerPage() {
-    if (window.innerWidth <= 1280) {
-      rowsPerPage = 6;
-    } else if (window.innerWidth <= 1600) {
-      rowsPerPage = 8;
-    } else {
-      rowsPerPage = 10;
-    }
-  }
-
-  function displayTableData(page) {
-    const tableBody = document.getElementById('table-body');
-    tableBody.innerHTML = '';
-
-    const start = (page - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
-    const paginatedData = filteredDnData.slice(start, end);
-
-    paginatedData.forEach((row) => {
-      const tableRow = document.createElement('tr');
-      tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
-      tableRow.innerHTML = `
-          <td class="px-2 py-4 text-center font-medium text-gray-900">
-              <a href="delivery-note-detail.html?noDN=${row.noDN}" class="text-blue-600 underline">${row.noDN}</a>
-          </td>
-          <td class="px-2 py-4 text-center font-medium text-gray-900">
-              <a class="text-black">${row.noPO}</a>
-          </td>
-          <td class="px-2 py-4 text-center">${row.planDNDate}</td>
-          <td class="px-2 py-4 text-center">${row.statusDN}</td>
-      `;
-      tableBody.appendChild(tableRow);
-    });
-  }
-
-  function searchTable() {
-    const searchInput = document.getElementById('search-input').value.toLowerCase();
-    filteredDnData = deliveryNote.filter(row => row.noDN.toLowerCase().includes(searchInput));
-    currentPage = 1;
-    displayTableData(currentPage);
-    updatePagination();
-  }
-
-  // Function to sort the table based on the column index
-  function sortTable(columnIndex) {
-    const columnKeys = ['noDN', 'noPO', 'planDNDate', 'statusDN']; // Kolom yang ingin diurutkan
-    const columnKey = columnKeys[columnIndex]; // Mendapatkan key kolom yang di-klik
-
-    // Toggle sorting order (asc/desc)
-    sortOrder[columnKey] = sortOrder[columnKey] === 'asc' ? 'desc' : 'asc';
-
-    // Sorting data berdasarkan urutan
-    filteredDnData.sort((a, b) => {
-      if (a[columnKey] < b[columnKey]) {
-        return sortOrder[columnKey] === 'asc' ? -1 : 1;
-      } else if (a[columnKey] > b[columnKey]) {
-        return sortOrder[columnKey] === 'asc' ? 1 : -1;
-      } else {
-        return 0;
-      }
-    });
-
-    // Reset to the first page after sorting
-    currentPage = 1;
-    displayTableData(currentPage);
-    updatePagination();
-  }
-
-  // Function to update pagination controls
-  function updatePagination() {
-    const paginationContainer = document.querySelector('.pagination');
-    paginationContainer.innerHTML = '';
-
-    const totalPages = Math.ceil(filteredDnData.length / rowsPerPage);
-    const maxPageNumbersToShow = 4;
-
-    const prevButton = document.createElement('button');
-    prevButton.className = 'px-3 py-3 2xl:px-4 2xl:py-4 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
-    prevButton.innerHTML = `Prev`;
-    prevButton.disabled = currentPage === 1;
-    prevButton.addEventListener('click', () => {
-      if (currentPage > 1) {
-        currentPage--;
-        displayTableData(currentPage);
-        updatePagination();
-      }
-    });
-    paginationContainer.appendChild(prevButton);
-
-    const pageNumbers = [];
-    if (totalPages <= maxPageNumbersToShow) {
-      for (let i = 1; i <= totalPages; i++) {
-        pageNumbers.push(i);
-      }
-    } else {
-      pageNumbers.push(1);
-      const startPage = Math.max(2, currentPage - 1);
-      const endPage = Math.min(totalPages - 1, currentPage + 1);
-
-      if (startPage > 2) {
-        pageNumbers.push('...');
-      }
-
-      for (let i = startPage; i <= endPage; i++) {
-        pageNumbers.push(i);
-      }
-
-      if (endPage < totalPages - 1) {
-        pageNumbers.push('...');
-      }
-
-      pageNumbers.push(totalPages);
-    }
-
-    pageNumbers.forEach(number => {
-      const pageButton = document.createElement('button');
-      pageButton.className = `px-4 py-2 2xl:px-6 2xl:py-4 ${number === currentPage ? 'bg-blue-900 text-white' : 'bg-gray-200 text-gray-900'} rounded-md hover:bg-gray-300`;
-      pageButton.textContent = number;
-      pageButton.addEventListener('click', () => {
-        currentPage = number;
-        displayTableData(currentPage);
-        updatePagination();
-      });
-      paginationContainer.appendChild(pageButton);
-    });
-
-    const nextButton = document.createElement('button');
-    nextButton.className = '2xl:px-4 2xl:py-4 px-3 py-3 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
-    nextButton.innerHTML = `Next`;
-    nextButton.disabled = currentPage === totalPages;
-    nextButton.addEventListener('click', () => {
-      if (currentPage < totalPages) {
-        currentPage++;
-        displayTableData(currentPage);
-        updatePagination();
-      }
-    });
-    paginationContainer.appendChild(nextButton);
-  }
+  let sortOrder = {}; // Object to keep track of sort order for each columnrray untuk data yang sudah difilter
 
   document.addEventListener('DOMContentLoaded', () => {
-      const name = localStorage.getItem('name');
-      const bpCode = localStorage.getItem('bpCode');
-
-      const userInfoElement = document.getElementById('user-info');
-      const searchInputElement = document.getElementById('search-input');
-
-      if (userInfoElement) {
-          userInfoElement.textContent = `${name} - ${bpCode}`;
-      }
-
-    adjustRowsPerPage(); // Set rows per page based on initial screen size
+    // Adjust rows per page based on screen size
+    fetchSuppliers();
+    adjustRowsPerPage(); // Atur jumlah data per halaman berdasarkan ukuran layar
 
     window.addEventListener('resize', () => {
-      adjustRowsPerPage(); // Adjust rows per page on screen resize
-      displayTableData(currentPage); // Re-render table data
-      updatePagination(); // Re-render pagination
+      adjustRowsPerPage();
+      displayTableData(currentPage);
+      updatePagination(); // Call updatePagination() from table.js
     });
 
-    if (searchInputElement) {
-      searchInputElement.addEventListener('input', searchTable);
+    const supplierSelect = document.getElementById('supplier_id');
+    const searchButton = document.getElementById('search-button');
+
+    // Event listener for supplier dropdown change
+    supplierSelect.addEventListener('change', async (event) => {
+      const selectedSupplierId = event.target.value;
+      console.log('Supplier dipilih:', selectedSupplierId); // Debugging
+
+      if (selectedSupplierId) {
+        // Tampilkan section setelah supplier dipilih
+        document.getElementById('periodeSection').classList.remove('hidden');
+
+        localStorage.setItem('selectedSupplierId', selectedSupplierId);
+
+        // Fetch performance report based on selected supplier
+        await fetchPerformanceReport(selectedSupplierId);
+      } else {
+        // Sembunyikan section jika tidak ada supplier yang dipilih
+        document.getElementById('periodeSection').classList.add('hidden');
+      }
+    });
+
+    if (searchButton) {
+      searchButton.addEventListener('input', searchTable);
     }
 
+    // Initialize data
     filteredDnData = [...deliveryNote]; // Copy data ke filteredDnData untuk diproses
     displayTableData(currentPage); // Tampilkan data
-    updatePagination(); // Update paginasi
+    updatePagination(); // Call updatePagination from table.js
 
     // Add sorting listeners for each sortable column using data-sort
     const sortableHeaders = document.querySelectorAll('th[data-sort]');
@@ -360,6 +240,142 @@
       });
     });
   });
+
+  // Function to fetch suppliers and populate the dropdown
+  async function fetchSuppliers() {
+    const token = localStorage.getItem('accessToken');
+    try {
+      const response = await fetch(APIpartner2, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          populateSupplierDropdown(data.data);
+        } else {
+          console.error('Failed to fetch suppliers:', data.message);
+        }
+      } else {
+        console.error('Kesalahan saat mengambil data supplier:', response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error('Error Token Not Valid', error);
+    }
+  }
+
+  // Populate the dropdown with suppliers
+  function populateSupplierDropdown(suppliersData) {
+    const supplierSelect = document.getElementById('supplier_id');
+    supplierSelect.innerHTML = '<option value="">Search Supplier</option>'; // Reset dropdown
+
+    suppliersData.forEach(supplier => {
+      const option = document.createElement('option');
+      option.value = supplier.bp_code;
+      option.textContent = `${supplier.bp_code} | ${supplier.bp_name}`;
+      supplierSelect.appendChild(option);
+    });
+
+    // Initialize Select2 again after options are populated
+    $(supplierSelect).select2({
+      placeholder: 'Search Supplier',
+      allowClear: true
+    });
+  }
+
+  // Function to fetch delivery notes based on selected supplier
+  async function fetchDeliveryNotes(supplier_id) {
+    const token = localStorage.getItem('accessToken');
+
+    try {
+      const response = await fetch(`${APIindexdnheader2}/poNO?supplier_id=${supplier_id}`, { // Dengan query parameter
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log(`Data fetched for DN:`, data);
+
+      // Ensure data exists and is in expected format
+      if (data && data.data && Array.isArray(data.data)) {
+        // Map and manipulate your data accordingly
+        deliveryNote = data.data.map(dn => ({
+          noDN: dn.no_dn ? dn.no_dn.toString() : '',
+          noPO: dn.po_no ? dn.po_no.toString() : '',
+          planDNDate: dn.plan_delivery_date || '',
+          statusDN: dn.status_desc || '',
+        }));
+
+        // Set filteredDnData to match deliveryNote initially
+        filteredDnData = deliveryNote;
+
+        // Display data immediately after fetching
+        displayTableData(currentPage);
+        updatePagination(); // Call updatePagination from table.js
+      } else {
+        console.error('No valid data found for the specified supplier.');
+      }
+    } catch (error) {
+      console.error(`Error fetching delivery notes:`, error);
+    }
+  }
+
+  // Function to display the table data based on the current page
+  function displayTableData(page) {
+    const tableBody = document.getElementById('table-body');
+    tableBody.innerHTML = '';
+  
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+    const paginatedData = filteredDnData.slice(start, end);
+  
+    paginatedData.forEach((row) => {
+      const tableRow = document.createElement('tr');
+      tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
+      tableRow.innerHTML = `
+        <td class="px-2 py-4 text-center font-medium text-gray-900">
+          <a href="delivery-note-detail.html?noDN=${row.noDN}" class="text-blue-600 underline">${row.noDN}</a>
+        </td>
+        <td class="px-2 py-4 text-center font-medium text-gray-900">
+          <a class="text-black">${row.noPO}</a>
+        </td>
+        <td class="px-2 py-4 text-center">${row.planDNDate}</td>
+        <td class="px-2 py-4 text-center">${row.statusDN}</td>
+      `;
+      tableBody.appendChild(tableRow);
+    });
+  }  
+
+  // Function to handle searching
+  function searchTable() {
+    const searchInput = document.getElementById('search-input').value.toLowerCase();
+    filteredDnData = deliveryNote.filter(row => row.noDN.toLowerCase().includes(searchInput));
+    currentPage = 1;
+    displayTableData(currentPage);
+    updatePagination(); // Call updatePagination from table.js
+  }
+
+  // Function to adjust the rows per page based on screen size
+  function adjustRowsPerPage() {
+    if (window.innerWidth < 768) {
+      rowsPerPage = 3; // Set rows per page to 3 for small screens
+    } else if (window.innerWidth < 1280) {
+      rowsPerPage = 4; // Set rows per page to 4 for medium screens
+    } else {
+      rowsPerPage = 5; // Set rows per page to 5 for large screens
+    }
+  }
 </script>
 
 </html>
