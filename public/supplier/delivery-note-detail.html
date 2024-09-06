@@ -280,7 +280,7 @@
     const noPO = localStorage.getItem('noPO');
 
     try {
-        const response = await fetch(`https://api.edutrashgo.com/api/indexdnheader1`, {
+        const response = await fetch(`${API_indexDNSupplier}`, {
           method: 'GET',
           headers: {
               'Authorization': `Bearer ${token}`,

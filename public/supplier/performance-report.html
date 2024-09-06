@@ -241,7 +241,7 @@ async function fetchPerformanceReport(bpCode, selectedMonth = null) {
   }
 
   try {
-    const response = await fetch(`${APIindexlistingreportSupplier}/${bpCode}`, {
+    const response = await fetch(`${API_indexPerformanceReportSupplier}/${bpCode}`, {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'

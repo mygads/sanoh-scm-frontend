@@ -1,38 +1,3 @@
-const dummyData = [
-    {
-      username: '1',
-      password: '1234abcd',
-      access_token: 'dummyAccessToken123',
-      name: 'NAME DUMMY Supplier1',
-      bp_code: 'SANOH',
-      role: '1'
-    },
-    {
-      username: '2',
-      password: '1234abcd',
-      access_token: 'dummyAccessToken123',
-      name: 'NAME DUMMY Warehouse1',
-      bp_code: 'SANOH',
-      role: '2'
-    },
-    {
-      username: '3',
-      password: '1234abcd',
-      access_token: 'dummyAccessToken123',
-      name: 'NAME DUMMY Purchasing1',
-      bp_code: 'SANOH',
-      role: '3'
-    },
-    {
-      username: '4',
-      password: '1234abcd',
-      access_token: 'dummyAccessToken123',
-      name: 'NAME DUMMY Admin1',
-      bp_code: 'SANOH',
-      role: "4"
-    },
-];
-
 const API = 'https://api.edutrashgo.com/api';
 
 function saveLogout() {
@@ -46,7 +11,7 @@ function saveLogout() {
     } else if (userRole === '3') {
       role = '/purchasing'
     } else if (userRole === '4') {
-      role = '/adming'
+      role = '/admin'
     }
   }
   localStorage.setItem('APIlogout', API + role + '/logout');
@@ -66,8 +31,14 @@ APIpartner3 = API + `/partner3`;
 APIindexlistingreport = API + `/indexlistingreport3`;
 APIuploadlisting = API + `/createlistingreport3`;
 APIpartner3 = API + `/partner3`;
-APIreadfile = API + '/listingreporttest/file/'
-APIindexlistingreportSupplier = API + `/indexlistingreport1`;
+APIreadfile = API + '/listingreporttest/file/';
 
+// supplier
+API_indexPOSupplier = API + `/indexpoheader1/`;
+API_updatePOSupplier = API + `/updatepoheader1/`;
+API_indexPerformanceReportSupplier = API + `/indexlistingreport1`;
+API_indexDNSupplier = API + `/indexdnheader1`;
+API_indexPOHistorySupplier = API + `/pohistory1/`;
+API_indexDNHistorySupplier = API + `/dnhistory1/`;
 
 
