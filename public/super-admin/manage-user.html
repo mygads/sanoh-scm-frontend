@@ -175,10 +175,10 @@
                   <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
                     >
                     Status
-                    
+
                   </th>
                   <th scope="col" class="px-0 2xl:py-4 py-0 text-center border-b border-b-gray-400 cursor-pointer"
-                    onclick="sortTable(5)">
+                    onclick="sortTable(6)">
                     Action
                   </th>
                   <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
@@ -216,6 +216,7 @@
 <script>
 
   cekToken();
+  adjustRowsPerPage();
 
   document.addEventListener('DOMContentLoaded', () => {
 
@@ -273,6 +274,16 @@
     } catch (error) {
       console.error('Kesalahan fetch:', error);
       displayNotification(`Kesalahan fetch: ${error}`,'error')
+    }
+  }
+
+  function adjustRowsPerPage() {
+  if (window.innerHeight <= 720) {
+      rowsPerPage = 7;
+    } else if (window.innerHeight <= 1080) {
+      rowsPerPage = 8;
+    } else {
+      rowsPerPage = 9;
     }
   }
 
