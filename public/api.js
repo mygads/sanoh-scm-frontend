@@ -18,20 +18,35 @@ function saveLogout() {
 }
 
 APIlogin = API + '/login';
+
+
+// API Test No Auth
+APIreadfile = API + '/listingreporttest/file/';
+
+
+
+// supper admin 
 APIpartner4 = API + '/partner4';
 APIcreateuser = API + '/create4';
 APIedit4 = API + '/edit4/';
 APIupdate4 = API + '/update4/';
 APIlistuser = API + '/index4';
 APIupdatestatus = API + `/updatestatus/`;
-APIpartner2 = API + `/partner2`;
-APIindexdnheader2 = API + `/indexdnheader2`;
-APIindexdndetail2 = API + '/indexdndetail2/';
+
+
+// purchasing
+API_readPerformanceReportPurchasing = API + `/listingreport3/file/`;
 APIpartner3 = API + `/partner3`;
 APIindexlistingreport = API + `/indexlistingreport3`;
 APIuploadlisting = API + `/createlistingreport3`;
-APIpartner3 = API + `/partner3`;
-APIreadfile = API + '/listingreporttest/file/';
+
+
+
+// warehouse
+APIpartner2 = API + `/partner2`;
+APIindexdnheader2 = API + `/indexdnheader2`;
+APIindexdndetail2 = API + '/indexdndetail2/';
+
 
 // supplier
 API_indexPOSupplier = API + `/indexpoheader1/`;
@@ -40,5 +55,5 @@ API_indexPerformanceReportSupplier = API + `/indexlistingreport1`;
 API_indexDNSupplier = API + `/indexdnheader1`;
 API_indexPOHistorySupplier = API + `/pohistory1/`;
 API_indexDNHistorySupplier = API + `/dnhistory1/`;
-
+API_readPerformanceReportSupplier = API + `/listingreport1/file/`;
 
