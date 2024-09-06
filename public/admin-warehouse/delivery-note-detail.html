@@ -227,16 +227,19 @@
 
 </body>
 
-<script src="../script.js"></script>
 <script src="script.js"></script>
+<script src="../api.js"></script>
+<script src="../script.js"></script>
+<script src="../table.js"></script>
 
 <!-- Add the script to handle table sorting and pagination -->
 <script>
+
   let rowsPerPage = 10;
   let currentPage = 1;
   let filteredData = [];
-  let isAscending = true; // Track sort direction for "No." column
   
+
   // Adjust rows per page based on screen size
   function adjustRowsPerPage() {
     if (window.innerWidth <= 1280) {
@@ -298,18 +301,91 @@
       `;
       tableBody.appendChild(tableRow);
     });
+    updateButtonState(); // Update button state after displaying data
   }
-  
-  // Sorting function for "No." column
-  function sortTableByNo() {
-    isAscending = !isAscending; // Toggle sorting direction
-    filteredData.sort((a, b) => {
-      return isAscending ? a.no - b.no : b.no - a.no;
+
+  document.getElementById('confirm-button') 
+    const confirmButton = document.getElementById('confirm-button');
+    const confirmationSection = document.getElementById('confirmation-section');
+
+    if (confirmButton) {
+      // Enable qtyConfirm inputs
+      document.querySelectorAll('.qty-confirm-input').forEach(input => {
+        input.disabled = false;
+        input.classList.add('border-black'); // Add border when enabled
+      });
+
+      // Change button text to "Submit" and display the Cancel button and Checkbox
+      confirmButton.textContent = 'Submit';
+
+      const cancelButton = document.createElement('button');
+      cancelButton.id = 'cancel-button';
+      cancelButton.className = 'ml-[1%] px-4 2xl:px-6 py-2 2xl:py-3 my-auto bg-red-500 rounded cursor-pointer pointer-events-auto max-md:px-5 text-white text-xs 2xl:text-sm';
+      cancelButton.textContent = 'Cancel';
+      document.getElementById('confirm-button-section').appendChild(cancelButton);
+
+      confirmationSection.classList.remove('hidden'); // Show the checkbox confirmation section
+
+      document.getElementById('confirmation-checkbox').addEventListener('change', (e) => {
+        confirmButton.disabled = !e.target.checked;
+      });
+
+      // Handle Cancel button
+      cancelButton.addEventListener('click', () => {
+        displayDNDetails(filteredData);
+        confirmationSection.classList.add('hidden');
+        cancelButton.remove();
+        confirmButton.textContent = 'Edit';
+      });
+
+      confirmButton.disabled = true; // Disable Submit button initially until checkbox is checked
+    } else if (confirmButton) {
+      // Submit logic
+      const inputs = document.querySelectorAll('.qty-confirm-input');
+      inputs.forEach((input, index) => {
+        filteredData[index].qtyConfirm = input.value;
+      });
+
+      alert('Data submitted successfully!');
+      displayDNDetails(filteredData);
+      updateButtonState();
+
+      confirmationSection.classList.add('hidden');
+      document.getElementById('cancel-button').remove();
+    }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const name = localStorage.getItem('name');
+    const bpCode = localStorage.getItem('bpCode');
+
+    document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
+    
+    adjustRowsPerPage(); // Set rows per page based on initial screen size
+    window.addEventListener('resize', () => {
+      adjustRowsPerPage(); // Adjust rows per page on screen resize
+      displayDNDetails(filteredData); // Re-render table data
+      updatePagination(); // Re-render pagination
     });
-    displayDNDetails(filteredData); // Re-render table with sorted data
+
+    document.getElementById('search-input').addEventListener('input', searchTable);
+
+    displayDNDetails(filteredData);
+    updatePagination();
+    updateButtonState();
+  });
+
+  function updateButtonState() {
+    const hasUnconfirmedQty = filteredData.some(detail => !detail.qtyConfirm);
+    const confirmButton = document.getElementById('confirm-button');
+
+    if (hasUnconfirmedQty) {
+      
+    } else {
+      confirmButton;
+      confirmButton;
+    }
   }
-  
-  // Update pagination
+
   function updatePagination() {
     const paginationContainer = document.querySelector('.pagination');
     paginationContainer.innerHTML = '';

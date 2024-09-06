@@ -36,8 +36,22 @@ const dummyData = [
 const API = 'https://api.edutrashgo.com/api';
 
 function saveLogout() {
-  localStorage.setItem('APIlogout', API + '/logout');
+  const userRole = localStorage.getItem('userRole');
+
+  if(userRole) {
+    if (userRole === '1') {
+      role = '/supplier';
+    } else if (userRole === '2') {
+      role = '/warehouse';
+    } else if (userRole === '3') {
+      role = '/purchasing'
+    } else if (userRole === '4') {
+      role = '/admin'
+    }
+  }
+  localStorage.setItem('APIlogout', API + role + '/logout');
 }
+
 APIlogin = API + '/login';
 APIpartner4 = API + '/partner4';
 APIcreateuser = API + '/create4';
@@ -52,7 +66,7 @@ APIpartner3 = API + `/partner3`;
 APIindexlistingreport = API + `/indexlistingreport3`;
 APIuploadlisting = API + `/createlistingreport3`;
 APIpartner3 = API + `/partner3`;
-APIreadfile = API + '/listingreport1/file/'
+APIreadfile = API + '/listingreporttest/file/'
 
 
 

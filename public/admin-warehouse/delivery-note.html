@@ -164,8 +164,10 @@
   </section>
 </body>
 
-<script src="../script.js"></script>
 <script src="script.js"></script>
+<script src="../api.js"></script>
+<script src="../script.js"></script>
+<script src="../table.js"></script>
  <!-- jQuery for Select2 -->
  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
  <!-- Select2 JS -->
@@ -175,9 +177,11 @@
 <script>
   let rowsPerPage = 10;
   let currentPage = 1;
-  let deliveryNote = []; // Array yang berisi data delivery note
-  let filteredDnData = []; // Filtered data untuk menampilkan di tabel
-  let sortOrder = {}; // Menyimpan urutan (asc/desc) untuk masing-masing kolom
+  let pendingResponseIndex = null;
+  let pendingResponseAction = '';
+  let deliveryNote = [];
+  let filteredDnData = [];
+  let sortOrder = {}; // Object to keep track of sort order for each column
 
   // Adjust rows per page based on screen size
   function adjustRowsPerPage() {
@@ -321,15 +325,15 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    const name = localStorage.getItem('name');
-    const bpCode = localStorage.getItem('bpCode');
+      const name = localStorage.getItem('name');
+      const bpCode = localStorage.getItem('bpCode');
 
-    const userInfoElement = document.getElementById('user-info');
-    const searchInputElement = document.getElementById('search-input');
+      const userInfoElement = document.getElementById('user-info');
+      const searchInputElement = document.getElementById('search-input');
 
-    if (userInfoElement) {
-      userInfoElement.textContent = `${name} - ${bpCode}`;
-    }
+      if (userInfoElement) {
+          userInfoElement.textContent = `${name} - ${bpCode}`;
+      }
 
     adjustRowsPerPage(); // Set rows per page based on initial screen size
 
