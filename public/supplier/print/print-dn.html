@@ -307,8 +307,10 @@
         <!-- Page Content Container -->
         <script>
             async function fetchDeliveryNoteData(no_dn) {
+                const token = localStorage.getItem('accessToken');
+                const noPO = localStorage.getItem('noPO');
                 // Fetching the data from the API (dummy URL here, replace with actual URL)
-                const response = await fetch(`http://127.0.0.1:8000/api/dnhview/${no_dn}`);
+                const response = await fetch(`https://api.edutrashgo.com/api/dnhview/${no_dn}`);
                 const dnData = await response.json();
         
                 // Map the fetched data to the required structure
