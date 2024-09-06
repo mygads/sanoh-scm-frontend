@@ -115,10 +115,10 @@
 
            <!-- Add File Section -->
           <form id="upload-file">
-           <div id="addFileSection" class="flex flex-col mt-6 2xl:mt-8 w-full 2xl:text-base text-xs font-medium hidden">
-            <div class="flex items-center mb-4">
+           <div id="addFileSection" class="flex flex-col mt-6 2xl:mt-8 2xl:text-base text-xs font-medium hidden">
+            <div class="flex items-center mb-4  ">
               <label for="month-picker" class="mr-4 text-base 2xl:text-xl">Periode :</label>
-              <input type="month" id="month-picker" class="w-32 2xl:w-40 h-8 2xl:h-10 pl-4 pr-4 border rounded-md">
+              <input type="month" id="month-picker" class=" pl-4 pr-4 border rounded-md">
             </div>
 
             <div class="flex items-center mb-4">
@@ -126,8 +126,9 @@
               <input type="file" id="file-upload" class="rounded-md p-2 ml-2 text-gray-600">
               
               <button id="upload-button"
-              class="px-4 py-2 w-24 h-10 bg-gray-400 text-white text-sm 2xl:text-base rounded-md"
-              disabled>Upload</button>
+                class="px-4 py-2 bg-gray-400 text-white text-xs 2xl:text-base rounded-md" disabled>
+                Upload
+              </button>
             </div>
           </div>
         </form>
@@ -156,24 +157,28 @@
             <table class="w-full text-[11px] 2xl:text-base text-left text-gray-700 dark:text-gray-700">
               <thead class="text-[14px] 2xl:text-[20px] text-gray-700">
                 <tr>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
-                    data-sort="no">
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer "
+                    data-sort="no" onclick="sortTable(0)" >
                     No
                     <img loading="lazy" src="../assets/icon_sort.svg" alt=""
                       class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
                   <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
-                    data-sort="periode">
+                    data-sort="periode" onclick="sortTable(1)">
                     Periode
                     <img loading="lazy" src="../assets/icon_sort.svg" alt=""
                       class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer">
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(2)">
                     Created At
                     <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
+                  </th>                  
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                    data-sort="filename">
+                    FIle Name
                   </th>
                   <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
                     data-sort="attachedFile">
@@ -206,9 +211,7 @@
 <script src="../script.js"></script>
 <script src="../table.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<!-- jQuery for Select2 -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- Select2 JS -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <!-- Add the script to handle table sorting and pagination -->
@@ -221,7 +224,7 @@
   document.addEventListener('DOMContentLoaded', () => {
 
     fetchSuppliers();
-    adjustRowsPerPage(); // Atur jumlah data per halaman berdasarkan ukuran layar
+    adjustRowsPerPage();
     window.addEventListener('resize', () => {
       adjustRowsPerPage();
       displayTableData(currentPage);
@@ -268,6 +271,7 @@
         uploadButton.disabled = false;
         uploadButton.classList.remove('bg-gray-400');
         uploadButton.classList.add('bg-blue-500', 'hover:bg-blue-700');
+
       } else {
         uploadButton.disabled = true;
         uploadButton.classList.remove('bg-blue-500', 'hover:bg-blue-700');
@@ -280,29 +284,33 @@
 
       const file = fileUpload.files[0];
       let period = monthPicker.value;
+      period = `${period}-01`;
+      console.log(period);      
       const supplierId = localStorage.getItem('selectedSupplierId');
       const valid = validateForm(file, period, supplierId);
-      // const supplierSelectedCode = localStorage.getItem('selectedSupplierId');
+
       
-
-      // Validate form fields
-      if (!file) {
-        alert('Silakan pilih file untuk diunggah.');
-        valid = false;
-      }
-      if (!period) {
-        alert('Silakan pilih periode.');
-        valid = false;
-      }
-      if (!supplierId) {
-        alert('Silakan pilih supplier.');
-        valid = false;
-      }
-
       if (valid) {
-        // Tambahkan hari default "00" untuk period yang dipilih
-        period = `${period}-00`;
-        await uploadFile(token, supplierId, file, period); // Tambahkan bpCode saat memanggil uploadFile
+        const uploadButton = document.getElementById('upload-button');
+
+        // Tampilkan spinner dengan mengubah innerHTML
+        uploadButton.innerHTML = `
+          <svg aria-hidden="true" role="status" class="inline w-4 h-4 me-3 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB"/>
+            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentColor"/>
+          </svg>
+          Uploading...
+        `;
+
+        uploadButton.disabled = true;
+
+        try {
+          await uploadFile(token, supplierId, file, period); // Tambahkan bpCode saat memanggil uploadFile
+        } finally {
+          // Kembalikan tombol ke teks "Upload" setelah selesai
+          uploadButton.innerHTML = 'Upload';
+          uploadButton.disabled = false;
+        }
       }
     });
 
@@ -399,6 +407,7 @@
           no: item.po_listing_no,
           periode: formatDate(item.date),
           upload_at: item.upload_at,
+          filedata: item.file,
           attachedFile: item.file
         }));
 
@@ -411,6 +420,8 @@
         } else {
           filteredData = [...originalData]; // Jika tidak ada bulan yang dipilih, tampilkan semua data
         }
+        // Urutkan data berdasarkan 'upload_at' secara menurun (terbaru duluan)
+        filteredData.sort((a, b) => new Date(b.upload_at) - new Date(a.upload_at));
 
         displayTableData(currentPage);
         updatePagination();
@@ -448,8 +459,9 @@
       // Ubah kembali ke JSON jika respons valid
       const result = JSON.parse(textResponse);
       if (response.ok && result.status) {
-        displayNotification(result.message,'success');
-        addFileToTable(result.data);
+        displayNotification('Success uploading file','success');
+        await fetchPerformanceReport(supplierId); // Refresh data setelah upload
+        displayTableData(currentPage); // Perbarui tampilan tabel
       } else {
         displayNotification(`Error: ${result.message}`);
       }
@@ -459,45 +471,27 @@
     }
   }
 
-  function addFileToTable(fileData) {
-    const tableBody = document.getElementById('table-body-detail');
-    const tableRow = document.createElement('tr');
-    tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b');
-
-    const fileUrl = `${APIreadfile}${fileData.file}`; // Generate file URL dynamically
-
-    tableRow.innerHTML = `
-      <td class="px-2 py-4 text-center font-medium text-gray-900">${fileData.po_listing_no}</td>
-      <td class="px-2 py-4 text-center">${formatDate(fileData.date)}</td>
-      <td class="px-1 py-2 text-center flex items-center justify-center">
-        <a href="${fileUrl}" target="_blank">
-          ${getFileIcon(fileData.file)}
-        </a>
-      </td>
-    `;
-    tableBody.appendChild(tableRow);
-  }
 
   function getFileIcon(filename) {
     const extension = filename.split('.').pop().toLowerCase(); // Get the file extension
 
     switch (extension) {
-        case 'pdf':
-            return `<img src="../assets/icon_pdf.svg" alt="PDF Icon" class="w-6 h-6" />`;
-        case 'doc':
-            return `<img src="../assets/icon_doc.svg" alt="png Icon" class="w-6 h-6" />`;
-        case 'docx':
-            return `<img src="../assets/icon_docx.svg" alt="Word Icon" class="w-6 h-6" />`;
-        case 'jpg':
-        case 'jpeg':
-            return `<img src="../assets/icon_jpg.svg" alt="png Icon" class="w-6 h-6" />`;
-        case 'png':
-            return `<img src="../assets/icon_png.svg" alt="png Icon" class="w-6 h-6" />`;
-        case 'xls':
-        case 'xlsx':
-            return `<img src="../assets/icon_excel.svg" alt="Excel Icon" class="w-6 h-6" />`;
-        default:
-            return `<img src="../assets/icon_file.svg" alt="File Icon" class="w-6 h-6" />`;
+      case 'pdf':
+          return `<img src="../assets/icon_pdf.svg" alt="PDF Icon" class="w-6 h-6" />`;
+      case 'doc':
+          return `<img src="../assets/icon_doc.svg" alt="png Icon" class="w-6 h-6" />`;
+      case 'docx':
+          return `<img src="../assets/icon_docx.svg" alt="Word Icon" class="w-6 h-6" />`;
+      case 'jpg':
+      case 'jpeg':
+          return `<img src="../assets/icon_jpg.svg" alt="png Icon" class="w-6 h-6" />`;
+      case 'png':
+          return `<img src="../assets/icon_png.svg" alt="png Icon" class="w-6 h-6" />`;
+      case 'xls':
+      case 'xlsx':
+          return `<img src="../assets/icon_excel.svg" alt="Excel Icon" class="w-6 h-6" />`;
+      default:
+          return `<img src="../assets/icon_file.svg" alt="File Icon" class="w-6 h-6" />`;
     }
   }
 
@@ -523,10 +517,14 @@
     paginatedData.forEach(row => {
         const tableRow = document.createElement('tr');
         tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b');
+        // Pisahkan angka dan nama file dengan memanfaatkan split dan slice
+        const fileName = row.filedata.split('_').slice(1).join('_');
+
         tableRow.innerHTML = `
           <td class="px-2 py-4 text-center font-medium text-gray-900">${row.no}</td>
           <td class="px-2 py-4 text-center">${row.periode}</td>
           <td class="px-2 py-4 text-center">${row.upload_at}</td> <!-- Kolom Created At -->
+          <td class="px-2 py-4 text-center">${fileName}</td> <!-- Nama File -->
           <td class="px-1 py-2 text-center flex items-center justify-center">
             <a href="${APIreadfile}${row.attachedFile}" download>
               ${getFileIcon(row.attachedFile)}
@@ -538,12 +536,12 @@
 }
 
   function adjustRowsPerPage() {
-    if (window.innerWidth < 768) {
-      rowsPerPage = 3; // Atur menjadi 3 jika ukuran layar < 768
-    } else if (window.innerWidth < 1280) {
-      rowsPerPage = 4; // Atur menjadi 4 jika ukuran layar >= 768
+    if (window.innerHeight < 768) {
+      rowsPerPage = 4; // Atur menjadi 3 jika ukuran layar < 768
+    } else if (window.innerHeight < 1280) {
+      rowsPerPage = 5; // Atur menjadi 4 jika ukuran layar >= 768
     } else {
-      rowsPerPage = 5;
+      rowsPerPage = 6;
     }
   }
 

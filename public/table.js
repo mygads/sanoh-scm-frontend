@@ -3,43 +3,33 @@ let currentPage = 1;
 let filteredData = [];
 let originalData= [];
 
-function adjustRowsPerPage() {
-  if (window.innerWidth <= 1280) {
-      rowsPerPage = 7;
-    } else if (window.innerWidth <= 1600) {
-      rowsPerPage = 8;
-    } else {
-      rowsPerPage = 9;
-    }
-}
-
 
 function sortTable(columnIndex) {
-    const table = document.querySelector('table');
-    const isAscending = table.querySelectorAll('th')[columnIndex].classList.toggle('asc');
-  
-    // Remove sorting classes from other headers
-    table.querySelectorAll('th').forEach((th, index) => {
-      if (index !== columnIndex) th.classList.remove('asc', 'desc');
-    });
-  
-    // Sort the entire dataset
-    filteredData.sort((a, b) => {
-      const cellA = Object.values(a)[columnIndex].toString().trim();
-      const cellB = Object.values(b)[columnIndex].toString().trim();
-  
-      return cellA.localeCompare(cellB, undefined, { numeric: true, sensitivity: 'base' });
-    });
-  
-    // If not ascending, reverse the order
-    if (!isAscending) {
-      filteredData.reverse();
-    }
-  
-    // Redisplay the sorted data with pagination
-    currentPage = 1; // Reset to the first page after sorting
-    displayTableData(currentPage);
-    updatePagination();
+  const table = document.querySelector('table');
+  const isAscending = table.querySelectorAll('th')[columnIndex].classList.toggle('asc');
+
+  // Remove sorting classes from other headers
+  table.querySelectorAll('th').forEach((th, index) => {
+    if (index !== columnIndex) th.classList.remove('asc', 'desc');
+  });
+
+  // Sort the entire dataset
+  filteredData.sort((a, b) => {
+    const cellA = Object.values(a)[columnIndex].toString().trim();
+    const cellB = Object.values(b)[columnIndex].toString().trim();
+
+    return cellA.localeCompare(cellB, undefined, { numeric: true, sensitivity: 'base' });
+  });
+
+  // If not ascending, reverse the order
+  if (!isAscending) {
+    filteredData.reverse();
+  }
+
+  // Redisplay the sorted data with pagination
+  currentPage = 1; // Reset to the first page after sorting
+  displayTableData(currentPage);
+  updatePagination();
 }
   
 function searchTable() {
