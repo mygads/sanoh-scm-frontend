@@ -267,7 +267,6 @@
 
 <!-- Add the script to handle table sorting and pagination -->
 <script>
-
   cekToken();
 
   let details = [];
@@ -308,8 +307,8 @@
                     noPO: dn.po_no ? dn.po_no.toString() : '',
                     planDNDate: dn.plan_delivery_date || '',
                     statusDN: dn.status_desc || '',
-                    // Check if dn.detail exists and is an array
-                    details: Array.isArray(dn.detail) ? dn.detail.map((detail, index) => ({
+                    // Ensure dn.detail exists and is an array, otherwise use an empty array
+                    details: Array.isArray(dn.detail) && dn.detail.length > 0 ? dn.detail.map((detail, index) => ({
                         no: (index + 1).toString(),
                         planDelivery: detail.plan_delivery_date || '',
                         partNumber: detail.part_no || '',
@@ -321,8 +320,8 @@
                         qtyConfirm: detail.qty_confirm || 0,
                         qtyDelivered: detail.receipt_qty || 0,
                         qtyReceived: detail.receipt_qty || 0,
-                        qtyMinus: (detail.dn_qty - (detail.receipt_qty || 0)).toString()
-                    })) : [] // If dn.detail is not an array, assign an empty array
+                        qtyMinus: ((detail.dn_qty || 0) - (detail.receipt_qty || 0)).toString() // Handle undefined dn_qty or receipt_qty
+                    })) : [] // If dn.detail is not an array or is empty, assign an empty array
                 };
             });
 
@@ -342,85 +341,81 @@
   fetchDeliveryNotes();
 
   function DNDetails() {
-      const params = new URLSearchParams(window.location.search);
-      const noDN = params.get('noDN');
+    const params = new URLSearchParams(window.location.search);
+    const noDN = params.get('noDN');
 
-      if (noDN) {
-          // Debug: Check if `details` array is populated
-          console.log('Details array:', details);
+    if (noDN) {
+        // Debug: Check if `details` array is populated
+        console.log('Details array:', details);
 
-          const dn = details.find(dn => dn.noDN === noDN);
+        const dn = details.find(dn => dn.noDN === noDN);
 
-          // Debug: Check if the correct Delivery Note object is found
-          console.log('Delivery Note found:', dn);
+        // Debug: Check if the correct Delivery Note object is found
+        console.log('Delivery Note found:', dn);
 
-          if (dn) {
-              const noPO = dn.noPO !== null && dn.noPO !== undefined && dn.noPO.trim() !== '' 
-                  ? dn.noPO 
-                  : 'No PO provided';
-              const planDNDate = dn.planDNDate !== null && dn.planDNDate !== undefined && dn.planDNDate.trim() !== '' 
-                  ? dn.planDNDate 
-                  : 'No Plan Delivery provided';
+        if (dn) {
+            const noPO = dn.noPO || 'No PO provided';
+            const planDNDate = dn.planDNDate || 'No Plan Delivery provided';
 
-              document.getElementById('dnNumber').textContent = dn.noDN;
-              document.getElementById('poNumber').textContent = noPO;
-              document.getElementById('planDelivery').textContent = planDNDate;
+            document.getElementById('dnNumber').textContent = dn.noDN;
+            document.getElementById('poNumber').textContent = noPO;
+            document.getElementById('planDelivery').textContent = planDNDate;
 
-              // Store the details array into filteredDnDetailData
-              filteredDnDetailData = dn.details;
+            // Store the details array into filteredDnDetailData
+            filteredDnDetailData = dn.details;
 
-              // Display the details
-              if (typeof displayDNDetails === 'function') {
-                  displayDNDetails(filteredDnDetailData);  // Show first page of details
-              } else {
-                  console.error('displayDNDetails function is not defined.');
-              }
+            // Display the details
+            if (typeof displayDNDetails === 'function') {
+                displayDNDetails(filteredDnDetailData);  // Show first page of details
+            } else {
+                console.error('displayDNDetails function is not defined.');
+            }
 
-              // Update pagination for details
-              if (typeof updatePagination === 'function') {
-                  updatePagination();
-              } else {
-                  console.error('updatePagination function is not defined.');
-              }
+            // Update pagination for details
+            if (typeof updatePagination === 'function') {
+                updatePagination();
+            } else {
+                console.error('updatePagination function is not defined.');
+            }
 
-          } else {
-              console.error('Delivery Note data not found in details array.');
-          }
-      } else {
-          console.error('Parameter noDN not found in the URL.');
-      }
+        } else {
+            console.error('Delivery Note data not found in details array.');
+        }
+    } else {
+        console.error('Parameter noDN not found in the URL.');
+    }
 
-      window.addEventListener('resize', () => {
-          displayDNDetails(filteredDnDetailData);  // Adjust display when resized
-          updatePagination();
-      });
+    window.addEventListener('resize', () => {
+        displayDNDetails(filteredDnDetailData);  // Adjust display when resized
+        updatePagination();
+    });
 
-      document.getElementById('search-input').addEventListener('input', searchTable);
+    document.getElementById('search-input').addEventListener('input', searchTable);
   }
 
   function displayDNDetails(details) {
-      const tableBody = document.getElementById('table-body-detail');
-      tableBody.innerHTML = '';
+    const tableBody = document.getElementById('table-body-detail');
+    tableBody.innerHTML = '';
 
-      details.forEach((detail, index) => {
-          const tableRow = document.createElement('tr');
-          tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
-          tableRow.innerHTML = `
-              <td class="px-2 py-4 text-center font-medium text-gray-900">${detail.no}</td>
-              <td class="px-2 py-4 text-center">${detail.partNumber}</td>
-              <td class="px-2 py-4 text-center">${detail.partName}</td>
-              <td class="px-2 py-4 text-center">${detail.UoM}</td>
-              <td class="px-2 py-4 text-center">${detail.QTY}</td>
-              <td class="px-2 py-4 text-center">${detail.qtyLabel}</td>
-              <td class="px-2 py-4 text-center">${detail.qtyRequested}</td>
-              <td class="px-2 py-4 text-center">
-                  <input type="text" class="qty-confirm-input border border-gray-300 rounded px-2 py-1 text-center w-full ${detail.qtyConfirm ? 'input-enabled' : ''}" value="${detail.qtyConfirm || '-'}" data-dn-detail-no="${detail.dnDetailNo}" disabled>
-              </td>
-              <td class="px-2 py-4 text-center">${detail.qtyDelivered}</td>
-              <td class="px-2 py-4 text-center">${detail.qtyMinus}</td>
-          `;
-          tableBody.appendChild(tableRow);
-      });
+    details.forEach((detail, index) => {
+        const tableRow = document.createElement('tr');
+        tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
+        tableRow.innerHTML = `
+            <td class="px-2 py-4 text-center font-medium text-gray-900">${detail.no}</td>
+            <td class="px-2 py-4 text-center">${detail.partNumber}</td>
+            <td class="px-2 py-4 text-center">${detail.partName}</td>
+            <td class="px-2 py-4 text-center">${detail.UoM}</td>
+            <td class="px-2 py-4 text-center">${detail.QTY}</td>
+            <td class="px-2 py-4 text-center">${detail.qtyLabel}</td>
+            <td class="px-2 py-4 text-center">${detail.qtyRequested}</td>
+            <td class="px-2 py-4 text-center">
+                <input type="text" class="qty-confirm-input border border-gray-300 rounded px-2 py-1 text-center w-full ${detail.qtyConfirm ? 'input-enabled' : ''}" value="${detail.qtyConfirm || '-'}" data-dn-detail-no="${detail.dnDetailNo}" disabled>
+            </td>
+            <td class="px-2 py-4 text-center">${detail.qtyDelivered}</td>
+            <td class="px-2 py-4 text-center">${detail.qtyMinus}</td>
+        `;
+        tableBody.appendChild(tableRow);
+    });
   }
 
   document.getElementById('confirm-button').addEventListener('click', async () => {

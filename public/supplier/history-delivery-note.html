@@ -180,8 +180,8 @@
 <script src="../table.js"></script>
 <!-- Add the script to handle table sorting and pagination -->
 <script>
-  
-  cekToken();  
+
+  cekToken();
 
   let pendingResponseIndex = null;
   let pendingResponseAction = '';
@@ -191,7 +191,7 @@
   // Function to fetch delivery notes from the API
   async function fetchHistoryDeliveryNotes() {
     const token = localStorage.getItem('accessToken');
-    const bpCode = localStorage.getItem('bpCode'); // Fetch bpCode from localStorage
+    const bpCode = localStorage.getItem('bpCode'); 
 
     if (!bpCode) {
         console.error('bpCode not found in localStorage.');
@@ -214,44 +214,31 @@
         const data = await response.json();
         console.log("Data fetched:", data);
 
-        data.data.forEach(dn => console.log("DN Data:", dn));
-
-        // Check if data and data.data exist
         if (data.success && data.data) {
-            deliveryNote = data.data
-                .filter(dn => dn.po_status && dn.po_status.toLowerCase() === 'closed')  // Filter by status
-                .map(dn => ({
-                    noDN: dn.dn_number ? dn.dn_number.toString() : 'No DN Number',
-                    noPO: dn.po_number ? dn.po_number.toString() : 'No PO Number',                  
-                    statusDN: dn.dn_status || 'Unknown Status',
-                    planDNDate: dn.send_date || 'Date Unknown',
-                    receivedDNDate: dn.receive_date || 'Date Unknown',
-                    details: dn.detail ? dn.detail.map((detail, index) => ({
-                        no: (index + 1).toString(),
-                        partNumber: detail.internal_part_number || 'No Part Number',
-                        partName: detail.part_name || 'No Item Description',
-                        QTY: detail.total_quantity || 'No Quantity',
-                        qtyLabel: detail.pcs_per_kamban || 'No Label',
-                        qtyDelivered: detail.total_quantity || 'No Quantity',
-                        qtyReceived: detail.total_quantity || 'No Quantity',
-                    })) : []
-                }));
+          deliveryNote = data.data
+              .map(dn => ({
+                  noDN: dn.dn_number ? dn.dn_number.toString() : 'No DN Number',
+                  noPO: dn.po_number ? dn.po_number.toString() : 'No PO Number',                  
+                  statusDN: dn.dn_status || 'Unknown Status',
+                  planDNDate: dn.send_date || 'Date Unknown',
+                  receivedDNDate: dn.receive_date || 'Date Unknown',
+                  details: dn.detail ? dn.detail.map((detail, index) => ({
+                      no: (index + 1).toString(),
+                      partNumber: detail.internal_part_number || 'No Part Number',
+                      partName: detail.part_name || 'No Item Description',
+                      QTY: detail.total_quantity || 'No Quantity',
+                      qtyLabel: detail.pcs_per_kamban || 'No Label',
+                      qtyDelivered: detail.total_quantity || 'No Quantity',
+                      qtyReceived: detail.total_quantity || 'No Quantity',
+                  })) : []
+              }));
 
-            // Set filteredHistoryDNData to match deliveryNote initially
-            filteredHistoryDNData = deliveryNote;
+          // Set filteredHistoryDNData to match deliveryNote initially
+          filteredHistoryDNData = deliveryNote;
 
-            // Call functions to display data and setup pagination
-            if (typeof displayTableData === 'function') {
-                displayTableData();
-            } else {
-                console.error('displayTableData function is not defined.');
-            }
-            
-            if (typeof updatePagination === 'function') {
-                updatePagination();
-            } else {
-                console.error('updatePagination function is not defined.');
-            }
+          // Call function to display data
+          displayTableData();
+
         } else {
             console.error('No data found or unexpected format.');
         }
@@ -263,7 +250,7 @@
   // Function to display data in the table
   function displayTableData() {
     const tableBody = document.getElementById('table-body');
-  
+
     if (!tableBody) {
         console.error('Table body element not found.');
         return;
@@ -271,7 +258,7 @@
 
     tableBody.innerHTML = '';
 
-    filteredHistoryDNData.forEach((row, index) => {
+    filteredHistoryDNData.forEach((row) => {
       const tableRow = document.createElement('tr');
       tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
       tableRow.innerHTML = `
@@ -289,66 +276,28 @@
     });
   }
 
+  // Function for search
   function searchTable() {
     const searchInput = document.getElementById('search-input').value.toLowerCase();
     filteredHistoryDNData = deliveryNote.filter(row => row.noDN.toLowerCase().includes(searchInput));
     displayTableData();
-    if (typeof updatePagination === 'function') {
-        updatePagination();
-    }
-  }
-
-  // Function to sort table based on column index
-  function sortTable(columnIndex) {
-    const table = document.querySelector('table');
-    const tbody = table.querySelector('tbody');
-    const rows = Array.from(tbody.querySelectorAll('tr'));
-    const isAscending = table.querySelectorAll('th')[columnIndex].classList.toggle('asc');
-    table.querySelectorAll('th').forEach((th, index) => {
-      if (index !== columnIndex) th.classList.remove('asc', 'desc');
-    });
-
-    rows.sort((a, b) => {
-      const cellA = a.querySelectorAll('td')[columnIndex].textContent.trim();
-      const cellB = b.querySelectorAll('td')[columnIndex].textContent.trim();
-
-      if (columnIndex === 3) { // For Revision Date, handle date sorting
-        return new Date(cellA) - new Date(cellB);
-      }
-
-      return cellA.localeCompare(cellB, undefined, { numeric: true, sensitivity: 'base' });
-    });
-
-    if (!isAscending) {
-      rows.reverse();
-    }
-
-    tbody.innerHTML = '';
-    tbody.append(...rows);
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    const name = localStorage.getItem('name');
-    const bpCode = localStorage.getItem('bpCode');
+  const name = localStorage.getItem('name');
+  const bpCode = localStorage.getItem('bpCode');
 
-    if (!bpCode) {
-        console.error('bpCode is not set in localStorage.');
-        return;
-    }
+  if (!bpCode) {
+      console.error('bpCode is not set in localStorage.');
+      return;
+  }
 
-    document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
-    
-    // Fetch and display delivery notes
-    fetchHistoryDeliveryNotes();
+  document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
 
-    window.addEventListener('resize', () => {
-      displayTableData(); // Re-render table data
-      if (typeof updatePagination === 'function') {
-        updatePagination(); // Re-render pagination if defined
-      }
-    });
+  // Fetch and display delivery notes
+  fetchHistoryDeliveryNotes();
 
-    document.getElementById('search-input').addEventListener('input', searchTable);
+  document.getElementById('search-input').addEventListener('input', searchTable);
   });
 
 </script>
