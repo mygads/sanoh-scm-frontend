@@ -238,7 +238,7 @@
             revisionDate: po.po_revision_date || "",
             status: po.po_status || "",
             response: po.response || "",
-            note: po.reference_2 || "",
+            note: po.note || "",
             details: (po.detail || []).map((detail, index) => ({
                 no: (index + 1).toString(),
                 partNumber: detail.bp_part_no || "",
@@ -379,6 +379,13 @@
     updatePagination();
   });
 
+  function searchTable() {
+      const searchInput = document.getElementById('search-input').value.toLowerCase();
+      filteredData = purchaseOrder.filter(row => row.noPO.toLowerCase().includes(searchInput));
+      currentPage = 1;
+      displayTableData(currentPage);
+      updatePagination();
+  }
   
 </script>
 

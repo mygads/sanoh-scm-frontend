@@ -11,7 +11,9 @@ tailwind.config = {
 const token = localStorage.getItem('accessToken');
 const name = localStorage.getItem('name');
 const bpCode = localStorage.getItem('bpCode');
-
+const noPO = localStorage.getItem('noPO'); // gw tambahin yog -kiki
+const note = localStorage.getItem('note'); // gw tambahin yog -kiki
+const noDN = localStorage.getItem('noDN'); // gw tambahin yog -kiki
 
 function cekToken() {
   if (token) {
