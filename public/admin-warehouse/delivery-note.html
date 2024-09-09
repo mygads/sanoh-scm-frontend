@@ -92,9 +92,10 @@
           <article class="flex flex-col items-start w-full text-base">
             <h1 class="text-base 2xl:text-xl font-semibold text-black mt-4">Select Supplier</h1>
 
-            <form id="supplierForm" class="flex flex-col w-full text-neutral-500">
+            <form id="supplier_form" class="flex flex-col w-full text-neutral-500"> <!-- Changed id here -->
               <div class="flex flex-col xl:w-[500px] 2xl:w-[600px]">
-                <label for="supplier_id" class="block xl:mb-6 2xl:mb-8 xl:text-base 2xl:text-lg text-neutral-500"></label>
+                <label for="supplier_id"
+                  class="block xl:mb-6 2xl:mb-8 xl:text-base 2xl:text-lg text-neutral-500"></label>
                 <select id="supplier_id"
                   class="scrollable-select bg-transparent border border-neutral-300 rounded-lg block w-full p-4 2xl:p-7 text-neutral-500 text-sm 2xl:text-lg">
                   <option value="">Cari Supplier</option>
@@ -103,6 +104,7 @@
               </div>
             </form>
           </article>
+
 
           <div class="flex flex-col mt-4 2xl:mt-6 w-full 2xl:text-base text-xs font-medium">
             <div class="flex flex-wrap gap-10 justify-end items-center w-full">
@@ -184,198 +186,198 @@
 
 <!-- Add the script to handle table sorting and pagination -->
 <script>
+  cekToken(); // Memeriksa token autentikasi pengguna
+
+  let sortOrder = {}; // Objek untuk melacak urutan pengurutan setiap kolom
   
-  cekToken();
-
-  let sortOrder = {}; // Object to keep track of sort order for each columnrray untuk data yang sudah difilter
-
   document.addEventListener('DOMContentLoaded', () => {
-    // Adjust rows per page based on screen size
-    fetchSuppliers();
-    adjustRowsPerPage(); // Atur jumlah data per halaman berdasarkan ukuran layar
-
+    fetchSuppliers(); // Memanggil fungsi untuk mengambil data supplier saat halaman dimuat
+    adjustRowsPerPage(); // Menyesuaikan jumlah baris per halaman berdasarkan ukuran layar
+  
     window.addEventListener('resize', () => {
-      adjustRowsPerPage();
-      displayTableData(currentPage);
-      updatePagination(); // Call updatePagination() from table.js
+      adjustRowsPerPage(); // Menyesuaikan jumlah baris jika ukuran jendela diubah
+      displayTableData(currentPage); // Menampilkan data tabel berdasarkan halaman saat ini
+      updatePagination(); // Memperbarui elemen paginasi
     });
-
-    const supplierSelect = document.getElementById('supplier_id');
-    const searchButton = document.getElementById('search-button');
-
-    // Event listener for supplier dropdown change
+  
+    const supplierSelect = document.getElementById('supplier_id'); // Mendapatkan elemen dropdown untuk memilih supplier
+    const searchButton = document.getElementById('search-button'); // Mendapatkan tombol pencarian
+  
+    // Event listener untuk ketika supplier dipilih dari dropdown
     supplierSelect.addEventListener('change', async (event) => {
-      const selectedSupplierId = event.target.value;
-      console.log('Supplier dipilih:', selectedSupplierId); // Debugging
-
+      const selectedSupplierId = event.target.value; // Mengambil nilai supplier yang dipilih
+      console.log('Supplier dipilih:', selectedSupplierId); // Log supplier yang dipilih untuk debugging
+  
       if (selectedSupplierId) {
-        // Tampilkan section setelah supplier dipilih
-        document.getElementById('periodeSection').classList.remove('hidden');
-
-        localStorage.setItem('selectedSupplierId', selectedSupplierId);
-
-        // Fetch performance report based on selected supplier
-        await fetchPerformanceReport(selectedSupplierId);
-      } else {
-        // Sembunyikan section jika tidak ada supplier yang dipilih
-        document.getElementById('periodeSection').classList.add('hidden');
+        localStorage.setItem('supplierBpCode', selectedSupplierId); // Menyimpan supplierBpCode ke localStorage
+        await fetchDeliveryNotes(selectedSupplierId); // Memanggil data delivery note berdasarkan supplier yang dipilih
+        displaySelectedSupplier(currentPage); // Menampilkan supplier yang dipilih di tabel
+        updatePagination(); 
       }
     });
-
+  
     if (searchButton) {
-      searchButton.addEventListener('input', searchTable);
+      searchButton.addEventListener('input', searchTable); // Menambahkan event listener untuk pencarian tabel
     }
-
-    // Initialize data
-    filteredDnData = [...deliveryNote]; // Copy data ke filteredDnData untuk diproses
-    displayTableData(currentPage); // Tampilkan data
-    updatePagination(); // Call updatePagination from table.js
-
-    // Add sorting listeners for each sortable column using data-sort
-    const sortableHeaders = document.querySelectorAll('th[data-sort]');
+  
+    filteredDnData = [...deliveryNote]; // Menyalin data delivery note ke array baru untuk digunakan dalam filter
+    displayTableData(currentPage); // Menampilkan data tabel berdasarkan halaman saat ini
+    updatePagination(); // Memperbarui elemen paginasi
+  
+    const sortableHeaders = document.querySelectorAll('th[data-sort]'); // Mengambil semua header tabel yang bisa diurutkan
     sortableHeaders.forEach(header => {
       header.addEventListener('click', () => {
-        const columnIndex = header.getAttribute('data-sort');
-        sortTable(columnIndex); // Call the sorting function with the correct index
+        const columnIndex = header.getAttribute('data-sort'); // Mendapatkan kolom yang akan diurutkan
+        sortTable(columnIndex); // Memanggil fungsi untuk mengurutkan tabel berdasarkan kolom
       });
     });
   });
-
-  // Function to fetch suppliers and populate the dropdown
+  
+  // Fungsi untuk mengambil data supplier dari API
   async function fetchSuppliers() {
-    const token = localStorage.getItem('accessToken');
+    const token = localStorage.getItem('accessToken'); // Mendapatkan token autentikasi
     try {
       const response = await fetch(APIpartner2, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${token}`,
+          'Authorization': `Bearer ${token}`, // Menyertakan token dalam header permintaan
           'Content-Type': 'application/json',
         },
       });
-
+  
       if (response.ok) {
-        const data = await response.json();
+        const data = await response.json(); // Mengubah respons menjadi format JSON
         if (data.success) {
-          populateSupplierDropdown(data.data);
+          populateSupplierDropdown(data.data); // Mengisi dropdown supplier dengan data yang diterima
         } else {
-          console.error('Failed to fetch suppliers:', data.message);
+          console.error('Failed to fetch suppliers:', data.message); // Menampilkan pesan kesalahan jika gagal
         }
       } else {
-        console.error('Kesalahan saat mengambil data supplier:', response.status, response.statusText);
+        console.error('Kesalahan saat mengambil data supplier:', response.status, response.statusText); // Menangani kesalahan HTTP
       }
     } catch (error) {
-      console.error('Error Token Not Valid', error);
+      console.error('Error Token Not Valid', error); // Menangani kesalahan jika token tidak valid
     }
   }
-
-  // Populate the dropdown with suppliers
+  
+  // Fungsi untuk mengisi dropdown supplier dengan data dari API
   function populateSupplierDropdown(suppliersData) {
     const supplierSelect = document.getElementById('supplier_id');
-    supplierSelect.innerHTML = '<option value="">Search Supplier</option>'; // Reset dropdown
-
+    supplierSelect.innerHTML = '<option value="">Cari Supplier</option>'; // Reset dropdown
+  
     suppliersData.forEach(supplier => {
       const option = document.createElement('option');
-      option.value = supplier.bp_code;
-      option.textContent = `${supplier.bp_code} | ${supplier.bp_name}`;
-      supplierSelect.appendChild(option);
+      option.value = supplier.bp_code; // Menggunakan bp_code sebagai nilai opsi
+      option.textContent = `${supplier.bp_code} | ${supplier.bp_name}`; // Menampilkan bp_code dan nama supplier
+      supplierSelect.appendChild(option); // Menambahkan opsi ke dropdown
     });
-
-    // Initialize Select2 again after options are populated
+  
+    // Menginisialisasi kembali Select2 setelah opsi ditambahkan
     $(supplierSelect).select2({
-      placeholder: 'Search Supplier',
+      placeholder: 'Cari Supplier',
       allowClear: true
     });
   }
-
-  // Function to fetch delivery notes based on selected supplier
+  
+  // Fungsi untuk mengambil data delivery notes berdasarkan supplier yang dipilih
   async function fetchDeliveryNotes(supplier_id) {
-    const token = localStorage.getItem('accessToken');
-
+    const token = localStorage.getItem('accessToken'); // Mengambil token autentikasi
+    const supplierBpCode = localStorage.getItem('supplierBpCode'); // Mengambil supplierBpCode dari localStorage
+  
+    if (!supplierBpCode) {
+      console.error('supplierBpCode not found in localStorage.'); // Menampilkan pesan jika supplierBpCode tidak ditemukan
+      return;
+    }
+  
     try {
-      const response = await fetch(`${APIindexdnheader2}/poNO?supplier_id=${supplier_id}`, { // Dengan query parameter
+      console.log(`Making GET request to: ${APIindexdnheader2}/${supplierBpCode}`); // Debugging URL API
+  
+      const response = await fetch(`${APIindexdnheader2}/${supplierBpCode}`, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${token}`,
+          'Authorization': `Bearer ${token}`, // Menyertakan token dalam header permintaan
           'Content-Type': 'application/json',
         },
       });
-
+  
+      console.log('Response status:', response.status); // Debugging status respons
+  
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      console.log(`Data fetched for DN:`, data);
-
-      // Ensure data exists and is in expected format
+        alert('Error: ' + response.statusText); // Menampilkan pesan error ke pengguna
+        return;
+    }
+  
+      const data = await response.json(); // Mengubah respons menjadi JSON
+      console.log('Data fetched for DN:', data); // Debugging data yang diterima
+  
       if (data && data.data && Array.isArray(data.data)) {
-        // Map and manipulate your data accordingly
+        // Transformasi data yang diterima untuk digunakan di tabel
         deliveryNote = data.data.map(dn => ({
-          noDN: dn.no_dn ? dn.no_dn.toString() : '',
-          noPO: dn.po_no ? dn.po_no.toString() : '',
-          planDNDate: dn.plan_delivery_date || '',
-          statusDN: dn.status_desc || '',
+          noDN: dn.no_dn ? dn.no_dn.toString() : 'N/A',
+          noPO: dn.po_no ? dn.po_no.toString() : 'N/A',
+          planDNDate: dn.plan_delivery_date || 'Unknown Date',
+          statusDN: dn.status_desc || 'Unknown Status',
         }));
-
-        // Set filteredDnData to match deliveryNote initially
-        filteredDnData = deliveryNote;
-
-        // Display data immediately after fetching
-        displayTableData(currentPage);
-        updatePagination(); // Call updatePagination from table.js
+  
+        console.log('Transformed delivery note data:', deliveryNote); // Debugging data setelah diubah
+  
+        filteredDnData = deliveryNote; // Menyimpan data delivery note yang difilter
+        displayTableData(currentPage); // Menampilkan data di tabel
+        updatePagination(); // Memperbarui paginasi
       } else {
-        console.error('No valid data found for the specified supplier.');
+        console.error('No valid data found for the specified supplier or empty data.', data); // Menangani data kosong
       }
     } catch (error) {
-      console.error(`Error fetching delivery notes:`, error);
+      console.error(`Error fetching delivery notes:`, error); // Menangani kesalahan selama pengambilan data
     }
   }
+  
+  // Fungsi untuk menampilkan supplier yang dipilih di bagian atas tabel
+  function displaySelectedSupplier() {
+    const supplierBpCode = localStorage.getItem('supplierBpCode'); // Mengambil supplierBpCode dari localStorage
+    const tableBody = document.getElementById('table-body');
+    
+    // Tambahkan row untuk menampilkan supplierBpCode yang dipilih
+    const supplierRow = document.createElement('tr');
+    supplierRow.classList.add('bg-blue-100', 'border-b');
+    supplierRow.innerHTML = `
+      <td colspan="4" class="text-center font-bold text-blue-900">
+        Supplier yang Dipilih: ${supplierBpCode}
+      </td>
+    `;
+    tableBody.prepend(supplierRow); // Menambahkan row di bagian atas tabel
+  }
 
-  // Function to display the table data based on the current page
   function displayTableData(page) {
     const tableBody = document.getElementById('table-body');
-    tableBody.innerHTML = '';
-  
+    tableBody.innerHTML = ''; // Kosongkan tabel sebelum ditambahkan data baru
+    
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
-    const paginatedData = filteredDnData.slice(start, end);
-  
-    paginatedData.forEach((row) => {
-      const tableRow = document.createElement('tr');
-      tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
-      tableRow.innerHTML = `
-        <td class="px-2 py-4 text-center font-medium text-gray-900">
-          <a href="delivery-note-detail.html?noDN=${row.noDN}" class="text-blue-600 underline">${row.noDN}</a>
-        </td>
-        <td class="px-2 py-4 text-center font-medium text-gray-900">
-          <a class="text-black">${row.noPO}</a>
-        </td>
-        <td class="px-2 py-4 text-center">${row.planDNDate}</td>
-        <td class="px-2 py-4 text-center">${row.statusDN}</td>
-      `;
-      tableBody.appendChild(tableRow);
+    const dataToShow = filteredDnData.slice(start, end);
+    
+    dataToShow.forEach(dn => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${dn.noDN}</td>
+            <td>${dn.noPO}</td>
+            <td>${dn.planDNDate}</td>
+            <td>${dn.statusDN}</td>
+        `;
+        tableBody.appendChild(row);
     });
-  }  
+}
 
-  // Function to handle searching
+  
+  // Fungsi untuk mencari data di tabel berdasarkan input
   function searchTable() {
-    const searchInput = document.getElementById('search-input').value.toLowerCase();
-    filteredDnData = deliveryNote.filter(row => row.noDN.toLowerCase().includes(searchInput));
-    currentPage = 1;
-    displayTableData(currentPage);
-    updatePagination(); // Call updatePagination from table.js
+    const searchInput = document.getElementById('search-input').value.toLowerCase(); // Mendapatkan input pencarian
+    filteredDnData = deliveryNote.filter(row => row.noDN.toLowerCase().includes(searchInput)); // Filter data berdasarkan pencarian
+    currentPage = 1; // Reset halaman saat ini ke halaman 1
+    displayTableData(currentPage); // Menampilkan data tabel berdasarkan pencarian
+    updatePagination(); // Memperbarui paginasi
   }
 
-  // Function to adjust the rows per page based on screen size
-  function adjustRowsPerPage() {
-    if (window.innerWidth < 768) {
-      rowsPerPage = 3; // Set rows per page to 3 for small screens
-    } else if (window.innerWidth < 1280) {
-      rowsPerPage = 4; // Set rows per page to 4 for medium screens
-    } else {
-      rowsPerPage = 5; // Set rows per page to 5 for large screens
-    }
-  }
 </script>
 
 </html>
