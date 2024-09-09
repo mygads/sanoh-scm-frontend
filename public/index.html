@@ -152,25 +152,25 @@ async function handleLogin(event) {
       const data = await response.json();
       // Ambil waktu kedaluwarsa dari respons server atau set secara manual
       const expiryDate = new Date();
-      expiryDate.setHours(expiryDate.getHours() + 24); // Misal, token berlaku selama 1 jam
+      expiryDate.setHours(expiryDate.getHours() + 1); // Misal, token berlaku selama 1 jam
 
       localStorage.setItem('accessToken', data.access_token);
       localStorage.setItem('tokenExpiry', expiryDate.toISOString()); // Simpan waktu kedaluwarsa
       localStorage.setItem('name', data.name);
       localStorage.setItem('bpCode', data.bp_code);
       localStorage.setItem('userRole', data.role);
-      displayNotification(`User "${data.name}" successfully Login!`, 'success');
+      displayNotification(`Welcome ${data.name}`, 'success');
       setTimeout(() => {
         saveLogout();
         redirectToDashboardIndex(data.role);
       }, 1000);
 
     } else {
-      displayNotification(`Invalid username or password`);
+      displayNotification(`Invalid username or password`, 'error');
     }
   } catch (error) {
     console.error('Error logging in:', error);
-    displayNotification('Login failed No Internet Connection');
+    displayNotification('Login failed Server Error', 'error');
     setTimeout(() => {
       // handleDummyLogin(username, password);
     }, 3000);
@@ -182,26 +182,26 @@ async function handleLogin(event) {
 }
 
 
-async function handleDummyLogin(username, password) {
-  const user = dummyData.find(user => user.username === username && user.password === password);
+// async function handleDummyLogin(username, password) {
+//   const user = dummyData.find(user => user.username === username && user.password === password);
 
-  if (user) {
-    try {
-      // Simulate a successful login with the matched dummy data
-      localStorage.setItem('accessToken', user.access_token);
-      localStorage.setItem('name', user.name);
-      localStorage.setItem('bpCode', user.bp_code);
-      localStorage.setItem('userRole', user.role);
-      displayNotification(`User "${user.username}" successfully Login!`, 'success');
-      redirectToDashboardIndex(user.role);
-    } catch (error) {
-      console.error('Error logging in with dummy data:', error);
-      displayNotification('An error occurred with dummy login. Please try again later.');
-    }
-  } else {
-    displayNotification('Invalid username or password for dummy data');
-  }
-}
+//   if (user) {
+//     try {
+//       // Simulate a successful login with the matched dummy data
+//       localStorage.setItem('accessToken', user.access_token);
+//       localStorage.setItem('name', user.name);
+//       localStorage.setItem('bpCode', user.bp_code);
+//       localStorage.setItem('userRole', user.role);
+//       displayNotification(`User "${user.username}" successfully Login!`, 'success');
+//       redirectToDashboardIndex(user.role);
+//     } catch (error) {
+//       console.error('Error logging in with dummy data:', error);
+//       displayNotification('An error occurred with dummy login. Please try again later.');
+//     }
+//   } else {
+//     displayNotification('Invalid username or password for dummy data', 'success');
+//   }
+// }
 
 function redirectToDashboardIndex(role) {
 

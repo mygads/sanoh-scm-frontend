@@ -80,9 +80,10 @@
 
             <!-- Logout Button -->
             <a href="javascript:void(0)" onclick="handleLogout()"
-              class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 cursor-pointer bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50">
-              <img loading="lazy" src="../assets/icon_logout.svg" alt="Logout" class="object-contain w-4 2xl:w-6" />
-              <span class="text-sm 2xl:text-xl">Logout</span>
+              class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
+              <img loading="lazy" src="../assets/icon_logout.svg" alt=""
+                class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square logout-icon hover:icon_logout_white.svg" />
+              <span class="self-stretch my-auto text-sm 2xl:text-xl">Logout</span>
             </a>
           </div>
         </nav>
@@ -101,43 +102,43 @@
             <h1 class="text-base 2xl:text-xl font-semibold text-black mt-4">Select Supplier</h1>
           </article>
           
-            <form id="supplierForm" class="flex flex-col w-full text-neutral-500">
-              <div class="flex flex-col xl:w-[500px] 2xl:w-[600px]">
-                <label for="Supplier" class="block xl:mb-6 2xl:mb-8 xl:text-base 2xl:text-lg text-neutral-500"></label>
-                <select id="supplier_id"
-                  class="scrollable-select bg-transparent border border-neutral-300 rounded-lg block w-full p-4 2xl:p-7 text-neutral-500 text-sm 2xl:text-lg">
-                  <option value="">Cari Supplier</option>
-                  <!-- Options will be added here by JavaScript -->
-                </select>
-              </div>
-            </form>
-          </article>
+          <form id="supplierForm" class="flex flex-col w-full text-neutral-500">
+            <div class="flex flex-col xl:w-[500px] 2xl:w-[600px]">
+              <label for="Supplier" class="block xl:mb-6 2xl:mb-8 xl:text-base 2xl:text-lg text-neutral-500"></label>
+              <select id="supplier_id"
+                class="scrollable-select bg-transparent border border-neutral-300 rounded-lg block w-full p-4 2xl:p-7 text-neutral-500 text-sm 2xl:text-lg">
+                <option value="">Cari Supplier</option>
+                <!-- Options will be added here by JavaScript -->
+              </select>
+            </div>
+          </form>
+         
 
            <!-- Add File Section -->
           <form id="upload-file">
-           <div id="addFileSection" class="flex flex-col mt-6 2xl:mt-8 2xl:text-base text-xs font-medium hidden">
-            <div class="flex items-center mb-4  ">
-              <label for="month-picker" class="mr-4 text-base 2xl:text-xl">Periode :</label>
-              <input type="month" id="month-picker" class=" pl-4 pr-4 border rounded-md">
-            </div>
+            <div id="addFileSection" class="flex flex-col mt-6 2xl:mt-8 2xl:text-base text-xs font-medium hidden">
+              <div class="flex items-center mb-4  ">
+                <label for="month-picker" class="mr-4 text-base 2xl:text-xl">Periode :</label>
+                <input type="month" id="month-picker" class=" pl-4 pr-4 border rounded-md">
+              </div>
 
-            <div class="flex items-center mb-4">
-              <label for="file-upload" class=" text-base 2xl:text-xl">Add File :</label>
-              <input type="file" id="file-upload" class="rounded-md p-2 ml-2 text-gray-600">
-              
-              <button id="upload-button"
-                class="px-4 py-2 bg-gray-400 text-white text-xs 2xl:text-base rounded-md" disabled>
-                Upload
-              </button>
+              <div class="flex items-center mb-4">
+                <label for="file-upload" class=" text-base 2xl:text-xl">Add File :</label>
+                <input type="file" id="file-upload" class="rounded-md p-2 ml-2 text-gray-600">
+                
+                <button id="upload-button"
+                  class="px-4 py-2 bg-gray-400 text-white text-xs 2xl:text-base rounded-md" disabled>
+                  Upload
+                </button>
+              </div>
             </div>
-          </div>
-        </form>
+          </form>
 
           <!-- Periode Section -->
-          <div id="periodeSection" class="flex flex-wrap gap-10 justify-between items-center w-full mt-4 hidden">
-            <div class="flex items-center w-[13%] h-[100%]">
-              <input type="month" id="month-input" class="w-full h-full pl-4 pr-4 border rounded-md" />
-              <button id="search-button" class="ml-4 px-4 py-2 bg-blue-500 text-white text-sm 2xl:text-lg rounded-md">
+          <div id="periodeSection" class="items-center mt-4 hidden">
+            <div class="flex items-center">
+              <input type="month" id="month-input" class="px-4 border rounded-md" />
+              <button id="search-button" class="ml-4 px-4 py-2 bg-blue-500 text-white text-xs 2xl:text-base rounded-md">
                 Search
               </button>
             </div>
@@ -157,18 +158,23 @@
             <table class="w-full text-[11px] 2xl:text-base text-left text-gray-700 dark:text-gray-700">
               <thead class="text-[14px] 2xl:text-[20px] text-gray-700">
                 <tr>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer "
-                    data-sort="no" onclick="sortTable(0)" >
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer " data-sort="no" onclick="sortTable(0)" >
                     No
                     <img loading="lazy" src="../assets/icon_sort.svg" alt=""
                       class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
-                    data-sort="periode" onclick="sortTable(1)">
-                    Periode
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" data-sort="periode" onclick="sortTable(1)">
+                   Periode
                     <img loading="lazy" src="../assets/icon_sort.svg" alt=""
-                      class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <span class="sort-indicator"></span>
+                  </th>
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" data-sort="filename">
+                    FIle Name
+                  </th>
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" data-sort="attachedFile">
+                    Attached File
                     <span class="sort-indicator"></span>
                   </th>
                   <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(2)">
@@ -176,15 +182,6 @@
                     <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>                  
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
-                    data-sort="filename">
-                    FIle Name
-                  </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
-                    data-sort="attachedFile">
-                    Attached File
-                    <span class="sort-indicator"></span>
-                  </th>
                 </tr>
               </thead>
               <tbody id="table-body-detail">
@@ -216,8 +213,6 @@
 
 <!-- Add the script to handle table sorting and pagination -->
 <script>
-
-  let sortOrder = {}; // Object to keep track of sort order for each column
 
   cekToken();
 
@@ -284,7 +279,7 @@
 
       const file = fileUpload.files[0];
       let period = monthPicker.value;
-      period = `${period}-01`;
+      period = `${period}-05`;
       console.log(period);      
       const supplierId = localStorage.getItem('selectedSupplierId');
       const valid = validateForm(file, period, supplierId);
@@ -517,19 +512,24 @@
     paginatedData.forEach(row => {
         const tableRow = document.createElement('tr');
         tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b');
+
         // Pisahkan angka dan nama file dengan memanfaatkan split dan slice
         const fileName = row.filedata.split('_').slice(1).join('_');
 
+        // Konversi periode ke format "Month YYYY"
+        const periodDate = new Date(row.periode);
+        const formattedPeriod = periodDate.toLocaleString('en-US', { month: 'long', year: 'numeric' });
+
         tableRow.innerHTML = `
           <td class="px-2 py-4 text-center font-medium text-gray-900">${row.no}</td>
-          <td class="px-2 py-4 text-center">${row.periode}</td>
-          <td class="px-2 py-4 text-center">${row.upload_at}</td> <!-- Kolom Created At -->
-          <td class="px-2 py-4 text-center">${fileName}</td> <!-- Nama File -->
+          <td class="px-2 py-4 text-center">${formattedPeriod}</td>
+          <td class="px-1 py-4 w-[30%] text-center">${fileName}</td>          
           <td class="px-1 py-2 text-center flex items-center justify-center">
             <a href="${APIreadfile}${row.attachedFile}" download>
               ${getFileIcon(row.attachedFile)}
             </a>
           </td>
+          <td class="px-2 py-4 text-center">${row.upload_at}</td>
         `;
         tableBody.appendChild(tableRow);
     });

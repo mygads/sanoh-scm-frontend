@@ -361,7 +361,7 @@
       }
     })
     .then(data => {
-      displayNotification(`Status for "${username}" successfully updated`, 'success');
+      displayNotification(`Status for "${username}" successfully updated`, 'warning');
     })
     .catch(error => {
       console.error(`Error updating status for "${username}":`, error);

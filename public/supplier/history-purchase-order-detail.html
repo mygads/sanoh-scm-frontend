@@ -221,7 +221,7 @@
     const bpCode = localStorage.getItem('bpCode');
 
     try {
-        const response = await fetch(`https://api.edutrashgo.com/api/pohistory1/${bpCode}`, {
+        const response = await fetch(`${API_indexPOHistorySupplier}${bpCode}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
