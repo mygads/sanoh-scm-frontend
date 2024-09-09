@@ -137,10 +137,10 @@
               
               <div class="flex gap-3 2xl:gap-6 items-center self-stretch my-auto text-white 2xl:min-w-[240px] text-[10px] 2xl:text-lg">
                 <a href="#" id="print-po-link" class="flex gap-2 2xl:gap-4 items-center self-stretch px-6 2xl:px-9 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5">
-                  <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-5 aspect-square" />
-                  <span class="flex-1 shrink self-stretch my-auto basis-0">Print PO</span>
+                    <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-5 aspect-square" />
+                    <span class="flex-1 shrink self-stretch my-auto basis-0">Print PO</span>
                 </a>
-              </div>
+            </div>
             </div>
 
           </div>
@@ -211,45 +211,48 @@
 
   cekToken();
 
-  // Example function to set noPO in localStorage when a PO is selected
   function setNoPO(noPOValue) {
+    const printLink = document.getElementById('print-po-link');
+
     if (noPOValue && noPOValue.trim() !== "") {
-        // Store the noPO in localStorage
-        localStorage.setItem('noPO', noPOValue);
-        console.log("noPO set in localStorage:", noPOValue); // Debugging statement
+        // Update the print link's href with the noPO value
+        printLink.setAttribute('href', `print/print-po.html?noPO=${encodeURIComponent(noPOValue)}`);
+        console.log("noPO set in the print link:", noPOValue); // Debugging statement
+
+        // Enable the print button if noPO is valid
+        printLink.classList.remove('disabled');
     } else {
         console.error("Invalid noPO value:", noPOValue);
+        alert("Invalid Purchase Order number.");
+        printLink.setAttribute('href', '#'); // Reset href in case of invalid noPO
+        printLink.classList.add('disabled'); // Disable the print button
     }
   }
-
-  // Example for a button that initiates printing:
-  const printLink = document.getElementById('print-po-link');
-
-  // Add event listener to the print button
-  printLink.addEventListener('click', function(event) {
-      event.preventDefault(); // Prevent default link behavior
-
-      // Retrieve the stored noPO from localStorage
-      const noPO = localStorage.getItem('noPO');
-      console.log("Retrieved noPO for print:", noPO); // Debugging
-
-      // Ensure noPO is valid before navigating
-      if (noPO && noPO.trim() !== "") {
-          window.location.href = `print/print-po.html?noPO=${noPO}`;
-      } else {
-          alert("Error: Purchase Order number (noPO) is missing.");
-          console.error("noPO is missing or invalid.");
-      }
-  });
 
   // This function should be triggered when selecting a purchase order (PO)
   function handlePOSelection(selectedNoPO) {
       if (selectedNoPO && selectedNoPO.trim() !== "") {
-          setNoPO(selectedNoPO);  // Store the valid noPO in localStorage
+          setNoPO(selectedNoPO);  // Update the print link with the selected noPO
       } else {
           console.error("Invalid PO selection:", selectedNoPO);
+          alert("Invalid PO selection.");
       }
   }
+
+  // Example for a button that initiates printing
+  const printLink = document.getElementById('print-po-link');
+
+  // Add event listener to the print button, but only if the href has a valid noPO
+  printLink.addEventListener('click', function(event) {
+      const currentHref = printLink.getAttribute('href');
+      console.log("Attempting to navigate to:", currentHref); // Debugging
+
+      if (!currentHref || currentHref === '#' || !currentHref.includes('noPO=')) {
+          event.preventDefault(); // Prevent the link from navigating if href is invalid
+          alert("Error: Purchase Order number (noPO) is missing.");
+          console.error("noPO is missing or invalid.");
+      }
+  });
 
   let pendingResponseIndex = null;
   let pendingResponseAction = '';

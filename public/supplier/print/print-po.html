@@ -285,27 +285,27 @@
 <div id="page-content"></div>
 <script src="../../api.js"></script>
 <script>
-    // Function to get the query parameter from the URL
-    function getQueryParams() {
-    const params = new URLSearchParams(window.location.search);
-    const noPO = params.get('noPO');  // Retrieve noPO from the URL
-    console.log("noPO from URL:", noPO);  // Debugging: Check if it's retrieved correctly
 
-    // Return the noPO (even if it's undefined)
-    return noPO;
-    }
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            const noPO = params.get('noPO');  // Retrieve noPO from the URL
+            console.log("noPO from URL:", noPO);  // Debugging: Check if it's retrieved correctly
 
-    // Retrieve the noPO from the URL
-    const noPO = getQueryParams();
+            // Return the noPO (even if it's undefined)
+            return noPO;
+        }
 
-    // Validate the noPO value
-    if (!noPO || noPO.trim() === "" || noPO === 'undefined') {
-        console.error("Invalid noPO value:", noPO);
-        document.getElementById('page-content').innerHTML = "<p>Error: Invalid or missing Purchase Order number.</p>";
-    } else {
-        // If noPO is valid, fetch and display the Purchase Order data
-        fetchPurchaseOrderData(noPO);
-    }
+        // Retrieve the noPO from the URL
+        const noPO = getQueryParams();
+
+        // Validate the noPO value
+        if (!noPO || noPO.trim() === "" || noPO === 'undefined' || noPO === null) {
+            console.error("Invalid noPO value:", noPO);
+            document.getElementById('page-content').innerHTML = "<p>Error: Invalid or missing Purchase Order number.</p>";
+        } else {
+            // If noPO is valid, fetch and display the Purchase Order data
+            fetchPurchaseOrderData(noPO);
+        }
 
         // Function to fetch the Purchase Order data using the noPO from the URL
         async function fetchPurchaseOrderData(noPO) {
