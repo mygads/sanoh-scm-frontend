@@ -351,10 +351,38 @@
     <div class="page" id="page-content"></div>
 
     <script>
+
+        // Function to get query parameter by name from the URL
+        function getQueryParameter(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Get the 'noDN' parameter from the URL (e.g., ?noDN=DN0009970)
+        const no_dn = getQueryParameter('noDN');
+
+        // Check if no_dn exists and proceed
+        if (!no_dn) {
+            console.error("no_dn (Delivery Note number) is not provided in the URL");
+        }
+        
         async function fetchPurchaseOrderData(no_dn) {
+            const token = localStorage.getItem('accessToken');
             try {
-                const response = await fetch(`http://127.0.0.1:8000/api/lbview/${no_dn}`);
+                const response = await fetch(`https://api.edutrashgo.com/api/lbview1/${no_dn}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,  // Ensure the token is passed correctly
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
                 const poData = await response.json();
+                console.log("Data fetched:", poData);
 
                 if (poData.success && poData.data && poData.data.length > 0) {
                     const header = {
@@ -489,8 +517,6 @@
                 correctLevel: QRCode.CorrectLevel.L,
             });
         }
-
-        const no_dn = 'DN0013274';  // Sample order number
 
         window.onload = async function() {
             await fetchPurchaseOrderData(no_dn);
