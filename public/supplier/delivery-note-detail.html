@@ -166,7 +166,7 @@
 
         <!-- table -->
         <div class="flex flex-col mt-5 2xl:mt-8">
-          <div class="relative overflow-x-auto shadow-md rounded-lg border border-gray-300">
+          <div class= "relative overflow-x-auto overflow-y-auto shadow-md rounded-lg border border-gray-300" style="max-height: 400px;" >
 
             <table class="w-full text-[11px] 2xl:text-base text-left text-gray-700 dark:text-gray-700">
               <thead class="text-[14px] 2xl:text-[20px] text-gray-700">
@@ -217,7 +217,7 @@
                   </th>
                 </tr>
               </thead>
-              <tbody id="table-body-detail">
+              <tbody id="table-body-detail" clas>
                 <!-- Data rows will be inserted here by JavaScript -->
               </tbody>
             </table>
@@ -225,11 +225,11 @@
         </div>
   
         <!-- Pagination -->
-        <div class="flex justify-end my-6">
+        <!-- <div class="flex justify-end my-6">
           <div class="flex gap-2 2xl:gap-4 items-center pagination">
-            <!-- Pagination buttons will be inserted here by JavaScript -->
+           
           </div>
-        </div>
+        </div> -->
 
 
         <!-- Confirm Button -->
@@ -251,8 +251,6 @@
             <button id="confirm-button" class="px-4 2xl:px-6 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5 text-white text-xs 2xl:text-sm">Confirm Order</button>
           </div>
         </div>
-
-        
       </main>
     </div>
   </section>
@@ -588,15 +586,6 @@
     console.log('Button state set to:', confirmButton.textContent);
   }
 
-  function searchTable() {
-    const searchInput = document.getElementById('search-input').value.toLowerCase();
-    filteredDnDetailData = details.filter(row => 
-        row.details.some(detail => detail.partNumber.toLowerCase().includes(searchInput) || 
-                                    detail.partName.toLowerCase().includes(searchInput))
-    );
-    displayDNDetails(filteredDnDetailData);
-    updatePagination();
-  }
   
 </script>
 
