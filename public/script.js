@@ -54,7 +54,13 @@ function redirectToLogin() {
 }
 
 function clearSession() {
-  localStorage.clear();
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('tokenExpiry');
+  localStorage.removeItem('name');
+  localStorage.removeItem('bpCode');
+  localStorage.removeItem('userRole');
+  localStorage.removeItem('APIlogout');
+  // localStorage.clear();
 }
 
 async function handleLogout() {
