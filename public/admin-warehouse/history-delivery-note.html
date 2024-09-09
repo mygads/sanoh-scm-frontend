@@ -243,16 +243,10 @@
       console.log('Supplier dipilih:', selectedSupplierId); // Debugging
 
       if (selectedSupplierId) {
-        // Tampilkan section setelah supplier dipilih
-        document.getElementById('periodeSection').classList.remove('hidden');
-
-        localStorage.setItem('selectedSupplierId', selectedSupplierId);
-
-        // Fetch performance report based on selected supplier
-        await fetchPerformanceReport(selectedSupplierId);
-      } else {
-        // Sembunyikan section jika tidak ada supplier yang dipilih
-        document.getElementById('periodeSection').classList.add('hidden');
+        localStorage.setItem('supplierBpCode', selectedSupplierId); // Menyimpan supplierBpCode ke localStorage
+        await fetchDeliveryNotes(selectedSupplierId); // Memanggil data delivery note berdasarkan supplier yang dipilih
+        displaySelectedSupplier(currentPage); // Menampilkan supplier yang dipilih di tabel
+        updatePagination();
       }
     });
 
@@ -278,6 +272,11 @@
   // Function to fetch suppliers and populate the dropdown
   async function fetchSuppliers() {
     const token = localStorage.getItem('accessToken');
+    if (!token) {
+      console.error('Token not found. Please log in.');
+      return;
+    }
+
     try {
       const response = await fetch(APIpartner2, {
         method: 'GET',
@@ -302,17 +301,37 @@
     }
   }
 
+
+  // Fungsi untuk mengisi dropdown supplier dengan data dari API
+  function populateSupplierDropdown(suppliersData) {
+    const supplierSelect = document.getElementById('supplier_id');
+    supplierSelect.innerHTML = '<option value="">Cari Supplier</option>'; // Reset dropdown
+
+    suppliersData.forEach(supplier => {
+      const option = document.createElement('option');
+      option.value = supplier.bp_code; // Menggunakan bp_code sebagai nilai opsi
+      option.textContent = `${supplier.bp_code} | ${supplier.bp_name}`; // Menampilkan bp_code dan nama supplier
+      supplierSelect.appendChild(option); // Menambahkan opsi ke dropdown
+    });
+
+    // Menginisialisasi kembali Select2 setelah opsi ditambahkan
+    $(supplierSelect).select2({
+      placeholder: 'Cari Supplier',
+      allowClear: true
+    });
+  }
+
   async function fetchHistoryDeliveryNotes() {
     const token = localStorage.getItem('accessToken');
-    const bpCode = localStorage.getItem('bpCode');
+    const supplierBpCode = localStorage.getItem('supplierBpCode');
 
-    if (!bpCode) {
-      console.error('bpCode not found in localStorage.');
+    if (!supplierBpCode) {
+      console.error('supplierBpCode not found in localStorage.');
       return;
     }
 
     try {
-      const response = await fetch(`${APIdnhistory2}/${bpCode}`, {
+      const response = await fetch(`${APIdnhistory2}/${supplierBpCode}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -329,23 +348,20 @@
 
       if (data.success && data.data) {
         deliveryNote = data.data.map(dn => ({
-          // Data delivery note dipetakan menjadi format yang diinginkan
           noDN: dn.dn_number ? dn.dn_number.toString() : 'No DN Number',
           noPO: dn.po_number ? dn.po_number.toString() : 'No PO Number',
           statusDN: dn.dn_status || 'Unknown Status',
-          planDNDate: dn.send_date || 'Date Unknown',
-          receivedDNDate: dn.receive_date || 'Date Unknown',
-          details: dn.detail ? dn.detail.map((detail, index) => ({
-            // Detail item lainnya
-          })) : []
+          planDNDate: dn.plan_dn_date || 'Date Unknown', // Plan DN Date
+          sentDate: dn.send_date || 'Send Date Unknown', // Send Date
+          receiveDate: dn.receive_date || 'Receive Date Unknown' // Receive Date
         }));
 
         // Set filteredHistoryDNData to match deliveryNote initially
         filteredHistoryDNData = deliveryNote;
 
         // Panggil fungsi displayTableData untuk menampilkan data
-        displayTableData();
-
+        displayTableData(currentPage);
+        updatePagination();
       } else {
         console.error('No data found or unexpected format.');
       }
@@ -354,58 +370,21 @@
     }
   }
 
-  function displayTableData() {
+  // Fungsi untuk menampilkan supplier yang dipilih di bagian atas tabel
+  function displaySelectedSupplier() {
+    const supplierBpCode = localStorage.getItem('supplierBpCode'); // Mengambil supplierBpCode dari localStorage
     const tableBody = document.getElementById('table-body');
 
-    if (!tableBody) {
-      console.error('Table body element not found.');
-      return;
-    }
-
-    // Kosongkan tabel sebelum memasukkan data baru
-    tableBody.innerHTML = '';
-
-    // Iterasi melalui setiap row dalam filteredHistoryDNData
-    filteredHistoryDNData.forEach((row) => {
-      const tableRow = document.createElement('tr');
-      tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
-      tableRow.innerHTML = `
-        <td class="px-2 py-4 text-center font-medium text-gray-900">
-          <a href="history-delivery-note-detail.html?noDN=${row.noDN}" class="text-blue-600 underline">${row.noDN}</a>
-        </td>
-        <td class="px-2 py-4 text-center font-medium text-gray-900">
-          <a href="history-purchase-order-detail.html?noPO=${row.noPO}" class="text-blue-600 underline">${row.noPO}</a>
-        </td>        
-        <td class="px-2 py-4 text-center">${row.statusDN}</td>
-        <td class="px-2 py-4 text-center">${row.planDNDate}</td>
-        <td class="px-2 py-4 text-center">${row.receivedDNDate}</td>
-      `;
-      tableBody.appendChild(tableRow);
-    });
+    // Tambahkan row untuk menampilkan supplierBpCode yang dipilih
+    const supplierRow = document.createElement('tr');
+    supplierRow.classList.add('bg-blue-100', 'border-b');
+    supplierRow.innerHTML = `
+      <td colspan="4" class="text-center font-bold text-blue-900">
+        Supplier yang Dipilih: ${supplierBpCode}
+      </td>
+    `;
+    tableBody.prepend(supplierRow); // Menambahkan row di bagian atas tabel
   }
-
-
-  // Populate the dropdown with suppliers
-  function populateSupplierDropdown(suppliersData) {
-    const supplierSelect = document.getElementById('supplier_id');
-    supplierSelect.innerHTML = '<option value="">Search Supplier</option>'; // Reset dropdown
-
-    suppliersData.forEach(supplier => {
-      const option = document.createElement('option');
-      option.value = supplier.bp_code;
-      option.textContent = `${supplier.bp_code} | ${supplier.bp_name}`;
-      supplierSelect.appendChild(option);
-    });
-
-    // Initialize Select2 again after options are populated
-    $(supplierSelect).select2({
-      placeholder: 'Search Supplier',
-      allowClear: true
-    });
-  }
-
-
-
 
   function displayTableData(page) {
     const tableBody = document.getElementById('table-body');
@@ -413,22 +392,24 @@
 
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
-    const paginatedData = filteredData.slice(start, end);
+    const paginatedData = filteredDnData.slice(start, end);
 
     paginatedData.forEach((row, index) => {
       const tableRow = document.createElement('tr');
       tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
       tableRow.innerHTML = `
-        <td class="px-2 py-4 text-center font-medium text-gray-900">
-            <a href="history-delivery-note-detail.html?noDN=${row.noDN}" class="text-blue-600 underline">${row.noDN}</a>
-        </td>
-        <td class="px-2 py-4 text-center font-medium text-gray-900">
-            <a?noPO=${row.noPO}" class="text-black">${row.noPO}</a>
-        </td>        
-        <td class="px-2 py-4 text-center">${row.statusDN}</td>
-        <td class="px-2 py-4 text-center">${row.planDNDate}</td>
-        <td class="px-2 py-4 text-center">${row.receivedDNDate}</td>
-      `;
+  <td class="px-2 py-4 text-center font-medium text-gray-900">
+      <a href="history-delivery-note-detail.html?noDN=${row.noDN}" class="text-blue-600 underline">${row.noDN}</a>
+  </td>
+  <td class="px-2 py-4 text-center font-medium text-gray-900">
+      <a href="history-delivery-note-detail.html?noPO=${row.noPO}" class="text-black">${row.noPO}</a>
+  </td>
+  <td class="px-2 py-4 text-center">${row.planDNDate}</td>
+  <td class="px-2 py-4 text-center">${row.sentDate}</td> <!-- Tambahkan Sent Date -->
+  <td class="px-2 py-4 text-center">${row.receiveDate}</td> <!-- Tambahkan Receive Date -->
+  <td class="px-2 py-4 text-center">${row.statusDN}</td>
+`;
+
       tableBody.appendChild(tableRow);
     });
   }
@@ -442,140 +423,6 @@
     updatePagination();
   }
 
-  // Function to sort table based on column index
-  function sortTable(columnIndex) {
-    const table = document.querySelector('table');
-    const tbody = table.querySelector('tbody');
-    const rows = Array.from(tbody.querySelectorAll('tr'));
-    const isAscending = table.querySelectorAll('th')[columnIndex].classList.toggle('asc');
-    table.querySelectorAll('th').forEach((th, index) => {
-      if (index !== columnIndex) th.classList.remove('asc', 'desc');
-    });
-
-    rows.sort((a, b) => {
-      const cellA = a.querySelectorAll('td')[columnIndex].textContent.trim();
-      const cellB = b.querySelectorAll('td')[columnIndex].textContent.trim();
-
-
-      if (columnIndex === 3) { // For Revision Date, handle date sorting
-        return new Date(cellA) - new Date(cellB);
-      }
-
-      return cellA.localeCompare(cellB, undefined, { numeric: true, sensitivity: 'base' });
-    });
-
-    if (!isAscending) {
-      rows.reverse();
-    }
-
-    tbody.innerHTML = '';
-    tbody.append(...rows);
-  }
-
-  function updatePagination() {
-    const paginationContainer = document.querySelector('.pagination');
-    paginationContainer.innerHTML = '';
-
-    const totalPages = Math.ceil(filteredData.length / rowsPerPage);
-    const maxPageNumbersToShow = 4; // Number of page buttons to display (including current)
-
-    // Previous button
-    const prevButton = document.createElement('button');
-    prevButton.className = 'px-3 py-3 2xl:px-4 2xl:py-4 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
-    prevButton.innerHTML = `
-        <svg class="2xl:w-4 2xl:h-4 w-3 h-3 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
-        <path d="M8.766.566A2 2 0 0 0 6.586 1L1 6.586a2 2 0 0 0 0 2.828L6.586 15A2 2 0 0 0 10 13.586V2.414A2 2 0 0 0 8.766.566Z" />
-        </svg>
-    `;
-    prevButton.disabled = currentPage === 1;
-    prevButton.addEventListener('click', () => {
-      if (currentPage > 1) {
-        currentPage--;
-        displayTableData(currentPage);
-        updatePagination();
-      }
-    });
-    paginationContainer.appendChild(prevButton);
-
-    // Calculate page numbers to show
-    const pageNumbers = [];
-    if (totalPages <= maxPageNumbersToShow) {
-      // If total pages is less than or equal to maxPageNumbersToShow, show all page numbers
-      for (let i = 1; i <= totalPages; i++) {
-        pageNumbers.push(i);
-      }
-    } else {
-      // Otherwise, calculate which page numbers to show
-      pageNumbers.push(1); // Always show the first page
-
-      const startPage = Math.max(2, currentPage - 1);
-      const endPage = Math.min(totalPages - 1, currentPage + 1);
-
-      if (startPage > 2) {
-        pageNumbers.push('...');
-      }
-
-      for (let i = startPage; i <= endPage; i++) {
-        pageNumbers.push(i);
-      }
-
-      if (endPage < totalPages - 1) {
-        pageNumbers.push('...');
-      }
-
-      pageNumbers.push(totalPages); // Always show the last page
-    }
-
-    // Page numbers buttons
-    pageNumbers.forEach(number => {
-      const pageButton = document.createElement('button');
-      if (number === '...') {
-        pageButton.className = 'px-4 py-2 2xl:px-6 2xl:py-4 text-gray-900 bg-gray-200 rounded-md cursor-default';
-        pageButton.textContent = '...';
-      } else {
-        pageButton.className = `px-4 py-2 2xl:px-6 2xl:py-4 ${number === currentPage ? 'bg-blue-900 text-white' : 'bg-gray-200 text-gray-900'} rounded-md hover:bg-gray-300`;
-        pageButton.textContent = number;
-        pageButton.addEventListener('click', () => {
-          currentPage = number;
-          displayTableData(currentPage);
-          updatePagination();
-        });
-      }
-      paginationContainer.appendChild(pageButton);
-    });
-
-    // Next button
-    const nextButton = document.createElement('button');
-    nextButton.className = '2xl:px-4 2xl:py-4 px-3 py-3 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
-    nextButton.innerHTML = `
-        <svg class="2xl:w-4 2xl:h-4 w-3 h-3 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
-        <path d="M1.234 15.434A2 2 0 0 0 3.414 15L9 9.414a2 2 0 0 0 0-2.828L3.414 1A2 2 0 0 0 1 2.414v11.172a2 2 0 0 0 1.234 1.848Z" />
-        </svg>
-    `;
-    nextButton.disabled = currentPage === totalPages;
-    nextButton.addEventListener('click', () => {
-      if (currentPage < totalPages) {
-        currentPage++;
-        displayTableData(currentPage);
-        updatePagination();
-      }
-    });
-    paginationContainer.appendChild(nextButton);
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-
-    adjustRowsPerPage(); // Set rows per page based on initial screen size
-    window.addEventListener('resize', () => {
-      adjustRowsPerPage(); // Adjust rows per page on screen resize
-      displayTableData(currentPage); // Re-render table data
-      updatePagination(); // Re-render pagination
-    });
-
-    document.getElementById('search-input').addEventListener('input', searchTable);
-    displayTableData(currentPage);
-    updatePagination();
-  });
 </script>
 
 </html>
