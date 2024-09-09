@@ -234,236 +234,78 @@
 
 <!-- Add the script to handle table sorting and pagination -->
 <script>
+ // Memeriksa token autentikasi pengguna
+cekToken(); 
 
-  let rowsPerPage = 10;
-  let currentPage = 1;
-  let filteredData = [];
-  
+let sortOrder = {}; // Objek untuk melacak urutan pengurutan setiap kolom
+let details = [];
+let filteredDnDetailData = [];
 
-  // Adjust rows per page based on screen size
-  function adjustRowsPerPage() {
-    if (window.innerWidth <= 1280) {
-      rowsPerPage = 7;
-    } else if (window.innerWidth <= 1600) {
-      rowsPerPage = 9;
-    } else {
-      rowsPerPage = 10;
-    }
-  }
+// Function to fetch delivery notes from the API
+async function fetchDeliveryNotes() {
+  // Mengambil token dan kode BP dari localStorage
+  const token = localStorage.getItem('accessToken');
+  const bpCode = localStorage.getItem('bpCode');
   
-  // Get noDN from URL
-  const params = new URLSearchParams(window.location.search);
-  const noDN = params.get('noDN');
-  
-  // Sample deliveryNote data for demonstration
-  const deliveryNote = [
-    {
-      noDN: 'DN0012990',
-      noPO: 'PO12345',
-      planDNDate: '2023-09-04',
-      details: [
-        { no: 1, partNumber: 'A001', partName: 'Part 1', QTY: 100, qtyLabel: 'PCS', qtyDelivered: 100, qtyReceived: 90 },
-        { no: 2, partNumber: 'A002', partName: 'Part 2', QTY: 200, qtyLabel: 'PCS', qtyDelivered: 200, qtyReceived: 200 },
-        // Add more rows here if needed
-      ]
-    }
-  ];
-  
-  const dn = deliveryNote.find(dn => dn.noDN === noDN);
-  
-  if (dn) {
-    document.getElementById('dnNumber').textContent = dn.noDN;
-    filteredData = dn.details;
-    displayDNDetails(filteredData);
-    updatePagination();
-  } else {
-    console.error('Data DN tidak ditemukan.');
-  }
-  
-  // Display the DN details
-  function displayDNDetails(details) {
-    const tableBody = document.getElementById('table-body-detail');
-    tableBody.innerHTML = '';
-  
-    const start = (currentPage - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
-    const paginatedData = details.slice(start, end);
-  
-    paginatedData.forEach((row) => {
-      const tableRow = document.createElement('tr');
-      tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
-      tableRow.innerHTML = `
-        <td class="px-2 py-4 text-center font-medium text-gray-900">${row.no}</td>
-        <td class="px-2 py-4 text-center">${row.partNumber}</td>
-        <td class="px-2 py-4 text-center">${row.partName}</td>
-        <td class="px-2 py-4 text-center">${row.qtyLabel}</td>
-        <td class="px-2 py-4 text-center">${row.QTY}</td>
-      `;
-      tableBody.appendChild(tableRow);
+  try {
+    // Mengambil data delivery notes dari API
+    const response = await fetch(`${APIindexdndetail2}/${bpCode}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
     });
-    updateButtonState(); // Update button state after displaying data
-  }
-
-  document.getElementById('confirm-button') 
-    const confirmButton = document.getElementById('confirm-button');
-    const confirmationSection = document.getElementById('confirmation-section');
-
-    if (confirmButton) {
-      // Enable qtyConfirm inputs
-      document.querySelectorAll('.qty-confirm-input').forEach(input => {
-        input.disabled = false;
-        input.classList.add('border-black'); // Add border when enabled
-      });
-
-      // Change button text to "Submit" and display the Cancel button and Checkbox
-      confirmButton.textContent = 'Submit';
-
-      const cancelButton = document.createElement('button');
-      cancelButton.id = 'cancel-button';
-      cancelButton.className = 'ml-[1%] px-4 2xl:px-6 py-2 2xl:py-3 my-auto bg-red-500 rounded cursor-pointer pointer-events-auto max-md:px-5 text-white text-xs 2xl:text-sm';
-      cancelButton.textContent = 'Cancel';
-      document.getElementById('confirm-button-section').appendChild(cancelButton);
-
-      confirmationSection.classList.remove('hidden'); // Show the checkbox confirmation section
-
-      document.getElementById('confirmation-checkbox').addEventListener('change', (e) => {
-        confirmButton.disabled = !e.target.checked;
-      });
-
-      // Handle Cancel button
-      cancelButton.addEventListener('click', () => {
-        displayDNDetails(filteredData);
-        confirmationSection.classList.add('hidden');
-        cancelButton.remove();
-        confirmButton.textContent = 'Edit';
-      });
-
-      confirmButton.disabled = true; // Disable Submit button initially until checkbox is checked
-    } else if (confirmButton) {
-      // Submit logic
-      const inputs = document.querySelectorAll('.qty-confirm-input');
-      inputs.forEach((input, index) => {
-        filteredData[index].qtyConfirm = input.value;
-      });
-
-      alert('Data submitted successfully!');
-      displayDNDetails(filteredData);
-      updateButtonState();
-
-      confirmationSection.classList.add('hidden');
-      document.getElementById('cancel-button').remove();
+  
+    // Mengecek jika response tidak OK
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
+  
+    // Mengonversi response menjadi JSON
+    const data = await response.json();
+    console.log(`Data fetched for DN:`, data);
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const name = localStorage.getItem('name');
-    const bpCode = localStorage.getItem('bpCode');
+    // Mengambil parameter noDN dari URL
+    const params = new URLSearchParams(window.location.search);
+    const noDN = params.get('noDN');
 
-    document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
+    // Mencari DN berdasarkan noDN yang dipilih
+    const dn = data.find(dn => dn.noDN === noDN);
     
-    adjustRowsPerPage(); // Set rows per page based on initial screen size
-    window.addEventListener('resize', () => {
-      adjustRowsPerPage(); // Adjust rows per page on screen resize
-      displayDNDetails(filteredData); // Re-render table data
-      updatePagination(); // Re-render pagination
-    });
-
-    document.getElementById('search-input').addEventListener('input', searchTable);
-
-    displayDNDetails(filteredData);
-    updatePagination();
-    updateButtonState();
-  });
-
-  function updateButtonState() {
-    const hasUnconfirmedQty = filteredData.some(detail => !detail.qtyConfirm);
-    const confirmButton = document.getElementById('confirm-button');
-
-    if (hasUnconfirmedQty) {
-      
+    if (dn) {
+      // Menampilkan nomor DN pada elemen HTML
+      document.getElementById('dnNumber').textContent = dn.noDN;
+      filteredData = dn.details; // Menyimpan detail DN untuk ditampilkan di tabel
+      displayDNDetails(filteredData); // Menampilkan detail DN di tabel
+      updatePagination(); // Memperbarui pagination
     } else {
-      confirmButton;
-      confirmButton;
+      console.error('Data DN tidak ditemukan.'); // Menangani kasus jika DN tidak ditemukan
     }
+  } catch (error) {
+    // Menangani error jika terjadi kesalahan saat fetch
+    console.error(`Error fetching delivery notes:`, error);
   }
+}
 
-  function updatePagination() {
-    const paginationContainer = document.querySelector('.pagination');
-    paginationContainer.innerHTML = '';
+// Menampilkan detail DN di tabel
+function displayDNDetails(details) {
+  const tableBody = document.getElementById('table-body-detail');
+  tableBody.innerHTML = ''; // Mengosongkan isi tabel sebelumnya
   
-    const totalPages = Math.ceil(filteredData.length / rowsPerPage);
-    const maxPageNumbersToShow = 4;
+  // Menghitung start dan end index untuk pagination
+  const start = (currentPage - 1) * rowsPerPage;
+  const end = start + rowsPerPage;
+  const paginatedData = details.slice(start, end); // Mengambil data yang sesuai dengan halaman saat ini
   
-    // Previous button
-    const prevButton = document.createElement('button');
-    prevButton.className = 'px-3 py-3 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
-    prevButton.textContent = 'Previous';
-    prevButton.disabled = currentPage === 1;
-    prevButton.addEventListener('click', () => {
-      if (currentPage > 1) {
-        currentPage--;
-        displayDNDetails(filteredData);
-        updatePagination();
-      }
-    });
-    paginationContainer.appendChild(prevButton);
-  
-    // Page numbers
-    for (let i = 1; i <= totalPages; i++) {
-      const pageButton = document.createElement('button');
-      pageButton.className = `px-4 py-2 ${i === currentPage ? 'bg-blue-900 text-white' : 'bg-gray-200 text-gray-900'} rounded-md hover:bg-gray-300`;
-      pageButton.textContent = i;
-      pageButton.addEventListener('click', () => {
-        currentPage = i;
-        displayDNDetails(filteredData);
-        updatePagination();
-      });
-      paginationContainer.appendChild(pageButton);
-    }
-  
-    // Next button
-    const nextButton = document.createElement('button');
-    nextButton.className = 'px-3 py-3 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
-    nextButton.textContent = 'Next';
-    nextButton.disabled = currentPage === totalPages;
-    nextButton.addEventListener('click', () => {
-      if (currentPage < totalPages) {
-        currentPage++;
-        displayDNDetails(filteredData);
-        updatePagination();
-      }
-    });
-    paginationContainer.appendChild(nextButton);
-  }
-  
-  // Add event listener for sorting when DOM is fully loaded
-  document.addEventListener('DOMContentLoaded', () => {
-    const name = localStorage.getItem('name');
-    const bpCode = localStorage.getItem('bpCode');
-    document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
-  
-    adjustRowsPerPage();
-    window.addEventListener('resize', () => {
-      adjustRowsPerPage();
-      displayDNDetails(filteredData);
-      updatePagination();
-    });
-  
-    document.getElementById('sort-no').addEventListener('click', sortTableByNo); // Sorting on click
-    displayDNDetails(filteredData);
-    updatePagination();
+  paginatedData.forEach((row) => {
+    // Menambahkan baris ke tabel berdasarkan data yang dipaginate
+    const rowElement = document.createElement('tr');
+    // Menambahkan sel ke baris sesuai dengan data
+    // (kode ini mungkin akan berlanjut di sini dengan penambahan elemen <td>)
+    tableBody.appendChild(rowElement);
   });
-  
-  // Function to handle search
-  function searchTable() {
-    const searchInput = document.getElementById('search-input').value.toLowerCase();
-    filteredData = deliveryNote.find(dn => dn.noDN === noDN).details.filter(row =>
-      row.partNumber.toLowerCase().includes(searchInput) ||
-      row.partName.toLowerCase().includes(searchInput)
-    );
-    currentPage = 1;
-    displayDNDetails(filteredData);
-    updatePagination();
-  }
+}
   
 </script>
 
