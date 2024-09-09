@@ -234,78 +234,92 @@
 
 <!-- Add the script to handle table sorting and pagination -->
 <script>
- // Memeriksa token autentikasi pengguna
-cekToken(); 
+  // Memeriksa token autentikasi pengguna
+  cekToken();
 
-let sortOrder = {}; // Objek untuk melacak urutan pengurutan setiap kolom
-let details = [];
-let filteredDnDetailData = [];
+  let sortOrder = {}; // Objek untuk melacak urutan pengurutan setiap kolom
+  let details = [];
+  let filteredDnDetailData = [];
 
-// Function to fetch delivery notes from the API
-async function fetchDeliveryNotes() {
-  // Mengambil token dan kode BP dari localStorage
-  const token = localStorage.getItem('accessToken');
-  const bpCode = localStorage.getItem('bpCode');
+  // Function to fetch delivery notes from the API
+  async function fetchDeliveryNotes() {
+    // Get token and delivery note number from localStorage
+    const token = localStorage.getItem('accessToken');
+    const noDN = localStorage.getItem('noDN');
   
-  try {
-    // Mengambil data delivery notes dari API
-    const response = await fetch(`${APIindexdndetail2}/${bpCode}`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-    });
-  
-    // Mengecek jika response tidak OK
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    // Check if noDN is null
+    if (!noDN) {
+      console.error('No Delivery Note (noDN) found in localStorage');
+      return;
     }
   
-    // Mengonversi response menjadi JSON
-    const data = await response.json();
-    console.log(`Data fetched for DN:`, data);
-
-    // Mengambil parameter noDN dari URL
-    const params = new URLSearchParams(window.location.search);
-    const noDN = params.get('noDN');
-
-    // Mencari DN berdasarkan noDN yang dipilih
-    const dn = data.find(dn => dn.noDN === noDN);
-    
-    if (dn) {
-      // Menampilkan nomor DN pada elemen HTML
-      document.getElementById('dnNumber').textContent = dn.noDN;
-      filteredData = dn.details; // Menyimpan detail DN untuk ditampilkan di tabel
-      displayDNDetails(filteredData); // Menampilkan detail DN di tabel
-      updatePagination(); // Memperbarui pagination
-    } else {
-      console.error('Data DN tidak ditemukan.'); // Menangani kasus jika DN tidak ditemukan
+    try {
+      // Fetch header data (if needed, remove if not required)
+      const headerResponse = await fetch(`${APIindexdnheader}${noDN}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (!headerResponse.ok) {
+        throw new Error(`HTTP error! status: ${headerResponse.status}`);
+      }
+  
+      const headerData = await headerResponse.json();
+      console.log('Header data:', headerData);
+  
+      // Fetch detail data
+      const detailResponse = await fetch(`${APIindexdndetail2}${noDN}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (!detailResponse.ok) {
+        throw new Error(`HTTP error! status: ${detailResponse.status}`);
+      }
+  
+      const detailData = await detailResponse.json();
+      console.log('Detail data:', detailData);
+  
+      // Ensure both header and detail data exist
+      if (headerData && headerData.data && Array.isArray(headerData.data) && detailData && detailData.data && Array.isArray(detailData.data)) {
+        const header = headerData.data[0];
+        const details = detailData.data.map(detail => ({
+          dnDetailNo: detail.dn_detail_no,
+          dnLine: detail.dn_line,
+          partNo: detail.part_no,
+          itemDescA: detail.item_desc_a,
+          dnUnit: detail.dn_unit,
+          dnSnp: detail.dn_snp,
+          dnQty: detail.dn_qty,
+          qtyConfirm: detail.qty_confirm,
+          receiptQty: detail.receipt_qty,
+        }));
+  
+        // Combine header and details
+        const combinedData = {
+          ...header,
+          details: details,
+        };
+  
+        console.log('Combined data:', combinedData);
+  
+        // Store combined data
+        filteredDnDetailData = combinedData;
+      }
+  
+    } catch (error) {
+      console.error('Error fetching data:', error);
     }
-  } catch (error) {
-    // Menangani error jika terjadi kesalahan saat fetch
-    console.error(`Error fetching delivery notes:`, error);
   }
-}
-
-// Menampilkan detail DN di tabel
-function displayDNDetails(details) {
-  const tableBody = document.getElementById('table-body-detail');
-  tableBody.innerHTML = ''; // Mengosongkan isi tabel sebelumnya
   
-  // Menghitung start dan end index untuk pagination
-  const start = (currentPage - 1) * rowsPerPage;
-  const end = start + rowsPerPage;
-  const paginatedData = details.slice(start, end); // Mengambil data yang sesuai dengan halaman saat ini
-  
-  paginatedData.forEach((row) => {
-    // Menambahkan baris ke tabel berdasarkan data yang dipaginate
-    const rowElement = document.createElement('tr');
-    // Menambahkan sel ke baris sesuai dengan data
-    // (kode ini mungkin akan berlanjut di sini dengan penambahan elemen <td>)
-    tableBody.appendChild(rowElement);
-  });
-}
+  // Call the function to fetch data
+  fetchDeliveryNotes();
   
 </script>
 
