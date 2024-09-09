@@ -100,9 +100,7 @@
     }, 1500);
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    
-  });
+  document.addEventListener('DOMContentLoaded', prefillLoginFields);
 
 // Toggle password visibility
 function togglePassword() {
@@ -159,6 +157,11 @@ async function handleLogin(event) {
       localStorage.setItem('name', data.name);
       localStorage.setItem('bpCode', data.bp_code);
       localStorage.setItem('userRole', data.role);
+
+      // Store username and password in localStorage for future use
+      localStorage.setItem('username', username);
+      localStorage.setItem('password', password);
+
       displayNotification(`Welcome ${data.name}`, 'success');
       setTimeout(() => {
         saveLogout();
@@ -181,48 +184,36 @@ async function handleLogin(event) {
   }
 }
 
-
-// async function handleDummyLogin(username, password) {
-//   const user = dummyData.find(user => user.username === username && user.password === password);
-
-//   if (user) {
-//     try {
-//       // Simulate a successful login with the matched dummy data
-//       localStorage.setItem('accessToken', user.access_token);
-//       localStorage.setItem('name', user.name);
-//       localStorage.setItem('bpCode', user.bp_code);
-//       localStorage.setItem('userRole', user.role);
-//       displayNotification(`User "${user.username}" successfully Login!`, 'success');
-//       redirectToDashboardIndex(user.role);
-//     } catch (error) {
-//       console.error('Error logging in with dummy data:', error);
-//       displayNotification('An error occurred with dummy login. Please try again later.');
-//     }
-//   } else {
-//     displayNotification('Invalid username or password for dummy data', 'success');
-//   }
-// }
-
 function redirectToDashboardIndex(role) {
 
-switch(role) {
-  case '1':
-    window.location.href = 'supplier/';
-    break;
-  case '2':
-    window.location.href = 'admin-warehouse/';
-    break;
-  case '3':
-    window.location.href = 'admin-purchasing/';
-    break;
-  case '4':
-    window.location.href = 'super-admin/';
-    break;
-  default:
-    displayNotification('Role not recognized');
-}
+  switch(role) {
+    case '1':
+      window.location.href = 'supplier/';
+      break;
+    case '2':
+      window.location.href = 'admin-warehouse/';
+      break;
+    case '3':
+      window.location.href = 'admin-purchasing/';
+      break;
+    case '4':
+      window.location.href = 'super-admin/';
+      break;
+    default:
+      displayNotification('Role not recognized');
+  }
 }
 
+// Function to prefill username and password if available in localStorage
+function prefillLoginFields() {
+  const savedUsername = localStorage.getItem('username');
+  const savedPassword = localStorage.getItem('password');
+
+  if (savedUsername && savedPassword) {
+    document.getElementById('username').value = savedUsername;
+    document.getElementById('password').value = savedPassword;
+  }
+}
 
 // Function to show the loading spinner
 function showLoadingSpinner() {
