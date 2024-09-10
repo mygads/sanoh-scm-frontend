@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <title>Label Sample</title>
+    <title>Label Delivery Note PT Sanoh Indonesia</title>
+    <link rel="icon" type="image/png" href="../assets/icon_sanoh.png">
     <style>
         body {
             font-family: "Poppins", sans-serif;
@@ -350,181 +351,229 @@
 
     <div class="page" id="page-content"></div>
 
-    <script>
-
-        // Function to get query parameter by name from the URL
-        function getQueryParameter(param) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(param);
-        }
-
-        // Get the 'noDN' parameter from the URL (e.g., ?noDN=DN0009970)
-        const no_dn = getQueryParameter('noDN');
-
-        // Check if no_dn exists and proceed
-        if (!no_dn) {
-            console.error("no_dn (Delivery Note number) is not provided in the URL");
-        }
-        
-        async function fetchPurchaseOrderData(no_dn) {
-            const token = localStorage.getItem('accessToken');
-            try {
-                const response = await fetch(`https://api.edutrashgo.com/api/lbview1/${no_dn}`, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,  // Ensure the token is passed correctly
-                        'Content-Type': 'application/json',
-                    },
-                });
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                const poData = await response.json();
-                console.log("Data fetched:", poData);
-
-                if (poData.success && poData.data && poData.data.length > 0) {
-                    const header = {
-                        dn_label_no: poData.data[0].dn_label_no || 'N/A',
-                        lot_number: poData.data[0].lot_number || 'N/A',
-                        qr_number: poData.data[0].qr_number || 'N/A',
-                        po_number: poData.data[0].po_number || 'N/A',
-                        dn_number: poData.data[0].dn_number || 'N/A',
-                        model: poData.data[0].model || 'N/A',
-                        customer_name: poData.data[0].customer_name || 'N/A',
-                        supplier_name: poData.data[0].supplier_name || 'N/A',
-                        part_number: poData.data[0].part_number || 'N/A',
-                        part_name: poData.data[0].part_name || 'N/A',
-                        quantity: poData.data[0].quantity || 'N/A',
-                        delivery_date: poData.data[0].delivery_date || 'N/A',
-                        printed_date: poData.data[0].printed_date || 'N/A',
-                    };
-
-                    renderPurchaseOrder(header, poData.data);
-                } else {
-                    console.error("Failed to fetch Purchase Order data:", poData.message);
-                }
-            } catch (error) {
-                console.error("Error fetching Purchase Order data:", error);
-            }
-        }
-
-        // Render table content for the purchase order
-        function renderPurchaseOrder(header, items) {
-            let pageContent = '';
-
-            items.forEach((item, index) => {
-                pageContent += `
-                <div class="label">
-                    <table class="table">
-                        <tr>
-                            <td style="font-size: 5px !important; line-height: 1 !important;">
-                                <span class="model-label">MODEL</span>
-                            </td>
-                            <td colspan="5" class="header-text">
-                                <div class="part-no-container">
-                                    <span class="part-no-label">PART NO</span>
-                                    <span class="part-no-value">${item['part_number'] || 'N/A'}</span>
-                                </div>
-                            </td>
-                            <td class="header-text left-text">
-                                <div class="lot-no-container">
-                                    <span class="lot-no-label">LOT NO</span>
-                                    <span class="lot-no-value">${item['lot_number'] || 'N/A'}</span>
-                                </div>
-                            </td>                
-                        </tr>
-                        <tr>
-                            <td class="header-text">
-                            <span class="customer-label">CUSTOMER</span>
-                            </td>
-                            <td colspan="5" class="header-text">
-                                <div class="part-name-container">
-                                    <span class="part-name-label">PART NAME</span>
-                                    <span class="part-name-value">${item['part_name'] || 'N/A'}</span>
-                                </div>
-                            </td>
-                            <td class="header-text">
-                                <div class="quantity-container">
-                                    <span class="quantity-label">QUANTITY</span><br>
-                                    <span class="quantity-value">${item['quantity'] || 'N/A'}</span>
-                                </div>
-                            </td>                
-                        </tr>
-                        <tr>
-                            <td colspan="4">
-                                <span class="company-name">${item['customer_name'] || 'N/A'}</span>
-                            </td>
-                            <td colspan="2" class="header-text">
-                                <span class="pl-number">${item['po_number'] || 'N/A'}</span>
-                            </td>
-                            <td class="header-text right-text">
-                                <span class="delivery-date-label" style="line-height: 0.8; margin: 0;">DATE DELIVERY</span><br>
-                                <span class="delivery-date-value" style="line-height: 0.8; margin: 0;">${item['delivery_date'] || 'N/A'}</span>
-                            </td>                                 
-                        </tr>
-                        <tr>
-                            <td class="header-text">
-                                <span class="quality-label">QUALITY</span>
-                            </td>
-                            <td colspan="3" class="header-text">
-                                <span class="inspection-label">INSPECTION</span>
-                            </td>
-                            <td colspan="2" class="header-text left-text no-border">
-                                <span class="printed-date-label">PRINTED DATE</span><br>
-                                <span class="printed-date-value">${item['printed_date'] || 'N/A'}</span>               
-                        </tr>
-                        <tr>
-                            <td colspan="7">
-                                <div class="qr-code-container">
-                                    <div class="qr-code" style="margin-left: 13px;">
-                                        <div id="qrcode-left-${index}"></div>
-                                        <span>${item['qr_number'] || 'N/A'}</span>
-                                    </div>                            
-                                    <div class="qr-code-right">
-                                        <div id="qrcode-right-${index}"></div>
-                                        <span>${item['po_number'] || 'N/A'}</span>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>                                 
-                    </table>
-                </div>`;
-            });
-
-            document.getElementById('page-content').innerHTML = pageContent;
-
-            // Generate QR Codes for each item after rendering the page
-            items.forEach((item, index) => {
-                generateQRCodes(item['qr_number'], item['po_number'], index);
-            });
-        }
-
-        // Generate QR codes for each label
-        function generateQRCodes(qrNumber, poNumber, index) {
-            new QRCode(document.getElementById(`qrcode-left-${index}`), {
-                text: qrNumber,
-                width: 50,
-                height: 50,
-                correctLevel: QRCode.CorrectLevel.L,
-            });
-
-            new QRCode(document.getElementById(`qrcode-right-${index}`), {
-                text: poNumber ? poNumber : "No PO Number",
-                width: 40,
-                height: 40,
-                correctLevel: QRCode.CorrectLevel.L,
-            });
-        }
-
-        window.onload = async function() {
-            await fetchPurchaseOrderData(no_dn);
-            setTimeout(function() {
-                window.print();
-            }, 500);
-        };
-    </script>
-
 </body>
+
+<script src="../../api.js"></script>
+<script src="../../script.js"></script>
+
+<script>
+
+
+const noDN = getQueryParams();
+
+// Function untuk mengambil parameter noDN dari URL
+function getQueryParams() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('noDN');  // Ambil noDN dari URL
+}
+
+// Validate the noDN value
+if (!noDN || noDN.trim() === "" || noDN === 'undefined' || noDN === null) {
+    console.error("Invalid noDN value:", noDN);
+    document.getElementById('page-content').innerHTML = "<p>Error: Invalid or missing Purchase Order number.</p>";
+} else {
+    // If noDN is valid, fetch and display the Label data
+    fetchLabelData(noDN).then(data => {
+        window.print();
+    });
+}
+
+// window.onload = async function() {
+//     await fetchLabelData(noDN);
+//     setTimeout(function() {
+//         window.print();
+//     }, 500);
+// };
+
+
+// Function untuk mengambil token dari localStorage
+async function getToken() {
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+        throw new Error("Access token is missing. Please log in.");
+    }
+    return token;
+}
+
+// async function fetchLabelData(noDN) {
+//     try {
+//         const response = await fetch(`http://127.0.0.1:8000/api/lbview/${noDN}`);
+//         const labelData = await response.json();
+
+//         if (labelData.success && labelData.data && labelData.data.length > 0) {
+//             const header = {
+//                 dn_label_no: labelData.data[0].dn_label_no || 'N/A',
+//                 lot_number: labelData.data[0].lot_number || 'N/A',
+//                 qr_number: labelData.data[0].qr_number || 'N/A',
+//                 po_number: labelData.data[0].po_number || 'N/A',
+//                 dn_number: labelData.data[0].dn_number || 'N/A',
+//                 model: labelData.data[0].model || 'N/A',
+//                 customer_name: labelData.data[0].customer_name || 'N/A',
+//                 supplier_name: labelData.data[0].supplier_name || 'N/A',
+//                 part_number: labelData.data[0].part_number || 'N/A',
+//                 part_name: labelData.data[0].part_name || 'N/A',
+//                 quantity: labelData.data[0].quantity || 'N/A',
+//                 delivery_date: labelData.data[0].delivery_date || 'N/A',
+//                 printed_date: labelData.data[0].printed_date || 'N/A',
+//             };
+
+//             renderLabel(header, labelData.data);
+//         } else {
+//             console.error("Failed to fetch Purchase Order data:", labelData.message);
+//         }
+//     } catch (error) {
+//         console.error("Error fetching Purchase Order data:", error);
+//     }
+// }
+
+// Function untuk mengambil data label dengan token
+async function fetchLabelData(noDN) {
+    try {
+        const token = await getToken();  // Ambil token dari localStorage
+        const response = await fetch(`${API_labelViewSupplier}${noDN}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,  // Sertakan token dalam header
+                'Content-Type': 'application/json',
+            }
+        });
+
+        const labelData = await response.json();
+
+        if (labelData.success && labelData.data && labelData.data.length > 0) {
+            const header = {
+                dn_label_no: labelData.data[0].dn_label_no || 'N/A',
+                lot_number: labelData.data[0].lot_number || 'N/A',
+                qr_number: labelData.data[0].qr_number || 'N/A',
+                po_number: labelData.data[0].po_number || 'N/A',
+                dn_number: labelData.data[0].dn_number || 'N/A',
+                model: labelData.data[0].model || 'N/A',
+                customer_name: labelData.data[0].customer_name || 'N/A',
+                supplier_name: labelData.data[0].supplier_name || 'N/A',
+                part_number: labelData.data[0].part_number || 'N/A',
+                part_name: labelData.data[0].part_name || 'N/A',
+                quantity: labelData.data[0].quantity || 'N/A',
+                delivery_date: labelData.data[0].delivery_date || 'N/A',
+                printed_date: labelData.data[0].printed_date || 'N/A',
+            };
+
+            renderLabel(header, labelData.data);
+        } else {
+            console.error("Failed to fetch label data:", labelData.message);
+        }
+    } catch (error) {
+        console.error("Error fetching label data:", error);
+    }
+}
+
+// Render table content for the purchase order
+function renderLabel(header, items) {
+    let pageContent = '';
+
+    items.forEach((item, index) => {
+        pageContent += `
+        <div class="label">
+            <table class="table">
+                <tr>
+                    <td style="font-size: 5px !important; line-height: 1 !important;">
+                        <span class="model-label">MODEL</span>
+                    </td>
+                    <td colspan="5" class="header-text">
+                        <div class="part-no-container">
+                            <span class="part-no-label">PART NO</span>
+                            <span class="part-no-value">${item['part_number'] || 'N/A'}</span>
+                        </div>
+                    </td>
+                    <td class="header-text left-text">
+                        <div class="lot-no-container">
+                            <span class="lot-no-label">LOT NO</span>
+                            <span class="lot-no-value">${item['lot_number'] || 'N/A'}</span>
+                        </div>
+                    </td>                
+                </tr>
+                <tr>
+                    <td class="header-text">
+                    <span class="customer-label">CUSTOMER</span>
+                    </td>
+                    <td colspan="5" class="header-text">
+                        <div class="part-name-container">
+                            <span class="part-name-label">PART NAME</span>
+                            <span class="part-name-value">${item['part_name'] || 'N/A'}</span>
+                        </div>
+                    </td>
+                    <td class="header-text">
+                        <div class="quantity-container">
+                            <span class="quantity-label">QUANTITY</span><br>
+                            <span class="quantity-value">${item['quantity'] || 'N/A'}</span>
+                        </div>
+                    </td>                
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <span class="company-name">${item['customer_name'] || 'N/A'}</span>
+                    </td>
+                    <td colspan="2" class="header-text">
+                        <span class="pl-number">${item['po_number'] || 'N/A'}</span>
+                    </td>
+                    <td class="header-text right-text">
+                        <span class="delivery-date-label" style="line-height: 0.8; margin: 0;">DATE DELIVERY</span><br>
+                        <span class="delivery-date-value" style="line-height: 0.8; margin: 0;">${item['delivery_date'] || 'N/A'}</span>
+                    </td>                                 
+                </tr>
+                <tr>
+                    <td class="header-text">
+                        <span class="quality-label">QUALITY</span>
+                    </td>
+                    <td colspan="3" class="header-text">
+                        <span class="inspection-label">INSPECTION</span>
+                    </td>
+                    <td colspan="2" class="header-text left-text no-border">
+                        <span class="printed-date-label">PRINTED DATE</span><br>
+                        <span class="printed-date-value">${item['printed_date'] || 'N/A'}</span>               
+                </tr>
+                <tr>
+                    <td colspan="7">
+                        <div class="qr-code-container">
+                            <div class="qr-code" style="margin-left: 13px;">
+                                <div id="qrcode-left-${index}"></div>
+                                <span>${item['qr_number'] || 'N/A'}</span>
+                            </div>                            
+                            <div class="qr-code-right">
+                                <div id="qrcode-right-${index}"></div>
+                                <span>${item['po_number'] || 'N/A'}</span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>                                 
+            </table>
+        </div>`;
+    });
+
+    document.getElementById('page-content').innerHTML = pageContent;
+
+    // Generate QR Codes for each item after rendering the page
+    items.forEach((item, index) => {
+        generateQRCodes(item['qr_number'], item['po_number'], index);
+    });
+}
+
+// Generate QR codes for each label
+function generateQRCodes(qrNumber, poNumber, index) {
+    new QRCode(document.getElementById(`qrcode-left-${index}`), {
+        text: qrNumber,
+        width: 50,
+        height: 50,
+        correctLevel: QRCode.CorrectLevel.L,
+    });
+
+    new QRCode(document.getElementById(`qrcode-right-${index}`), {
+        text: poNumber ? poNumber : "No PO Number",
+        width: 40,
+        height: 40,
+        correctLevel: QRCode.CorrectLevel.L,
+    });
+}
+
+
+</script>
 </html>
