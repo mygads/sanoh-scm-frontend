@@ -181,7 +181,6 @@
   let pendingResponseIndex = null;
   let pendingResponseAction = '';
   let deliveryNote = [];
-  let filteredDnData = [];
 
   // Function to fetch delivery notes from the API
   async function fetchDeliveryNotes() {
@@ -228,8 +227,8 @@
                   })) : []
               }));
 
-              // Set filteredDnData to match deliveryNote initially
-              filteredDnData = deliveryNote;
+              // Set filteredData to match deliveryNote initially
+              filteredData = deliveryNote;
 
               displayTableData(1);
               updatePagination();
@@ -250,9 +249,9 @@
 
       const start = (page - 1) * rowsPerPage;
       const end = start + rowsPerPage;
-      const paginatedData = filteredDnData.slice(start, end);
+      const paginatedData = filteredData.slice(start, end);
 
-      // Iterate through filteredDnData to display in the table
+      // Iterate through filteredData to display in the table
       paginatedData.forEach(row => {
           const tableRow = document.createElement('tr');
           tableRow.innerHTML = `
@@ -271,7 +270,7 @@
 
   function searchTable() {
       const searchInput = document.getElementById('search-input').value.toLowerCase();
-      filteredDnData = deliveryNote.filter(row => row.noDN.toLowerCase().includes(searchInput));
+      filteredData = deliveryNote.filter(row => row.noDN.toLowerCase().includes(searchInput));
       displayTableData(); // Re-display data after searching
   }
 

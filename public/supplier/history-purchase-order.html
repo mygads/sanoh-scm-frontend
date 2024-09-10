@@ -177,7 +177,7 @@
   let pendingResponseIndex = null;
   let pendingResponseAction = '';
   let historyPurchaseOrder = [];
-  let filteredHistoryPOData = [];
+
   fetchHistoryPurchaseOrders();
   
   // Function to fetch purchase orders from the API
@@ -221,8 +221,8 @@
                     })) : []
                 }));
 
-            // Set filteredHistoryPOData to match historyPurchaseOrder initially
-            filteredHistoryPOData = historyPurchaseOrder;
+            // Set filteredData to match historyPurchaseOrder initially
+            filteredData = historyPurchaseOrder;
             filteredHistoryPODetailData = historyPurchaseOrder;
 
             // Call functions to display data and setup pagination
@@ -249,7 +249,7 @@
     const tableBody = document.getElementById('table-body');
     tableBody.innerHTML = '';
 
-    if (filteredHistoryPOData.length === 0) {
+    if (filteredData.length === 0) {
         // Display a message if no data is available
         const noDataRow = document.createElement('tr');
         noDataRow.innerHTML = `
@@ -263,7 +263,7 @@
 
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
-    const paginatedData = filteredHistoryPOData.slice(start, end);
+    const paginatedData = filteredData.slice(start, end);
 
     paginatedData.forEach((row, index) => {
         const tableRow = document.createElement('tr');
@@ -281,7 +281,7 @@
 
   function searchTable() {
     const searchInput = document.getElementById('search-input').value.toLowerCase();
-    filteredHistoryPOData = historyPurchaseOrder.filter(row => row.noPO.toLowerCase().includes(searchInput)); // Use historyPurchaseOrder for filtering
+    filteredData = historyPurchaseOrder.filter(row => row.noPO.toLowerCase().includes(searchInput)); // Use historyPurchaseOrder for filtering
     currentPage = 1;
     displayTableData(currentPage);
     updatePagination();

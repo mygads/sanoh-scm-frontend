@@ -214,7 +214,7 @@
   let pendingResponseIndex = null;
   let pendingResponseAction = '';
   let details = [];  // This will hold the purchase orders
-  let filteredDataDetail = [];  // To hold the filtered details data
+
 
   // Call the function to fetch data on page load
   fetchPurchaseOrders();
@@ -323,8 +323,8 @@
         document.getElementById('poNumber').textContent = po.noPO;
         document.getElementById('noteInput').textContent = note;
 
-        // Store the details array into filteredDataDetail
-        filteredDataDetail = po.details;
+        // Store the details array into filteredData
+        filteredData = po.details;
 
         // Display the details
         if (typeof displayTableData === 'function') {
@@ -362,7 +362,7 @@
 
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
-    const paginatedData = filteredDataDetail.slice(start, end);
+    const paginatedData = filteredData.slice(start, end);
 
     paginatedData.forEach((detail, index) => {
       const tableRow = document.createElement('tr');
@@ -398,7 +398,7 @@
     }
 
     // Filter the details array based on the search input
-    filteredDataDetail = details.filter(detail => {
+    filteredData = details.filter(detail => {
         // Ensure detail is not undefined and has the required properties
         if (detail && typeof detail.partNumber === 'string' && typeof detail.partName === 'string') {
             return detail.partNumber.toLowerCase().includes(searchInput) ||

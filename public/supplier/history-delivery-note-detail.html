@@ -235,7 +235,6 @@
   cekToken();
 
   let details = [];
-  let filteredHistoryDNData = [];
 
   // Function to fetch delivery notes from the API
   async function fetchHistoryDeliveryNotes() {
@@ -282,8 +281,8 @@
                   })) : []
               }));
 
-          // Set filteredHistoryDNData to match deliveryNote initially
-          filteredHistoryDNData = details;
+          // Set filteredData to match deliveryNote initially
+          filteredData = details;
 
           // Call function to display data
           historyDNDetails();
@@ -344,7 +343,7 @@
     }
 
     window.addEventListener('resize', () => {
-        displayDNDetails(filteredHistoryDNData);  // Adjust display when resized
+        displayDNDetails(filteredData);  // Adjust display when resized
         updatePagination();
     });
 
@@ -384,25 +383,25 @@
     adjustRowsPerPage(); // Set rows per page based on initial screen size
     window.addEventListener('resize', () => {
       adjustRowsPerPage(); // Adjust rows per page on screen resize
-      displayDNDetails(filteredHistoryDNData); // Re-render table data
+      displayDNDetails(filteredData); // Re-render table data
       updatePagination(); // Re-render pagination
     });
 
     document.getElementById('search-input').addEventListener('input', searchTable);
 
-    displayDNDetails(filteredHistoryDNData);
+    displayDNDetails(filteredData);
     updatePagination();
   });
 
   // Function to handle search
   function searchTable() {
     const searchInput = document.getElementById('search-input').value.toLowerCase();
-    filteredHistoryDNData = deliveryNote.find(dn => dn.noDN === noDN).details.filter(row => 
+    filteredData = deliveryNote.find(dn => dn.noDN === noDN).details.filter(row => 
       detail.partNumber.toLowerCase().includes(searchInput) || 
       detail.partName.toLowerCase().includes(searchInput)
     );
     currentPage = 1;
-    displayDNDetails(filteredHistoryDNData);
+    displayDNDetails(filteredData);
     updatePagination();
   }
 

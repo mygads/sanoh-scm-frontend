@@ -214,7 +214,6 @@
   cekToken();  // Ensure token is valid.
 
   let historyPurchaseOrder = [];  // This stores the purchase orders from the API
-  let filteredHistoryPODetailData = [];  // Stores the details of the specific PO
   
   // Define the fetchHistoryPurchaseOrders function
   async function fetchHistoryPurchaseOrders() {
@@ -284,8 +283,8 @@
             document.getElementById('poNumber').textContent = po.noPO;
             document.getElementById('noteInput').textContent = po.note || 'No note provided';
             
-            // Store the details array into filteredHistoryPODetailData
-            filteredHistoryPODetailData = po.details;
+            // Store the details array into filteredData
+            filteredData = po.details;
 
             // Display the details
             if (typeof displayTableData === 'function') {
@@ -330,7 +329,7 @@
     const rowsPerPage = 5;  // Define how many rows to display per page
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
-    const paginatedData = filteredHistoryPODetailData.slice(start, end);  // Paginate the details data
+    const paginatedData = filteredData.slice(start, end);  // Paginate the details data
 
     if (paginatedData.length === 0) {
         const noDataRow = document.createElement('tr');
@@ -371,7 +370,7 @@
 
     const po = historyPurchaseOrder.find(po => po.noPO === noPO);
     if (po) {
-        filteredHistoryPODetailData = po.details.filter(row => 
+        filteredData = po.details.filter(row => 
             row.partNumber.toLowerCase().includes(searchInput) || 
             row.partName.toLowerCase().includes(searchInput)
         );

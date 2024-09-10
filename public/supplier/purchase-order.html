@@ -211,8 +211,22 @@
   let pendingResponseIndex = null;
   let pendingResponseAction = '';
 
+  fetchPurchaseOrders();
+  adjustRowsPerPage();
+
+  document.addEventListener('DOMContentLoaded', () => {
+
+    window.addEventListener('resize', () => {
+      displayTableData(currentPage); // Re-render table data
+      updatePagination(); // Re-render pagination
+    });
+
+    document.getElementById('search-input').addEventListener('input', searchTable);
+    displayTableData(currentPage);
+    updatePagination();
+  });
+
   async function fetchPurchaseOrders() {
-    const token = localStorage.getItem('accessToken');
 
     try {
         const response = await fetch(`${API_indexPOSupplier}${bpCode}`, {
@@ -240,19 +254,12 @@
             status: po.po_status || "",
             response: po.response || "",
             note: po.note || "",
-            details: (po.detail || []).map((detail, index) => ({
-                no: (index + 1).toString(),
-                partNumber: detail.bp_part_no || "",
-                partName: detail.item_desc_a || "",
-                UoM: detail.purchase_unit || "",
-                QTY: detail.po_qty || "",
-            }))
         }));
 
         // Set filteredData to match purchaseOrder initially
         filteredData = purchaseOrder;
 
-        // Call functions to display data and setup pagination
+        // Call functions to display data and setup pagination        
         displayTableData(1);
         updatePagination();
     } catch (error) {
@@ -261,8 +268,7 @@
   }
 
   async function updateResponse(po_no, response) {
-    const token = localStorage.getItem('accessToken');
-    
+ 
     try {
         const updateURL = `${API_updatePOSupplier}${po_no}`;
         const responseBody = JSON.stringify({ response });
@@ -309,7 +315,13 @@
   }
 
   function handleResponse(po_no, response) {  
-    updateResponse(po_no, response);
+    // Store the PO number and the desired response (Accept/Decline)
+    pendingResponseAction = response;
+    pendingResponseIndex = po_no;
+
+    // Show the confirmation modal
+    showConfirmation(po_no, response);
+    // updateResponse(po_no, response);
   }
 
   function displayTableData(page) {
@@ -347,8 +359,7 @@
   }
 
   function showConfirmation(index, action) {
-    pendingResponseIndex = index;
-    pendingResponseAction = action;
+
     document.getElementById('confirm-action').textContent = action.toLowerCase();
     document.getElementById('confirmation-modal').classList.remove('hidden');
   }
@@ -357,28 +368,17 @@
     document.getElementById('confirmation-modal').classList.add('hidden');
   }
 
+  // Event listener for the "Yes" button in the confirmation modal
   document.getElementById('confirm-yes').addEventListener('click', () => {
-    purchaseOrder[pendingResponseIndex].response = pendingResponseAction;
+    // If user clicks "Yes," proceed with updating the PO status
+    updateResponse(pendingResponseIndex, pendingResponseAction);
+
+    // Hide the modal
     hideConfirmation();
-    displayTableData(currentPage);
   });
 
   document.getElementById('confirm-no').addEventListener('click', hideConfirmation);
 
-
-  document.addEventListener('DOMContentLoaded', () => {
-    fetchPurchaseOrders(); // Fetch the purchase orders when the page loads
-
-    window.addEventListener('resize', () => {
-
-      displayTableData(currentPage); // Re-render table data
-      updatePagination(); // Re-render pagination
-    });
-
-    document.getElementById('search-input').addEventListener('input', searchTable);
-    displayTableData(currentPage);
-    updatePagination();
-  });
 
   function searchTable() {
       const searchInput = document.getElementById('search-input').value.toLowerCase();
@@ -388,6 +388,16 @@
       updatePagination();
   }
   
+
+  function adjustRowsPerPage() {
+    if (window.innerHeight < 768) {
+      rowsPerPage = 8; // Atur menjadi 3 jika ukuran layar < 768
+    } else if (window.innerHeight < 1280) {
+      rowsPerPage = 9; // Atur menjadi 4 jika ukuran layar >= 768
+    } else {
+      rowsPerPage = 10;
+    }
+  }
 </script>
 
 </html>
