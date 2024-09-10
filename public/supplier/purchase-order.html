@@ -186,23 +186,13 @@
     </div>
   </section>
 
-  <!-- Confirmation Modal -->
-  <div id="confirmation-modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
-    <div class="bg-white rounded-lg shadow-lg p-5 2xl:p-8 max-w-md w-full">
-      <h2 class="text-base 2xl:text-xl font-semibold mb-3 2xl:mb-4">Confirm Purchase Order</h2>
-      <p class="text-xs 2xl:text-base mb-4 2xl:mb-6">Are you sure you want to <span id="confirm-action" class="font-bold"></span> this purchase order?</p>
-      <div class="flex justify-end gap-3 2xl:gap-4 text-sm 2xl:text-lg">
-        <button id="confirm-yes" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">Yes</button>
-        <button id="confirm-no" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">No</button>
-      </div>
-    </div>
-  </div>
 </body>
 
 <script src="script.js"></script>
 <script src="../api.js"></script>
 <script src="../script.js"></script>
 <script src="../table.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 
   cekToken();
@@ -358,14 +348,31 @@
     });
   }
 
-  function showConfirmation(index, action) {
-
-    document.getElementById('confirm-action').textContent = action.toLowerCase();
-    document.getElementById('confirmation-modal').classList.remove('hidden');
-  }
-
-  function hideConfirmation() {
-    document.getElementById('confirmation-modal').classList.add('hidden');
+  // This function uses SweetAlert2 to show the confirmation modal
+  function showConfirmation(po_no, action) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: `You are about to ${action.toLowerCase()} this purchase order.`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: `Yes, ${action.toLowerCase()} it!`,
+        cancelButtonText: 'No, cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // If the user confirms, proceed with the response update
+            updateResponse(po_no, action);
+            Swal.fire({
+                title: `${action}!`,
+                text: `The purchase order has been ${action.toLowerCase()}.`,
+                icon: 'success'
+            });
+        } else {
+            // If the user cancels, you can handle the cancellation logic here if needed
+            console.log(`${action} action was cancelled.`);
+        }
+    });
   }
 
   // Event listener for the "Yes" button in the confirmation modal
