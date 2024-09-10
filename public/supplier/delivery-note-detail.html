@@ -151,7 +151,7 @@
                   <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 spect-square" />
                   <span class="flex-1 shrink self-stretch my-auto ">Print Label</span>
                 </a>
-                <a href="" target="_blank" id="print-csv-link" class="flex gap-2  items-center self-stretch px-4 py-2 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5" onclick="updatePrintCSVButton(noDN)">
+                <a href="" target="_blank" id="print-csv-link" class="flex gap-2  items-center self-stretch px-4 py-2 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5" onclick="updateCSVButton(noDN)">
                   <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
                   <span class="flex-1 shrink self-stretch my-auto ">Export CSV</span>
                 </a>
@@ -286,6 +286,15 @@
     const printdnLink = document.getElementById('print-dn-link');
     if (noDN) {
       printdnLink.href = `print/print-dn.html?noDN=${noDN}`;
+    } else {
+      console.error('noDN is not available.');
+    }
+  }
+  
+  function updateCSVButton(noDN) {
+    const printdcsvLink = document.getElementById('print-csv-link');
+    if (noDN) {
+      printdcsvLink.href = `print/print-dn.html?noDN=${noDN}`;
     } else {
       console.error('noDN is not available.');
     }
