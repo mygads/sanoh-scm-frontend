@@ -25,27 +25,11 @@
       <!-- nav-side bar -->
       <aside class="flex flex-col w-[20%] h-screen border-r border-r-neutral-400 bg-stone-300">
         <nav class="flex flex-col grow py-9 2xl:py-14 text-base font-medium">
-      <aside class="flex flex-col w-[20%] h-screen border-r border-r-neutral-400 bg-stone-300">
-        <nav class="flex flex-col grow py-9 2xl:py-14 text-base font-medium">
 
           <!-- Logo Sanoh -->
           <img loading="lazy" src="../assets/logosanoh.svg"
             class="object-contain self-center w-30 2xl:w-48 max-w-full cursor-pointer" />
-          <!-- Logo Sanoh -->
-          <img loading="lazy" src="../assets/logosanoh.svg"
-            class="object-contain self-center w-30 2xl:w-48 max-w-full cursor-pointer" />
 
-          <!-- Menu Items -->
-          <ul class="flex flex-col mt-7 2xl:mt-10 w-full text-gray-500">
-            <!-- Dashboard -->
-            <li>
-              <a href="index.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
-                <img loading="lazy" src="../assets/icon_home_default.svg" alt="Dashboard"
-                  class="object-contain w-4 2xl:w-6" />
-                <span class="text-sm 2xl:text-xl">Dashboard</span>
-              </a>
-            </li>
           <!-- Menu Items -->
           <ul class="flex flex-col mt-7 2xl:mt-10 w-full text-gray-500">
             <!-- Dashboard -->
@@ -67,25 +51,7 @@
                 <span class="text-sm 2xl:text-xl">Purchase Order</span>
               </a>
             </li>
-            <!-- Purchase Order -->
-            <li class="hidden">
-              <a href="purchase-order.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 ">
-                <img loading="lazy" src="../assets/icon_po_default.svg" alt="Purchase Order"
-                  class="object-contain w-4 2xl:w-6 " />
-                <span class="text-sm 2xl:text-xl">Purchase Order</span>
-              </a>
-            </li>
 
-            <!-- Delivery Note -->
-            <li>
-              <a href="delivery-note.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
-                <img loading="lazy" src="../assets/icon_dn_default.svg" alt="Purchase Order"
-                  class="object-contain w-4 2xl:w-6" />
-                <span class="text-sm 2xl:text-xl">Delivery Note</span>
-              </a>
-            </li>
             <!-- Delivery Note -->
             <li>
               <a href="delivery-note.html"
@@ -116,24 +82,7 @@
               </a>
             </li>
           </ul>
-            <!-- History Delivery Note -->
-            <li>
-              <a href="history-delivery-note.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 active">
-                <img loading="lazy" src="../assets/icon_history_default.svg" alt="History Purchase Order"
-                  class="object-contain w-4 2xl:w-6 icon-history-active" />
-                <span class="text-sm 2xl:text-xl">History Delivery Note</span>
-              </a>
-            </li>
-          </ul>
 
-          <!-- User and Logout Section at the Bottom -->
-          <div class="mt-auto flex flex-col w-full">
-            <!-- User Info -->
-            <div class="flex gap-4 items-center p-2 2xl:p-4 w-full bg-blue-950 bg-opacity-10 text-blue-950">
-              <img loading="lazy" src="../assets/icon_people.svg" alt="User Info" class="object-contain w-4 2xl:w-6" />
-              <span id="user-info" class="text-sm 2xl:text-xl"></span>
-            </div>
           <!-- User and Logout Section at the Bottom -->
           <div class="mt-auto flex flex-col w-full">
             <!-- User Info -->
@@ -273,15 +222,16 @@
   cekToken();
 
   let deliveryNote = []; // Initialize the deliveryNote array
-  let sortOrder = {}; // Object to keep track of sort order for each columnrray untuk data yang sudah difilter
-  let rowsPerPage = 10; // Default rows per page
+  let sortOrder = {}; // Objek untuk melacak urutan pengurutan setiap kolom
+  let rowsPerPage = 6; // Default rows per page
   let currentPage = 1; // Default to the first page
 
   document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM fully loaded and parsed');
+  
     // Adjust rows per page based on screen size
     fetchSuppliers();
-    adjustRowsPerPage(); // Atur jumlah data per halaman berdasarkan ukuran layar
+    //adjustRowsPerPage(); // Atur jumlah data per halaman berdasarkan ukuran layar
 
     window.addEventListener('resize', () => {
       console.log('Window resized, adjusting table rows per page');
@@ -298,12 +248,13 @@
       console.log('Supplier selected:', selectedSupplierId); // Debugging
 
       if (selectedSupplierId) {
-        localStorage.setItem('bpCode', selectedSupplierId); // Store bpCode in localStorage
+        localStorage.setItem('bpCode', selectedSupplierId); // Menyimpan bpCode ke localStorage
         console.log('Fetching delivery notes for supplier:', selectedSupplierId);
-        await fetchHistoryDeliveryNotes(selectedSupplierId); // Fetch delivery notes based on the selected supplier
-        displaySelectedSupplier(); // Display selected supplier in the table
-        displayTableData(currentPage); // Display data for the first page
-      } else {
+        await fetchHistoryDeliveryNotes(selectedSupplierId); // Memanggil data delivery note berdasarkan supplier yang dipilih
+        displaySelectedSupplier(currentPage); // Menampilkan supplier yang dipilih di tabel
+        updatePagination();
+      }
+      else {
         console.error('No supplier selected.');
       }
     });
@@ -333,10 +284,9 @@
 
       if (response.ok) {
         const data = await response.json();
-        console.log('Suppliers data received:', data);
         if (data.success) {
           populateSupplierDropdown(data.data);
-        } else {
+        }  else {
           console.error('Failed to fetch suppliers:', data.message);
         }
       } else {
@@ -347,30 +297,32 @@
     }
   }
 
-  // Fungsi untuk mengisi dropdown supplier dengan data dari API
+  // Function to populate supplier dropdown
   function populateSupplierDropdown(suppliersData) {
     const supplierSelect = document.getElementById('supplier_id');
     supplierSelect.innerHTML = '<option value="">Cari Supplier</option>'; // Reset dropdown
 
     suppliersData.forEach(supplier => {
       const option = document.createElement('option');
-      option.value = supplier.bp_code; // Menggunakan bp_code sebagai nilai opsi
-      option.textContent = `${supplier.bp_code} | ${supplier.bp_name}`; // Menampilkan bp_code dan nama supplier
-      supplierSelect.appendChild(option); // Menambahkan opsi ke dropdown
+      option.value = supplier.bp_code;
+      option.textContent = `${supplier.bp_code} | ${supplier.bp_name}`;
+      supplierSelect.appendChild(option);
     });
+
     console.log('Supplier dropdown populated');
+    // Re-initialize Select2 after adding options
   }
 
   async function fetchHistoryDeliveryNotes(bpCode) {
     const token = localStorage.getItem('accessToken');
 
-    if (!token) {
-      console.error('No access token found for fetching delivery notes');
+    if (!bpCode) {
+      console.error('bpCode not found in localStorage.');
       return;
     }
 
     try {
-      console.log(`Fetching history delivery notes for bpCode: ${bpCode}`);
+      console.log(`Fetching delivery notes for bpCode: ${bpCode}`);
       const response = await fetch(`${APIdnhistory2}/${bpCode}`, {
         method: 'GET',
         headers: {
@@ -382,52 +334,58 @@
       if (response.ok) {
         const data = await response.json();
 
-        console.log('Raw History Delivery notes data received:', data);
+      console.log("Data fetched:", data);
 
-        if (data.success && data.data) {
-          deliveryNote = data.data.map(dn => ({
-            noDN: dn.dn_number ? dn.dn_number.toString() : 'No DN Number',
-            noPO: dn.po_number ? dn.po_number.toString() : 'No PO Number',
-            statusDN: dn.dn_status || 'Unknown Status',
-            sentDate: dn.send_date || 'Send Date Unknown', // Send Date
-            receiveDate: dn.receive_date || 'Receive Date Unknown' // Receive Date
-          }));
+      if (data.success && data.data) {
+        deliveryNote = data.data.map(dn => ({
+          noDN: dn.dn_number ? dn.dn_number.toString() : 'No DN Number',
+          noPO: dn.po_number ? dn.po_number.toString() : 'No PO Number',
+          statusDN: dn.dn_status || 'Unknown Status',
+          sentDate: dn.send_date || 'Send Date Unknown', // Send Date
+          receiveDate: dn.receive_date || 'Receive Date Unknown' // Receive Date
+        }));
 
-          // Set filteredHistoryDNData to match deliveryNote initially
-          filteredHistoryDNData = [...deliveryNote];
+        // Set filteredHistoryDNData to match deliveryNote initially
+        filteredHistoryDNData = [...deliveryNote];
 
+        
           // Check if there's any data to display
           if (filteredHistoryDNData.length > 0) {
             displayTableData(currentPage); // Display data for the current page
           } else {
-            console.warn('No history delivery notes found for this supplier.');
+            console.warn('No delivery notes found for this supplier.');
           }
         } else {
-          console.error('Failed to fetch history delivery notes:', data.message);
+          console.error('Failed to fetch delivery notes:', data.message);
         }
       } else {
-        console.error('Error fetching history delivery notes:', response.status, response.statusText);
+        console.error('Error fetching delivery notes:', response.status, response.statusText);
       }
     } catch (error) {
-      console.error('Fetch error during history delivery notes retrieval:', error);
+      console.error('Fetch error during delivery notes retrieval:', error);
     }
   }
 
   // Fungsi untuk menampilkan supplier yang dipilih di bagian atas tabel
   function displaySelectedSupplier() {
     const bpCode = localStorage.getItem('bpCode'); // Mengambil bpCode dari localStorage
-
     if (!bpCode) {
       console.error('No selected supplier found in localStorage');
       return;
     }
-
+  
     const tableBody = document.getElementById('table-body');
     if (!tableBody) {
       console.error('Table body element not found');
       return;
     }
-
+  
+    // Remove any previously displayed supplier rows to avoid duplicates
+    const existingSupplierRow = tableBody.querySelector('.bg-blue-100');
+    if (existingSupplierRow) {
+      existingSupplierRow.remove();
+    }
+  
     const supplierRow = document.createElement('tr');
     supplierRow.classList.add('bg-blue-100', 'border-b');
     supplierRow.innerHTML = `
@@ -435,10 +393,11 @@
         Supplier yang Dipilih: ${bpCode}
       </td>
     `;
-
+  
     tableBody.prepend(supplierRow); // Add the selected supplier row at the top
     console.log('Displayed selected supplier in table:', bpCode);
   }
+
 
   function displayTableData(page) {
     const tableBody = document.getElementById('table-body');
@@ -459,37 +418,41 @@
       return;
     }
 
-    dataToShow.forEach(historydn => {
-      const row = document.createElement('tr');
-      row.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
-      row.innerHTML = `
-        <td class="px-2 py-4 text-center font-medium text-gray-900">
-          <a href="delivery-note-detail.html?noDN=${historydn.noDN}" class="text-blue-600 underline">${historydn.noDN}</a>
-        </td>
-        <td class="px-2 py-4 text-center font-medium text-gray-900">
-          <a href="purchase-order-detail.html?noPO=${historydn.noPO}" class="text-blue-600 underline">${historydn.noPO}</a>
-        </td>
-        <td class="px-2 py-4 text-center">${historydn.statusDN}</td>
-        <td class="px-2 py-4 text-center">${historydn.sentDate}</td>
-        <td class="px-2 py-4 text-center">${historydn.receiveDate}</td>
-      `;
-      tableBody.appendChild(row);
+    paginatedData.forEach(historydn => {
+      const tableRow = document.createElement('tr');
+      tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
+      tableRow.innerHTML = `
+  <td class="px-2 py-4 text-center font-medium text-gray-900">
+      <a href="history-delivery-note-detail.html?noDN=${historydn.noDN}" class="text-blue-600 underline">${historydn.noDN}</a>
+  </td>
+  <td class="px-2 py-4 text-center font-medium text-gray-900">
+      <a href="history-delivery-note-detail.html?noPO=${historydn.noPO}" class="text-black">${historydn.noPO}</a>
+  </td>
+  <td class="px-2 py-4 text-center">${historydn.planDNDate}</td>
+  <td class="px-2 py-4 text-center">${historydn.sentDate}</td> <!-- Tambahkan Sent Date -->
+  <td class="px-2 py-4 text-center">${historydn.receiveDate}</td> <!-- Tambahkan Receive Date -->
+  <td class="px-2 py-4 text-center">${historydn.statusDN}</td>
+`;
+
+      tableBody.appendChild(tableRow);
     });
+     
     console.log(`Displayed ${dataToShow.length} rows of data in table`);
   }
 
-  function searchTable() {
-    const searchInput = document.getElementById('search-input').value.toLowerCase();
-    if (!searchInput) {
-      console.warn('Search input is empty');
-      return;
-    }
-
-    filteredData = deliveryNote.filter(row => row.noDN.toLowerCase().includes(searchInput));
-    console.log(`Search result: Found ${filteredData.length} matching rows`);
-    currentPage = 1;
-    displayTableData(currentPage);
+// Function to search table data
+function searchTable() {
+  const searchInput = document.getElementById('search-input').value.toLowerCase();
+  if (!searchInput) {
+    console.warn('Search input is empty');
+    return;
   }
+
+  filteredData = deliveryNote.filter(row => row.noDN.toLowerCase().includes(searchInput));
+  console.log(`Search result: Found ${filteredData.length} matching rows`);
+  currentPage = 1; // Reset to page 1 after search
+  displayTableData(currentPage); // Display filtered data
+}
 
 </script>
 
