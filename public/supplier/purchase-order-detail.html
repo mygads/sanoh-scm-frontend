@@ -11,6 +11,7 @@
     rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
   <link rel="icon" type="image/png" href="../assets/icon_sanoh.png">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   
 </head>
 
@@ -136,12 +137,12 @@
                 <div id="noteInput" type="text" class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap ounded border border-solid border-neutral-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
               </div>
               
-              <div class="flex gap-3 2xl:gap-6 items-center self-stretch my-auto text-white 2xl:min-w-[240px] text-[10px] 2xl:text-lg">
-                <a href="" target="_blank" id="print-po-link" class="flex gap-2 2xl:gap-4 items-center self-stretch px-6 2xl:px-9 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5" onclick="updatePrintButton(noPO)">
-                    <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-5 aspect-square" />
+              <div class="flex gap-3  items-center self-stretch my-auto text-white text-[10px] ">
+                <a href="" target="_blank" id="print-po-link" class="flex gap-2  items-center self-stretch px-6  py-2  my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5" onclick="updatePrintButton(noPO)">
+                    <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
                     <span class="flex-1 shrink self-stretch my-auto basis-0">Print PO</span>
                 </a>
-            </div>
+              </div>
             </div>
 
           </div>
@@ -214,7 +215,7 @@
   let pendingResponseIndex = null;
   let pendingResponseAction = '';
   let details = [];  // This will hold the purchase orders
-  let filteredDataDetail = [];  // To hold the filtered details data
+
 
   // Call the function to fetch data on page load
   fetchPurchaseOrders();
@@ -323,8 +324,8 @@
         document.getElementById('poNumber').textContent = po.noPO;
         document.getElementById('noteInput').textContent = note;
 
-        // Store the details array into filteredDataDetail
-        filteredDataDetail = po.details;
+        // Store the details array into filteredData
+        filteredData = po.details;
 
         // Display the details
         if (typeof displayTableData === 'function') {
@@ -362,7 +363,7 @@
 
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
-    const paginatedData = filteredDataDetail.slice(start, end);
+    const paginatedData = filteredData.slice(start, end);
 
     paginatedData.forEach((detail, index) => {
       const tableRow = document.createElement('tr');
@@ -398,7 +399,7 @@
     }
 
     // Filter the details array based on the search input
-    filteredDataDetail = detail.filter(detail => {
+    filteredData = details.filter(detail => {
         // Ensure detail is not undefined and has the required properties
         if (detail && typeof detail.partNumber === 'string' && typeof detail.partName === 'string') {
             return detail.partNumber.toLowerCase().includes(searchInput) ||

@@ -12,6 +12,7 @@
     rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
   <link rel="icon" type="image/png" href="../assets/icon_sanoh.png">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   
 </head>
 
@@ -149,8 +150,9 @@
                 </div>
               </div>
               <div class="flex gap-3 2xl:gap-6 items-center self-stretch my-auto text-white 2xl:min-w-[240px] text-[10px] 2xl:text-lg">
-                <a href="print/export-csv-dn.html" target="_blank" class="flex gap-2 2xl:gap-4 items-center self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5">
-                  <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-5 aspect-square" />
+
+                <a href="" target="_blank" id="print-csv-link" class="flex gap-2  items-center self-stretch px-4 py-2 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5" onclick="updateCSVButton(noDN)">
+                  <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
                   <span class="flex-1 shrink self-stretch my-auto ">Export CSV</span>
                 </a>
                 
@@ -235,7 +237,24 @@
   cekToken();
 
   let details = [];
-  let filteredHistoryDNData = [];
+
+  // Assign the noPO from URL
+  let noDN = getUrlParameter('noDN');
+
+  // Function to get URL parameters
+  function getUrlParameter(name) {
+    const params = new URLSearchParams(window.location.search);
+    return params.get(name);
+  }
+
+  function updateCSVButton(noDN) {
+    const printdcsvLink = document.getElementById('print-csv-link');
+    if (noDN) {
+      printdcsvLink.href = `print/print-dn.html?noDN=${noDN}`;
+    } else {
+      console.error('noDN is not available.');
+    }
+  }
 
   // Function to fetch delivery notes from the API
   async function fetchHistoryDeliveryNotes() {
@@ -282,8 +301,8 @@
                   })) : []
               }));
 
-          // Set filteredHistoryDNData to match deliveryNote initially
-          filteredHistoryDNData = details;
+          // Set filteredData to match deliveryNote initially
+          filteredData = details;
 
           // Call function to display data
           historyDNDetails();
@@ -344,7 +363,7 @@
     }
 
     window.addEventListener('resize', () => {
-        displayDNDetails(filteredHistoryDNData);  // Adjust display when resized
+        displayDNDetails(filteredData);  // Adjust display when resized
         updatePagination();
     });
 
@@ -384,25 +403,25 @@
     adjustRowsPerPage(); // Set rows per page based on initial screen size
     window.addEventListener('resize', () => {
       adjustRowsPerPage(); // Adjust rows per page on screen resize
-      displayDNDetails(filteredHistoryDNData); // Re-render table data
+      displayDNDetails(filteredData); // Re-render table data
       updatePagination(); // Re-render pagination
     });
 
     document.getElementById('search-input').addEventListener('input', searchTable);
 
-    displayDNDetails(filteredHistoryDNData);
+    displayDNDetails(filteredData);
     updatePagination();
   });
 
   // Function to handle search
   function searchTable() {
     const searchInput = document.getElementById('search-input').value.toLowerCase();
-    filteredHistoryDNData = deliveryNote.find(dn => dn.noDN === noDN).details.filter(row => 
+    filteredData = deliveryNote.find(dn => dn.noDN === noDN).details.filter(row => 
       detail.partNumber.toLowerCase().includes(searchInput) || 
       detail.partName.toLowerCase().includes(searchInput)
     );
     currentPage = 1;
-    displayDNDetails(filteredHistoryDNData);
+    displayDNDetails(filteredData);
     updatePagination();
   }
 

@@ -12,6 +12,7 @@
     rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
   <link rel="icon" type="image/png" href="../assets/icon_sanoh.png">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   
 </head>
 
@@ -187,7 +188,6 @@
   let pendingResponseIndex = null;
   let pendingResponseAction = '';
   let deliveryNote = [];
-  let filteredHistoryDNData = [];
 
   // Function to fetch delivery notes from the API
   async function fetchHistoryDeliveryNotes() {
@@ -234,11 +234,12 @@
                   })) : []
               }));
 
-          // Set filteredHistoryDNData to match deliveryNote initially
-          filteredHistoryDNData = deliveryNote;
+          // Set filteredData to match deliveryNote initially
+          filteredData = deliveryNote;
 
           // Call function to display data
           displayTableData();
+          updatePagination();
 
         } else {
             console.error('No data found or unexpected format.');
@@ -259,7 +260,7 @@
 
     tableBody.innerHTML = '';
 
-    filteredHistoryDNData.forEach((row) => {
+    filteredData.forEach((row) => {
       const tableRow = document.createElement('tr');
       tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
       tableRow.innerHTML = `
@@ -280,8 +281,9 @@
   // Function for search
   function searchTable() {
     const searchInput = document.getElementById('search-input').value.toLowerCase();
-    filteredHistoryDNData = deliveryNote.filter(row => row.noDN.toLowerCase().includes(searchInput));
+    filteredData = deliveryNote.filter(row => row.noDN.toLowerCase().includes(searchInput));
     displayTableData();
+    updatePagination();
   }
 
   document.addEventListener('DOMContentLoaded', () => {

@@ -12,6 +12,7 @@
     rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
   <link rel="icon" type="image/png" href="../assets/icon_sanoh.png">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   
 </head>
 
@@ -145,17 +146,17 @@
                 </div>
               </div>
               
-              <div class="flex gap-3 2xl:gap-6 items-center self-stretch my-auto text-white 2xl:min-w-[240px] text-[10px] 2xl:text-lg">
-                <a href="" target="_blank" id="print-label-link"  class="flex gap-2 2xl:gap-4 items-center self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5"  onclick="updatePrintLabelButton(noDN)">
-                  <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-5 aspect-square" />
+              <div class="flex gap-3  items-center self-stretch my-auto text-white -[240px] text-[10px]">
+                <a href="" target="_blank" id="print-label-link"  class="flex gap-2  items-center self-stretch px-4 py-2 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5"  onclick="updatePrintLabelButton(noDN)">
+                  <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 spect-square" />
                   <span class="flex-1 shrink self-stretch my-auto ">Print Label</span>
                 </a>
-                <a href="" target="_blank" id="print-csv-link" class="flex gap-2 2xl:gap-4 items-center self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5" onclick="updatePrintCSVButton(noDN)">
-                  <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-5 aspect-square" />
+                <a href="" target="_blank" id="print-csv-link" class="flex gap-2  items-center self-stretch px-4 py-2 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5" onclick="updateCSVButton(noDN)">
+                  <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
                   <span class="flex-1 shrink self-stretch my-auto ">Export CSV</span>
                 </a>
-                <a href="" target="_blank" id="print-dn-link" class="flex gap-2 2xl:gap-4 items-center self-stretch px-6 2xl:px-9 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5" onclick="updatePrintButton(noDN)">
-                  <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-5 aspect-square" />
+                <a href="" target="_blank" id="print-dn-link" class="flex gap-2  items-center self-stretch px-6 py-2 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5" onclick="updatePrintButton(noDN)">
+                  <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
                   <span class="flex-1 shrink self-stretch my-auto basis-0">Print DN </span>
                 </a>
               </div>
@@ -290,6 +291,15 @@
     }
   }
   
+  function updateCSVButton(noDN) {
+    const printdcsvLink = document.getElementById('print-csv-link');
+    if (noDN) {
+      printdcsvLink.href = `print/print-dn.html?noDN=${noDN}`;
+    } else {
+      console.error('noDN is not available.');
+    }
+  }
+  
   // Function to update the Print Label button href dynamically
   function updatePrintLabelButton(noDN) {
     const printdnLink = document.getElementById('print-label-link');
@@ -367,22 +377,21 @@
     }
   }
 
-  // Async function to update DN detail and refresh UI
-  async function updateDNDetail(noDN, dnLine, qtyConfirm) {
+  async function updateDNDetails(updates) {
     try {
         // Log the payload being sent
-        console.log(`Updating DN No: ${noDN}, Qty Confirm: ${qtyConfirm}`);
+        console.log(`Updating DN details:`, updates);
 
         const token = localStorage.getItem('accessToken'); // Ensure token is fetched properly
 
-        const response = await fetch(`https://api.edutrashgo.com/api/updatedndetail1/${noDN}/${dnLine}`, {
+        const response = await fetch('https://api.edutrashgo.com/api/updatedndetail1', {
             method: 'PUT',  // Ensure the correct HTTP method is used
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
             },
-            // Send the field as "qty_confirm" to match the server's expectation
-            body: JSON.stringify({ qty_confirm: parseInt(qtyConfirm) }),  // Ensure qty_confirm is an integer
+            // Send the array of updates
+            body: JSON.stringify({ updates }),  // Example payload: { updates: [{ no_detail: 1, qty_confirm: 10 }, { no_detail: 2, qty_confirm: 20 }] }
         });
 
         if (!response.ok) {
@@ -398,17 +407,18 @@
         }
 
         const updatedData = await response.json();
-        console.log(`Successfully updated DN No: ${noDN}`, updatedData);
+        console.log(`Successfully updated DN details`, updatedData);
 
         // Update the UI with the new data
-        updateUIDetail(noDN, dnLine, qtyConfirm);
+        // Handle UI update for each record if needed
 
         return updatedData;
     } catch (error) {
-        console.error(`Failed to update DN Quantity ${noDN}:`, error);
+        console.error(`Failed to update DN details:`, error);
         throw error;
     }
   }
+
 
   // Call the function to fetch data on page load
   fetchDeliveryNotes();

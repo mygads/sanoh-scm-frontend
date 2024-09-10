@@ -13,12 +13,13 @@
     rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
   <link rel="icon" type="image/png" href="../assets/icon_sanoh.png">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   
 </head>
 
-<body class="font-poppins bg-white">
-  <section class="overflow-hidden w-screen h-screen bg-white">
-    <div class="flex h-screen">
+<body class="font-poppins">
+  <section class="overflow-hidden h-screen w-screen bg-white">
+    <div class="flex h-screen w-screen justify-center items-center">
 
       <!-- nav-side bar -->
       <aside class="flex flex-col w-[20%]">
@@ -98,8 +99,74 @@
       </aside>
 
       <!-- Main Content -->
-      <main class="flex-1 mb-[auto] p-10 mt-2 2xl:mt-16">
+      <main class="flex-1 p-10 m-auto max-w-[1000px]">
         <!-- Combined Header and Image Section -->
+        <div class="flex flex-col items-center mb-8">
+          <div class="text-center mb-4">
+            <h1 class="text-black text-center">
+              <span class="font-semibold text-4xl ">Welcome Supplier!</span>
+            </h1>
+            <p class="text-center text-neutral-400 text-sm  mt-4 max-w-[800px] mx-auto">
+              Welcome to our dashboard, where you can seamlessly manage and <br> monitor all your supply chain operations with ease and efficiency.
+            </p>
+          </div>
+          <img src="../assets/dashboard_supp.png" alt="Dashboard overview"
+            class="object-contain mx-auto xl:w-[500px] " />
+        </div>
+
+        <!-- Status Section -->
+        <section id="status" class="flex flex-wrap justify-center gap-8 mt-8 px-">
+          <div class="flex flex-col items-center min-w-[240px] w-[45%]">
+            <h2 class="text-xl  font-semibold text-center text-black">Status Purchase Order (PO)</h2>
+            <div class="flex gap-4 items-start mt-4 flex-wrap justify-center">
+              <a id="po-active" href="purchase-order.html"
+                class="flex flex-col p-3 sm:p-4 text-left text-white bg-red-600 rounded w-full sm:w-[180px] ">
+                <span class="text-3xl font-medium">0</span>
+                <span class="mt-2 text-sm font-semibold">
+                  Purchase Order (PO)
+                  <br />
+                  Active
+                </span>
+              </a>
+              <a id="po-in-progress" href="purchase-order.html"
+                class="flex flex-col p-3 sm:p-4  text-left text-black bg-yellow-200 rounded w-full sm:w-[180px]">
+                <span class="text-3xl  font-medium text-left">0</span>
+                <span class="mt-2 text-sm  font-semibold text-left">
+                  Purchase Order (PO)
+                  <br />
+                  In Progress
+                </span>
+              </a>
+            </div>
+          </div>
+          <div class="flex flex-col items-center min-w-[240px] w-[45%]">
+            <h2 class="text-xl  font-semibold text-center text-black">Status Delivery Note (DN)</h2>
+            <div class="flex gap-4 items-start mt-4 flex-wrap justify-center">
+              <a id="dn-active" href="delivery-note.html"
+                class="flex flex-col p-3 sm:p-4  text-left text-white bg-red-600 rounded w-full sm:w-[180px] ">
+                <span class="text-3xl  font-medium text-left">0</span>
+                <span class="mt-2 text-sm  font-semibold text-left">
+                  Delivery Note (DN)
+                  <br />
+                  Active
+                </span>
+              </a>
+              <a id="dn-in-progress" href="delivery-note.html"
+                class="flex flex-col p-3 sm:p-4  text-left bg-yellow-200 rounded w-full sm:w-[180px] ">
+                <span class="text-3xl  font-medium text-left">0</span>
+                <span class="mt-2 text-sm  font-semibold text-left">
+                  Delivery Note (DN)
+                  <br />
+                  In Progress
+                </span>
+              </a>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- <main class="flex-1 mb-[auto] p-10 mt-2 2xl:mt-16">
+        
         <div class="flex flex-col items-center mb-8">
           <div class="text-center mb-4">
             <h1 class="text-black text-center">
@@ -113,7 +180,7 @@
             class="object-contain mx-auto xl:w-[500px] 2xl:w-[800px]" />
         </div>
 
-        <!-- Status Section -->
+        
         <section id="status" class="flex flex-wrap justify-center gap-8 mt-8 px-">
           <div class="flex flex-col items-center min-w-[240px] w-[45%]">
             <h2 class="text-xl 2xl:text-3xl font-semibold text-center text-black">Status Purchase Order (PO)</h2>
@@ -162,7 +229,7 @@
             </div>
           </div>
         </section>
-      </main>
+      </main> -->
   </div>
 </section>
 

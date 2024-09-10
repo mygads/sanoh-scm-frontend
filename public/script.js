@@ -63,7 +63,29 @@ function clearSession() {
   // localStorage.clear();
 }
 
-async function handleLogout() {
+function handleLogout() {
+  // Use SweetAlert2 for confirmation dialog
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "Do you really want to log out?",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, log out!',
+    cancelButtonText: 'Cancel'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // If confirmed, proceed with logout
+      logout();
+    } else {
+      // If canceled, log a message or do nothing
+      console.log('Logout canceled');
+    }
+  });
+}
+
+async function logout() {
   const APIlogout = localStorage.getItem('APIlogout');
   
   cekToken()
