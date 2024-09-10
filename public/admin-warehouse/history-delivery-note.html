@@ -25,11 +25,27 @@
       <!-- nav-side bar -->
       <aside class="flex flex-col w-[20%] h-screen border-r border-r-neutral-400 bg-stone-300">
         <nav class="flex flex-col grow py-9 2xl:py-14 text-base font-medium">
+      <aside class="flex flex-col w-[20%] h-screen border-r border-r-neutral-400 bg-stone-300">
+        <nav class="flex flex-col grow py-9 2xl:py-14 text-base font-medium">
 
           <!-- Logo Sanoh -->
           <img loading="lazy" src="../assets/logosanoh.svg"
             class="object-contain self-center w-30 2xl:w-48 max-w-full cursor-pointer" />
+          <!-- Logo Sanoh -->
+          <img loading="lazy" src="../assets/logosanoh.svg"
+            class="object-contain self-center w-30 2xl:w-48 max-w-full cursor-pointer" />
 
+          <!-- Menu Items -->
+          <ul class="flex flex-col mt-7 2xl:mt-10 w-full text-gray-500">
+            <!-- Dashboard -->
+            <li>
+              <a href="index.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
+                <img loading="lazy" src="../assets/icon_home_default.svg" alt="Dashboard"
+                  class="object-contain w-4 2xl:w-6" />
+                <span class="text-sm 2xl:text-xl">Dashboard</span>
+              </a>
+            </li>
           <!-- Menu Items -->
           <ul class="flex flex-col mt-7 2xl:mt-10 w-full text-gray-500">
             <!-- Dashboard -->
@@ -51,7 +67,25 @@
                 <span class="text-sm 2xl:text-xl">Purchase Order</span>
               </a>
             </li>
+            <!-- Purchase Order -->
+            <li class="hidden">
+              <a href="purchase-order.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 ">
+                <img loading="lazy" src="../assets/icon_po_default.svg" alt="Purchase Order"
+                  class="object-contain w-4 2xl:w-6 " />
+                <span class="text-sm 2xl:text-xl">Purchase Order</span>
+              </a>
+            </li>
 
+            <!-- Delivery Note -->
+            <li>
+              <a href="delivery-note.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
+                <img loading="lazy" src="../assets/icon_dn_default.svg" alt="Purchase Order"
+                  class="object-contain w-4 2xl:w-6" />
+                <span class="text-sm 2xl:text-xl">Delivery Note</span>
+              </a>
+            </li>
             <!-- Delivery Note -->
             <li>
               <a href="delivery-note.html"
@@ -82,7 +116,24 @@
               </a>
             </li>
           </ul>
+            <!-- History Delivery Note -->
+            <li>
+              <a href="history-delivery-note.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 active">
+                <img loading="lazy" src="../assets/icon_history_default.svg" alt="History Purchase Order"
+                  class="object-contain w-4 2xl:w-6 icon-history-active" />
+                <span class="text-sm 2xl:text-xl">History Delivery Note</span>
+              </a>
+            </li>
+          </ul>
 
+          <!-- User and Logout Section at the Bottom -->
+          <div class="mt-auto flex flex-col w-full">
+            <!-- User Info -->
+            <div class="flex gap-4 items-center p-2 2xl:p-4 w-full bg-blue-950 bg-opacity-10 text-blue-950">
+              <img loading="lazy" src="../assets/icon_people.svg" alt="User Info" class="object-contain w-4 2xl:w-6" />
+              <span id="user-info" class="text-sm 2xl:text-xl"></span>
+            </div>
           <!-- User and Logout Section at the Bottom -->
           <div class="mt-auto flex flex-col w-full">
             <!-- User Info -->

@@ -2,44 +2,52 @@
 // let currentPage = 1;
 let filteredData = [];
 let originalData= [];
+let sortDirection = 'asc';  // Default sorting order
 
-function adjustRowsPerPage() {
-  if (window.innerWidth <= 1280) {
-      rowsPerPage = 7;
-    } else if (window.innerWidth <= 1600) {
-      rowsPerPage = 8;
+// Function to sort the data and update the row numbers accordingly
+function sortBy(columnIndex) {
+  if (columnIndex === 0) {  // If the "No" column is clicked
+    if (sortDirection === 'asc') {
+      // Sort in descending order
+      filteredData.sort((a, b) => b.no - a.no);
+      sortDirection = 'desc';
     } else {
-      rowsPerPage = 9;
+      // Sort in ascending order
+      filteredData.sort((a, b) => a.no - b.no);
+      sortDirection = 'asc';
     }
+    
+    // Re-display the sorted data with updated row numbers
+    displayTableData(currentPage);
+  }
 }
 
-
 function sortTable(columnIndex) {
-    const table = document.querySelector('table');
-    const isAscending = table.querySelectorAll('th')[columnIndex].classList.toggle('asc');
-  
-    // Remove sorting classes from other headers
-    table.querySelectorAll('th').forEach((th, index) => {
-      if (index !== columnIndex) th.classList.remove('asc', 'desc');
-    });
-  
-    // Sort the entire dataset
-    filteredData.sort((a, b) => {
-      const cellA = Object.values(a)[columnIndex].toString().trim();
-      const cellB = Object.values(b)[columnIndex].toString().trim();
-  
-      return cellA.localeCompare(cellB, undefined, { numeric: true, sensitivity: 'base' });
-    });
-  
-    // If not ascending, reverse the order
-    if (!isAscending) {
-      filteredData.reverse();
-    }
-  
-    // Redisplay the sorted data with pagination
-    currentPage = 1; // Reset to the first page after sorting
-    displayTableData(currentPage);
-    updatePagination();
+  const table = document.querySelector('table');
+  const isAscending = table.querySelectorAll('th')[columnIndex].classList.toggle('asc');
+
+  // Remove sorting classes from other headers
+  table.querySelectorAll('th').forEach((th, index) => {
+    if (index !== columnIndex) th.classList.remove('asc', 'desc');
+  });
+
+  // Sort the entire dataset
+  filteredData.sort((a, b) => {
+    const cellA = Object.values(a)[columnIndex].toString().trim();
+    const cellB = Object.values(b)[columnIndex].toString().trim();
+
+    return cellA.localeCompare(cellB, undefined, { numeric: true, sensitivity: 'base' });
+  });
+
+  // If not ascending, reverse the order
+  if (!isAscending) {
+    filteredData.reverse();
+  }
+
+  // Redisplay the sorted data with pagination
+  currentPage = 1; // Reset to the first page after sorting
+  displayTableData(currentPage);
+  updatePagination();
 }
   
 function searchTable() {

@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <title>Delivery Note</title>
+    <title>Delivery Note PT Sanoh Indonesia</title>
+    <link rel="icon" type="image/png" href="../assets/icon_sanoh.png">
     
     <style>
         body {
@@ -305,351 +306,430 @@
         <div id="page-content"></div>
     </div>
         <!-- Page Content Container -->
-        <script>
-            async function fetchDeliveryNoteData(no_dn) {
-                // Fetching the data from the API (dummy URL here, replace with actual URL)
-                const response = await fetch(`http://127.0.0.1:8000/api/dnhview/${no_dn}`);
-                const dnData = await response.json();
         
-                // Map the fetched data to the required structure
-                const formattedData = {
-                    no_dn: dnData.data[0].no_dn,
-                    po_no: dnData.data[0].po_no,
-                    supplier_name: dnData.data[0].supplier_name,
-                    supplier_code: dnData.data[0].supplier_code,
-                    planned_receipt_date: dnData.data[0].planned_receipt_date,
-                    total_box: dnData.data[0].detail.reduce((sum, detail) => sum + calculateNoOfKanban(detail.total_quantity, detail.pcs_per_kamban), 0),
-                    printed_date: dnData.data[0].printed_date,
-                    detail: dnData.data[0].detail.map(detail => ({
-                        delivery_note_detail_id: detail.delivery_note_detail_id,
-                        dn_number: detail.dn_number,
-                        line_no: detail.line_no,
-                        supplier_part_number: detail.supplier_part_number,
-                        internal_part_number: detail.internal_part_number,
-                        part_name: concatenatePartName(detail.part_name),
-                        pcs_per_kamban: detail.pcs_per_kamban,
-                        no_of_kamban: calculateNoOfKanban(detail.total_quantity, detail.pcs_per_kamban),
-                        total_quantity: detail.total_quantity,
-                        box_quantity: calculateNoOfKanban(detail.total_quantity, detail.pcs_per_kamban),
-                    }))
-                };
-        
-                return formattedData;
-            }
-        
-            // Helper function to concatenate part descriptions
-            function concatenatePartName(part_name) {
-                return part_name;
-            }
-        
-            // Helper function to calculate no_of_kanban
-            function calculateNoOfKanban(quantity, snp) {
-                return quantity / snp;
-            }
-        
-            function renderTable(data, items) {
-                let pageContent = '';
-                const header = data || {};
-                let rowsPerPage = 10;
-        
-                console.log('API Response:', data);
-        
-                items.forEach((item, index) => {
-            // Cek jika ini adalah awal dari halaman baru
-            if (index % rowsPerPage === 0) {
-                if (index !== 0) {
-                    pageContent += `</tbody></table>
-                <div class="note">
-                    <p><b>NOTE: </b> <br> 1. Untuk penggunaan PO Number pada Surat Jalan Supplier, harap mengikuti PO Number di atas<br>
-                    2. Saat Delivery ke Sanoh membawa form ini sebagai bukti delivery<br>
-                    3. Form ini juga sebagai Checksheet Receiving Supplier<br>
-                    4. Confirmation Supplier wajib diisi</p>
-                </div>
-                
-                <div class="signature-section">
-                    <div class="supplier">
-                        <h5>SUPPLIER</h5>
-                        <table>
-                            <tr>
-                                <th style="width: 33.33%; text-align: center; font-size: 10px;">LOGISTIK</th>
-                                <th style="width: 33.33%; text-align: center; font-size: 10px;">CONTROLLER</th>
-                                <th style="width: 33.33%; text-align: center; font-size: 10px;">DRIVER</th>                        
-                            </tr>
-                            <tr>
-                                <th>    <br><br><br>    </th>
-                                <th>    <br><br><br>    </th>
-                                <th>    <br><br><br>    </th>
-                            </tr>
-                            <tr>
-                                <th>Name:</th>
-                                <th>Name:</th>
-                                <th>Name:</th>
-                            </tr>
-                            <tr>
-                                <th>Date:</th>
-                                <th>Date:</th>
-                                <th>Date:</th>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="sanoh">
-                        <h5>PT.SANOH INDONESIA</h5>
-                        <table>
-                            <tr>
-                                <th style="width: 50%; text-align: center; font-size: 10px;">RECEIVER</th>
-                                <th style="width: 50%; text-align: center; font-size: 10px;">CONTROLLER</th>             
-                            </tr>
-                            <tr>
-                                <th>    <br><br><br>    </th>
-                                <th>    <br><br><br>    </th>
-                            </tr>
-                            <tr>
-                                <th>Name:</th>
-                                <th>Name:</th>
-                            </tr>
-                            <tr>
-                                <th>Date:</th>
-                                <th>Date:</th>
-                            </tr>
-                        </table>
-                    </div>
-                </div><div class="page-break"></div>`;
-                }
-                pageContent += `
-                    <div class="header">
-                        <div class="logo">
-                            <img src="../../assets/logo-sanoh.png" alt="Sanoh Logo">
-                        </div>
-                        <div class="company-info">
-                            <p><b>PT. SANOH INDONESIA</b> <br>Jl. Inti II, Blok C-4 No.10, Kawasan Industri Hyundai, Cikarang, Kab. Bekasi<br>
-                                Phone +62 21 89907963</p>
-                        </div>
-                        <div class="delivery-note">
-                            <h3>DELIVERY NOTE<br><span id="dnNumber">${header.no_dn || 'N/A'}</span></h3>
-                        </div>
-                    </div>
-                    <div class="details">
-                        <div class="details-left">
-                            <div class="detail-item">
-                                <strong>Supplier Code</strong> <span id="supplierCode">: ${header.supplier_code || 'N/A'}</span>
-                            </div>
-                            <div class="detail-item">
-                                <strong>Supplier Name</strong> <span id="supplierName">: ${header.supplier_name || 'N/A'}</span>
-                            </div>
-                            <div class="detail-item">
-                                <strong>DN Number</strong> <span id="dnNumberDetail">: ${header.no_dn || 'N/A'}</span>
-                            </div>
-                            <div class="detail-item">
-                                <strong>PO Number</strong> <span id="poNumber">: ${header.po_no || 'N/A'}</span>
-                            </div>
-                        </div>
-                        <div class="details-right">
-                            <div class="detail-item">
-                                <strong>Planned Received Date</strong> <span id="plannedReceivedDate">: ${header.planned_receipt_date || 'N/A'}</span>
-                            </div>
-                            <div class="detail-item">
-                                <strong>Actual Received Date</strong> <span id="actualReceivedDate">: : ${header.actual_received_date || '_______________'}</span>
-                            </div>
-                            <div class="detail-item">
-                                <div class="total-box">
-                                    <strong class="box-label">Total Box</strong>
-                                    <span id="totalBox" class="box-number">${header.total_box || '0'}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th id="no-1" rowspan="2">No.</th>
-                                    <th id="supplier-part-no-1" colspan="1">Supplier Part No.</th>
-                                    <th id="part-name-1" rowspan="2">Part Name</th>
-                                    <th id="pcs-kbn-1" rowspan="2">Pcs/Kbn</th>
-                                    <th id="no-of-kbn-1" rowspan="2">No of Kbn</th>
-                                    <th id="total-qty-1" rowspan="2">Total Qty</th>
-                                    <th id="confirmation-1" colspan="2">Confirmation</th>
-                                    <th id="box-qty-1" rowspan="2">Box Qty</th>
-                                </tr>
-                                <tr>
-                                    <th id="internal-part-no-1">Internal Part No.</th>
-                                    <th id="supp-1">Supp.</th>
-                                    <th id="sanoh-1">Sanoh</th>
-                                </tr>
-                            </thead>
-                            <tbody>`;
-            }
+</body>
 
-            // Menambahkan item ke tabel
-            pageContent += `
-                <tr>
-                    <td>${index + 1}</td>
-                    <td><b>${item.supplier_part_number || 'N/A'}</b><br>${item.internal_part_number || 'N/A'}</td>
-                    <td>${item.part_name || 'N/A'}</td>
-                    <td>${item.pcs_per_kamban || '0'}</td>
-                    <td>${item.no_of_kamban || '0'}</td>
-                    <td>${item.total_quantity || '0'}</td>
-                    <td>${item.confirmation_supp || ''}</td>
-                    <td>${item.confirmation_sanoh || ''}</td>
-                    <td>${item.box_quantity || '0'}</td>
-                </tr>
-            `;
+<script src="../../api.js"></script>
+<script src="../../script.js"></script>
+
+<script>
+// Retrieve the noDN from the URL
+const noDN = getQueryParams();
+
+// Validate the noDN value
+if (!noDN || noDN.trim() === "" || noDN === 'undefined' || noDN === null) {
+    console.error("Invalid noDN value:", noDN);
+    document.getElementById('page-content').innerHTML = "<p>Error: Invalid or missing Purchase Order number.</p>";
+} else {
+    // If noDN is valid, fetch and display the Purchase Order data
+    fetchDeliveryNoteData(noDN).then(data => {
+        renderDeliveryNote(data);
+        window.print();
+    });
+}
+
+// Main function to handle token retrieval and fetching DN data
+(async function main() {
+    try {
+        // First, get the token and ensure it's valid
+        const token = await getToken();
+
+        // Then, if token is valid, proceed to fetch the Delivery Note data
+        if (token && noDN) {
+            const data = await fetchDeliveryNoteData(noDN, token);
+            renderDeliveryNote(data);
+            window.print(); // Cetak setelah data berhasil ditampilkan
+        } else {
+            throw new Error("Token or Delivery Note number is invalid.");
+        }
+    } catch (error) {
+        console.error("Error in main execution:", error);
+        document.getElementById('page-content').innerHTML = "<p>Error: Invalid or missing token or Delivery Note number.</p>";
+    }
+})();
+
+
+// Function to retrieve token from localStorage
+async function getToken() {
+    return new Promise((resolve, reject) => {
+        const token = localStorage.getItem('accessToken');
+        if (token) {
+            resolve(token);
+        } else {
+            reject("Access token is missing. Please log in again.");
+        }
+    });
+}
+
+
+function getQueryParams() {
+    const params = new URLSearchParams(window.location.search);
+    const noDN = params.get('noDN');  // Retrieve noDN from the URL
+    console.log("noDN from URL:", noDN);  // Debugging: Check if it's retrieved correctly
+
+    // Return the noDN (even if it's undefined)
+    return noDN;
+}
+
+// Function to fetch Delivery Note data using the noDN from the URL and token
+async function fetchDeliveryNoteData(noDN, token) {
+    try {
+        const response = await fetch(`${API_dnViewSupplier}${noDN}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,  // Kirim token dalam header
+                'Content-Type': 'application/json',
+            },
         });
 
-        // Tutup tabel terakhir
-        if (items.length > 0) {
-            pageContent += `</tbody></table><!-- Additional Pages as needed -->
-
-                <div class="note">
-                    <p><b>NOTE: </b> <br> 1. Untuk penggunaan PO Number pada Surat Jalan Supplier, harap mengikuti PO Number di atas<br>
-                    2. Saat Delivery ke Sanoh membawa form ini sebagai bukti delivery<br>
-                    3. Form ini juga sebagai Checksheet Receiving Supplier<br>
-                    4. Confirmation Supplier wajib diisi</p>
-                </div>
-                
-                <div class="signature-section">
-                    <div class="supplier">
-                        <h5>SUPPLIER</h5>
-                        <table>
-                            <tr>
-                                <th style="width: 33.33%; text-align: center; font-size: 10px;">LOGISTIK</th>
-                                <th style="width: 33.33%; text-align: center; font-size: 10px;">CONTROLLER</th>
-                                <th style="width: 33.33%; text-align: center; font-size: 10px;">DRIVER</th>                        
-                            </tr>
-                            <tr>
-                                <th>    <br><br><br>    </th>
-                                <th>    <br><br><br>    </th>
-                                <th>    <br><br><br>    </th>
-                            </tr>
-                            <tr>
-                                <th>Name:</th>
-                                <th>Name:</th>
-                                <th>Name:</th>
-                            </tr>
-                            <tr>
-                                <th>Date:</th>
-                                <th>Date:</th>
-                                <th>Date:</th>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="sanoh">
-                        <h5>PT.SANOH INDONESIA</h5>
-                        <table>
-                            <tr>
-                                <th style="width: 50%; text-align: center; font-size: 10px;">RECEIVER</th>
-                                <th style="width: 50%; text-align: center; font-size: 10px;">CONTROLLER</th>             
-                            </tr>
-                            <tr>
-                                <th>    <br><br><br>    </th>
-                                <th>    <br><br><br>    </th>
-                            </tr>
-                            <tr>
-                                <th>Name:</th>
-                                <th>Name:</th>
-                            </tr>
-                            <tr>
-                                <th>Date:</th>
-                                <th>Date:</th>
-                            </tr>
-                        </table>
-                    </div>
-                </div>`;
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        // Jika tidak ada item, tampilkan pesan kosong
-        if (items.length === 0) {
-            pageContent = `
-                    <div class="header">
-                        <div class="logo">
-                            <img src="../../assets/logo-sanoh.png" alt="Sanoh Logo">
-                        </div>
-                        <div class="company-info">
-                            <p><b>PT. SANOH INDONESIA</b> <br>Jl. Inti II, Blok C-4 No.10, Kawasan Industri Hyundai, Cikarang, Kab. Bekasi<br>
-                                Phone +62 21 89907963</p>
-                        </div>
-                        <div class="delivery-note">
-                            <h3>DELIVERY NOTE<br><span id="dnNumber"></span></h3>
-                        </div>
-                    </div>
-                    <div class="details">
-                        <div class="details-left">
-                            <div class="detail-item">
-                                <strong>Supplier Code</strong> <span id="supplierCode">: ${header.supplier_code || 'N/A'}</span>
-                            </div>
-                            <div class="detail-item">
-                                <strong>Supplier Name</strong> <span id="supplierName">: ${header.supplier_name || 'N/A'}</span>
-                            </div>
-                            <div class="detail-item">
-                                <strong>DN Number</strong> <span id="dnNumberDetail">: ${header.no_dn || 'N/A'}</span>
-                            </div>
-                            <div class="detail-item">
-                                <strong>PO Number</strong> <span id="poNumber">: ${header.po_no || 'N/A'}</span>
-                            </div>
-                        </div>
-                        <div class="details-right">
-                            <div class="detail-item">
-                                <strong>Planned Received Date</strong> <span id="plannedReceivedDate">: ${header.planned_receipt_date || 'N/A'}</span>
-                            </div>
-                            <div class="detail-item">
-                                <strong>Actual Received Date</strong> <span id="actualReceivedDate">: : ${header.actual_received_date || '_______________'}</span>
-                            </div>
-                            <div class="detail-item">
-                                <div class="total-box">
-                                    <strong class="box-label">Total Box</strong>
-                                    <span id="totalBox" class="box-number">${header.total_box || '0'}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th id="no-1" rowspan="2">No.</th>
-                                    <th id="supplier-part-no-1" colspan="1">Supplier Part No.</th>
-                                    <th id="part-name-1" rowspan="2">Part Name</th>
-                                    <th id="pcs-kbn-1" rowspan="2">Pcs/Kbn</th>
-                                    <th id="no-of-kbn-1" rowspan="2">No of Kbn</th>
-                                    <th id="total-qty-1" rowspan="2">Total Qty</th>
-                                    <th id="confirmation-1" colspan="2">Confirmation</th>
-                                    <th id="box-qty-1" rowspan="2">Box Qty</th>
-                                </tr>
-                                <tr>
-                                    <th id="internal-part-no-1">Internal Part No.</th>
-                                    <th id="supp-1">Supp.</th>
-                                    <th id="sanoh-1">Sanoh</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr><td colspan="8">No items found</td></tr>
-                            </tbody>
-                        </table>`;
-                    }
+        const dnData = await response.json();
 
-                return pageContent;
-        };
-        
-            // Function to render the Delivery Note
-            function renderDeliveryNote(data) {
-                const items = data.detail; // Accessing the 'detail' field for items
-                const datasss = renderTable(data, items);
-                const pageContent = `
-                    <div class="container">
-                        ${datasss}
+        if (dnData.success && dnData.data && dnData.data.length > 0) {
+            // Format the data as needed
+            const formattedData = {
+                dn_number: dnData.data[0].dn_number,
+                po_number: dnData.data[0].po_number,
+                supplier_name: dnData.data[0].supplier_name,
+                supplier_code: dnData.data[0].supplier_code,
+                planned_receipt_date: dnData.data[0].planned_receipt_date,
+                total_box: dnData.data[0].detail.reduce((sum, detail) => sum + calculateNoOfKanban(detail.total_quantity, detail.pcs_per_kamban), 0),
+                printed_date: dnData.data[0].printed_date,
+                detail: dnData.data[0].detail.map(detail => ({
+                    delivery_note_detail_id: detail.delivery_note_detail_id,
+                    dn_number: detail.dn_number,
+                    line_no: detail.line_no,
+                    supplier_part_number: detail.supplier_part_number,
+                    internal_part_number: detail.internal_part_number,
+                    part_name: concatenatePartName(detail.part_name),
+                    pcs_per_kamban: detail.pcs_per_kamban,
+                    no_of_kamban: calculateNoOfKanban(detail.total_quantity, detail.pcs_per_kamban),
+                    total_quantity: detail.total_quantity,
+                    box_quantity: calculateNoOfKanban(detail.total_quantity, detail.pcs_per_kamban),
+                }))
+            };
+
+            return formattedData;
+        } else {
+            console.error("No data available:", dnData.message);
+            return null;
+        }
+    } catch (error) {
+        console.error("Error fetching Delivery Note data:", error);
+        return null;
+    }
+}
+
+// Helper function to concatenate part descriptions
+function concatenatePartName(part_name) {
+    return part_name;
+}
+
+// Helper function to calculate no_of_kanban
+function calculateNoOfKanban(quantity, snp) {
+    return quantity / snp;
+}
+
+function renderTable(data, items) {
+    let pageContent = '';
+    const header = data || {};
+    let rowsPerPage = 10;
+
+    console.log('API Response:', data);
+
+    items.forEach((item, index) => {
+// Cek jika ini adalah awal dari halaman baru
+if (index % rowsPerPage === 0) {
+    if (index !== 0) {
+        pageContent += `</tbody></table>
+    <div class="note">
+        <p><b>NOTE: </b> <br> 1. Untuk penggunaan PO Number pada Surat Jalan Supplier, harap mengikuti PO Number di atas<br>
+        2. Saat Delivery ke Sanoh membawa form ini sebagai bukti delivery<br>
+        3. Form ini juga sebagai Checksheet Receiving Supplier<br>
+        4. Confirmation Supplier wajib diisi</p>
+    </div>
+    
+    <div class="signature-section">
+        <div class="supplier">
+            <h5>SUPPLIER</h5>
+            <table>
+                <tr>
+                    <th style="width: 33.33%; text-align: center; font-size: 10px;">LOGISTIK</th>
+                    <th style="width: 33.33%; text-align: center; font-size: 10px;">CONTROLLER</th>
+                    <th style="width: 33.33%; text-align: center; font-size: 10px;">DRIVER</th>                        
+                </tr>
+                <tr>
+                    <th>    <br><br><br>    </th>
+                    <th>    <br><br><br>    </th>
+                    <th>    <br><br><br>    </th>
+                </tr>
+                <tr>
+                    <th>Name:</th>
+                    <th>Name:</th>
+                    <th>Name:</th>
+                </tr>
+                <tr>
+                    <th>Date:</th>
+                    <th>Date:</th>
+                    <th>Date:</th>
+                </tr>
+            </table>
+        </div>
+        <div class="sanoh">
+            <h5>PT.SANOH INDONESIA</h5>
+            <table>
+                <tr>
+                    <th style="width: 50%; text-align: center; font-size: 10px;">RECEIVER</th>
+                    <th style="width: 50%; text-align: center; font-size: 10px;">CONTROLLER</th>             
+                </tr>
+                <tr>
+                    <th>    <br><br><br>    </th>
+                    <th>    <br><br><br>    </th>
+                </tr>
+                <tr>
+                    <th>Name:</th>
+                    <th>Name:</th>
+                </tr>
+                <tr>
+                    <th>Date:</th>
+                    <th>Date:</th>
+                </tr>
+            </table>
+        </div>
+    </div><div class="page-break"></div>`;
+    }
+    pageContent += `
+        <div class="header">
+            <div class="logo">
+                <img src="../../assets/logo-sanoh.png" alt="Sanoh Logo">
+            </div>
+            <div class="company-info">
+                <p><b>PT. SANOH INDONESIA</b> <br>Jl. Inti II, Blok C-4 No.10, Kawasan Industri Hyundai, Cikarang, Kab. Bekasi<br>
+                    Phone +62 21 89907963</p>
+            </div>
+            <div class="delivery-note">
+                <h3>DELIVERY NOTE<br><span id="dnNumber">${header.dn_number || 'N/A'}</span></h3>
+            </div>
+        </div>
+        <div class="details">
+            <div class="details-left">
+                <div class="detail-item">
+                    <strong>Supplier Code</strong> <span id="supplierCode">: ${header.supplier_code || 'N/A'}</span>
+                </div>
+                <div class="detail-item">
+                    <strong>Supplier Name</strong> <span id="supplierName">: ${header.supplier_name || 'N/A'}</span>
+                </div>
+                <div class="detail-item">
+                    <strong>DN Number</strong> <span id="dnNumberDetail">: ${header.dn_number || 'N/A'}</span>
+                </div>
+                <div class="detail-item">
+                    <strong>PO Number</strong> <span id="poNumber">: ${header.po_number || 'N/A'}</span>
+                </div>
+            </div>
+            <div class="details-right">
+                <div class="detail-item">
+                    <strong>Planned Received Date</strong> <span id="plannedReceivedDate">: ${header.planned_receipt_date || 'N/A'}</span>
+                </div>
+                <div class="detail-item">
+                    <strong>Actual Received Date</strong> <span id="actualReceivedDate">: : ${header.actual_received_date || '_______________'}</span>
+                </div>
+                <div class="detail-item">
+                    <div class="total-box">
+                        <strong class="box-label">Total Box</strong>
+                        <span id="totalBox" class="box-number">${header.total_box || '0'}</span>
                     </div>
-                `;
+                </div>
+            </div>
+        </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th id="no-1" rowspan="2">No.</th>
+                        <th id="supplier-part-no-1" colspan="1">Supplier Part No.</th>
+                        <th id="part-name-1" rowspan="2">Part Name</th>
+                        <th id="pcs-kbn-1" rowspan="2">Pcs/Kbn</th>
+                        <th id="no-of-kbn-1" rowspan="2">No of Kbn</th>
+                        <th id="total-qty-1" rowspan="2">Total Qty</th>
+                        <th id="confirmation-1" colspan="2">Confirmation</th>
+                        <th id="box-qty-1" rowspan="2">Box Qty</th>
+                    </tr>
+                    <tr>
+                        <th id="internal-part-no-1">Internal Part No.</th>
+                        <th id="supp-1">Supp.</th>
+                        <th id="sanoh-1">Sanoh</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+}
+
+    // Menambahkan item ke tabel
+    pageContent += `
+        <tr>
+            <td>${index + 1}</td>
+            <td><b>${item.supplier_part_number || 'N/A'}</b><br>${item.internal_part_number || 'N/A'}</td>
+            <td>${item.part_name || 'N/A'}</td>
+            <td>${item.pcs_per_kamban || '0'}</td>
+            <td>${item.no_of_kamban || '0'}</td>
+            <td>${item.total_quantity || '0'}</td>
+            <td>${item.confirmation_supp || ''}</td>
+            <td>${item.confirmation_sanoh || ''}</td>
+            <td>${item.box_quantity || '0'}</td>
+        </tr>
+    `;
+});
+
+// Tutup tabel terakhir
+if (items.length > 0) {
+    pageContent += `</tbody></table><!-- Additional Pages as needed -->
+
+        <div class="note">
+            <p><b>NOTE: </b> <br> 1. Untuk penggunaan PO Number pada Surat Jalan Supplier, harap mengikuti PO Number di atas<br>
+            2. Saat Delivery ke Sanoh membawa form ini sebagai bukti delivery<br>
+            3. Form ini juga sebagai Checksheet Receiving Supplier<br>
+            4. Confirmation Supplier wajib diisi</p>
+        </div>
         
-                // Inject the rendered content into the page
-                document.getElementById('page-content').innerHTML = pageContent;
+        <div class="signature-section">
+            <div class="supplier">
+                <h5>SUPPLIER</h5>
+                <table>
+                    <tr>
+                        <th style="width: 33.33%; text-align: center; font-size: 10px;">LOGISTIK</th>
+                        <th style="width: 33.33%; text-align: center; font-size: 10px;">CONTROLLER</th>
+                        <th style="width: 33.33%; text-align: center; font-size: 10px;">DRIVER</th>                        
+                    </tr>
+                    <tr>
+                        <th>    <br><br><br>    </th>
+                        <th>    <br><br><br>    </th>
+                        <th>    <br><br><br>    </th>
+                    </tr>
+                    <tr>
+                        <th>Name:</th>
+                        <th>Name:</th>
+                        <th>Name:</th>
+                    </tr>
+                    <tr>
+                        <th>Date:</th>
+                        <th>Date:</th>
+                        <th>Date:</th>
+                    </tr>
+                </table>
+            </div>
+            <div class="sanoh">
+                <h5>PT.SANOH INDONESIA</h5>
+                <table>
+                    <tr>
+                        <th style="width: 50%; text-align: center; font-size: 10px;">RECEIVER</th>
+                        <th style="width: 50%; text-align: center; font-size: 10px;">CONTROLLER</th>             
+                    </tr>
+                    <tr>
+                        <th>    <br><br><br>    </th>
+                        <th>    <br><br><br>    </th>
+                    </tr>
+                    <tr>
+                        <th>Name:</th>
+                        <th>Name:</th>
+                    </tr>
+                    <tr>
+                        <th>Date:</th>
+                        <th>Date:</th>
+                    </tr>
+                </table>
+            </div>
+        </div>`;
+}
+
+// Jika tidak ada item, tampilkan pesan kosong
+if (items.length === 0) {
+    pageContent = `
+            <div class="header">
+                <div class="logo">
+                    <img src="../../assets/logo-sanoh.png" alt="Sanoh Logo">
+                </div>
+                <div class="company-info">
+                    <p><b>PT. SANOH INDONESIA</b> <br>Jl. Inti II, Blok C-4 No.10, Kawasan Industri Hyundai, Cikarang, Kab. Bekasi<br>
+                        Phone +62 21 89907963</p>
+                </div>
+                <div class="delivery-note">
+                    <h3>DELIVERY NOTE<br><span id="dnNumber"></span></h3>
+                </div>
+            </div>
+            <div class="details">
+                <div class="details-left">
+                    <div class="detail-item">
+                        <strong>Supplier Code</strong> <span id="supplierCode">: ${header.supplier_code || 'N/A'}</span>
+                    </div>
+                    <div class="detail-item">
+                        <strong>Supplier Name</strong> <span id="supplierName">: ${header.supplier_name || 'N/A'}</span>
+                    </div>
+                    <div class="detail-item">
+                        <strong>DN Number</strong> <span id="dnNumberDetail">: ${header.dn_number || 'N/A'}</span>
+                    </div>
+                    <div class="detail-item">
+                        <strong>PO Number</strong> <span id="poNumber">: ${header.po_number || 'N/A'}</span>
+                    </div>
+                </div>
+                <div class="details-right">
+                    <div class="detail-item">
+                        <strong>Planned Received Date</strong> <span id="plannedReceivedDate">: ${header.planned_receipt_date || 'N/A'}</span>
+                    </div>
+                    <div class="detail-item">
+                        <strong>Actual Received Date</strong> <span id="actualReceivedDate">: : ${header.actual_received_date || '_______________'}</span>
+                    </div>
+                    <div class="detail-item">
+                        <div class="total-box">
+                            <strong class="box-label">Total Box</strong>
+                            <span id="totalBox" class="box-number">${header.total_box || '0'}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th id="no-1" rowspan="2">No.</th>
+                            <th id="supplier-part-no-1" colspan="1">Supplier Part No.</th>
+                            <th id="part-name-1" rowspan="2">Part Name</th>
+                            <th id="pcs-kbn-1" rowspan="2">Pcs/Kbn</th>
+                            <th id="no-of-kbn-1" rowspan="2">No of Kbn</th>
+                            <th id="total-qty-1" rowspan="2">Total Qty</th>
+                            <th id="confirmation-1" colspan="2">Confirmation</th>
+                            <th id="box-qty-1" rowspan="2">Box Qty</th>
+                        </tr>
+                        <tr>
+                            <th id="internal-part-no-1">Internal Part No.</th>
+                            <th id="supp-1">Supp.</th>
+                            <th id="sanoh-1">Sanoh</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td colspan="8">No items found</td></tr>
+                    </tbody>
+                </table>`;
             }
-        
-            // Initialize
-            const no_dn = 'DN0013274';
-            fetchDeliveryNoteData(no_dn).then(data => {
-                renderDeliveryNote(data);
-                window.print();
-            });
-</script>
 
-</body>
+        return pageContent;
+};
+
+    // Function to render the Delivery Note
+    function renderDeliveryNote(data) {
+        
+        const items = data.detail; // Accessing the 'detail' field for items
+        const datasss = renderTable(data, items);
+        const pageContent = `
+            <div class="container">
+                ${datasss}
+            </div>
+        `;
+
+        // Inject the rendered content into the page
+        document.getElementById('page-content').innerHTML = pageContent;
+    }
+        
+
+</script>
 
 </html>
