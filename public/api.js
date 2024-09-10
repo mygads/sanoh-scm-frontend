@@ -24,7 +24,6 @@ APIlogin = API + '/login';
 APIreadfile = API + '/listingreporttest/file/';
 
 
-
 // supper admin 
 APIpartner4 = API + '/partner4';
 APIcreateuser = API + '/create4';
@@ -36,18 +35,22 @@ APIpartner2 = API + `/partner2`;
 APIindexdnheader2 = API + `/indexdnheader2`;
 APIindexdndetail2 = API + '/indexdndetail2/';
 APIdnhistory2 = API + `/dnhistory2`;
+
+
 // purchasing
 API_readPerformanceReportPurchasing = API + `/listingreport3/file/`;
 APIpartner3 = API + `/partner3`;
 APIindexlistingreport = API + `/indexlistingreport3`;
 APIuploadlisting = API + `/createlistingreport3`;
-
+APIindexpoheader3 = API + `/indexpoheader3`;
+APIpohistory3 = API + `/pohistory3`;
 
 
 // warehouse
 APIpartner2 = API + `/partner2`;
 APIindexdnheader2 = API + `/indexdnheader2`;
 APIindexdndetail2 = API + '/indexdndetail2/';
+APIdnhistory2 = API + `/dnhistory2`;
 
 
 // supplier
