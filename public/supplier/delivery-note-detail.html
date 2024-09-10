@@ -377,22 +377,21 @@
     }
   }
 
-  // Async function to update DN detail and refresh UI
-  async function updateDNDetail(noDN, dnLine, qtyConfirm) {
+  async function updateDNDetails(updates) {
     try {
         // Log the payload being sent
-        console.log(`Updating DN No: ${noDN}, Qty Confirm: ${qtyConfirm}`);
+        console.log(`Updating DN details:`, updates);
 
         const token = localStorage.getItem('accessToken'); // Ensure token is fetched properly
 
-        const response = await fetch(`https://api.edutrashgo.com/api/updatedndetail1/${noDN}/${dnLine}`, {
+        const response = await fetch('https://api.edutrashgo.com/api/updatedndetails', {
             method: 'PUT',  // Ensure the correct HTTP method is used
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
             },
-            // Send the field as "qty_confirm" to match the server's expectation
-            body: JSON.stringify({ qty_confirm: parseInt(qtyConfirm) }),  // Ensure qty_confirm is an integer
+            // Send the array of updates
+            body: JSON.stringify({ updates }),  // Example payload: { updates: [{ no_detail: 1, qty_confirm: 10 }, { no_detail: 2, qty_confirm: 20 }] }
         });
 
         if (!response.ok) {
@@ -408,17 +407,18 @@
         }
 
         const updatedData = await response.json();
-        console.log(`Successfully updated DN No: ${noDN}`, updatedData);
+        console.log(`Successfully updated DN details`, updatedData);
 
         // Update the UI with the new data
-        updateUIDetail(noDN, dnLine, qtyConfirm);
+        // Handle UI update for each record if needed
 
         return updatedData;
     } catch (error) {
-        console.error(`Failed to update DN Quantity ${noDN}:`, error);
+        console.error(`Failed to update DN details:`, error);
         throw error;
     }
   }
+
 
   // Call the function to fetch data on page load
   fetchDeliveryNotes();
