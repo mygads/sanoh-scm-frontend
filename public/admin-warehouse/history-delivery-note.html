@@ -221,17 +221,21 @@
 
   cekToken();
 
+  let deliveryNote = []; // Initialize the deliveryNote array
   let sortOrder = {}; // Object to keep track of sort order for each columnrray untuk data yang sudah difilter
+  let rowsPerPage = 10; // Default rows per page
+  let currentPage = 1; // Default to the first page
 
   document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM fully loaded and parsed');
     // Adjust rows per page based on screen size
     fetchSuppliers();
     adjustRowsPerPage(); // Atur jumlah data per halaman berdasarkan ukuran layar
 
     window.addEventListener('resize', () => {
+      console.log('Window resized, adjusting table rows per page');
       adjustRowsPerPage();
       displayTableData(currentPage);
-      updatePagination(); // Call updatePagination() from table.js
     });
 
     const supplierSelect = document.getElementById('supplier_id');
@@ -240,44 +244,34 @@
     // Event listener for supplier dropdown change
     supplierSelect.addEventListener('change', async (event) => {
       const selectedSupplierId = event.target.value;
-      console.log('Supplier dipilih:', selectedSupplierId); // Debugging
+      console.log('Supplier selected:', selectedSupplierId); // Debugging
 
       if (selectedSupplierId) {
-        localStorage.setItem('supplierBpCode', selectedSupplierId); // Menyimpan supplierBpCode ke localStorage
-        await fetchDeliveryNotes(selectedSupplierId); // Memanggil data delivery note berdasarkan supplier yang dipilih
-        displaySelectedSupplier(currentPage); // Menampilkan supplier yang dipilih di tabel
-        updatePagination();
+        localStorage.setItem('bpCode', selectedSupplierId); // Store bpCode in localStorage
+        console.log('Fetching delivery notes for supplier:', selectedSupplierId);
+        await fetchHistoryDeliveryNotes(selectedSupplierId); // Fetch delivery notes based on the selected supplier
+        displaySelectedSupplier(); // Display selected supplier in the table
+        displayTableData(currentPage); // Display data for the first page
+      } else {
+        console.error('No supplier selected.');
       }
     });
 
     if (searchButton) {
       searchButton.addEventListener('input', searchTable);
     }
-
-    // Initialize data
-    filteredDnData = [...deliveryNote]; // Copy data ke filteredDnData untuk diproses
-    displayTableData(currentPage); // Tampilkan data
-    updatePagination(); // Call updatePagination from table.js
-
-    // Add sorting listeners for each sortable column using data-sort
-    const sortableHeaders = document.querySelectorAll('th[data-sort]');
-    sortableHeaders.forEach(header => {
-      header.addEventListener('click', () => {
-        const columnIndex = header.getAttribute('data-sort');
-        sortTable(columnIndex); // Call the sorting function with the correct index
-      });
-    });
   });
 
   // Function to fetch suppliers and populate the dropdown
   async function fetchSuppliers() {
     const token = localStorage.getItem('accessToken');
     if (!token) {
-      console.error('Token not found. Please log in.');
+      console.error('No access token found');
       return;
     }
 
     try {
+      console.log('Fetching suppliers...');
       const response = await fetch(APIpartner2, {
         method: 'GET',
         headers: {
@@ -288,19 +282,19 @@
 
       if (response.ok) {
         const data = await response.json();
+        console.log('Suppliers data received:', data);
         if (data.success) {
           populateSupplierDropdown(data.data);
         } else {
           console.error('Failed to fetch suppliers:', data.message);
         }
       } else {
-        console.error('Kesalahan saat mengambil data supplier:', response.status, response.statusText);
+        console.error('Error fetching suppliers:', response.status, response.statusText);
       }
     } catch (error) {
-      console.error('Error Token Not Valid', error);
+      console.error('Error during fetching suppliers:', error);
     }
   }
-
 
   // Fungsi untuk mengisi dropdown supplier dengan data dari API
   function populateSupplierDropdown(suppliersData) {
@@ -313,25 +307,20 @@
       option.textContent = `${supplier.bp_code} | ${supplier.bp_name}`; // Menampilkan bp_code dan nama supplier
       supplierSelect.appendChild(option); // Menambahkan opsi ke dropdown
     });
-
-    // Menginisialisasi kembali Select2 setelah opsi ditambahkan
-    $(supplierSelect).select2({
-      placeholder: 'Cari Supplier',
-      allowClear: true
-    });
+    console.log('Supplier dropdown populated');
   }
 
-  async function fetchHistoryDeliveryNotes() {
+  async function fetchHistoryDeliveryNotes(bpCode) {
     const token = localStorage.getItem('accessToken');
-    const supplierBpCode = localStorage.getItem('supplierBpCode');
 
-    if (!supplierBpCode) {
-      console.error('supplierBpCode not found in localStorage.');
+    if (!token) {
+      console.error('No access token found for fetching delivery notes');
       return;
     }
 
     try {
-      const response = await fetch(`${APIdnhistory2}/${supplierBpCode}`, {
+      console.log(`Fetching history delivery notes for bpCode: ${bpCode}`);
+      const response = await fetch(`${APIdnhistory2}/${bpCode}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -339,88 +328,116 @@
         },
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+      if (response.ok) {
+        const data = await response.json();
 
-      const data = await response.json();
-      console.log("Data fetched:", data);
+        console.log('Raw History Delivery notes data received:', data);
 
-      if (data.success && data.data) {
-        deliveryNote = data.data.map(dn => ({
-          noDN: dn.dn_number ? dn.dn_number.toString() : 'No DN Number',
-          noPO: dn.po_number ? dn.po_number.toString() : 'No PO Number',
-          statusDN: dn.dn_status || 'Unknown Status',
-          planDNDate: dn.plan_dn_date || 'Date Unknown', // Plan DN Date
-          sentDate: dn.send_date || 'Send Date Unknown', // Send Date
-          receiveDate: dn.receive_date || 'Receive Date Unknown' // Receive Date
-        }));
+        if (data.success && data.data) {
+          deliveryNote = data.data.map(dn => ({
+            noDN: dn.dn_number ? dn.dn_number.toString() : 'No DN Number',
+            noPO: dn.po_number ? dn.po_number.toString() : 'No PO Number',
+            statusDN: dn.dn_status || 'Unknown Status',
+            sentDate: dn.send_date || 'Send Date Unknown', // Send Date
+            receiveDate: dn.receive_date || 'Receive Date Unknown' // Receive Date
+          }));
 
-        // Set filteredHistoryDNData to match deliveryNote initially
-        filteredHistoryDNData = deliveryNote;
+          // Set filteredHistoryDNData to match deliveryNote initially
+          filteredHistoryDNData = [...deliveryNote];
 
-        // Panggil fungsi displayTableData untuk menampilkan data
-        displayTableData(currentPage);
-        updatePagination();
+          // Check if there's any data to display
+          if (filteredHistoryDNData.length > 0) {
+            displayTableData(currentPage); // Display data for the current page
+          } else {
+            console.warn('No history delivery notes found for this supplier.');
+          }
+        } else {
+          console.error('Failed to fetch history delivery notes:', data.message);
+        }
       } else {
-        console.error('No data found or unexpected format.');
+        console.error('Error fetching history delivery notes:', response.status, response.statusText);
       }
     } catch (error) {
-      console.error('Error fetching delivery notes:', error);
+      console.error('Fetch error during history delivery notes retrieval:', error);
     }
   }
 
   // Fungsi untuk menampilkan supplier yang dipilih di bagian atas tabel
   function displaySelectedSupplier() {
-    const supplierBpCode = localStorage.getItem('supplierBpCode'); // Mengambil supplierBpCode dari localStorage
-    const tableBody = document.getElementById('table-body');
+    const bpCode = localStorage.getItem('bpCode'); // Mengambil bpCode dari localStorage
 
-    // Tambahkan row untuk menampilkan supplierBpCode yang dipilih
+    if (!bpCode) {
+      console.error('No selected supplier found in localStorage');
+      return;
+    }
+
+    const tableBody = document.getElementById('table-body');
+    if (!tableBody) {
+      console.error('Table body element not found');
+      return;
+    }
+
     const supplierRow = document.createElement('tr');
     supplierRow.classList.add('bg-blue-100', 'border-b');
     supplierRow.innerHTML = `
       <td colspan="4" class="text-center font-bold text-blue-900">
-        Supplier yang Dipilih: ${supplierBpCode}
+        Supplier yang Dipilih: ${bpCode}
       </td>
     `;
-    tableBody.prepend(supplierRow); // Menambahkan row di bagian atas tabel
+
+    tableBody.prepend(supplierRow); // Add the selected supplier row at the top
+    console.log('Displayed selected supplier in table:', bpCode);
   }
 
   function displayTableData(page) {
     const tableBody = document.getElementById('table-body');
-    tableBody.innerHTML = '';
 
+    if (!tableBody) {
+      console.error('Table body element not found');
+      return;
+    }
+  
+    tableBody.innerHTML = ''; // Clear existing rows
+    
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
-    const paginatedData = filteredDnData.slice(start, end);
+    const dataToShow = filteredData.slice(start, end);
+  
+    if (dataToShow.length === 0) {
+      tableBody.innerHTML = '<tr><td colspan="4" class="text-center">No data available for this supplier</td></tr>';
+      return;
+    }
 
-    paginatedData.forEach((row, index) => {
-      const tableRow = document.createElement('tr');
-      tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
-      tableRow.innerHTML = `
-  <td class="px-2 py-4 text-center font-medium text-gray-900">
-      <a href="history-delivery-note-detail.html?noDN=${row.noDN}" class="text-blue-600 underline">${row.noDN}</a>
-  </td>
-  <td class="px-2 py-4 text-center font-medium text-gray-900">
-      <a href="history-delivery-note-detail.html?noPO=${row.noPO}" class="text-black">${row.noPO}</a>
-  </td>
-  <td class="px-2 py-4 text-center">${row.planDNDate}</td>
-  <td class="px-2 py-4 text-center">${row.sentDate}</td> <!-- Tambahkan Sent Date -->
-  <td class="px-2 py-4 text-center">${row.receiveDate}</td> <!-- Tambahkan Receive Date -->
-  <td class="px-2 py-4 text-center">${row.statusDN}</td>
-`;
-
-      tableBody.appendChild(tableRow);
+    dataToShow.forEach(historydn => {
+      const row = document.createElement('tr');
+      row.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
+      row.innerHTML = `
+        <td class="px-2 py-4 text-center font-medium text-gray-900">
+          <a href="delivery-note-detail.html?noDN=${historydn.noDN}" class="text-blue-600 underline">${historydn.noDN}</a>
+        </td>
+        <td class="px-2 py-4 text-center font-medium text-gray-900">
+          <a href="purchase-order-detail.html?noPO=${historydn.noPO}" class="text-blue-600 underline">${historydn.noPO}</a>
+        </td>
+        <td class="px-2 py-4 text-center">${historydn.statusDN}</td>
+        <td class="px-2 py-4 text-center">${historydn.sentDate}</td>
+        <td class="px-2 py-4 text-center">${historydn.receiveDate}</td>
+      `;
+      tableBody.appendChild(row);
     });
+    console.log(`Displayed ${dataToShow.length} rows of data in table`);
   }
-
 
   function searchTable() {
     const searchInput = document.getElementById('search-input').value.toLowerCase();
+    if (!searchInput) {
+      console.warn('Search input is empty');
+      return;
+    }
+
     filteredData = deliveryNote.filter(row => row.noDN.toLowerCase().includes(searchInput));
+    console.log(`Search result: Found ${filteredData.length} matching rows`);
     currentPage = 1;
     displayTableData(currentPage);
-    updatePagination();
   }
 
 </script>
