@@ -418,7 +418,7 @@
     }
 
     // Filter the details array based on the search input
-    filteredDataDetail = details.filter(detail => {
+    filteredDataDetail = detail.filter(detail => {
         // Ensure detail is not undefined and has the required properties
         if (detail && typeof detail.partNumber === 'string' && typeof detail.partName === 'string') {
             return detail.partNumber.toLowerCase().includes(searchInput) ||

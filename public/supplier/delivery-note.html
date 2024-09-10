@@ -175,8 +175,9 @@
 <script src="../table.js"></script>
 <!-- Add the script to handle table sorting and pagination -->
 <script>
+  
   cekToken();
-
+  
   let pendingResponseIndex = null;
   let pendingResponseAction = '';
   let deliveryNote = [];
@@ -230,8 +231,8 @@
               // Set filteredDnData to match deliveryNote initially
               filteredDnData = deliveryNote;
 
-              displayTableData(1);
-              updatePagination();
+              displayTableData(currentPage);
+              updatePagination(currentPage);
           } else {
               console.error('No valid data found for the specified PO.');
           }
@@ -239,8 +240,6 @@
           console.error(`Error fetching delivery notes:`, error);
       }
   }
-
-  fetchDeliveryNotes();
 
   // Function to display data in the table
   function displayTableData(page) {
@@ -252,8 +251,9 @@
       const paginatedData = filteredDnData.slice(start, end);
 
       // Iterate through filteredDnData to display in the table
-      paginatedData.forEach(row => {
+      paginatedData.forEach((row, index) => {
           const tableRow = document.createElement('tr');
+          tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
           tableRow.innerHTML = `
               <td class="px-2 py-4 text-center">
                   <a href="delivery-note-detail.html?noDN=${row.noDN}" class="text-blue-600 underline">${row.noDN}</a>
@@ -271,38 +271,11 @@
   function searchTable() {
       const searchInput = document.getElementById('search-input').value.toLowerCase();
       filteredDnData = deliveryNote.filter(row => row.noDN.toLowerCase().includes(searchInput));
-      displayTableData(); // Re-display data after searching
+      currentPage = 1; // Reset to page 1 on new search
+      displayTableData(currentPage); // Re-display data after searching
+      updatePagination(currentPage);
   }
 
-  function sortTable(columnIndex) {
-      const table = document.querySelector('table');
-      const tbody = table.querySelector('tbody');
-      const rows = Array.from(tbody.querySelectorAll('tr'));
-      const isAscending = table.querySelectorAll('th')[columnIndex].classList.toggle('asc');
-      table.querySelectorAll('th').forEach((th, index) => {
-          if (index !== columnIndex) th.classList.remove('asc', 'desc');
-      });
-
-      rows.sort((a, b) => {
-          const cellA = a.querySelectorAll('td')[columnIndex].textContent.trim();
-          const cellB = b.querySelectorAll('td')[columnIndex].textContent.trim();
-
-          if (columnIndex === 2) { // For planDNDate, handle date sorting
-              return new Date(cellA) - new Date(cellB);
-          }
-
-          return cellA.localeCompare(cellB, undefined, { numeric: true, sensitivity: 'base' });
-      });
-
-      if (!isAscending) {
-          rows.reverse();
-      }
-
-      tbody.innerHTML = '';
-      tbody.append(...rows);
-  }
-
-  // Execute after DOM is loaded
   document.addEventListener('DOMContentLoaded', () => {
       const name = localStorage.getItem('name');
       const bpCode = localStorage.getItem('bpCode');
@@ -313,6 +286,11 @@
       fetchDeliveryNotes();
 
       document.getElementById('search-input').addEventListener('input', searchTable);
+  });
+
+  window.addEventListener('resize', () => {
+      displayTableData(currentPage); // Re-render table data
+      updatePagination(currentPage); // Re-render pagination
   });
 
 </script>
