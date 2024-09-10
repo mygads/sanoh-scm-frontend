@@ -145,15 +145,15 @@
               </div>
               
               <div class="flex gap-3 2xl:gap-6 items-center self-stretch my-auto text-white 2xl:min-w-[240px] text-[10px] 2xl:text-lg">
-                <a href="print/print-label.html" target="_blank" class="flex gap-2 2xl:gap-4 items-center self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5">
+                <a href="" target="_blank" id="print-label-link"  class="flex gap-2 2xl:gap-4 items-center self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5"  onclick="updatePrintLabelButton(noDN)">
                   <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-5 aspect-square" />
                   <span class="flex-1 shrink self-stretch my-auto ">Print Label</span>
                 </a>
-                <a href="print/export-csv-dn.html" target="_blank" class="flex gap-2 2xl:gap-4 items-center self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5">
+                <a href="" target="_blank" id="print-csv-link" class="flex gap-2 2xl:gap-4 items-center self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5" onclick="updatePrintCSVButton(noDN)">
                   <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-5 aspect-square" />
                   <span class="flex-1 shrink self-stretch my-auto ">Export CSV</span>
                 </a>
-                <a href="print/print-dn.html" target="_blank" class="flex gap-2 2xl:gap-4 items-center self-stretch px-6 2xl:px-9 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5">
+                <a href="" target="_blank" id="print-dn-link" class="flex gap-2 2xl:gap-4 items-center self-stretch px-6 2xl:px-9 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5" onclick="updatePrintButton(noDN)">
                   <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-5 aspect-square" />
                   <span class="flex-1 shrink self-stretch my-auto basis-0">Print DN </span>
                 </a>
@@ -269,6 +269,36 @@
 
   let details = [];
   let filteredDnDetailData = [];
+
+  // Assign the noPO from URL
+  let noDN = getUrlParameter('noDN');
+
+  // Function to get URL parameters
+  function getUrlParameter(name) {
+    const params = new URLSearchParams(window.location.search);
+    return params.get(name);
+  }
+
+  // Function to update the Print DN button href dynamically
+  function updatePrintButton(noDN) {
+    const printdnLink = document.getElementById('print-dn-link');
+    if (noDN) {
+      printdnLink.href = `print/print-dn.html?noDN=${noDN}`;
+    } else {
+      console.error('noDN is not available.');
+    }
+  }
+  
+  // Function to update the Print Label button href dynamically
+  function updatePrintLabelButton(noDN) {
+    const printdnLink = document.getElementById('print-label-link');
+    if (noDN) {
+      printdnLink.href = `print/print-label.html?noDN=${noDN}`;
+    } else {
+      console.error('noDN is not available.');
+    }
+  }
+
 
   // Function to fetch delivery notes from the API
   async function fetchDeliveryNotes() {

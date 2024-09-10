@@ -57,4 +57,8 @@ API_indexDNSupplier = API + `/indexdnheader1`;
 API_indexPOHistorySupplier = API + `/pohistory1/`;
 API_indexDNHistorySupplier = API + `/dnhistory1/`;
 API_readPerformanceReportSupplier = API + `/listingreport1/file/`;
+API_indexPODetailSupplier = API + `/indexpodetail1/`;
+API_poViewSupplier = API + `/pohview1/`;
+API_dnViewSupplier = API + `/dnhview1/`;
+API_labelViewSupplier = API + `/lbview1/`;
 

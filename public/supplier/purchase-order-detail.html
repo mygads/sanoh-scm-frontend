@@ -136,7 +136,7 @@
               </div>
               
               <div class="flex gap-3 2xl:gap-6 items-center self-stretch my-auto text-white 2xl:min-w-[240px] text-[10px] 2xl:text-lg">
-                <a href="#" id="print-po-link" class="flex gap-2 2xl:gap-4 items-center self-stretch px-6 2xl:px-9 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5">
+                <a href="" target="_blank" id="print-po-link" class="flex gap-2 2xl:gap-4 items-center self-stretch px-6 2xl:px-9 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5" onclick="updatePrintButton(noPO)">
                     <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-5 aspect-square" />
                     <span class="flex-1 shrink self-stretch my-auto basis-0">Print PO</span>
                 </a>
@@ -206,58 +206,36 @@
 <script src="../script.js"></script>
 <script src="../table.js"></script>
 
-<!-- Add the script to handle table sorting and pagination -->
 <script>
 
   cekToken();
-
-  function setNoPO(noPOValue) {
-    const printLink = document.getElementById('print-po-link');
-
-    if (noPOValue && noPOValue.trim() !== "") {
-        // Update the print link's href with the noPO value
-        printLink.setAttribute('href', `print/print-po.html?noPO=${encodeURIComponent(noPOValue)}`);
-        console.log("noPO set in the print link:", noPOValue); // Debugging statement
-
-        // Enable the print button if noPO is valid
-        printLink.classList.remove('disabled');
-    } else {
-        console.error("Invalid noPO value:", noPOValue);
-        alert("Invalid Purchase Order number.");
-        printLink.setAttribute('href', '#'); // Reset href in case of invalid noPO
-        printLink.classList.add('disabled'); // Disable the print button
-    }
-  }
-
-  // This function should be triggered when selecting a purchase order (PO)
-  function handlePOSelection(selectedNoPO) {
-      if (selectedNoPO && selectedNoPO.trim() !== "") {
-          setNoPO(selectedNoPO);  // Update the print link with the selected noPO
-      } else {
-          console.error("Invalid PO selection:", selectedNoPO);
-          alert("Invalid PO selection.");
-      }
-  }
-
-  // Example for a button that initiates printing
-  const printLink = document.getElementById('print-po-link');
-
-  // Add event listener to the print button, but only if the href has a valid noPO
-  printLink.addEventListener('click', function(event) {
-      const currentHref = printLink.getAttribute('href');
-      console.log("Attempting to navigate to:", currentHref); // Debugging
-
-      if (!currentHref || currentHref === '#' || !currentHref.includes('noPO=')) {
-          event.preventDefault(); // Prevent the link from navigating if href is invalid
-          alert("Error: Purchase Order number (noPO) is missing.");
-          console.error("noPO is missing or invalid.");
-      }
-  });
-
+ 
   let pendingResponseIndex = null;
   let pendingResponseAction = '';
   let details = [];  // This will hold the purchase orders
   let filteredDataDetail = [];  // To hold the filtered details data
+
+  // Call the function to fetch data on page load
+  fetchPurchaseOrders();
+
+  // Assign the noPO from URL
+  let noPO = getUrlParameter('noPO');
+
+  // Function to get URL parameters
+  function getUrlParameter(name) {
+    const params = new URLSearchParams(window.location.search);
+    return params.get(name);
+  }
+
+  // Function to update the Print PO button href dynamically
+  function updatePrintButton(noPO) {
+    const printPoLink = document.getElementById('print-po-link');
+    if (noPO) {
+      printPoLink.href = `print/print-po.html?noPO=${noPO}`;
+    } else {
+      console.error('noPO is not available.');
+    }
+  }
 
   async function fetchPurchaseOrders() {
     const token = localStorage.getItem('accessToken');
@@ -277,7 +255,7 @@
       }
 
       const data = await response.json();
-      console.log("Data fetched:", data);
+      // console.log("Data fetched:", data);
 
       // Check if the response status is 'success' and if the data array exists
       if (data && data.status === 'success' && Array.isArray(data.data)) {
@@ -300,7 +278,7 @@
           })) : []  // Ensure details is an array, even if no data is found
         }));
 
-        console.log("Filtered Purchase Orders:", details);
+        // console.log("Filtered Purchase Orders:", details);
         filteredData = details;
 
         displayTableData(1);
@@ -318,21 +296,22 @@
     }
   }
 
-  // Call the function to fetch data on page load
-  fetchPurchaseOrders();
+  
 
   function PODetails() {
     const params = new URLSearchParams(window.location.search);
     const noPO = params.get('noPO');
+    // const getNoPo = noPO;
+    // // console.log(getNoPo);
 
     if (noPO) {
       // Debug: Check if `details` array is populated
-      console.log('Details array:', details);
+      // console.log('Details array:', details);
 
       const po = details.find(po => po.noPO === noPO);
       
       // Debug: Check if the correct Purchase Order object is found
-      console.log('Purchase Order found:', po);
+      // console.log('Purchase Order found:', po);
 
       if (po) {
         // Check for `note` value and handle all possible cases
