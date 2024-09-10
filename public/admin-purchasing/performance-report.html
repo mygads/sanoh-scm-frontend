@@ -12,8 +12,12 @@
     rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
   <link rel="icon" type="image/png" href="../assets/icon_sanoh.png">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="font-poppins bg-white">
@@ -108,7 +112,7 @@
               <label for="Supplier" class="block xl:mb-6 2xl:mb-8 xl:text-base 2xl:text-lg text-neutral-500"></label>
               <select id="supplier_id"
                 class="scrollable-select bg-transparent border border-neutral-300 rounded-lg block w-full p-4 2xl:p-7 text-neutral-500 text-sm 2xl:text-lg">
-                <option value="">Cari Supplier</option>
+                <option value="">Search Supplier</option>
                 <!-- Options will be added here by JavaScript -->
               </select>
             </div>
@@ -209,8 +213,6 @@
 <script src="../script.js"></script>
 <script src="../table.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <!-- Add the script to handle table sorting and pagination -->
 <script>
@@ -359,7 +361,9 @@
   // Fungsi untuk mengisi dropdown supplier
   function populateSupplierDropdown(suppliersData) {
     const supplierSelect = document.getElementById('supplier_id');
-    supplierSelect.innerHTML = '<option value="">Search Supplier</option>'; // Reset dropdown
+    // supplierSelect.innerHTML = '<option value="">Search Supplier</option>'; // Reset dropdown
+
+    
 
     suppliersData.forEach(supplier => {
       const option = document.createElement('option');
