@@ -148,11 +148,8 @@
             <table class="w-full text-[11px] 2xl:text-base text-left text-gray-700 dark:text-gray-700">
               <thead class="text-[14px] 2xl:text-[20px] text-gray-700">
                 <tr>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer " data-sort="no" onclick="sortTable(0)" >
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer " data-sort="no" " >
                     No
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
-                      class="w-3 2xl:w-4 inline-block text-gray-600" />
-                    <span class="sort-indicator"></span>
                   </th>
                   <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" data-sort="periode" onclick="sortTable(1)">
                    Periode
@@ -332,30 +329,32 @@ function displayTableData(page) {
   const start = (page - 1) * rowsPerPage;
   const end = start + rowsPerPage;
   const paginatedData = filteredData.slice(start, end);
+  // Generate the row number based on the current page and index
+  
+  paginatedData.forEach((row, index) => {
+    const tableRow = document.createElement('tr');
+    tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b');
+    const rowNumber = start + index + 1;
 
-  paginatedData.forEach(row => {
-      const tableRow = document.createElement('tr');
-      tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b');
+    // Pisahkan angka dan nama file dengan memanfaatkan split dan slice
+    const fileName = row.filedata.split('_').slice(1).join('_');
 
-      // Pisahkan angka dan nama file dengan memanfaatkan split dan slice
-      const fileName = row.filedata.split('_').slice(1).join('_');
+    // Konversi periode ke format "Month YYYY"
+    const periodDate = new Date(row.periode);
+    const formattedPeriod = periodDate.toLocaleString('en-US', { month: 'long', year: 'numeric' });
 
-      // Konversi periode ke format "Month YYYY"
-      const periodDate = new Date(row.periode);
-      const formattedPeriod = periodDate.toLocaleString('en-US', { month: 'long', year: 'numeric' });
-
-      tableRow.innerHTML = `
-        <td class="px-2 py-4 text-center font-medium text-gray-900">${row.no}</td>
-        <td class="px-2 py-4 text-center">${formattedPeriod}</td>
-        <td class="px-1 py-4 w-[30%] text-center">${fileName}</td>          
-        <td class="px-1 py-2 text-center flex items-center justify-center">
-          <a href="${APIreadfile}${row.attachedFile}" download>
-            ${getFileIcon(row.attachedFile)}
-          </a>
-        </td>
-        <td class="px-2 py-4 text-center">${row.upload_at}</td>
-      `;
-      tableBody.appendChild(tableRow);
+    tableRow.innerHTML = `
+      <td class="px-2 py-4 text-center font-medium text-gray-900">${rowNumber}</td>
+      <td class="px-2 py-4 text-center">${formattedPeriod}</td>
+      <td class="px-1 py-4 w-[30%] text-center">${fileName}</td>          
+      <td class="px-1 py-2 text-center flex items-center justify-center">
+        <a href="${APIreadfile}${row.attachedFile}" download>
+          ${getFileIcon(row.attachedFile)}
+        </a>
+      </td>
+      <td class="px-2 py-4 text-center">${row.upload_at}</td>
+    `;
+    tableBody.appendChild(tableRow);
   });
 }
 

@@ -2,7 +2,25 @@ let rowsPerPage = 7;
 let currentPage = 1;
 let filteredData = [];
 let originalData= [];
+let sortDirection = 'asc';  // Default sorting order
 
+// Function to sort the data and update the row numbers accordingly
+function sortBy(columnIndex) {
+  if (columnIndex === 0) {  // If the "No" column is clicked
+    if (sortDirection === 'asc') {
+      // Sort in descending order
+      filteredData.sort((a, b) => b.no - a.no);
+      sortDirection = 'desc';
+    } else {
+      // Sort in ascending order
+      filteredData.sort((a, b) => a.no - b.no);
+      sortDirection = 'asc';
+    }
+    
+    // Re-display the sorted data with updated row numbers
+    displayTableData(currentPage);
+  }
+}
 
 function sortTable(columnIndex) {
   const table = document.querySelector('table');
