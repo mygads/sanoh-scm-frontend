@@ -260,7 +260,7 @@
       // console.log("Data fetched:", data);
 
       // Check if the response status is 'success' and if the data array exists
-      if (data && data.status === 'success' && Array.isArray(data.data)) {
+      if (data && data.status === true && Array.isArray(data.data)) {
         details = data.data.map(po => ({
           noPO: po.po_no ? po.po_no.toString() : "",
           poDate: po.po_date || "",
