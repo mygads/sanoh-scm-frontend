@@ -126,7 +126,7 @@
 
               <div class="flex items-center gap-4 mb-6 2xl:mb-8">
                 <label for="password" class="text-base 2xl:text-lg font-medium dark:text-black w-[15%] 2xl:w-[10%]">Password</label>
-                <input type="password" id="password" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[32%] p-3 dark:text-black" placeholder="Password" required />
+                <input type="password" id="password" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[32%] p-3 dark:text-black" placeholder="Password" />
                 <img id="toggle_password" src="../assets/icon_see.svg" alt="Toggle Password Visibility" class="ml-2 cursor-pointer w-6 h-6" />
                 <button type="button" id="generate_password" class="ml-2 bg-blue-400 text-white rounded px-4 py-3 text-xs 2xl:text-sm">Generate Password</button>
               </div>
@@ -287,7 +287,7 @@
     document.getElementById('role').value = data.role || '';
     document.getElementById('username').value = data.username || '';
     document.getElementById('email').value = data.email || '';
-    document.getElementById('password').value = data.password || '';
+    // document.getElementById('password').value = data.password || '';
   }
 
   async function updateUser(userId, data) {
