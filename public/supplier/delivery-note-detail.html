@@ -349,6 +349,7 @@
                     // Ensure dn.detail exists and is an array, otherwise use an empty array
                     details: Array.isArray(dn.detail) && dn.detail.length > 0 ? dn.detail.map((detail, index) => ({
                         no: (index + 1).toString(),
+                        dnDetailNo: detail.dn_detail_no || '',
                         planDelivery: detail.plan_delivery_date || '',
                         partNumber: detail.part_no || '',
                         partName: detail.item_desc_a || '',
@@ -492,7 +493,7 @@
             <td class="px-2 py-4 text-center">${detail.qtyLabel}</td>
             <td class="px-2 py-4 text-center">${detail.qtyRequested}</td>
             <td class="px-2 py-4 text-center">
-                <input type="text" class="qty-confirm-input border border-gray-300 rounded px-2 py-1 text-center w-full ${detail.qtyConfirm ? 'input-enabled' : ''}" value="${detail.qtyConfirm || '-'}" dnNumber="${detail.noDN}" disabled>
+              <input type="text" class="qty-confirm-input border border-gray-300 rounded px-2 py-1 text-center w-full ${detail.qtyConfirm ? 'input-enabled' : ''}" value="${detail.qtyConfirm || '-'}" data-dn-detail-no="${detail.dnDetailNo || ''}" dnNumber="${detail.noDN}" disabled>
             </td>
             <td class="px-2 py-4 text-center">${detail.qtyDelivered}</td>
             <td class="px-2 py-4 text-center">${detail.qtyMinus}</td>
@@ -507,6 +508,11 @@
 
     if (confirmButton.textContent === 'Confirm Order' || confirmButton.textContent === 'Edit') {
         document.querySelectorAll('.qty-confirm-input').forEach(input => {
+            const dnDetailNo = input.getAttribute('data-dn-detail-no');
+            if (!dnDetailNo) {
+                console.error('Missing data-dn-detail-no attribute');
+            }
+
             input.disabled = false;
             input.classList.add('border-black');
         });
@@ -535,9 +541,11 @@
         confirmButton.disabled = true;
     } else if (confirmButton.textContent === 'Submit') {
         const inputs = document.querySelectorAll('.qty-confirm-input');
+        let updates = [];  // Collect updates to send in a single request
+
         for (let i = 0; i < inputs.length; i++) {
             const input = inputs[i];
-            const dnDetail = input.getAttribute('data-dn-detail-no');
+            const dnDetailNo = input.getAttribute('data-dn-detail-no');
             let qtyConfirm = input.value;
 
             if (isNaN(qtyConfirm) || qtyConfirm === '' || qtyConfirm < 0) {
@@ -547,18 +555,21 @@
 
             qtyConfirm = parseInt(qtyConfirm);
 
-            try {
-                await updateDNDetail(dnDetail, qtyConfirm);
-            } catch (error) {
-                console.error(`Failed to update DN detail ${dnDetail}:`, error);
-                alert(`Failed to update DN detail ${dnDetail}. Please try again.`);
-                return;
-            }
+            updates.push({ dn_detail_no: dnDetailNo, qty_confirm: qtyConfirm });
 
-            const dataIndex = filteredDnDetailData.findIndex(detail => detail.dnDetail === dn_detail_no);
+            // Update the local data array
+            const dataIndex = filteredDnDetailData.findIndex(detail => detail.dnDetailNo === dnDetailNo);
             if (dataIndex !== -1) {
                 filteredDnDetailData[dataIndex].qtyConfirm = qtyConfirm;
             }
+        }
+
+        try {
+            await updateDNDetails(updates);
+        } catch (error) {
+            console.error('Failed to update DN details:', error);
+            alert('Failed to update DN details. Please try again.');
+            return;
         }
 
         alert('Data submitted successfully!');
@@ -568,12 +579,12 @@
         confirmationSection.classList.add('hidden');
         document.getElementById('cancel-button').remove();
     }
-  });
+});
 
-  function updateButtonState() {
+function updateButtonState() {
     const confirmButton = document.getElementById('confirm-button');
     const hasData = filteredDnDetailData.length > 0;
-    const hasUnconfirmedQty = filteredDnDetailData.some(detail => !detail.qtyConfirm);
+    const hasUnconfirmedQty = filteredDnDetailData.some(detail => detail.qtyConfirm === 0);
 
     console.log('Checking button state...');
     console.log('Has data:', hasData);
@@ -593,8 +604,7 @@
     }
 
     console.log('Button state set to:', confirmButton.textContent);
-  }
-
+}
   
 </script>
 
