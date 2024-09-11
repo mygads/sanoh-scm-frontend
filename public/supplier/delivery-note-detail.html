@@ -168,7 +168,7 @@
 
         <!-- table -->
         <div class="flex flex-col mt-5 2xl:mt-8">
-          <div class= "relative overflow-x-auto overflow-y-auto shadow-md rounded-lg border border-gray-300 lg:max-h-[650px] max-h-[400px]"  >
+          <div class= "relative overflow-x-auto overflow-y-auto shadow-md rounded-lg border border-gray-300 lg:max-h-[500px] max-h-[400px]"  >
 
             <table class="w-full text-[11px] 2xl:text-base text-left text-gray-700 dark:text-gray-700">
               <thead class="text-[14px] 2xl:text-[20px] text-gray-700">
@@ -452,13 +452,6 @@
                 console.error('displayDNDetails function is not defined.');
             }
 
-            // Update pagination for details
-            if (typeof updatePagination === 'function') {
-                updatePagination();
-            } else {
-                console.error('updatePagination function is not defined.');
-            }
-
         } else {
             console.error('Delivery Note data not found in details array.');
         }
@@ -468,7 +461,6 @@
 
     window.addEventListener('resize', () => {
         displayDNDetails(filteredDnDetailData);  // Adjust display when resized
-        updatePagination();
     });
 
     document.getElementById('search-input').addEventListener('input', searchTable);
@@ -504,6 +496,7 @@
     const confirmationSection = document.getElementById('confirmation-section');
 
     if (confirmButton.textContent === 'Confirm Order' || confirmButton.textContent === 'Edit') {
+        // Mengizinkan input qty confirm
         document.querySelectorAll('.qty-confirm-input').forEach(input => {
             const dnDetailNo = input.getAttribute('data-dn-detail-no');
             if (!dnDetailNo) {
@@ -515,7 +508,8 @@
         });
 
         confirmButton.textContent = 'Submit';
-
+        
+        // Membuat tombol cancel jika user ingin membatalkan edit
         const cancelButton = document.createElement('button');
         cancelButton.id = 'cancel-button';
         cancelButton.className = 'ml-[1%] px-4 2xl:px-6 py-2 2xl:py-3 my-auto bg-red-500 rounded cursor-pointer pointer-events-auto max-md:px-5 text-white text-xs 2xl:text-sm';
@@ -524,10 +518,19 @@
 
         confirmationSection.classList.remove('hidden');
 
+        // Mengatur tombol submit berwarna abu-abu sampai checkbox dicentang
         document.getElementById('confirmation-checkbox').addEventListener('change', (e) => {
             confirmButton.disabled = !e.target.checked;
+            if (e.target.checked) {
+                confirmButton.classList.remove('bg-gray-400');
+                confirmButton.classList.add('bg-blue-500');
+            } else {
+                confirmButton.classList.remove('bg-blue-500');
+                confirmButton.classList.add('bg-gray-400');
+            }
         });
 
+        // Aksi tombol cancel
         cancelButton.addEventListener('click', () => {
             displayDNDetails(filteredDnDetailData);
             confirmationSection.classList.add('hidden');
@@ -536,9 +539,10 @@
         });
 
         confirmButton.disabled = true;
+        confirmButton.classList.add('bg-gray-400');
     } else if (confirmButton.textContent === 'Submit') {
         const inputs = document.querySelectorAll('.qty-confirm-input');
-        let updates = [];  // Collect updates to send in a single request
+        let updates = [];  // Mengumpulkan semua data yang akan di-update
 
         for (let i = 0; i < inputs.length; i++) {
             const input = inputs[i];
@@ -546,7 +550,7 @@
             let qtyConfirm = input.value;
 
             if (isNaN(qtyConfirm) || qtyConfirm === '' || qtyConfirm < 0) {
-                alert(`Invalid quantity at line ${i + 1}. Please enter a valid number.`);
+                displayNotification(`Invalid quantity at line ${i + 1}. Please enter a valid number.`, 'warning');
                 return;
             }
 
@@ -565,11 +569,14 @@
             await updateDNDetails(updates);
         } catch (error) {
             console.error('Failed to update DN details:', error);
-            alert('Failed to update DN details. Please try again.');
+            displayNotification(`Failed to update DN details. ${error}`,'error');
             return;
         }
 
-        alert('Data submitted successfully!');
+        displayNotification('Data submitted successfully!','success');
+        // Fetch data ulang setelah submit berhasil
+        await fetchDeliveryNotes();
+        
         displayDNDetails(filteredDnDetailData);
         updateButtonState();
 
@@ -581,7 +588,7 @@
 function updateButtonState() {
     const confirmButton = document.getElementById('confirm-button');
     const hasData = filteredDnDetailData.length > 0;
-    const hasUnconfirmedQty = filteredDnDetailData.some(detail => detail.qtyConfirm === 0);
+    const hasUnconfirmedQty = filteredDnDetailData.some(detail => !detail.qtyConfirm || detail.qtyConfirm === null);
 
     console.log('Checking button state...');
     console.log('Has data:', hasData);
