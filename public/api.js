@@ -66,4 +66,5 @@ API_indexPODetailSupplier = API + `/indexpodetail1/`;
 API_poViewSupplier = API + `/pohview1/`;
 API_dnViewSupplier = API + `/dnhview1/`;
 API_labelViewSupplier = API + `/lbview1/`;
+API_indexDNDetailUpdateSupplier = API + `/updatedndetail1`;
 

@@ -163,18 +163,33 @@ async function handleLogin(event) {
       localStorage.setItem('username', username);
       localStorage.setItem('password', password);
 
+      // Check if a previous URL exists
+      const lastUrl = localStorage.getItem('lastUrl');
+
       displayNotification(`Welcome ${data.name}`, 'success');
       setTimeout(() => {
-        saveLogout();
-        redirectToDashboardIndex(data.role);
+        if (lastUrl) {
+          // Redirect to the last accessed URL if available
+          saveLogout();
+          window.location.href = lastUrl;
+          localStorage.removeItem('lastUrl'); // Clear the URL after redirecting
+        } else {
+          // Redirect to the appropriate dashboard based on role
+          redirectToDashboardIndex(data.role);
+        }
       }, 1000);
 
+      // setTimeout(() => {
+      //   saveLogout();
+      //   redirectToDashboardIndex(data.role);
+      // }, 1000);
+
     } else {
-      displayNotification(`Invalid username or password`, 'error');
+      displayNotification(`Invalid Username and Password`, 'error');
     }
   } catch (error) {
     console.error('Error logging in:', error);
-    displayNotification('Login failed Server Error', 'error');
+    displayNotification(`Login failed Server Error`, 'error');
     setTimeout(() => {
       // handleDummyLogin(username, password);
     }, 3000);
