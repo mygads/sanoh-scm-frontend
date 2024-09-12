@@ -236,6 +236,7 @@
 
           // Set filteredData to match deliveryNote initially
           filteredData = deliveryNote;
+          originalData = filteredData;
 
           // Call function to display data
           displayTableData();
@@ -279,12 +280,26 @@
   }
 
   // Function for search
-  function searchTable() {
+  function searchTableData() {
     const searchInput = document.getElementById('search-input').value.toLowerCase();
-    filteredData = deliveryNote.filter(row => row.noDN.toLowerCase().includes(searchInput));
-    displayTableData();
+    if (searchInput === "") {
+      // Jika input kosong, kembalikan data ke originalData
+      filteredData = originalData;
+    } else {
+      // Filter data berdasarkan input
+      filteredData = originalData.filter(row =>
+        row.noDN.toLowerCase().includes(searchInput) ||
+        row.noPO.toLowerCase().includes(searchInput) ||
+        row.statusDN.toLowerCase().includes(searchInput)
+      );
+    }
+  
+    currentPage = 1;
+    displayTableData(currentPage);
     updatePagination();
   }
+
+
 
   document.addEventListener('DOMContentLoaded', () => {
   const name = localStorage.getItem('name');
@@ -300,7 +315,7 @@
   // Fetch and display delivery notes
   fetchHistoryDeliveryNotes();
 
-  document.getElementById('search-input').addEventListener('input', searchTable);
+  document.getElementById('search-input').addEventListener('input', searchTableData);
   });
 
 </script>

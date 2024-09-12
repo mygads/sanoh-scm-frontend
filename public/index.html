@@ -167,6 +167,11 @@ async function handleLogin(event) {
       const lastUrl = localStorage.getItem('lastUrl');
 
       displayNotification(`Welcome ${data.name}`, 'success');
+      
+      // setTimeout(() => {
+      //   saveLogout();
+      //   redirectToDashboardIndex(data.role);
+      // }, 1000);
       setTimeout(() => {
         if (lastUrl) {
           // Redirect to the last accessed URL if available
@@ -174,6 +179,7 @@ async function handleLogin(event) {
           window.location.href = lastUrl;
           localStorage.removeItem('lastUrl'); // Clear the URL after redirecting
         } else {
+          saveLogout();
           // Redirect to the appropriate dashboard based on role
           redirectToDashboardIndex(data.role);
         }
