@@ -225,8 +225,8 @@
 
   let deliveryNote = []; // Initialize the deliveryNote array
   let sortOrder = {}; // Objek untuk melacak urutan pengurutan setiap kolom
-  let rowsPerPage = 6; // Default rows per page
-  let currentPage = 1; // Default to the first page
+  // let rowsPerPage = 6; // Default rows per page
+  // let currentPage = 1; // Default to the first page
 
   document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM fully loaded and parsed');
@@ -317,54 +317,61 @@
 
   async function fetchHistoryDeliveryNotes(bpCode) {
     const token = localStorage.getItem('accessToken');
+    const noDN = localStorage.getItem('noDN');
 
-    if (!bpCode) {
-      console.error('bpCode not found in localStorage.');
+    if (!token) {
+      console.error('No access token found for fetching delivery notes');
       return;
     }
 
     try {
       console.log(`Fetching delivery notes for bpCode: ${bpCode}`);
-      const response = await fetch(`${APIdnhistory2}/${bpCode}`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
+        const response = await fetch(`${APIdnhistory2}/${bpCode}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        });
 
-      if (response.ok) {
-        const data = await response.json();
-
-      console.log("Data fetched:", data);
-
-      if (data.success && data.data) {
-        deliveryNote = data.data.map(dn => ({
-          noDN: dn.dn_number ? dn.dn_number.toString() : 'No DN Number',
-          noPO: dn.po_number ? dn.po_number.toString() : 'No PO Number',
-          statusDN: dn.dn_status || 'Unknown Status',
-          sentDate: dn.send_date || 'Send Date Unknown', // Send Date
-          receiveDate: dn.receive_date || 'Receive Date Unknown' // Receive Date
-        }));
-
-        // Set filteredHistoryDNData to match deliveryNote initially
-        filteredHistoryDNData = [...deliveryNote];
-
-        
-          // Check if there's any data to display
-          if (filteredHistoryDNData.length > 0) {
-            displayTableData(currentPage); // Display data for the current page
-          } else {
-            console.warn('No delivery notes found for this supplier.');
-          }
-        } else {
-          console.error('Failed to fetch delivery notes:', data.message);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.success}`);
         }
-      } else {
-        console.error('Error fetching delivery notes:', response.status, response.statusText);
-      }
+
+        const data = await response.json();
+        console.log("Data fetched:", data);
+
+        if (data && data.data && Array.isArray(data.data)) {
+          deliveryNote = data.data
+              .map(dn => ({
+                  noDN: dn.dn_number ? dn.dn_number.toString() : 'No DN Number',
+                  noPO: dn.po_number ? dn.po_number.toString() : 'No PO Number',                  
+                  statusDN: dn.dn_status || 'Unknown Status',
+                  planDNDate: dn.send_date || 'Date Unknown',
+                  receivedDNDate: dn.receive_date || 'Date Unknown',
+                  details: dn.detail ? dn.detail.map((detail, index) => ({
+                      no: (index + 1).toString(),
+                      partNumber: detail.internal_part_number || 'No Part Number',
+                      partName: detail.part_name || 'No Item Description',
+                      QTY: detail.total_quantity || 'No Quantity',
+                      qtyLabel: detail.pcs_per_kamban || 'No Label',
+                      qtyDelivered: detail.total_quantity || 'No Quantity',
+                      qtyReceived: detail.total_quantity || 'No Quantity',
+                  })) : []
+              }));
+
+          // Set filteredData to match deliveryNote initially
+          filteredData = deliveryNote;
+
+          // Call function to display data
+          displayTableData();
+          updatePagination();
+
+        } else {
+            console.error('No data found or unexpected format.');
+        }
     } catch (error) {
-      console.error('Fetch error during delivery notes retrieval:', error);
+        console.error('Error fetching delivery notes:', error);
     }
   }
 
@@ -390,11 +397,7 @@
   
     const supplierRow = document.createElement('tr');
     supplierRow.classList.add('bg-blue-100', 'border-b');
-    supplierRow.innerHTML = `
-      <td colspan="4" class="text-center font-bold text-blue-900">
-        Supplier yang Dipilih: ${bpCode}
-      </td>
-    `;
+    supplierRow.innerHTML = ``;
   
     tableBody.prepend(supplierRow); // Add the selected supplier row at the top
     console.log('Displayed selected supplier in table:', bpCode);
@@ -405,41 +408,28 @@
     const tableBody = document.getElementById('table-body');
 
     if (!tableBody) {
-      console.error('Table body element not found');
-      return;
-    }
-  
-    tableBody.innerHTML = ''; // Clear existing rows
-    
-    const start = (page - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
-    const dataToShow = filteredData.slice(start, end);
-  
-    if (dataToShow.length === 0) {
-      tableBody.innerHTML = '<tr><td colspan="4" class="text-center">No data available for this supplier</td></tr>';
-      return;
+        console.error('Table body element not found.');
+        return;
     }
 
-    paginatedData.forEach(historydn => {
-      const tableRow = document.createElement('tr');
-      tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
-      tableRow.innerHTML = `
-  <td class="px-2 py-4 text-center font-medium text-gray-900">
-      <a href="history-delivery-note-detail.html?noDN=${historydn.noDN}" class="text-blue-600 underline">${historydn.noDN}</a>
-  </td>
-  <td class="px-2 py-4 text-center font-medium text-gray-900">
-      <a href="history-delivery-note-detail.html?noPO=${historydn.noPO}" class="text-black">${historydn.noPO}</a>
-  </td>
-  <td class="px-2 py-4 text-center">${historydn.planDNDate}</td>
-  <td class="px-2 py-4 text-center">${historydn.sentDate}</td> <!-- Tambahkan Sent Date -->
-  <td class="px-2 py-4 text-center">${historydn.receiveDate}</td> <!-- Tambahkan Receive Date -->
-  <td class="px-2 py-4 text-center">${historydn.statusDN}</td>
-`;
-
-      tableBody.appendChild(tableRow);
+    tableBody.innerHTML = '';
+  
+    filteredData.forEach(dn => {
+      const row = document.createElement('tr');
+      row.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
+      row.innerHTML = `
+        <td class="px-2 py-4 text-center font-medium text-gray-900">
+          <a href="history-delivery-note-detail.html?noDN=${dn.noDN}" class="text-blue-600 underline">${dn.noDN}</a>
+        </td>
+        <td class="px-2 py-4 text-center font-medium text-gray-900">
+          <a href="purchase-order-detail.html?noPO=${dn.noPO}" class="text-blue-600 underline">${dn.noPO}</a>
+        </td>
+        <td class="px-2 py-4 text-center">${dn.statusDN}</td>
+        <td class="px-2 py-4 text-center">${dn.planDNDate}</td>
+        <td class="px-2 py-4 text-center">${dn.receivedDNDate}</td>
+      `;
+      tableBody.appendChild(row);
     });
-     
-    console.log(`Displayed ${dataToShow.length} rows of data in table`);
   }
 
 // Function to search table data

@@ -192,6 +192,8 @@
 
   let deliveryNote = []; // Initialize the deliveryNote array
   let sortOrder = {}; // Objek untuk melacak urutan pengurutan setiap kolom
+  // let rowsPerPage = 6; // Default rows per page
+  // let currentPage = 1; // Default to the first page
 
   document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM fully loaded and parsed');
@@ -288,6 +290,7 @@
   // Function to fetch delivery notes based on supplier
   async function fetchDeliveryNotes(bpCode) {
     const token = localStorage.getItem('accessToken');
+    const noDN = localStorage.getItem('noDN');
 
     if (!token) {
       console.error('No access token found for fetching delivery notes');
@@ -310,13 +313,21 @@
         // Log the raw data to ensure it's being fetched correctly
         console.log('Raw Delivery notes data received:', data);
 
-        if (data.success) {
-          deliveryNote = data.data.map(dn => ({
-            noDN: dn.no_dn ? dn.no_dn.toString() : 'N/A',
-            noPO: dn.po_no ? dn.po_no.toString() : 'N/A',
-            planDNDate: dn.plan_delivery_date || 'Unknown Date',
-            statusDN: dn.status_desc || 'Unknown Status',
-          }));
+        if (data && data.data && Array.isArray(data.data)) {
+              // Map and manipulate your data accordingly
+              deliveryNote = data.data.map(dn => ({
+                  noDN: dn.no_dn ? dn.no_dn.toString() : '',
+                  noPO: dn.po_no ? dn.po_no.toString() : '',
+                  planDNDate: dn.plan_delivery_date || '',
+                  statusDN: dn.status_desc || '',
+                  details: dn.detail ? dn.detail.map((detail, index) => ({
+                      no: (index + 1).toString(),
+                      partNumber: detail.part_no || '',
+                      partName: detail.item_desc_a || '',
+                      UoM: detail.dn_unit || '',
+                      QTY: detail.dn_qty || 0,
+                  })) : []
+              }));
 
           // Ensure that filteredData is properly initialized
           filteredData = [...deliveryNote];

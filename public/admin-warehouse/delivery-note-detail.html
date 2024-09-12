@@ -153,11 +153,9 @@
                     class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-5 aspect-square" />
                   <span class="flex-1 shrink self-stretch my-auto ">Export CSV</span>
                 </a>
-                <a href="print-po.html"
-                  class="flex gap-2 2xl:gap-4 items-center self-stretch px-6 2xl:px-9 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5">
-                  <img loading="lazy" src="../assets/icon_print.png" alt=""
-                    class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-5 aspect-square" />
-                  <span class="flex-1 shrink self-stretch my-auto basis-0">Print PO </span>
+                <a href="" target="_blank" id="print-dn-link" class="flex gap-2  items-center self-stretch px-6 py-2 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5" onclick="updatePrintButton(noDN)">
+                  <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
+                  <span class="flex-1 shrink self-stretch my-auto basis-0">Print DN </span>
                 </a>
               </div>
             </div>
@@ -239,12 +237,13 @@
 
 <!-- Add the script to handle table sorting and pagination -->
 <script>
-  // Memeriksa token autentikasi pengguna
+  // Remove or replace this function call if not needed
   cekToken();
 
-  let sortOrder = {}; // Objek untuk melacak urutan pengurutan setiap kolom
+  let sortOrder = [];
   let details = [];
-  let filteredDnDetailData = [];
+
+  // Assign the noPO from URL
   let noDN = getUrlParameter('noDN');
 
   // Function to get URL parameters
@@ -253,86 +252,185 @@
     return params.get(name);
   }
 
-  // Function to fetch delivery notes from the API
-  async function fetchDeliveryNotes() {
-    // Get token and delivery note number from localStorage
-    const token = localStorage.getItem('accessToken');
-   
-  
-    // Check if noDN is null
-    if (!noDN) {
-      console.error('No Delivery Note (noDN) found in localStorage');
-      return;
-    }
-  
-    try {
-      // Fetch header data (if needed, remove if not required)
-      const headerResponse = await fetch(`${APIindexdnheader2}${noDN}`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
-  
-      if (!headerResponse.ok) {
-        throw new Error(`HTTP error! status: ${headerResponse.status}`);
-      }
-  
-      const headerData = await headerResponse.json();
-      console.log('Header data:', headerData);
-  
-      // Fetch detail data
-      const detailResponse = await fetch(`${APIindexdndetail2}${noDN}`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
-  
-      if (!detailResponse.ok) {
-        throw new Error(`HTTP error! status: ${detailResponse.status}`);
-      }
-  
-      const detailData = await detailResponse.json();
-      console.log('Detail data:', detailData);
-  
-      // Ensure both header and detail data exist
-      if (headerData && headerData.data && Array.isArray(headerData.data) && detailData && detailData.data && Array.isArray(detailData.data)) {
-        const header = headerData.data[0];
-        const details = detailData.data.map(detail => ({
-          dnDetailNo: detail.dn_detail_no,
-          dnLine: detail.dn_line,
-          partNo: detail.part_no,
-          itemDescA: detail.item_desc_a,
-          dnUnit: detail.dn_unit,
-          dnSnp: detail.dn_snp,
-          dnQty: detail.dn_qty,
-          qtyConfirm: detail.qty_confirm,
-          receiptQty: detail.receipt_qty,
-        }));
-  
-        // Combine header and details
-        const combinedData = {
-          ...header,
-          details: details,
-        };
-  
-        console.log('Combined data:', combinedData);
-  
-        // Store combined data
-        filteredDnDetailData = combinedData;
-      }
-  
-    } catch (error) {
-      console.error('Error fetching data:', error);
+  // Function to update the Print DN button href dynamically
+  function updatePrintButton(noDN) {
+    const printdnLink = document.getElementById('print-dn-link');
+    if (printdnLink && noDN) {
+      printdnLink.href = `print/print-dn.html?noDN=${noDN}`;
+    } else {
+      console.error('Print DN link or noDN is not available.');
     }
   }
-  
-  // Call the function to fetch data
-  fetchDeliveryNotes();
-  
+
+  // // Function to update the CSV button href dynamically
+  // function updateCSVButton(noDN) {
+  //   const printdcsvLink = document.getElementById('print-csv-link');
+  //   if (printdcsvLink && noDN) {
+  //     printdcsvLink.href = `print/print-dn.html?noDN=${noDN}`;
+  //   } else {
+  //     console.error('Print CSV link or noDN is not available.');
+  //   }
+  // }
+
+  // // Function to update the Print Label button href dynamically
+  // function updatePrintLabelButton(noDN) {
+  //   const printLabelLink = document.getElementById('print-label-link');
+  //   if (printLabelLink && noDN) {
+  //     printLabelLink.href = `print/print-label.html?noDN=${noDN}`;
+  //   } else {
+  //     console.error('Print Label link or noDN is not available.');
+  //   }
+  // }
+
+  // Function to fetch delivery notes based on supplier
+  async function fetchDeliveryNotes(noDN) {
+    const token = localStorage.getItem('accessToken');
+
+    if (!token) {
+      console.error('No access token found for fetching delivery notes');
+      return;
+    }
+
+    try {
+      console.log(`Fetching delivery notes for bpCode: ${noDN}`);
+      const response = await fetch(`${APIindexdnheader2}/${bpCode}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        
+        // Log the raw data to ensure it's being fetched correctly
+        console.log('Raw Delivery notes data received:', data);
+
+        if (data && data.data && Array.isArray(data.data)) {
+          // Map and manipulate your data accordingly
+          const details = data.data.map(dn => {
+            console.log('Current DN Object:', dn);
+
+            return {
+              noDN: dn.no_dn ? dn.no_dn.toString() : '',
+              noPO: dn.po_no ? dn.po_no.toString() : '',
+              planDNDate: dn.plan_delivery_date || '',
+              statusDN: dn.status_desc || '',
+              details: dn.detail ? dn.detail.map((detail, index) => ({
+                  no: (index + 1).toString(),
+                  partNumber: detail.part_no || '',
+                  partName: detail.item_desc_a || '',
+                  UoM: detail.dn_unit || '',
+                  QTY: detail.dn_qty || 0,
+              })) : []
+            };
+          });
+
+          // Ensure that filteredData is properly initialized
+          filteredData = [...details];
+
+          // Check if there's any data to display
+          if (filteredData.length > 0) {
+            // Ensure that DNDetails gets called to display data
+            DNDetails();
+          } else {
+            console.warn('No delivery notes found for this supplier.');
+          }
+        } else {
+          console.error('Failed to fetch delivery notes:', data.message);
+        }
+      } else {
+        console.error('Error fetching delivery notes:', response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error('Fetch error during delivery notes retrieval:', error);
+    }
+  }
+
+  // Call the function to fetch data on page load
+  if (noDN) {
+    fetchDeliveryNotes(noDN);
+    updatePrintButton(noDN);
+    updateCSVButton(noDN);
+    updatePrintLabelButton(noDN);
+  } else {
+    console.error('noDN is not available.');
+  }
+
+  function DNDetails() {
+    if (noDN) {
+      console.log('Details array:', filteredData);  // Ensure filteredData is being logged correctly
+
+      const dn = filteredData.find(dn => dn.noDN === noDN);
+
+      console.log('Delivery Note found:', dn);
+
+      if (dn) {
+        const noPO = dn.noPO || 'No PO provided';
+
+        document.getElementById('dnNumber').textContent = dn.noDN;
+        document.getElementById('poNumber').textContent = noPO;
+        filteredData = dn.details;  // Update filteredData with details of this specific DN
+
+        if (typeof displayTableData === 'function') {
+          displayTableData(filteredData);  // Pass the correct details to the table display function
+        } else {
+          console.error('displayTableData function is not defined.');
+        }
+
+        if (typeof updatePagination === 'function') {
+          updatePagination();
+        } else {
+          console.error('updatePagination function is not defined.');
+        }
+      } else {
+        console.error('Delivery Note data not found in details array.');
+      }
+    } else {
+      console.error('Parameter noDN not found in the URL.');
+    }
+
+    window.addEventListener('resize', () => {
+      if (typeof displayTableData === 'function') {
+        displayTableData(filteredData);
+      }
+      if (typeof updatePagination === 'function') {
+        updatePagination();
+      }
+    });
+
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) {
+      searchInput.addEventListener('input', searchTable);
+    } else {
+      console.error('Search input element not found.');
+    }
+  }
+
+  // Function to display table data
+  function displayTableData(details) {
+    const tableBody = document.getElementById('table-body-detail');
+    if (tableBody) {
+      tableBody.innerHTML = '';
+
+      details.forEach((detail, index) => {
+        const tableRow = document.createElement('tr');
+        tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
+        tableRow.innerHTML = `
+          <td class="px-2 py-4 text-center font-medium text-gray-900">${detail.no}</td>
+          <td class="px-2 py-4 text-center">${detail.partNumber}</td>
+          <td class="px-2 py-4 text-center">${detail.partName}</td>
+          <td class="px-2 py-4 text-center">${detail.UoM}</td>
+          <td class="px-2 py-4 text-center">${detail.QTY}</td>
+        `;
+        tableBody.appendChild(tableRow);
+      });
+    } else {
+      console.error('Table body element not found.');
+    }
+  }
+
 </script>
 
 </html>
