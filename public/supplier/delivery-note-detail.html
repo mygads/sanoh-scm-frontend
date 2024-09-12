@@ -121,12 +121,12 @@
               </div>
 
               <!-- Search Bar -->
-              <div class="flex flex-wrap items-center self-stretch my-auto  text-neutral-500">
+              <!-- <div class="flex flex-wrap items-center self-stretch my-auto  text-neutral-500">
                 <div class="flex items-center px-4 2xl:px-6 py-2 2xl:py-4 bg-neutral-100 rounded w-full ml-auto">
                   <input id="search-input" type="text" placeholder="Search part number or name" class="flex-1 bg-neutral-100 outline-none 2xl:text-base">
                   <img src="../assets/icon_search.svg" alt="Search Icon" class="w-4 2xl:w-5 h-4 2xl:h-5 ml-3">
                 </div>
-              </div>
+              </div> -->
 
             </div>
 
@@ -463,14 +463,33 @@
         displayDNDetails(filteredDnDetailData);  // Adjust display when resized
     });
 
-    document.getElementById('search-input').addEventListener('input', searchTable);
+    
   }
+
+  // document.getElementById('search-input').addEventListener('input', searchTableData);
+
+  // function searchTableData() {
+  //   const searchInput = document.getElementById('search-input').value.toLowerCase();
+  //   if (searchInput === "") {
+  //     // Jika input kosong, kembalikan data ke originalData
+  //     filteredData = originalData;
+  //   } else {
+  //     // Filter data berdasarkan input
+  //     filteredData = originalData.filter(detail =>
+  //       detail.partName.toLowerCase().includes(searchInput) ||
+  //       detail.partNumber.toLowerCase().includes(searchInput)
+  //     );
+  //   }
+
+  //   displayDNDetails(filteredDnDetailData);
+  // }
+
 
   function displayDNDetails(details) {
     const tableBody = document.getElementById('table-body-detail');
     tableBody.innerHTML = '';
 
-    details.forEach((detail, index) => {
+    details.forEach(detail => {
         const tableRow = document.createElement('tr');
         tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
         tableRow.innerHTML = `

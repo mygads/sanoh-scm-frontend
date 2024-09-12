@@ -49,6 +49,7 @@ function searchTable() {
     displayTableData(currentPage);
     updatePagination();
 }
+
   
 function updatePagination() {
     const paginationContainer = document.querySelector('.pagination');
