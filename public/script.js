@@ -18,6 +18,7 @@ function cekToken() {
     checkSession();
   } 
   else {
+    saveCurrentUrl();  // Simpan URL sebelum diarahkan ke login
     redirectToLogin();
     return;
   }
@@ -26,6 +27,7 @@ function cekToken() {
 function checkSession() {
   if (isTokenExpired()) {
     displayNotification('Session expired. Please log in again.');
+    saveCurrentUrl();  // Simpan URL sebelum sesi habis
     clearSession(); // Hapus token dan informasi sesi lainnya
     redirectToLogin();
     return;
@@ -33,6 +35,11 @@ function checkSession() {
   else {
     document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
   }
+}
+
+function saveCurrentUrl() {
+  const currentUrl = window.location.href; // Dapatkan URL saat ini
+  localStorage.setItem('lastUrl', currentUrl); // Simpan ke localStorage
 }
 
 // Function to check token expiration
@@ -125,24 +132,6 @@ async function logout() {
     }, 1500);
   }
 }
-
-
-// function displayNotification(message, type) {
-//   const notification = document.createElement('div');
-//   if (Array.isArray(message)) {
-//     message = message.join(' ');
-//   }
-
-//   notification.textContent = message;
-//   notification.className = 'fixed bottom-4 right-4 p-4 rounded-lg shadow-lg text-white ';
-//   notification.className += type === 'success' ? 'bg-green-600' : 'bg-red-600';
-
-//   document.body.appendChild(notification);
-
-//   setTimeout(() => {
-//     notification.remove();
-//   }, 3000);
-// }
   
 
 function displayNotification(message, type = 'error') {
