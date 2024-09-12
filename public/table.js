@@ -1,5 +1,5 @@
-// let rowsPerPage = 7;
-// let currentPage = 1;
+let rowsPerPage = 7;
+let currentPage = 1;
 let filteredData = [];
 let originalData= [];
 
