@@ -7,85 +7,88 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
+  <link
+    href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
   <link rel="icon" type="image/png" href="../assets/icon_sanoh.png">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  
+
 </head>
 
 <body class="font-poppins bg-white">
-    <section class="overflow-hidden w-screen h-screen bg-white">
-      <div class="flex h-screen">
-  
-        <!-- nav-side bar -->
-        <aside class="flex flex-col w-[20%] h-screen border-r border-r-neutral-400 bg-stone-300">
-          <nav class="flex flex-col grow py-9 2xl:py-14 text-base font-medium">
-  
-            <!-- Logo Sanoh -->
-            <img loading="lazy" src="../assets/logosanoh.svg"
-              class="object-contain self-center w-30 2xl:w-48 max-w-full cursor-pointer" />
-  
-            <!-- Menu Items -->
-            <ul class="flex flex-col mt-7 2xl:mt-10 w-full text-gray-500">
-              <!-- Dashboard -->
-              <li>
-                <a href="index.html"
-                  class="flex gap-4 items-center p-[9px] 2xl:p-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
-                  <img loading="lazy" src="../assets/icon_home_default.svg" alt="Dashboard"
-                    class="object-contain w-4 2xl:w-6" />
-                  <span class="text-sm 2xl:text-xl">Supplier ABCD</span>
-                </a>
-              </li>
-  
-              <!-- Purchase Order -->
-              <li>
-                <a href="purchase-order.html"
-                  class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 ">
-                  <img loading="lazy" src="../assets/icon_po_default.svg" alt="Purchase Order"
-                    class="object-contain w-4 2xl:w-6" />
-                  <span class="text-sm 2xl:text-xl">Purchase Order</span>
-                </a>
-              </li>
-  
-              <!-- History Purchase Order -->
-              <li>
-                <a href="history-purchase-order.html"
-                  class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 active">
-                  <img loading="lazy" src="../assets/icon_history_default.svg" alt="History Purchase Order"
-                    class="object-contain w-5 2xl:w-6 icon-history-active" />
-                  <span class="text-sm 2xl:text-xl">History Purchase Order</span>
-                </a>
-              </li>
-  
-              <!-- Performance Report -->
-              <li>
-                <a href="performance-report.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                  <img loading="lazy" src="../assets/icon_performance_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-                  <span class="self-stretch my-auto text-sm 2xl:text-xl">Performance Report</span>
-                </a>
-              </li>
-            </ul>
-  
-            <!-- User and Logout Section at the Bottom -->
-            <div class="mt-auto flex flex-col w-full">
-              <!-- User Info -->
-              <div class="flex gap-4 items-center p-2 2xl:p-4 w-full bg-blue-950 bg-opacity-10 text-blue-950">
-                <img loading="lazy" src="../assets/icon_people.svg" alt="User Info" class="object-contain w-4 2xl:w-6" />
-                <span id="user-info" class="text-sm 2xl:text-xl"></span>
-              </div>
-  
-              <!-- Logout Button -->
-              <a href="javascript:void(0)" onclick="handleLogout()"
-                class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
-                <img loading="lazy" src="../assets/icon_logout.svg" alt=""
-                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square logout-icon hover:icon_logout_white.svg" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Logout</span>
+  <section class="overflow-hidden w-screen h-screen bg-white">
+    <div class="flex h-screen">
+
+      <!-- nav-side bar -->
+      <aside class="flex flex-col w-[20%] h-screen border-r border-r-neutral-400 bg-stone-300">
+        <nav class="flex flex-col grow py-9 2xl:py-14 text-base font-medium">
+
+          <!-- Logo Sanoh -->
+          <img loading="lazy" src="../assets/logosanoh.svg"
+            class="object-contain self-center w-30 2xl:w-48 max-w-full cursor-pointer" />
+
+          <!-- Menu Items -->
+          <ul class="flex flex-col mt-7 2xl:mt-10 w-full text-gray-500">
+            <!-- Dashboard -->
+            <li>
+              <a href="index.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
+                <img loading="lazy" src="../assets/icon_home_default.svg" alt="Dashboard"
+                  class="object-contain w-4 2xl:w-6" />
+                <span class="text-sm 2xl:text-xl">Dashboard</span>
               </a>
+            </li>
+
+            <!-- Purchase Order -->
+            <li>
+              <a href="purchase-order.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 ">
+                <img loading="lazy" src="../assets/icon_po_default.svg" alt="Purchase Order"
+                  class="object-contain w-4 2xl:w-6" />
+                <span class="text-sm 2xl:text-xl">Purchase Order</span>
+              </a>
+            </li>
+
+            <!-- History Purchase Order -->
+            <li>
+              <a href="history-purchase-order.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 active">
+                <img loading="lazy" src="../assets/icon_history_default.svg" alt="History Purchase Order"
+                  class="object-contain w-5 2xl:w-6 icon-history-active" />
+                <span class="text-sm 2xl:text-xl">History Purchase Order</span>
+              </a>
+            </li>
+
+            <!-- Performance Report -->
+            <li>
+              <a href="performance-report.html"
+                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+                <img loading="lazy" src="../assets/icon_performance_default.svg" alt=""
+                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
+                <span class="self-stretch my-auto text-sm 2xl:text-xl">Performance Report</span>
+              </a>
+            </li>
+          </ul>
+
+          <!-- User and Logout Section at the Bottom -->
+          <div class="mt-auto flex flex-col w-full">
+            <!-- User Info -->
+            <div class="flex gap-4 items-center p-2 2xl:p-4 w-full bg-blue-950 bg-opacity-10 text-blue-950">
+              <img loading="lazy" src="../assets/icon_people.svg" alt="User Info" class="object-contain w-4 2xl:w-6" />
+              <span id="user-info" class="text-sm 2xl:text-xl"></span>
             </div>
-          </nav>
-        </aside>
+
+            <!-- Logout Button -->
+            <a href="javascript:void(0)" onclick="handleLogout()"
+              class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
+              <img loading="lazy" src="../assets/icon_logout.svg" alt=""
+                class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square logout-icon hover:icon_logout_white.svg" />
+              <span class="self-stretch my-auto text-sm 2xl:text-xl">Logout</span>
+            </a>
+          </div>
+        </nav>
+      </aside>
 
       <!-- Main Content -->
       <main class="flex flex-col w-[80%] mb-auto mt-[3%] mx-auto px-6 2xl:px-10">
@@ -99,17 +102,17 @@
           <article class="flex flex-col items-start w-full text-base">
             <h1 class="text-base 2xl:text-xl font-semibold text-black mt-4">Select Supplier</h1>
           </article>
-          
-            <form id="supplierForm" class="flex flex-col w-full text-neutral-500">
-              <div class="flex flex-col xl:w-[500px] 2xl:w-[600px]">
-                <label for="Supplier" class="block xl:mb-6 2xl:mb-8 xl:text-base 2xl:text-lg text-neutral-500"></label>
-                <select id="Supplier"
-                  class="scrollable-select bg-transparent border border-neutral-300 rounded-lg block w-full p-4 2xl:p-7 text-neutral-500 text-sm 2xl:text-lg">
-                  <option value="">Cari Supplier</option>
-                  <!-- Options will be added here by JavaScript -->
-                </select>
-              </div>
-            </form>
+
+          <form id="supplierForm" class="flex flex-col w-full text-neutral-500">
+            <div class="flex flex-col xl:w-[500px] 2xl:w-[600px]">
+              <label for="supplier_id" class="block xl:mb-6 2xl:mb-8 xl:text-base 2xl:text-lg text-neutral-500"></label>
+              <select id="supplier_id"
+                class="scrollable-select bg-transparent border border-neutral-300 rounded-lg block w-full p-4 2xl:p-7 text-neutral-500 text-sm 2xl:text-lg">
+                <option value="">Cari Supplier</option>
+                <!-- Options will be added here by JavaScript -->
+              </select>
+            </div>
+          </form>
           </article>
 
           <div class="flex flex-col mt-4 2xl:mt-6 w-full 2xl:text-base text-xs font-medium">
@@ -119,11 +122,12 @@
               <!-- Search Bar -->
               <div class="flex flex-wrap items-center self-stretch my-auto  text-neutral-500">
                 <div class="flex items-center px-4 2xl:px-6 py-2 2xl:py-4 bg-neutral-100 rounded w-full ml-auto">
-                  <input id="search-input" type="text" placeholder="Search no purchase order here" class="flex-1 bg-neutral-100 outline-none 2xl:text-base">
+                  <input id="search-input" type="text" placeholder="Search no purchase order here"
+                    class="flex-1 bg-neutral-100 outline-none 2xl:text-base">
                   <img src="../assets/icon_search.svg" alt="Search Icon" class="w-4 2xl:w-5 h-4 2xl:h-5 ml-3">
                 </div>
               </div>
-          </div>
+            </div>
 
         </section>
 
@@ -134,19 +138,25 @@
             <table class="w-full text-[11px] 2xl:text-base text-left text-gray-700 dark:text-gray-700">
               <thead class="text-[14px] 2xl:text-[20px] text-gray-700">
                 <tr>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(0)">
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                    onclick="sortTable(0)">
                     No. PO
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
+                      class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(1)">
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                    onclick="sortTable(1)">
                     PO Date
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
+                      class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
-                  </th>                  
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(2)">
+                  </th>
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                    onclick="sortTable(2)">
                     Status PO
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
+                      class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
                 </tr>
@@ -158,7 +168,7 @@
           </div>
         </div>
 
-        
+
         <!-- Pagination -->
         <div class="flex justify-end my-6">
           <div class="flex gap-2 2xl:gap-4 items-center pagination">
@@ -178,13 +188,41 @@
 <script src="../table.js"></script>
 
 <script>
-  
-cekToken();
 
-  let suppliersData = [];
-  let sortOrder = {}; // Object to keep track of sort order for each column
+  cekToken();
 
-  // Fungsi untuk mengambil data supplier
+  document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM fully loaded and parsed');
+
+    fetchSuppliers();
+    adjustRowsPerPage();
+
+    const supplierSelect = document.getElementById('supplier_id'); // Get supplier dropdown element
+    const searchButton = document.getElementById('search-button'); // Get search button element
+
+    // Event listener for supplier selection
+    supplierSelect.addEventListener('change', async (event) => {
+      const selectedSupplierId = event.target.value;
+      console.log('Supplier selected:', selectedSupplierId);
+
+      if (selectedSupplierId) {
+        localStorage.setItem('bpCode', selectedSupplierId); // Store bpCode in localStorage
+        console.log('Fetching delivery notes for supplier:', selectedSupplierId);
+        await fetchHistoryPurchaseOrders(selectedSupplierId); // Fetch delivery notes based on the selected supplier
+        displaySelectedSupplier(); // Display selected supplier in the table
+        displayTableData(currentPage); // Display data for the first page
+        updatePagination();
+      } else {
+        console.error('No supplier selected.');
+      }
+    });
+    // Event listener for search input
+    if (searchButton) {
+      searchButton.addEventListener('input', searchTable); // Add search event listener
+    }
+  });
+
+  // Function to fetch suppliers data
   async function fetchSuppliers() {
     const token = localStorage.getItem('accessToken');
     if (!token) {
@@ -193,170 +231,192 @@ cekToken();
     }
 
     try {
-      const response = await fetch('http://localhost:8000/api/partner3', {
+      console.log('Fetching suppliers...');
+      const response = await fetch(APIpartner3, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
       });
-      
-      const data = await response.json();
-      console.log('API Response for Suppliers:', data); // Debugging log untuk memeriksa data
-  
-      if (data.success) { // Sesuaikan dengan respons API
-        suppliersData = data.data;
-        populateSupplierDropdown();
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Suppliers data received:', data);
+        if (data.success) {
+          populateSupplierDropdown(data.data); // Populate dropdown with supplier data
+        } else {
+          console.error('Failed to fetch suppliers:', data.message);
+        }
       } else {
-        console.error('Failed to fetch suppliers:', data.message);
+        console.error('Error fetching suppliers:', response.status, response.statusText);
       }
     } catch (error) {
-      console.error('Error fetching suppliers:', error);
+      console.error('Error during fetching suppliers:', error);
     }
   }
 
-  // Fungsi untuk mengisi dropdown supplier
-  function populateSupplierDropdown() {
-    const supplierSelect = document.getElementById('Supplier');
-    if (!supplierSelect) {
-      console.error('Supplier select element not found!');
-      return;
-    }
-
-    supplierSelect.innerHTML = '<option value="">Select a supplier</option>'; // Reset dropdown
+  // Function to populate supplier dropdown
+  function populateSupplierDropdown(suppliersData) {
+    const supplierSelect = document.getElementById('supplier_id');
+    supplierSelect.innerHTML = '<option value="">Cari Supplier</option>'; // Reset dropdown
 
     suppliersData.forEach(supplier => {
       const option = document.createElement('option');
       option.value = supplier.bp_code;
-      option.textContent = supplier.bp_name;
+      option.textContent = `${supplier.bp_code} | ${supplier.bp_name}`;
       supplierSelect.appendChild(option);
     });
+
+    console.log('Supplier dropdown populated');
+    // Re-initialize Select2 after adding options if necessary
   }
 
-  // Event listener untuk pemilihan supplier dan pengambilan data purchase order
-document.addEventListener('DOMContentLoaded', () => {
-  const supplierSelect = document.getElementById('Supplier');
-  if (!supplierSelect) {
-    console.error('Supplier select element not found during DOMContentLoaded!');
-    return;
-  }
+  // Function to fetch purchase orders from the API
+  async function fetchHistoryPurchaseOrders(bpCode) {
+    const token = localStorage.getItem('accessToken');
 
-  supplierSelect.addEventListener('change', async () => {
-    const selectedSupplier = supplierSelect.value;
-    if (selectedSupplier) {
-      const token = localStorage.getItem('accessToken');
-      if (!token) {
-        console.error('No access token found');
-        return;
+    try {
+      const response = await fetch(`${APIpohistory3}/${bpCode}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      console.log(`Response status: ${response.status} ${response.statusText}`);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      try {
-        const response = await fetch(`http://localhost:8000/api/pohistory3/${selectedSupplier}`, {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        });
-        const data = await response.json();
+      const data = await response.json();
+      console.log("Data fetched:", data);
 
-        console.log('API Response for PO History:', data); // Debugging log untuk memeriksa data
+      if (data.success) {
+        console.log('Success:', data.message);
+        let historyPurchaseOrder = [];
+        historyPurchaseOrder = data.data.map(po => ({
+          noPO: po.po_number ? po.po_number.toString() : 'N/A',
+          poDate: po.po_date || 'Unknown Date',
+          status: po.po_status || 'Unknown Status'
+        }));
 
-        if (data.success) { // Sesuaikan dengan respons API
-          if (data.data && data.data.length > 0) {
-            originalData = data.data.map(po => ({
-              noPO: po.po_no,
-              poDate: po.po_date,
-              planDelivery: po.planned_receipt_date,
-              poRevision: po.po_revision_no,
-              revisionDate: po.po_revision_date,
-              status: po.po_status,
-              response: po.response
-            }));
-            filteredData = [...originalData]; // Salin data asli ke data yang akan ditampilkan
-            adjustRowsPerPage(); // Panggil fungsi ini setelah mengambil data
-            displayTableData(currentPage);
-            updatePagination();
-
-            // Tampilkan elemen-elemen yang terkait dengan tabel
-            const searchBar = document.getElementById('search-bar');
-            const tableContainer = document.getElementById('table-container');
-            const pagination = document.querySelector('.pagination');
-            
-            if (searchBar && tableContainer && pagination) {
-              searchBar.style.display = 'block';
-              tableContainer.style.display = 'block';
-              pagination.style.display = 'flex';
-            }
-          } else {
-            console.log('No PO history available for the selected supplier.');
-            // Pastikan elemen ada sebelum mengubah style
-            const searchBar = document.getElementById('search-bar');
-            const tableContainer = document.getElementById('table-container');
-            const pagination = document.querySelector('.pagination');
-            
-            if (searchBar && tableContainer && pagination) {
-              searchBar.style.display = 'none';
-              tableContainer.style.display = 'none';
-              pagination.style.display = 'none';
-            }
-          }
-        } else {
-          console.error('Failed to fetch PO history:', data.message);
+        filteredData = [...historyPurchaseOrder];
+        displayTableData(currentPage);
+        updatePagination();
+      } else {
+        const tableBody = document.getElementById('table-body');
+        if (tableBody) {
+          tableBody.innerHTML = '<tr><td colspan="6" class="text-center">No purchase orders found for this supplier</td></tr>';
         }
-      } catch (error) {
-        console.error('Error fetching PO history:', error);
+        console.warn('Failed to fetch purchase order:', data.message);
       }
-    } else {
-      // Sembunyikan elemen-elemen jika tidak ada supplier yang dipilih
-      const searchBar = document.getElementById('search-bar');
-      const tableContainer = document.getElementById('table-container');
-      const pagination = document.querySelector('.pagination');
-      
-      if (searchBar && tableContainer && pagination) {
-        searchBar.style.display = 'none';
-        tableContainer.style.display = 'none';
-        pagination.style.display = 'none';
+    } catch (error) {
+      const tableBody = document.getElementById('table-body');
+      if (tableBody) {
+        tableBody.innerHTML = '<tr><td colspan="6" class="text-center text-red-500">Failed to fetch purchase orders. Please try again later.</td></tr>';
       }
+      console.error('Fetch error during purchase order retrieval:', error);
     }
-  });
+  }
 
-  fetchSuppliers(); // Memanggil fungsi untuk mengambil data supplier saat halaman dimuat
-  adjustRowsPerPage(); // Inisialisasi jumlah baris per halaman berdasarkan ukuran layar
+  // Function to display selected supplier at the top of the table
+  function displaySelectedSupplier() {
+    const bpCode = localStorage.getItem('bpCode');
+    if (!bpCode) {
+      console.error('No selected supplier found in localStorage');
+      return;
+    }
 
-  // Setel ulang tabel dan paginasi saat ukuran layar berubah
-  window.addEventListener('resize', () => {
-    adjustRowsPerPage();
-    displayTableData(currentPage);
-    updatePagination();
-  });
+    const tableBody = document.getElementById('table-body');
+    if (!tableBody) {
+      console.error('Table body element not found');
+      return;
+    }
 
-  document.getElementById('search-input').addEventListener('input', searchTable);
+    // Remove any previously displayed supplier rows to avoid duplicates
+    const existingSupplierRow = tableBody.querySelector('.bg-blue-100');
+    if (existingSupplierRow) {
+      existingSupplierRow.remove();
+    }
 
-  // Tambahkan event listener untuk pengurutan
-  addSortingListeners();
-});
+    const supplierRow = document.createElement('tr');
+    supplierRow.classList.add('bg-blue-100', 'border-b');
+    supplierRow.innerHTML = `
+      <td colspan="4" class="text-center font-bold text-blue-900">
+        Supplier yang Dipilih: ${bpCode}
+      </td>
+    `;
 
-// Fungsi untuk pengurutan data
-function sortData(sortKey) {
-  // Toggle sort order
-  sortOrder[sortKey] = sortOrder[sortKey] === 'asc' ? 'desc' : 'asc';
+    tableBody.prepend(supplierRow); // Add the selected supplier row at the top
+    console.log('Displayed selected supplier in table:', bpCode);
+  }
 
-  filteredData.sort((a, b) => {
-    if (a[sortKey] < b[sortKey]) {
-      return sortOrder[sortKey] === 'asc' ? -1 : 1;
-    } else if (a[sortKey] > b[sortKey]) {
-      return sortOrder[sortKey] === 'asc' ? 1 : -1;
+  // Function to display table data
+  function displayTableData(page) {
+    const tableBody = document.getElementById('table-body');
+
+    if (!tableBody) {
+      console.error('Table body element not found!');
+      return;
+    }
+
+    tableBody.innerHTML = ''; // Clear the table before displaying new data
+
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+    const dataToShow = filteredData.slice(start, end);
+
+    console.log(`Displaying ${dataToShow.length} rows`);
+
+    if (dataToShow.length === 0) {
+      tableBody.innerHTML = '<tr><td colspan="3" class="text-center">No data available for this supplier</td></tr>';
+      return;
+    }
+
+    dataToShow.forEach(po => {
+      console.log('Adding row for PO:', po.noPO);
+      const tableRow = document.createElement('tr');
+      tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
+      tableRow.innerHTML = `
+        <td class="px-2 py-4 text-center font-medium text-gray-900">
+          <a href="purchase-order-detail.html?noPO=${po.noPO}" class="text-blue-600 underline">${po.noPO}</a>
+          </td>
+        <td class="px-2 py-4 text-center">${po.poDate}</td>
+        <td class="px-2 py-4 text-center">${po.status}</td>
+      `;
+      tableBody.appendChild(tableRow);
+    });
+
+    console.log("Displayed rows in the table");
+  }
+
+  // Function to search table data
+  function searchTable() {
+    const searchInput = document.getElementById('search-input').value.toLowerCase();
+    if (!searchInput) {
+      console.warn('Search input is empty');
+      return;
+    }
+
+    filteredData = historyPurchaseOrder.filter(po => po.noPO.toLowerCase().includes(searchInput));
+    console.log(`Search result: Found ${filteredData.length} matching rows`);
+    currentPage = 1; // Reset to page 1 after search
+    displayTableData(currentPage); // Display filtered data
+  }
+
+  function adjustRowsPerPage() {
+    if (window.innerHeight < 768) {
+      rowsPerPage = 6; // Update the existing variable, no need to redeclare
+    } else if (window.innerHeight < 1280) {
+      rowsPerPage = 8; // Update the existing variable
     } else {
-      return 0;
+      rowsPerPage = 10; // Update the existing variable
     }
-  });
-
-  // Update table after sorting
-  currentPage = 1; // Reset to the first page after sorting
-  displayTableData(currentPage);
-  updatePagination();
-}
+  }
 
 </script>
+
 </html>
