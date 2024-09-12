@@ -116,7 +116,7 @@
 
               <div class="flex items-center gap-4 mb-6 2xl:mb-8">
                 <label for="username" class="text-base 2xl:text-lg font-medium dark:text-black w-[15%] 2xl:w-[10%]">Username</label>
-                <input type="text" id="username" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[32%] p-3 dark:text-black" placeholder="Username" required readonly disabled />
+                <input type="text" id="username" class="bg-gray-200 border border-neutral-300 text-gray-500 text-sm rounded-lg block w-[32%] p-3 cursor-not-allowed " placeholder="Username" required readonly disabled />
               </div>
 
               <div class="flex items-center gap-4 mb-6 2xl:mb-8">
@@ -126,13 +126,13 @@
 
               <div class="flex items-center gap-4 mb-6 2xl:mb-8">
                 <label for="password" class="text-base 2xl:text-lg font-medium dark:text-black w-[15%] 2xl:w-[10%]">Password</label>
-                <input type="password" id="password" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[32%] p-3 dark:text-black" placeholder="Password" />
+                <input type="password" id="password" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[32%] p-3 dark:text-black" placeholder="Enter new password or leave blank to keep current" />
                 <img id="toggle_password" src="../assets/icon_see.svg" alt="Toggle Password Visibility" class="ml-2 cursor-pointer w-6 h-6" />
-                <button type="button" id="generate_password" class="ml-2 bg-blue-400 text-white rounded px-4 py-3 text-xs 2xl:text-sm">Generate Password</button>
+                <button type="button" id="generate_password" class="ml-2 bg-blue-500 hover:bg-blue-700 text-white rounded px-4 py-3 text-xs 2xl:text-sm">Generate Password</button>
               </div>
 
               <div class="flex justify-end">
-                <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md text-base 2xl:text-xl px-6 2xl:px-8 py-3 2xl:py-4 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save</button>
+                <button type="submit" class="text-white bg-blue-500 hover:bg-blue-800  font-medium rounded-md text-base 2xl:text-xl px-6 2xl:px-8 py-2 2xl:py-4 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save</button>
               </div>
             </form>
           </div>
