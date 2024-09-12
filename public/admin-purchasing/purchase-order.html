@@ -235,13 +235,12 @@
   cekToken();
 
   let sortOrder = {}; // Object to keep track of sort order for each column
-  let rowsPerPage = 6; // Default rows per page
-  let currentPage = 1; // Default to the first page
 
   document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM fully loaded and parsed');
 
     fetchSuppliers();
+    adjustRowsPerPage();
 
     const supplierSelect = document.getElementById('supplier_id'); // Get supplier dropdown element
     const searchButton = document.getElementById('search-button'); // Get search button element
@@ -257,6 +256,7 @@
         await fetchPurchaseOrder(selectedSupplierId); // Fetch delivery notes based on the selected supplier
         displaySelectedSupplier(); // Display selected supplier in the table
         displayTableData(currentPage); // Display data for the first page
+        updatePagination();
       } else {
         console.error('No supplier selected.');
       }
@@ -301,8 +301,6 @@
       console.error('Error during fetching suppliers:', error);
     }
   }
-
-
 
   // Fungsi untuk mengisi dropdown supplier
   function populateSupplierDropdown(suppliersData) {
@@ -361,6 +359,7 @@
 
         filteredData = [...purchaseOrder];
         displayTableData(currentPage);
+        updatePagination();
       } else {
         const tableBody = document.getElementById('table-body');
         if (tableBody) {
@@ -467,6 +466,17 @@
     currentPage = 1; // Reset to page 1 after search
     displayTableData(currentPage); // Display filtered data
   }
+
+  function adjustRowsPerPage() {
+    if (window.innerHeight < 768) {
+      rowsPerPage = 6; // Update the existing variable, no need to redeclare
+    } else if (window.innerHeight < 1280) {
+      rowsPerPage = 8; // Update the existing variable
+    } else {
+      rowsPerPage = 10; // Update the existing variable
+    }
+}
+
 
 </script>
 

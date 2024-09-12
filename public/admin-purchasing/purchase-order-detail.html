@@ -35,7 +35,7 @@
                 class="flex gap-4 items-center p-[9px] 2xl:p-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
                 <img loading="lazy" src="../assets/icon_home_default.svg" alt="Dashboard"
                   class="object-contain w-4 2xl:w-6" />
-                <span class="text-sm 2xl:text-xl">Supplier ABCD</span>
+                <span class="text-sm 2xl:text-xl">Dashboard</span>
               </a>
             </li>
 
@@ -204,8 +204,6 @@
   cekToken();
 
   let details = [];
-  let rowsPerPage = 7;
-let currentPage = 1;
 
   fetchPurchaseOrders();
 
@@ -347,10 +345,9 @@ let currentPage = 1;
   function displayTableData(page) {
     const tableBody = document.getElementById('table-body-detail');
     tableBody.innerHTML = '';
-
-    const rowsPerPage = 10;
+    
     const start = (page - 1) * rowsPerPage;
-  const end = start + rowsPerPage;
+    const end = start + rowsPerPage;
     const paginatedData = filteredData.slice(start, end);
 
     paginatedData.forEach((detail, index) => {
