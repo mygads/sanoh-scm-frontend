@@ -31,10 +31,6 @@ APIedit4 = API + '/edit4/';
 APIupdate4 = API + '/update4/';
 APIlistuser = API + '/index4';
 APIupdatestatus = API + `/updatestatus/`;
-APIpartner2 = API + `/partner2`;
-APIindexdnheader2 = API + `/indexdnheader2`;
-APIindexdndetail2 = API + '/indexdndetail2/';
-APIdnhistory2 = API + `/dnhistory2`;
 
 
 // purchasing
