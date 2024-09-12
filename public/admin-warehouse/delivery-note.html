@@ -11,13 +11,11 @@
     href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
     rel="stylesheet">
 
-   <!-- Select2 CSS -->
-   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
-
-   <!-- Custom Styles -->
+  <!-- Select2 CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+  <!-- Custom Styles -->
   <link rel="stylesheet" href="../style.css">
-  <link rel="icon" type="image/png" href="../assets/icon_sanoh.png">
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 
@@ -76,10 +74,9 @@
 
             <!-- Logout Button -->
             <a href="javascript:void(0)" onclick="handleLogout()"
-              class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
-              <img loading="lazy" src="../assets/icon_logout.svg" alt=""
-                class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square logout-icon hover:icon_logout_white.svg" />
-              <span class="self-stretch my-auto text-sm 2xl:text-xl">Logout</span>
+              class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 cursor-pointer bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50">
+              <img loading="lazy" src="../assets/icon_logout.svg" alt="Logout" class="object-contain w-4 2xl:w-6" />
+              <span class="text-sm 2xl:text-xl">Logout</span>
             </a>
           </div>
         </nav>
@@ -87,22 +84,19 @@
 
       <!-- Main Content -->
       <main class="flex flex-col w-[80%] mb-[100%] mt-[3%] mx-auto px-6 2xl:px-10">
-
-
         <section class="flex flex-col self-stretch py-px my-auto w-full max-md:mt-10 max-md:max-w-full">
-
           <header class="flex items-center self-start text-2xl font-semibold text-black">
             <h1 class="self-stretch my-auto text-[80%] 2xl:text-[120%]">Delivery Note (DN)</h1>
           </header>
-          
+
           <article class="flex flex-col items-start w-full text-base">
             <h1 class="text-base 2xl:text-xl font-semibold text-black mt-4">Select Supplier</h1>
-  
-          
-            <form id="supplierForm" class="flex flex-col w-full text-neutral-500">
+
+            <form id="supplier_form" class="flex flex-col w-full text-neutral-500"> <!-- Changed id here -->
               <div class="flex flex-col xl:w-[500px] 2xl:w-[600px]">
-                <label for="Supplier" class="block xl:mb-6 2xl:mb-8 xl:text-base 2xl:text-lg text-neutral-500"></label>
-                <select id="Supplier"
+                <label for="supplier_id"
+                  class="block xl:mb-6 2xl:mb-8 xl:text-base 2xl:text-lg text-neutral-500"></label>
+                <select id="supplier_id"
                   class="scrollable-select bg-transparent border border-neutral-300 rounded-lg block w-full p-4 2xl:p-7 text-neutral-500 text-sm 2xl:text-lg">
                   <option value="">Cari Supplier</option>
                   <!-- Options will be added here by JavaScript -->
@@ -110,50 +104,56 @@
               </div>
             </form>
           </article>
-      
+
 
           <div class="flex flex-col mt-4 2xl:mt-6 w-full 2xl:text-base text-xs font-medium">
-
             <div class="flex flex-wrap gap-10 justify-end items-center w-full">
-
               <!-- Search Bar -->
-              <div class="flex flex-wrap items-center self-stretch my-auto  text-neutral-500">
+              <div class="flex flex-wrap items-center self-stretch my-auto text-neutral-500">
                 <div class="flex items-center px-4 2xl:px-6 py-2 2xl:py-4 bg-neutral-100 rounded w-full ml-auto">
-                  <input id="search-input" type="text" placeholder="Search no purchase order here" class="flex-1 bg-neutral-100 outline-none 2xl:text-base">
+                  <input id="search-input" type="text" placeholder="Search no purchase order here"
+                    class="flex-1 bg-neutral-100 outline-none 2xl:text-base">
                   <img src="../assets/icon_search.svg" alt="Search Icon" class="w-4 2xl:w-5 h-4 2xl:h-5 ml-3">
                 </div>
               </div>
             </div>
-
+          </div>
         </section>
 
         <!-- Table -->
         <div class="flex flex-col mt-5 2xl:mt-8">
           <div class="relative overflow-x-auto shadow-md rounded-lg border border-gray-300">
-
             <table class="w-full text-[11px] 2xl:text-base text-left text-gray-700 dark:text-gray-700">
               <thead class="text-[14px] 2xl:text-[20px] text-gray-700">
                 <tr>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(0)">
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                    data-sort="0" onclick="sortTable(0)">
                     No. DN
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
+                      class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(1)">
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                    data-sort="1"  onclick="sortTable(1)">
                     No. PO
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
+                      class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(2)">
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                    data-sort="2"  onclick="sortTable(2)">
                     Plan DN Date
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
+                      class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(3)">
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                    data-sort="3"  onclick="sortTable(3)">
                     Status DN
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
+                      class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
-                  </th>    
+                  </th>
                 </tr>
               </thead>
               <tbody id="table-body">
@@ -162,7 +162,7 @@
             </table>
           </div>
         </div>
-        
+
         <!-- Pagination -->
         <div class="flex justify-end my-6">
           <div class="flex gap-2 2xl:gap-4 items-center pagination">
@@ -179,200 +179,246 @@
 <script src="../api.js"></script>
 <script src="../script.js"></script>
 <script src="../table.js"></script>
- <!-- jQuery for Select2 -->
- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
- <!-- Select2 JS -->
- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<!-- jQuery for Select2 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <!-- Add the script to handle table sorting and pagination -->
 <script>
-  cekToken();
-  let pendingResponseIndex = null;
-  let pendingResponseAction = '';
-  let deliveryNote = [];
+  cekToken(); // Memeriksa token autentikasi pengguna
 
-  let sortOrder = {}; // Object to keep track of sort order for each column
-
-  // Adjust rows per page based on screen size
-  function adjustRowsPerPage() {
-      if (window.innerWidth <= 1280) {
-          rowsPerPage = 6;
-      } else if (window.innerWidth <= 1600) {
-          rowsPerPage = 8;
-      } else {
-          rowsPerPage = 10;
-      }
-  }
-
-  function displayTableData(page) {
-      const tableBody = document.getElementById('table-body');
-      tableBody.innerHTML = '';
-
-      const start = (page - 1) * rowsPerPage;
-      const end = start + rowsPerPage;
-      const paginatedData = filteredDnData.slice(start, end);
-
-      paginatedData.forEach((row) => {
-          const tableRow = document.createElement('tr');
-          tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
-          tableRow.innerHTML = `
-              <td class="px-2 py-4 text-center font-medium text-gray-900">
-                  <a href="delivery-note-detail.html?noDN=${row.noDN}" class="text-blue-600 underline">${row.noDN}</a>
-              </td>
-              <td class="px-2 py-4 text-center font-medium text-gray-900">
-                  <a href="purchase-order-detail.html?noPO=${row.noPO}" class="text-blue-600 underline">${row.noPO}</a>
-              </td>
-              <td class="px-2 py-4 text-center">${row.planDNDate}</td>
-              <td class="px-2 py-4 text-center">${row.statusDN}</td>
-          `;
-          tableBody.appendChild(tableRow);
-      });
-  }
-
-  function searchTable() {
-      const searchInput = document.getElementById('search-input').value.toLowerCase();
-      filteredDnData = deliveryNote.filter(row => row.noDN.toLowerCase().includes(searchInput));
-      currentPage = 1;
-      displayTableData(currentPage);
-      updatePagination();
-  }
-
-  // Sort function based on the column key
-  function sortTable(columnKey) {
-      sortOrder[columnKey] = sortOrder[columnKey] === 'asc' ? 'desc' : 'asc'; // Toggle sort order
-
-      filteredDnData.sort((a, b) => {
-          if (a[columnKey] < b[columnKey]) {
-              return sortOrder[columnKey] === 'asc' ? -1 : 1;
-          } else if (a[columnKey] > b[columnKey]) {
-              return sortOrder[columnKey] === 'asc' ? 1 : -1;
-          } else {
-              return 0;
-          }
-      });
-
-      // Update table after sorting
-      currentPage = 1; // Reset to the first page after sorting
-      displayTableData(currentPage);
-      updatePagination();
-  }
-
-  function updatePagination() {
-      const paginationContainer = document.querySelector('.pagination');
-      paginationContainer.innerHTML = '';
-
-      const totalPages = Math.ceil(filteredDnData.length / rowsPerPage);
-      const maxPageNumbersToShow = 4;
-
-      const prevButton = document.createElement('button');
-      prevButton.className = 'px-3 py-3 2xl:px-4 2xl:py-4 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
-      prevButton.innerHTML = `
-          <svg class="2xl:w-4 2xl:h-4 w-3 h-3 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
-          <path d="M8.766.566A2 2 0 0 0 6.586 1L1 6.586a2 2 0 0 0 0 2.828L6.586 15A2 2 0 0 0 10 13.586V2.414A2 2 0 0 0 8.766.566Z" />
-          </svg>
-      `;
-      prevButton.disabled = currentPage === 1;
-      prevButton.addEventListener('click', () => {
-          if (currentPage > 1) {
-              currentPage--;
-              displayTableData(currentPage);
-              updatePagination();
-          }
-      });
-      paginationContainer.appendChild(prevButton);
-
-      const pageNumbers = [];
-      if (totalPages <= maxPageNumbersToShow) {
-          for (let i = 1; i <= totalPages; i++) {
-              pageNumbers.push(i);
-          }
-      } else {
-          pageNumbers.push(1);
-
-          const startPage = Math.max(2, currentPage - 1);
-          const endPage = Math.min(totalPages - 1, currentPage + 1);
-
-          if (startPage > 2) {
-              pageNumbers.push('...');
-          }
-
-          for (let i = startPage; i <= endPage; i++) {
-              pageNumbers.push(i);
-          }
-
-          if (endPage < totalPages - 1) {
-              pageNumbers.push('...');
-          }
-
-          pageNumbers.push(totalPages);
-      }
-
-      pageNumbers.forEach(number => {
-          const pageButton = document.createElement('button');
-          if (number === '...') {
-              pageButton.className = 'px-4 py-2 2xl:px-6 2xl:py-4 text-gray-900 bg-gray-200 rounded-md cursor-default';
-              pageButton.textContent = '...';
-          } else {
-              pageButton.className = `px-4 py-2 2xl:px-6 2xl:py-4 ${number === currentPage ? 'bg-blue-900 text-white' : 'bg-gray-200 text-gray-900'} rounded-md hover:bg-gray-300`;
-              pageButton.textContent = number;
-              pageButton.addEventListener('click', () => {
-                  currentPage = number;
-                  displayTableData(currentPage);
-                  updatePagination();
-              });
-          }
-          paginationContainer.appendChild(pageButton);
-      });
-
-      const nextButton = document.createElement('button');
-      nextButton.className = '2xl:px-4 2xl:py-4 px-3 py-3 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
-      nextButton.innerHTML = `
-          <svg class="2xl:w-4 2xl:h-4 w-3 h-3 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
-          <path d="M1.234 15.434A2 2 0 0 0 3.414 15L9 9.414a2 2 0 0 0 0-2.828L3.414 1A2 2 0 0 0 1 2.414v11.172a2 2 0 0 0 1.234 1.848Z" />
-          </svg>
-      `;
-      nextButton.disabled = currentPage === totalPages;
-      nextButton.addEventListener('click', () => {
-          if (currentPage < totalPages) {
-              currentPage++;
-              displayTableData(currentPage);
-              updatePagination();
-          }
-      });
-      paginationContainer.appendChild(nextButton);
-  }
+  let deliveryNote = []; // Initialize the deliveryNote array
+  let sortOrder = {}; // Objek untuk melacak urutan pengurutan setiap kolom
+  let rowsPerPage = 6; // Default rows per page
+  let currentPage = 1; // Default to the first page
 
   document.addEventListener('DOMContentLoaded', () => {
-
-      const searchInputElement = document.getElementById('search-input');
-
-      adjustRowsPerPage(); // Set rows per page based on initial screen size
-
-      window.addEventListener('resize', () => {
-          adjustRowsPerPage(); // Adjust rows per page on screen resize
-          displayTableData(currentPage); // Re-render table data
-          updatePagination(); // Re-render pagination
-      });
-
-      if (searchInputElement) {
-          searchInputElement.addEventListener('input', searchTable);
-      }
-
-      if (typeof fetchDeliveryNotes === 'function') {
-          fetchDeliveryNotes(); // Fetch data and initialize display
+    console.log('DOM fully loaded and parsed');
+  
+    fetchSuppliers(); // Fetch suppliers on page load
+   // adjustRowsPerPage(); // Adjust rows per page based on screen size
+  
+    window.addEventListener('resize', () => {
+      console.log('Window resized, adjusting table rows per page');
+      adjustRowsPerPage(); // Adjust rows on resize
+      displayTableData(currentPage); // Display table data based on the current page
+    });
+  
+    const supplierSelect = document.getElementById('supplier_id'); // Get supplier dropdown element
+    const searchButton = document.getElementById('search-button'); // Get search button element
+  
+    // Event listener for supplier selection
+    supplierSelect.addEventListener('change', async (event) => {
+      const selectedSupplierId = event.target.value;
+      console.log('Supplier selected:', selectedSupplierId);
+  
+      if (selectedSupplierId) {
+        localStorage.setItem('bpCode', selectedSupplierId); // Store bpCode in localStorage
+        console.log('Fetching delivery notes for supplier:', selectedSupplierId);
+        await fetchDeliveryNotes(selectedSupplierId); // Fetch delivery notes based on the selected supplier
+        displaySelectedSupplier(); // Display selected supplier in the table
+        displayTableData(currentPage); // Display data for the first page
       } else {
-          console.error('fetchDeliveryNotes function is not defined.');
+        console.error('No supplier selected.');
       }
-
-      // Add sorting listeners for each sortable column
-      const sortableHeaders = document.querySelectorAll('th[data-sort]');
-      sortableHeaders.forEach(header => {
-          header.addEventListener('click', () => {
-              const sortKey = header.getAttribute('data-sort');
-              sortTable(sortKey);
-          });
-      });
+    });
+  
+    // Event listener for search input
+    if (searchButton) {
+      searchButton.addEventListener('input', searchTable); // Add search event listener
+    }
   });
+
+  // Function to fetch suppliers from API
+  async function fetchSuppliers() {
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      console.error('No access token found');
+      return;
+    }
+
+    try {
+      console.log('Fetching suppliers...');
+      const response = await fetch(APIpartner2, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Suppliers data received:', data);
+        if (data.success) {
+          populateSupplierDropdown(data.data); // Populate dropdown with supplier data
+        } else {
+          console.error('Failed to fetch suppliers:', data.message);
+        }
+      } else {
+        console.error('Error fetching suppliers:', response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error('Error during fetching suppliers:', error);
+    }
+  }
+
+  // Function to populate supplier dropdown
+  function populateSupplierDropdown(suppliersData) {
+    const supplierSelect = document.getElementById('supplier_id');
+    supplierSelect.innerHTML = '<option value="">Cari Supplier</option>'; // Reset dropdown
+
+    suppliersData.forEach(supplier => {
+      const option = document.createElement('option');
+      option.value = supplier.bp_code;
+      option.textContent = `${supplier.bp_code} | ${supplier.bp_name}`;
+      supplierSelect.appendChild(option);
+    });
+
+    console.log('Supplier dropdown populated');
+    // Re-initialize Select2 after adding options
+  }
+
+  // Function to fetch delivery notes based on supplier
+  async function fetchDeliveryNotes(bpCode) {
+    const token = localStorage.getItem('accessToken');
+
+    if (!token) {
+      console.error('No access token found for fetching delivery notes');
+      return;
+    }
+
+    try {
+      console.log(`Fetching delivery notes for bpCode: ${bpCode}`);
+      const response = await fetch(`${APIindexdnheader2}/${bpCode}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        
+        // Log the raw data to ensure it's being fetched correctly
+        console.log('Raw Delivery notes data received:', data);
+
+        if (data.success) {
+          deliveryNote = data.data.map(dn => ({
+            noDN: dn.no_dn ? dn.no_dn.toString() : 'N/A',
+            noPO: dn.po_no ? dn.po_no.toString() : 'N/A',
+            planDNDate: dn.plan_delivery_date || 'Unknown Date',
+            statusDN: dn.status_desc || 'Unknown Status',
+          }));
+
+          // Ensure that filteredData is properly initialized
+          filteredData = [...deliveryNote];
+
+          // Check if there's any data to display
+          if (filteredData.length > 0) {
+            displayTableData(currentPage); // Display data for the current page
+          } else {
+            console.warn('No delivery notes found for this supplier.');
+          }
+        } else {
+          console.error('Failed to fetch delivery notes:', data.message);
+        }
+      } else {
+        console.error('Error fetching delivery notes:', response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error('Fetch error during delivery notes retrieval:', error);
+    }
+  }
+
+  // Function to display selected supplier at the top of the table
+  function displaySelectedSupplier() {
+    const bpCode = localStorage.getItem('bpCode');
+    if (!bpCode) {
+      console.error('No selected supplier found in localStorage');
+      return;
+    }
+  
+    const tableBody = document.getElementById('table-body');
+    if (!tableBody) {
+      console.error('Table body element not found');
+      return;
+    }
+  
+    // Remove any previously displayed supplier rows to avoid duplicates
+    const existingSupplierRow = tableBody.querySelector('.bg-blue-100');
+    if (existingSupplierRow) {
+      existingSupplierRow.remove();
+    }
+  
+    const supplierRow = document.createElement('tr');
+    supplierRow.classList.add('bg-blue-100', 'border-b');
+    supplierRow.innerHTML = `
+      <td colspan="4" class="text-center font-bold text-blue-900">
+        Supplier yang Dipilih: ${bpCode}
+      </td>
+    `;
+  
+    tableBody.prepend(supplierRow); // Add the selected supplier row at the top
+    console.log('Displayed selected supplier in table:', bpCode);
+  }
+
+  // Function to display table data
+  function displayTableData(page) {
+    const tableBody = document.getElementById('table-body');
+    
+    if (!tableBody) {
+      console.error('Table body element not found');
+      return;
+    }
+  
+    tableBody.innerHTML = ''; // Clear existing rows
+    
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+    const dataToShow = filteredData.slice(start, end);
+  
+    if (dataToShow.length === 0) {
+      tableBody.innerHTML = '<tr><td colspan="4" class="text-center">No data available for this supplier</td></tr>';
+      return;
+    }
+  
+    dataToShow.forEach(dn => {
+      const row = document.createElement('tr');
+      row.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
+      row.innerHTML = `
+        <td class="px-2 py-4 text-center font-medium text-gray-900">
+          <a href="delivery-note-detail.html?noDN=${dn.noDN}" class="text-blue-600 underline">${dn.noDN}</a>
+        </td>
+        <td class="px-2 py-4 text-center font-medium text-gray-900">
+          <a href="purchase-order-detail.html?noPO=${dn.noPO}" class="text-blue-600 underline">${dn.noPO}</a>
+        </td>
+        <td class="px-2 py-4 text-center">${dn.planDNDate}</td>
+        <td class="px-2 py-4 text-center">${dn.statusDN}</td>
+      `;
+      tableBody.appendChild(row);
+    });
+    
+    console.log(`Displayed ${dataToShow.length} rows of data in table`);
+  }
+
+  // Function to search table data
+  function searchTable() {
+    const searchInput = document.getElementById('search-input').value.toLowerCase();
+    if (!searchInput) {
+      console.warn('Search input is empty');
+      return;
+    }
+
+    filteredData = deliveryNote.filter(row => row.noDN.toLowerCase().includes(searchInput));
+    console.log(`Search result: Found ${filteredData.length} matching rows`);
+    currentPage = 1; // Reset to page 1 after search
+    displayTableData(currentPage); // Display filtered data
+  }
+
 </script>
+
 
 </html>

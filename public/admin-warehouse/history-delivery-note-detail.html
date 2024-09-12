@@ -262,12 +262,153 @@
 <script>
   cekToken();
 
-
   // Adjust rows per page based on screen size
   adjustRowsPerPage();
 
+  let sortOrder = {}; // Objek untuk melacak urutan pengurutan setiap kolom
+  let details = [];
+  let filteredDnDetailData = [];
+
   const params = new URLSearchParams(window.location.search);
   const noDN = params.get('noDN');
+
+  // Function to fetch delivery notes from the API
+  async function fetchHistoryDeliveryNotes() {
+    const token = localStorage.getItem('accessToken');
+    const bpCode = localStorage.getItem('bpCode'); 
+
+    if (!bpCode) {
+        console.error('bpCode not found in localStorage.');
+        return;
+    }
+
+    try {
+        const response = await fetch(`${APIdnhistory2}${bpCode}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("Data fetched:", data);
+
+        if (data.success && data.data) {
+          details = data.data
+              .map(dn => ({
+                  noDN: dn.dn_number ? dn.dn_number.toString() : 'No DN Number',
+                  noPO: dn.po_number ? dn.po_number.toString() : 'No PO Number',                  
+                  statusDN: dn.dn_status || 'Unknown Status',
+                  planDNDate: dn.send_date || 'Date Unknown',
+                  receivedDNDate: dn.receive_date || 'Date Unknown',
+                  details: dn.detail ? dn.detail.map((detail, index) => ({
+                      no: (index + 1).toString(),
+                      partNumber: detail.internal_part_number || 'No Part Number',
+                      partName: detail.part_name || 'No Item Description',
+                      QTY: detail.total_quantity || 'No Quantity',
+                      qtyLabel: detail.pcs_per_kamban || 'No Label',
+                      qtyDelivered: detail.total_quantity || 'No Quantity',
+                      qtyReceived: detail.total_quantity || 'No Quantity',
+                  })) : []
+              }));
+
+          // Set filteredHistoryDNData to match deliveryNote initially
+          filteredHistoryDNData = details;
+
+          // Call function to display data
+          historyDNDetails();
+
+        } else {
+            console.error('No data found or unexpected format.');
+        }
+    } catch (error) {
+        console.error('Error fetching delivery notes:', error);
+    }
+  }
+
+  fetchHistoryDeliveryNotes();
+
+  function historyDNDetails() {
+    const params = new URLSearchParams(window.location.search);
+    const noDN = params.get('noDN');
+
+    if (noDN) {
+        // Debug: Check if `details` array is populated
+        console.log('Details array:', details);
+
+        const dn = details.find(dn => dn.noDN === noDN);
+
+        // Debug: Check if the correct Delivery Note object is found
+        console.log('Delivery Note found:', dn);
+
+        if (dn) {
+            const noPO = dn.noPO || 'No PO provided';
+            const planDNDate = dn.planDNDate || 'No Plan Delivery provided';
+
+            document.getElementById('dnNumber').textContent = dn.noDN;
+            document.getElementById('poNumber').textContent = noPO;
+            document.getElementById('planDelivery').textContent = planDNDate;
+
+            // Store the details array into filteredDnDetailData
+            filteredDnDetailData = dn.details;
+
+            // Display the details
+            if (typeof displayDNDetails === 'function') {
+                displayDNDetails(filteredDnDetailData);  // Show first page of details
+            } else {
+                console.error('displayDNDetails function is not defined.');
+            }
+
+            // Update pagination for details
+            if (typeof updatePagination === 'function') {
+                updatePagination();
+            } else {
+                console.error('updatePagination function is not defined.');
+            }
+
+        } else {
+            console.error('Delivery Note data not found in details array.');
+        }
+    } else {
+        console.error('Parameter noDN not found in the URL.');
+    }
+
+    window.addEventListener('resize', () => {
+        displayDNDetails(filteredHistoryDNData);  // Adjust display when resized
+        updatePagination();
+    });
+
+    document.getElementById('search-input').addEventListener('input', searchTable);
+  }
+
+  function displayDNDetails(details) {
+    const tableBody = document.getElementById('table-body-detail');
+    tableBody.innerHTML = '';
+
+    const start = (currentPage - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+    const paginatedData = details.slice(start, end);
+
+    paginatedData.forEach((detail, index) => {
+      const tableRow = document.createElement('tr');
+      tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
+      tableRow.innerHTML = `
+        <td class="px-2 py-4 text-center font-medium text-gray-900">${detail.no}</td>
+        <td class="px-2 py-4 text-center">${detail.partNumber}</td>
+        <td class="px-2 py-4 text-center">${detail.partName}</td>
+        <td class="px-2 py-4 text-center">${detail.QTY}</td>
+        <td class="px-2 py-4 text-center">${detail.qtyLabel}</td>
+        <td class="px-2 py-4 text-center">${detail.qtyDelivered}</td>
+        <td class="px-2 py-4 text-center">${detail.qtyReceived}</td>
+      `;
+      tableBody.appendChild(tableRow);
+    });
+  }
 
   if (noDN) {
     const dn = deliveryNote.find(dn => dn.noDN === noDN);
@@ -283,16 +424,6 @@
     }
   } else {
     console.error('Parameter noDN tidak ditemukan dalam URL.');
-  }
-
-  function adjustRowsPerPage() {
-    if (window.innerWidth <= 1280) {
-      rowsPerPage = 7;
-    } else if (window.innerWidth <= 1600) {
-      rowsPerPage = 9;
-    } else {
-      rowsPerPage = 10;
-    }
   }
 
   function displayDNDetails(details) {
@@ -320,8 +451,6 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-
-
     adjustRowsPerPage(); // Set rows per page based on initial screen size
     window.addEventListener('resize', () => {
       adjustRowsPerPage(); // Adjust rows per page on screen resize
@@ -334,98 +463,6 @@
     displayDNDetails(filteredData);
     updatePagination();
   });
-
-
-  function updatePagination() {
-    const paginationContainer = document.querySelector('.pagination');
-    paginationContainer.innerHTML = '';
-
-    const totalPages = Math.ceil(filteredData.length / rowsPerPage);
-    const maxPageNumbersToShow = 4; // Number of page buttons to display (including current)
-
-    // Previous button
-    const prevButton = document.createElement('button');
-    prevButton.className = 'px-3 py-3 2xl:px-4 2xl:py-4 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
-    prevButton.innerHTML = `
-        <svg class="2xl:w-4 2xl:h-4 w-3 h-3 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
-        <path d="M8.766.566A2 2 0 0 0 6.586 1L1 6.586a2 2 0 0 0 0 2.828L6.586 15A2 2 0 0 0 10 13.586V2.414A2 2 0 0 0 8.766.566Z" />
-        </svg>
-    `;
-    prevButton.disabled = currentPage === 1;
-    prevButton.addEventListener('click', () => {
-      if (currentPage > 1) {
-        currentPage--;
-        displayDNDetails(filteredData);
-        updatePagination();
-      }
-    });
-    paginationContainer.appendChild(prevButton);
-
-    // Calculate page numbers to show
-    const pageNumbers = [];
-    if (totalPages <= maxPageNumbersToShow) {
-      // If total pages is less than or equal to maxPageNumbersToShow, show all page numbers
-      for (let i = 1; i <= totalPages; i++) {
-        pageNumbers.push(i);
-      }
-    } else {
-      // Otherwise, calculate which page numbers to show
-      pageNumbers.push(1); // Always show the first page
-
-      const startPage = Math.max(2, currentPage - 1);
-      const endPage = Math.min(totalPages - 1, currentPage + 1);
-
-      if (startPage > 2) {
-        pageNumbers.push('...');
-      }
-
-      for (let i = startPage; i <= endPage; i++) {
-        pageNumbers.push(i);
-      }
-
-      if (endPage < totalPages - 1) {
-        pageNumbers.push('...');
-      }
-
-      pageNumbers.push(totalPages); // Always show the last page
-    }
-
-    // Page numbers buttons
-    pageNumbers.forEach(number => {
-      const pageButton = document.createElement('button');
-      if (number === '...') {
-        pageButton.className = 'px-4 py-2 2xl:px-6 2xl:py-4 text-gray-900 bg-gray-200 rounded-md cursor-default';
-        pageButton.textContent = '...';
-      } else {
-        pageButton.className = `px-4 py-2 2xl:px-6 2xl:py-4 ${number === currentPage ? 'bg-blue-900 text-white' : 'bg-gray-200 text-gray-900'} rounded-md hover:bg-gray-300`;
-        pageButton.textContent = number;
-        pageButton.addEventListener('click', () => {
-          currentPage = number;
-          displayDNDetails(filteredData);
-          updatePagination();
-        });
-      }
-      paginationContainer.appendChild(pageButton);
-    });
-
-    // Next button
-    const nextButton = document.createElement('button');
-    nextButton.className = '2xl:px-4 2xl:py-4 px-3 py-3 text-gray-900 bg-gray-200 rounded-md hover:bg-gray-300';
-    nextButton.innerHTML = `
-        <svg class="2xl:w-4 2xl:h-4 w-3 h-3 text-blue-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 10 16">
-        <path d="M1.234 15.434A2 2 0 0 0 3.414 15L9 9.414a2 2 0 0 0 0-2.828L3.414 1A2 2 0 0 0 1 2.414v11.172a2 2 0 0 0 1.234 1.848Z" />
-        </svg>
-    `;
-    nextButton.disabled = currentPage === totalPages;
-    nextButton.addEventListener('click', () => {
-      if (currentPage < totalPages) {
-        currentPage++;
-        displayDNDetails(filteredData);
-        updatePagination();
-      }
-    });
-    paginationContainer.appendChild(nextButton);
-  }
 
   // Function to sort table based on column index
   function sortTable(columnIndex) {
