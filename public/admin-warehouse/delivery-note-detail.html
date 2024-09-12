@@ -245,12 +245,19 @@
   let sortOrder = {}; // Objek untuk melacak urutan pengurutan setiap kolom
   let details = [];
   let filteredDnDetailData = [];
+  let noDN = getUrlParameter('noDN');
+
+  // Function to get URL parameters
+  function getUrlParameter(name) {
+    const params = new URLSearchParams(window.location.search);
+    return params.get(name);
+  }
 
   // Function to fetch delivery notes from the API
   async function fetchDeliveryNotes() {
     // Get token and delivery note number from localStorage
     const token = localStorage.getItem('accessToken');
-    const noDN = localStorage.getItem('noDN');
+   
   
     // Check if noDN is null
     if (!noDN) {
@@ -260,7 +267,7 @@
   
     try {
       // Fetch header data (if needed, remove if not required)
-      const headerResponse = await fetch(`${APIindexdnheader}${noDN}`, {
+      const headerResponse = await fetch(`${APIindexdnheader2}${noDN}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
