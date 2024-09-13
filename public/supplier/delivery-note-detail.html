@@ -443,6 +443,34 @@
             document.getElementById('poNumber').textContent = noPO;
             document.getElementById('planDelivery').textContent = planDNDate;
 
+            // Periksa status_desc, jika "Confirmed", tombol dihilangkan
+            const confirmButton = document.getElementById('confirm-button');
+            const confirmSection = document.getElementById('confirm-section'); // Seksi yang memuat tombol
+
+            // Periksa apakah confirm_update_at null atau sudah terisi
+
+            if (dn.confirmUpdateAt === null) {
+              confirmButton.textContent = 'Confirm Order';
+              confirmButton.disabled = false;
+            } else {
+              confirmButton.textContent = 'Edit';
+              confirmButton.disabled = false;
+            }
+
+            if (dn.statusDN === "Confirmed") {
+              // Jika status confirmed, sembunyikan tombol
+              confirmSection.style.display = "none";
+            } else {
+              // Periksa apakah confirm_update_at null atau sudah terisi
+              if (dn.confirmUpdateAt === null) {
+                confirmButton.textContent = 'Confirm Order';
+                confirmButton.disabled = false;
+              } else {
+                confirmButton.textContent = 'Edit';
+                confirmButton.disabled = false;
+              }
+            }
+
             // Store the details array into filteredDnDetailData
             filteredDnDetailData = dn.details;
 
