@@ -252,6 +252,11 @@
       const start = (page - 1) * rowsPerPage;
       const end = start + rowsPerPage;
       const paginatedData = filteredData.slice(start, end);
+  
+      if (paginatedData.length === 0) {
+        tableBody.innerHTML = '<tr><td colspan="4" class="text-center">No data available for this supplier</td></tr>';
+        return;
+      }
 
       // Iterate through filteredData to display in the table
       paginatedData.forEach(row => {
