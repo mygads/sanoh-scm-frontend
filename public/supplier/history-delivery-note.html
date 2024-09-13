@@ -220,7 +220,7 @@
               .map(dn => ({
                   noDN: dn.dn_number ? dn.dn_number.toString() : 'No DN Number',
                   noPO: dn.po_number ? dn.po_number.toString() : 'No PO Number',                  
-                  statusDN: dn.dn_status || 'Unknown Status',
+                  statusDN: dn.dn_status || '-',
                   planDNDate: dn.send_date || 'Date Unknown',
                   receivedDNDate: dn.receive_date || 'Date Unknown',
                   details: dn.detail ? dn.detail.map((detail, index) => ({
@@ -237,6 +237,7 @@
           // Set filteredData to match deliveryNote initially
           filteredData = deliveryNote;
           originalData = filteredData;
+
 
           // Call function to display data
           displayTableData();
@@ -257,6 +258,12 @@
     if (!tableBody) {
         console.error('Table body element not found.');
         return;
+    }
+
+    // Jika filteredData kosong, tampilkan pesan "No data available for this supplier"
+    if (filteredData.length === 0) {
+      tableBody.innerHTML = '<tr><td colspan="5" class="text-center py-4">No data available for this supplier</td></tr>';
+      return;
     }
 
     tableBody.innerHTML = '';
