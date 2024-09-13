@@ -343,6 +343,7 @@
                     noPO: dn.po_no ? dn.po_no.toString() : '',
                     planDNDate: dn.plan_delivery_date || '',
                     statusDN: dn.status_desc || '',
+                    confirmUpdateAt: dn.confirm_update_at,
                     // Ensure dn.detail exists and is an array, otherwise use an empty array
                     details: Array.isArray(dn.detail) && dn.detail.length > 0 ? dn.detail.map((detail, index) => ({
                         no: (index + 1).toString(),
@@ -375,21 +376,21 @@
     }
   }
 
-  async function updateDNDetails(updates) {
+  async function updateDNDetails(payload) {
     try {
         // Log the payload being sent
-        console.log(`Updating DN details:`, updates);
+        console.log(`Updating DN details:`, payload);
 
         const token = localStorage.getItem('accessToken'); // Ensure token is fetched properly
 
-        const response = await fetch(API_indexDNDetailUpdateSupplier, {
+        const response = await fetch('https://api.edutrashgo.com/api/updatedndetail1', {
             method: 'PUT',  // Ensure the correct HTTP method is used
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
             },
             // Send the array of updates
-            body: JSON.stringify({ updates }),  // Example payload: { updates: [{ no_detail: 1, qty_confirm: 10 }, { no_detail: 2, qty_confirm: 20 }] }
+            body: JSON.stringify(payload, null, 2),  // Example payload: { updates: [{ no_detail: 1, qty_confirm: 10 }, { no_detail: 2, qty_confirm: 20 }] }
         });
 
         if (!response.ok) {
@@ -575,7 +576,7 @@
 
             qtyConfirm = parseInt(qtyConfirm);
 
-            updates.push({ dn_detail_no: dnDetailNo, qty_confirm: qtyConfirm });
+            updates.push({ dn_detail_no: parseInt(dnDetailNo), qty_confirm: qtyConfirm });
 
             // Update the local data array
             const dataIndex = filteredDnDetailData.findIndex(detail => detail.dnDetailNo === dnDetailNo);
@@ -584,8 +585,18 @@
             }
         }
 
+        // Create the payload with dn_no separate from updates
+      const payload = {
+          no_dn : noDN,   // Top-level no_dn
+          updates: updates // Separate updates array
+      };
+        
+        // Log the payload to inspect its content before sending
+        console.log('Payload to send:', JSON.stringify(payload));
+
+        // Example of sending payload to the API
         try {
-            await updateDNDetails(updates);
+            await updateDNDetails(payload);  // Assuming this function sends the payload to your backend
         } catch (error) {
             console.error('Failed to update DN details:', error);
             displayNotification(`Failed to update DN details. ${error}`,'error');
