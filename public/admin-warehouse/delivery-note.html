@@ -368,7 +368,7 @@
     currentPage = 1;
     displayTableData(currentPage);
     updatePagination();
-}
+  }
 
   // Function to display selected supplier at the top of the table
   function displaySelectedSupplier() {
@@ -431,9 +431,7 @@
         <td class="px-2 py-4 text-center font-medium text-gray-900">
           <a href="delivery-note-detail.html?noDN=${dn.noDN}" class="text-blue-600 underline">${dn.noDN}</a>
         </td>
-        <td class="px-2 py-4 text-center font-medium text-gray-900">
-          <a href="purchase-order-detail.html?noPO=${dn.noPO}" class="text-blue-600 underline">${dn.noPO}</a>
-        </td>
+        <td class="px-2 py-4 text-center font-medium text-gray-900">${dn.noPO}</td>
         <td class="px-2 py-4 text-center">${dn.planDNDate}</td>
         <td class="px-2 py-4 text-center">${dn.statusDN}</td>
       `;

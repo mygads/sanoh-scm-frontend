@@ -147,12 +147,12 @@
 
               <div
                 class="flex gap-3 2xl:gap-6 items-center self-stretch my-auto text-white 2xl:min-w-[240px] text-[10px] 2xl:text-lg">
-                <a href="export-csv.html"
+                <!-- <a href="export-csv.html"
                   class="flex gap-2 2xl:gap-4 items-center self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5">
                   <img loading="lazy" src="../assets/icon_print.png" alt=""
                     class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-5 aspect-square" />
                   <span class="flex-1 shrink self-stretch my-auto ">Export CSV</span>
-                </a>
+                </a> -->
                 <a href="" target="_blank" id="print-dn-link" class="flex gap-2  items-center self-stretch px-6 py-2 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5" onclick="updatePrintButton(noDN)">
                   <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
                   <span class="flex-1 shrink self-stretch my-auto basis-0">Print DN </span>
@@ -285,6 +285,7 @@
   // Function to fetch delivery notes based on supplier
   async function fetchDeliveryNotes(noDN) {
     const token = localStorage.getItem('accessToken');
+    const selectSupplierNew = localStorage.getItem('selectedSupplierId');
 
     if (!token) {
       console.error('No access token found for fetching delivery notes');
@@ -293,7 +294,7 @@
 
     try {
       console.log(`Fetching delivery notes for bpCode: ${noDN}`);
-      const response = await fetch(`${APIindexdnheader2}/${bpCode}`, {
+      const response = await fetch(`${APIindexdnheader2}/${selectSupplierNew}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -328,12 +329,13 @@
           });
 
           // Ensure that filteredData is properly initialized
-          filteredData = [...details];
+          filterData = details;
 
           // Check if there's any data to display
-          if (filteredData.length > 0) {
+          if (filterData.length > 0) {
             // Ensure that DNDetails gets called to display data
             DNDetails();
+            updatePagination();
           } else {
             console.warn('No delivery notes found for this supplier.');
           }
@@ -352,17 +354,17 @@
   if (noDN) {
     fetchDeliveryNotes(noDN);
     updatePrintButton(noDN);
-    updateCSVButton(noDN);
-    updatePrintLabelButton(noDN);
+    // updateCSVButton(noDN);
+    // updatePrintLabelButton(noDN);
   } else {
     console.error('noDN is not available.');
   }
 
   function DNDetails() {
     if (noDN) {
-      console.log('Details array:', filteredData);  // Ensure filteredData is being logged correctly
+      console.log('Details array:', filterData);  // Ensure filterData is being logged correctly
 
-      const dn = filteredData.find(dn => dn.noDN === noDN);
+      const dn = filterData.find(dn => dn.noDN === noDN);
 
       console.log('Delivery Note found:', dn);
 
@@ -372,6 +374,7 @@
         document.getElementById('dnNumber').textContent = dn.noDN;
         document.getElementById('poNumber').textContent = noPO;
         filteredData = dn.details;  // Update filteredData with details of this specific DN
+        originalData = filteredData;
 
         if (typeof displayTableData === 'function') {
           displayTableData(filteredData);  // Pass the correct details to the table display function
@@ -402,10 +405,28 @@
 
     const searchInput = document.getElementById('search-input');
     if (searchInput) {
-      searchInput.addEventListener('input', searchTable);
+      searchInput.addEventListener('input', searchTableData);
     } else {
       console.error('Search input element not found.');
     }
+  }
+
+  function searchTableData() {
+    const searchInput = document.getElementById('search-input').value.toLowerCase();
+    if (searchInput === "") {
+      // Jika input kosong, kembalikan data ke originalData
+      filteredData = originalData;
+    } else {
+      // Filter data berdasarkan input
+      filteredData = originalData.filter(row =>
+        row.partNumber.toLowerCase().includes(searchInput) ||
+        row.partName.toLowerCase().includes(searchInput)
+      );
+    }
+  
+    currentPage = 1;
+    displayTableData(currentPage);
+    updatePagination();
   }
 
   // Function to display table data

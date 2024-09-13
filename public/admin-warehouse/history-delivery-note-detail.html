@@ -270,6 +270,7 @@
 
   async function fetchHistoryDeliveryNotes(noDN) {
     const token = localStorage.getItem('accessToken');
+    const selectSupplierNew = localStorage.getItem('selectedSupplierId');
 
     if (!bpCode) {
         console.error('bpCode not found in localStorage.');
@@ -277,7 +278,7 @@
     }
 
     try {
-        const response = await fetch(`${APIdnhistory2}/${bpCode}`, {
+        const response = await fetch(`${APIdnhistory2}/${selectSupplierNew}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -313,6 +314,7 @@
 
           // Set filteredData to match deliveryNote initially
           filteredData = details;
+          
 
           // Call function to display data
           historyDNDetails();
@@ -350,6 +352,7 @@
 
             // Store the details array into filteredData
             filteredData = dn.details;
+            originalData = filteredData;
 
             // Display the details
             if (typeof displayDNDetails === 'function') {
@@ -377,7 +380,26 @@
         updatePagination();
     });
 
-    document.getElementById('search-input').addEventListener('input', searchTable);
+    // document.getElementById('search-input').addEventListener('input', searchTableData);
+  }
+
+  function searchTableData() {
+    
+    const searchInput = document.getElementById('search-input').value.toLowerCase();
+    if (searchInput === "") {
+      // Jika input kosong, kembalikan data ke originalData
+      filteredData = originalData;
+    } else {
+      // Filter data berdasarkan input
+      filteredData = originalData.filter(row =>
+        row.partNumber.toLowerCase().includes(searchInput) ||
+        row.partName.toLowerCase().includes(searchInput)
+      );
+    }
+  
+    currentPage = 1;
+    displayTableData(currentPage);
+    updatePagination();
   }
 
   function displayDNDetails(details) {
@@ -411,47 +433,11 @@
       updatePagination(); // Re-render pagination
     });
 
-    document.getElementById('search-input').addEventListener('input', searchTable);
+    document.getElementById('search-input').addEventListener('input', searchTableData);
 
     displayDNDetails(filteredData);
     updatePagination();
   });
-
-  // Function to sort table based on column index
-  function sortTable(columnIndex) {
-    const table = document.querySelector('table');
-    const tbody = table.querySelector('tbody');
-    const rows = Array.from(tbody.querySelectorAll('tr'));
-    const isAscending = table.querySelectorAll('th')[columnIndex].classList.toggle('asc');
-    table.querySelectorAll('th').forEach((th, index) => {
-      if (index !== columnIndex) th.classList.remove('asc', 'desc');
-    });
-
-    rows.sort((a, b) => {
-      const cellA = a.querySelectorAll('td')[columnIndex].textContent.trim();
-      const cellB = b.querySelectorAll('td')[columnIndex].textContent.trim();
-
-      return cellA.localeCompare(cellB, undefined, { numeric: true, sensitivity: 'base' });
-    });
-
-    if (!isAscending) {
-      rows.reverse();
-    }
-
-    tbody.innerHTML = '';
-    tbody.append(...rows);
-  }
-
-  // Function to handle search
-  function searchTable() {
-    const searchInput = document.getElementById('search-input').value.toLowerCase();
-    filteredData = deliveryNote.find(dn => dn.noDN === noDN).details.filter(row =>
-      row.partNumber.toLowerCase().includes(searchInput) ||
-      row.partName.toLowerCase().includes(searchInput)
-    );
-    displayDNDetails(filteredData);
-    updatePagination();
-  }
 
 </script>
 
