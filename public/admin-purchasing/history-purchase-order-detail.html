@@ -241,6 +241,8 @@
 
   cekToken();
 
+  document.getElementById('search-input').addEventListener('input', searchTableDataHistoryDetail);
+
   let details = [];
   // Adjust rows per page based on screen size
   fetchHistoryPurchaseOrders();
@@ -373,44 +375,23 @@ function HistoryPODetails() {
     updatePagination();  // Only call after table is rendered
 }
 
-  function searchTable() {
-    // Get the search input element
-    const searchInputElement = document.getElementById('search-input');
-    
-    // Check if the search input element exists
-    if (!searchInputElement) {
-        console.error('Search input element not found');
-        return;
-    }
-
-    // Get the value of the search input and convert it to lowercase
-    const searchInput = searchInputElement.value.toLowerCase();
-    
-    // Check if `details` is defined and is an array
-    if (!Array.isArray(details)) {
-        console.error('Details array is not defined or not an array');
-        return;
-    }
-
-    // Filter the details array based on the search input
-    filteredData = details.filter(detail => {
-        // Ensure detail is not undefined and has the required properties
-        if (detail && typeof detail.partNumber === 'string' && typeof detail.partName === 'string') {
-            return detail.partNumber.toLowerCase().includes(searchInput) ||
-                   detail.partName.toLowerCase().includes(searchInput);
-        }
-        return false;
-    });
-
-    // Reset to the first page
-    currentPage = 1;
-    
-    // Display the filtered details on the first page
-    displayTableData(currentPage);
-    
-    // Update the pagination controls to reflect the filtered results
-    updatePagination();
+function searchTableDataHistoryDetail() {
+  // Get the search input element value
+  const searchInput = document.getElementById('search-input').value.toLowerCase();
+  
+  if (!searchInput) {
+      filteredData = dataDetail;
+  } else {
+      filteredData = dataDetail.filter(row =>
+          row.partNumber.toLowerCase().includes(searchInput) || 
+          row.partName.toLowerCase().includes(searchInput)
+      );
   }
+
+  currentPage = 1; // Reset to page 1 after search
+  displayTableData(currentPage); // Display filtered data
+  updatePagination();
+}
 
 </script>
 
