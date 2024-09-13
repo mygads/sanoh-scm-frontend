@@ -383,7 +383,7 @@
 
         const token = localStorage.getItem('accessToken'); // Ensure token is fetched properly
 
-        const response = await fetch('https://api.edutrashgo.com/api/updatedndetail1', {
+        const response = await fetch(API_indexDNDetailUpdateSupplier, {
             method: 'PUT',  // Ensure the correct HTTP method is used
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -433,7 +433,7 @@
         const dn = details.find(dn => dn.noDN === noDN);
 
         // Debug: Check if the correct Delivery Note object is found
-        console.log('Delivery Note found:', dn);
+        // console.log('Delivery Note found:', dn);
 
         if (dn) {
             const noPO = dn.noPO || 'No PO provided';
@@ -590,6 +590,9 @@
           no_dn : noDN,   // Top-level no_dn
           updates: updates // Separate updates array
       };
+
+      console.log('Payload to send:', JSON.stringify(payload, null, 2));
+
         
         // Log the payload to inspect its content before sending
         console.log('Payload to send:', JSON.stringify(payload));
