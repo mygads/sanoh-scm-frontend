@@ -240,7 +240,12 @@
     console.log('DOM fully loaded and parsed');
 
     fetchSuppliers();
+
+    window.addEventListener('resize', () => {
     adjustRowsPerPage();
+    displayTableData(currentPage);
+    updatePagination();
+    });
 
     const supplierSelect = document.getElementById('supplier_id'); // Get supplier dropdown element
     const searchButton = document.getElementById('search-button'); // Get search button element
@@ -262,10 +267,7 @@
       }
     });
 
-    // Event listener for search input
-    if (searchButton) {
-      searchButton.addEventListener('input', searchTable); // Add search event listener
-    }
+    document.getElementById('search-input').addEventListener('input', searchTableData);
   });
 
   // Fungsi untuk mengambil data supplier
@@ -358,6 +360,7 @@
         }));
 
         filteredData = [...purchaseOrder];
+        originalData = [...filteredData];
         displayTableData(currentPage);
         updatePagination();
       } else {
@@ -454,17 +457,22 @@
 
 
   // Function to search table data
-  function searchTable() {
+  function searchTableData() {
     const searchInput = document.getElementById('search-input').value.toLowerCase();
     if (!searchInput) {
       console.warn('Search input is empty');
-      return;
+      filteredData = originalData;
+    } else {
+      filteredData = originalData.filter(row =>
+        row.noPO.toLowerCase().includes(searchInput) || 
+        row.poDate.toLowerCase().includes(searchInput) || 
+        row.status.toLowerCase().includes(searchInput)
+      );
     }
 
-    filteredData = purchaseOrder.filter(po => po.noPO.toLowerCase().includes(searchInput));
-    console.log(`Search result: Found ${filteredData.length} matching rows`);
     currentPage = 1; // Reset to page 1 after search
     displayTableData(currentPage); // Display filtered data
+    updatePagination();
   }
 
   function adjustRowsPerPage() {
