@@ -329,6 +329,7 @@
 
           // Ensure that filteredData is properly initialized
           filteredData = [...details];
+          originalData = filteredData;
 
           // Check if there's any data to display
           if (filteredData.length > 0) {
@@ -406,6 +407,24 @@
     } else {
       console.error('Search input element not found.');
     }
+  }
+
+  function searchTableData() {
+    const searchInput = document.getElementById('search-input').value.toLowerCase();
+    if (searchInput === "") {
+      // Jika input kosong, kembalikan data ke originalData
+      filteredData = originalData;
+    } else {
+      // Filter data berdasarkan input
+      filteredData = originalData.filter(row =>
+        row.partNumber.toLowerCase().includes(searchInput) ||
+        row.partName.toLowerCase().includes(searchInput)
+      );
+    }
+  
+    currentPage = 1;
+    displayTableData(currentPage);
+    updatePagination();
   }
 
   // Function to display table data
