@@ -7,12 +7,13 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
+  <link
+    href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
   <link rel="icon" type="image/png" href="../assets/icon_sanoh.png">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  
+
 </head>
 
 <body class="font-poppins bg-white">
@@ -41,7 +42,7 @@
 
             <!-- Purchase Order -->
             <li>
-              <a 
+              <a
                 class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 active">
                 <img loading="lazy" src="../assets/icon_po_default.svg" alt="Purchase Order"
                   class="object-contain w-4 2xl:w-6 icon-po-active" />
@@ -96,9 +97,10 @@
 
           <header class="flex gap-3 items-center self-start text-2xl font-semibold text-black">
             <a href="purchase-order.html">
-                <img loading="lazy" src="../assets/icon_back.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-5 2xl:w-7 cursor-pointer pointer-events-auto aspect-square" />
+              <img loading="lazy" src="../assets/icon_back.svg" alt=""
+                class="object-contain shrink-0 self-stretch my-auto w-5 2xl:w-7 cursor-pointer pointer-events-auto aspect-square" />
             </a>
-            
+
             <h1 class="self-stretch my-auto text-[80%] 2xl:text-[120%]">Purchase Order (PO) Detail</h1>
           </header>
 
@@ -109,37 +111,45 @@
               <!-- No PO -->
               <div class="flex gap-3 2xl:gap-6 items-center self-stretch my-auto text-black min-w-[10%]">
                 <div class="self-stretch my-auto ">No. PO</div>
-                <div id="poNumber" class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap rounded bg-stone-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
+                <div id="poNumber"
+                  class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap rounded bg-stone-300 min-h-[10%] w-[8%] max-md:px-5">
+                </div>
               </div>
 
               <!-- Search Bar -->
               <div class="flex flex-wrap items-center self-stretch my-auto  text-neutral-500">
                 <div class="flex items-center px-4 2xl:px-6 py-2 2xl:py-4 bg-neutral-100 rounded w-full ml-auto">
-                  <input id="search-input" type="text" placeholder="Search part number or name" class="flex-1 bg-neutral-100 outline-none 2xl:text-base">
+                  <input id="search-input" type="text" placeholder="Search part number or name"
+                    class="flex-1 bg-neutral-100 outline-none 2xl:text-base">
                   <img src="../assets/icon_search.svg" alt="Search Icon" class="w-4 2xl:w-5 h-4 2xl:h-5 ml-3">
                 </div>
               </div>
             </div>
 
             <div class="flex flex-wrap gap-[10%] justify-between items-center mt-4 2xl:mt-6 w-full">
-              
+
               <!-- Note -->
               <div class="flex gap-6 2xl:gap-10 items-center self-stretch my-auto text-black min-w-[10%]">
                 <div class="self-stretch my-auto ">Note</div>
-                <div id="noteInput" type="text" class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap ounded border border-solid border-neutral-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
+                <div id="noteInput" type="text"
+                  class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap ounded border border-solid border-neutral-300 min-h-[10%] w-[8%] max-md:px-5">
+                </div>
               </div>
-              
+
               <div class="flex gap-3  items-center self-stretch my-auto text-white text-[10px] ">
-                <a href="" target="_blank" id="print-po-link" class="flex gap-2  items-center self-stretch px-6  py-2  my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5" onclick="updatePrintButton(noPO)">
-                    <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
-                    <span class="flex-1 shrink self-stretch my-auto basis-0">Print PO</span>
+                <a href="" target="_blank" id="print-po-link"
+                  class="flex gap-2  items-center self-stretch px-6  py-2  my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5"
+                  onclick="updatePrintButton(noPO)">
+                  <img loading="lazy" src="../assets/icon_print.png" alt=""
+                    class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
+                  <span class="flex-1 shrink self-stretch my-auto basis-0">Print PO</span>
                 </a>
               </div>
 
             </div>
 
           </div>
-          
+
         </section>
 
         <!-- table -->
@@ -149,29 +159,39 @@
             <table class="w-full text-[11px] 2xl:text-base text-left text-gray-700 dark:text-gray-700">
               <thead class="text-[14px] 2xl:text-[20px] text-gray-700">
                 <tr>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(0)">
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                    onclick="sortTable(0)">
                     No
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
+                      class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(1)">
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                    onclick="sortTable(1)">
                     Part Number
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
+                      class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(2)">
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                    onclick="sortTable(2)">
                     Part Name
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
+                      class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(3)">
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                    onclick="sortTable(3)">
                     UoM
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
+                      class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(4)">
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                    onclick="sortTable(4)">
                     QTY
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
+                      class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
                 </tr>
@@ -182,7 +202,7 @@
             </table>
           </div>
         </div>
-  
+
         <!-- Pagination -->
         <div class="flex justify-end my-6">
           <div class="flex gap-2 2xl:gap-4 items-center pagination">
@@ -203,14 +223,16 @@
 <script>
   cekToken();
 
+  document.getElementById('search-input').addEventListener('input', searchTableData);
+
   let details = [];
 
   fetchPurchaseOrders();
 
-   // Assign the noPO from URL
-   let noPO = getUrlParameter('noPO');
+  // Assign the noPO from URL
+  let noPO = getUrlParameter('noPO');
 
-   // Function to get URL parameters
+  // Function to get URL parameters
   function getUrlParameter(name) {
     const params = new URLSearchParams(window.location.search);
     return params.get(name);
@@ -229,9 +251,9 @@
   // Function to fetch suppliers
   async function fetchPurchaseOrders() {
     const token = localStorage.getItem('accessToken');
-    const bpCode= localStorage.getItem('bpCode');
+    const bpCode = localStorage.getItem('bpCode');
 
-     try {
+    try {
       const response = await fetch(`${APIindexpoheader3}/${bpCode}`, {
         method: 'GET',
         headers: {
@@ -243,7 +265,7 @@
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
+
       const data = await response.json();
       // console.log("Data fetched:", data);
 
@@ -267,85 +289,86 @@
           })) : []  // Ensure details is an array, even if no data is found
         }));
 
-       // console.log("Filtered Purchase Orders:", details);
-       filteredData = details;
+        // console.log("Filtered Purchase Orders:", details);
+        filteredData = details;
+        originalData = filteredData;
 
-       displayTableData(1);
-       updatePagination();
-
-       // Once data is fetched, call the function to process the PO details
-       PODetails();
-     } else {
-       console.error('No purchase order data found in the expected format.');
-     }
-     displayTableData(1);
-     updatePagination();
-   } catch (error) {
-     console.error('Error fetching purchase orders:', error);
-   }
- }
-
- function PODetails() {
-  const params = new URLSearchParams(window.location.search);
-  const noPO = params.get('noPO');
-  // const getNoPo = noPO;
-  // // console.log(getNoPo);
-
-  if (noPO) {
-    // Debug: Check if `details` array is populated
-    // console.log('Details array:', details);
-
-    const po = details.find(po => po.noPO === noPO);
-    
-    // Debug: Check if the correct Purchase Order object is found
-    // console.log('Purchase Order found:', po);
-
-    if (po) {
-      // Check for `note` value and handle all possible cases
-      const note = po.note !== null && po.note !== undefined && po.note.trim() !== '' 
-        ? po.note 
-        : 'No note provided';
-
-      document.getElementById('poNumber').textContent = po.noPO;
-      document.getElementById('noteInput').textContent = note;
-
-      // Store the details array into filteredData
-      filteredData = po.details;
-
-      // Display the details
-      if (typeof displayTableData === 'function') {
-        displayTableData(1);  // Show first page of details
-      } else {
-        console.error('displayTableData function is not defined.');
-      }
-
-      // Update pagination for details
-      if (typeof updatePagination === 'function') {
+        displayTableData(1);
         updatePagination();
-      } else {
-        console.error('updatePagination function is not defined.');
-      }
 
-    } else {
-      console.error('Purchase Order data not found in details array.');
+        // Once data is fetched, call the function to process the PO details
+        PODetails();
+      } else {
+        console.error('No purchase order data found in the expected format.');
+      }
+      displayTableData(1);
+      updatePagination();
+    } catch (error) {
+      console.error('Error fetching purchase orders:', error);
     }
-  } else {
-    console.error('Parameter noPO not found in the URL.');
   }
 
-  window.addEventListener('resize', () => {
-    displayTableData(1);  // Adjust display when resized
-    updatePagination();
-  });
+  function PODetails() {
+    const params = new URLSearchParams(window.location.search);
+    const noPO = params.get('noPO');
+    // const getNoPo = noPO;
+    // // console.log(getNoPo);
 
-  document.getElementById('search-input').addEventListener('input', searchTable);
-}
+    if (noPO) {
+      // Debug: Check if `details` array is populated
+      // console.log('Details array:', details);
+
+      const po = details.find(po => po.noPO === noPO);
+
+      // Debug: Check if the correct Purchase Order object is found
+      // console.log('Purchase Order found:', po);
+
+      if (po) {
+        // Check for `note` value and handle all possible cases
+        const note = po.note !== null && po.note !== undefined && po.note.trim() !== ''
+          ? po.note
+          : 'No note provided';
+
+        document.getElementById('poNumber').textContent = po.noPO;
+        document.getElementById('noteInput').textContent = note;
+
+        // Store the details array into filteredData
+        filteredData = po.details;
+
+        // Display the details
+        if (typeof displayTableData === 'function') {
+          displayTableData(1);  // Show first page of details
+        } else {
+          console.error('displayTableData function is not defined.');
+        }
+
+        // Update pagination for details
+        if (typeof updatePagination === 'function') {
+          updatePagination();
+        } else {
+          console.error('updatePagination function is not defined.');
+        }
+
+      } else {
+        console.error('Purchase Order data not found in details array.');
+      }
+    } else {
+      console.error('Parameter noPO not found in the URL.');
+    }
+
+    window.addEventListener('resize', () => {
+      displayTableData(1);  // Adjust display when resized
+      updatePagination();
+    });
+
+    document.getElementById('search-input').addEventListener('input', searchTable);
+  }
 
   // Function to display PO details in a table
   function displayTableData(page) {
     const tableBody = document.getElementById('table-body-detail');
     tableBody.innerHTML = '';
-    
+
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
     const paginatedData = filteredData.slice(start, end);
@@ -364,44 +387,31 @@
     });
   }
 
-  function searchTable() {
-    // Get the search input element
-    const searchInputElement = document.getElementById('search-input');
-    
-    // Check if the search input element exists
-    if (!searchInputElement) {
-        console.error('Search input element not found');
-        return;
+  function searchTableData() {
+    // Ambil nilai dari search input
+    const searchInput = document.getElementById('search-input').value.toLowerCase();
+
+    // Jika input kosong, tampilkan kembali data original
+    if (searchInput === '') {
+        filteredData = originalData; // Kembali ke data asli
+    } else {
+        // Filter data berdasarkan partNumber dan partName, pastikan untuk menghindari error undefined
+        filteredData = originalData.filter(row => {
+            // Cek apakah partNumber ada dan merupakan string, jika tidak, berikan nilai default string kosong
+            const partNumber = (row.partNumber && typeof row.partNumber === 'string') ? row.partNumber.toLowerCase() : '';
+            // Cek apakah partName ada dan merupakan string, jika tidak, berikan nilai default string kosong
+            const partName = (row.partName && typeof row.partName === 'string') ? row.partName.toLowerCase() : '';
+
+            // Lakukan pencarian pada partNumber atau partName
+            return partNumber.includes(searchInput) || partName.includes(searchInput);
+        });
     }
 
-    // Get the value of the search input and convert it to lowercase
-    const searchInput = searchInputElement.value.toLowerCase();
-    
-    // Check if `details` is defined and is an array
-    if (!Array.isArray(details)) {
-        console.error('Details array is not defined or not an array');
-        return;
-    }
-
-    // Filter the details array based on the search input
-    filteredData = details.filter(detail => {
-        // Ensure detail is not undefined and has the required properties
-        if (detail && typeof detail.partNumber === 'string' && typeof detail.partName === 'string') {
-            return detail.partNumber.toLowerCase().includes(searchInput) ||
-                   detail.partName.toLowerCase().includes(searchInput);
-        }
-        return false;
-    });
-
-    // Reset to the first page
-    currentPage = 1;
-    
-    // Display the filtered details on the first page
-    displayTableData(currentPage);
-    
-    // Update the pagination controls to reflect the filtered results
+    currentPage = 1; // Reset ke halaman pertama setelah pencarian
+    displayTableData(currentPage); // Tampilkan data yang difilter
     updatePagination();
-  }
+}
+
 </script>
 
 </html>
