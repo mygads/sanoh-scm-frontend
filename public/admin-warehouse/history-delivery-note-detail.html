@@ -10,9 +10,9 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="../style.css"
+  <link rel="stylesheet" href="../style.css">
   <link rel="icon" type="image/png" href="../assets/icon_sanoh.png">
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 
@@ -262,20 +262,14 @@
 <script>
   cekToken();
 
-  // Adjust rows per page based on screen size
-  adjustRowsPerPage();
-
   let sortOrder = {}; // Objek untuk melacak urutan pengurutan setiap kolom
   let details = [];
-  let filteredDnDetailData = [];
 
   const params = new URLSearchParams(window.location.search);
   const noDN = params.get('noDN');
 
-  // Function to fetch delivery notes from the API
-  async function fetchHistoryDeliveryNotes() {
+  async function fetchHistoryDeliveryNotes(noDN) {
     const token = localStorage.getItem('accessToken');
-    const bpCode = localStorage.getItem('bpCode'); 
 
     if (!bpCode) {
         console.error('bpCode not found in localStorage.');
@@ -283,7 +277,7 @@
     }
 
     try {
-        const response = await fetch(`${APIdnhistory2}${bpCode}`, {
+        const response = await fetch(`${APIdnhistory2}/${bpCode}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -317,8 +311,8 @@
                   })) : []
               }));
 
-          // Set filteredHistoryDNData to match deliveryNote initially
-          filteredHistoryDNData = details;
+          // Set filteredData to match deliveryNote initially
+          filteredData = details;
 
           // Call function to display data
           historyDNDetails();
@@ -354,12 +348,12 @@
             document.getElementById('poNumber').textContent = noPO;
             document.getElementById('planDelivery').textContent = planDNDate;
 
-            // Store the details array into filteredDnDetailData
-            filteredDnDetailData = dn.details;
+            // Store the details array into filteredData
+            filteredData = dn.details;
 
             // Display the details
             if (typeof displayDNDetails === 'function') {
-                displayDNDetails(filteredDnDetailData);  // Show first page of details
+                displayDNDetails(filteredData);  // Show first page of details
             } else {
                 console.error('displayDNDetails function is not defined.');
             }
@@ -379,7 +373,7 @@
     }
 
     window.addEventListener('resize', () => {
-        displayDNDetails(filteredHistoryDNData);  // Adjust display when resized
+        displayDNDetails(filteredData);  // Adjust display when resized
         updatePagination();
     });
 
@@ -390,11 +384,7 @@
     const tableBody = document.getElementById('table-body-detail');
     tableBody.innerHTML = '';
 
-    const start = (currentPage - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
-    const paginatedData = details.slice(start, end);
-
-    paginatedData.forEach((detail, index) => {
+    details.forEach((detail, index) => {
       const tableRow = document.createElement('tr');
       tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
       tableRow.innerHTML = `
@@ -410,50 +400,13 @@
     });
   }
 
-  if (noDN) {
-    const dn = deliveryNote.find(dn => dn.noDN === noDN);
-    if (dn) {
-      document.getElementById('dnNumber').textContent = dn.noDN;
-      document.getElementById('poNumber').textContent = dn.noPO;
-      document.getElementById('planDelivery').textContent = dn.planDNDate;
-      filteredData = dn.details;
-      displayDNDetails(dn.details);
-      updatePagination();
-    } else {
-      console.error('Data DN tidak ditemukan dalam array data.');
-    }
-  } else {
-    console.error('Parameter noDN tidak ditemukan dalam URL.');
-  }
-
-  function displayDNDetails(details) {
-    const tableBody = document.getElementById('table-body-detail');
-    tableBody.innerHTML = '';
-
-    const start = (currentPage - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
-    const paginatedData = details.slice(start, end);
-
-    paginatedData.forEach((row, index) => {
-      const tableRow = document.createElement('tr');
-      tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
-      tableRow.innerHTML = `
-        <td class="px-2 py-4 text-center font-medium text-gray-900">${row.no}</td>
-        <td class="px-2 py-4 text-center">${row.partNumber}</td>
-        <td class="px-2 py-4 text-center">${row.partName}</td>
-        <td class="px-2 py-4 text-center">${row.QTY}</td>
-        <td class="px-2 py-4 text-center">${row.qtyLabel}</td>
-        <td class="px-2 py-4 text-center">${row.qtyDelivered}</td>
-        <td class="px-2 py-4 text-center">${row.qtyReceived}</td>
-      `;
-      tableBody.appendChild(tableRow);
-    });
-  }
-
   document.addEventListener('DOMContentLoaded', () => {
-    adjustRowsPerPage(); // Set rows per page based on initial screen size
+    const name = localStorage.getItem('name');
+    const bpCode = localStorage.getItem('bpCode');
+
+    document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
+    
     window.addEventListener('resize', () => {
-      adjustRowsPerPage(); // Adjust rows per page on screen resize
       displayDNDetails(filteredData); // Re-render table data
       updatePagination(); // Re-render pagination
     });
@@ -496,7 +449,6 @@
       row.partNumber.toLowerCase().includes(searchInput) ||
       row.partName.toLowerCase().includes(searchInput)
     );
-    currentPage = 1;
     displayDNDetails(filteredData);
     updatePagination();
   }

@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Purchase Order Supplier</title>
+  <title>History Purchase Order Supplier</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -224,7 +224,7 @@
 
             // Set filteredData to match historyPurchaseOrder initially
             filteredData = historyPurchaseOrder;
-            filteredHistoryPODetailData = historyPurchaseOrder;
+            originalData = filteredData;
 
             // Call functions to display data and setup pagination
             if (typeof displayTableData === 'function') {
@@ -280,9 +280,19 @@
     });
   }
 
-  function searchTable() {
+  function searchTableData() {
     const searchInput = document.getElementById('search-input').value.toLowerCase();
-    filteredData = historyPurchaseOrder.filter(row => row.noPO.toLowerCase().includes(searchInput)); // Use historyPurchaseOrder for filtering
+    if (searchInput === "") {
+      // Jika input kosong, kembalikan data ke originalData
+      filteredData = originalData;
+    } else {
+      // Filter data berdasarkan input
+      filteredData = originalData.filter(row =>
+        row.noPO.toLowerCase().includes(searchInput) ||
+        row.status.toLowerCase().includes(searchInput) 
+      );
+    }
+  
     currentPage = 1;
     displayTableData(currentPage);
     updatePagination();
@@ -324,14 +334,12 @@
 
     document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
 
-    adjustRowsPerPage(); // Set rows per page based on initial screen size
     window.addEventListener('resize', () => {
-        adjustRowsPerPage(); // Adjust rows per page on screen resize
         displayTableData(currentPage); // Re-render table data
         updatePagination(); // Re-render pagination
     });
 
-    document.getElementById('search-input').addEventListener('input', searchTable);
+    document.getElementById('search-input').addEventListener('input', searchTableData);
     displayTableData(currentPage);
     updatePagination();
   });

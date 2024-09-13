@@ -121,12 +121,12 @@
               </div>
 
               <!-- Search Bar -->
-              <div class="flex flex-wrap items-center self-stretch my-auto  text-neutral-500">
+              <!-- <div class="flex flex-wrap items-center self-stretch my-auto  text-neutral-500">
                 <div class="flex items-center px-4 2xl:px-6 py-2 2xl:py-4 bg-neutral-100 rounded w-full ml-auto">
                   <input id="search-input" type="text" placeholder="Search part number or name" class="flex-1 bg-neutral-100 outline-none 2xl:text-base">
                   <img src="../assets/icon_search.svg" alt="Search Icon" class="w-4 2xl:w-5 h-4 2xl:h-5 ml-3">
                 </div>
-              </div>
+              </div> -->
 
             </div>
 
@@ -151,7 +151,7 @@
                   <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 spect-square" />
                   <span class="flex-1 shrink self-stretch my-auto ">Print Label</span>
                 </a>
-                <a href="" target="_blank" id="print-csv-link" class="flex gap-2  items-center self-stretch px-4 py-2 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5" onclick="updateCSVButton(noDN)">
+                <a href="" target="_blank" id="print-csv-link" class="flex gap-2  items-center self-stretch px-4 py-2 my-auto bg-gray-500 rounded  pointer-events-auto max-md:px-5 disabled cursor-not-allowed" onclick="updateCSVButton(noDN)">
                   <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
                   <span class="flex-1 shrink self-stretch my-auto ">Export CSV</span>
                 </a>
@@ -343,6 +343,7 @@
                     noPO: dn.po_no ? dn.po_no.toString() : '',
                     planDNDate: dn.plan_delivery_date || '',
                     statusDN: dn.status_desc || '',
+                    confirmUpdateAt: dn.confirm_update_at,
                     // Ensure dn.detail exists and is an array, otherwise use an empty array
                     details: Array.isArray(dn.detail) && dn.detail.length > 0 ? dn.detail.map((detail, index) => ({
                         no: (index + 1).toString(),
@@ -375,10 +376,10 @@
     }
   }
 
-  async function updateDNDetails(updates) {
+  async function updateDNDetails(payload) {
     try {
         // Log the payload being sent
-        console.log(`Updating DN details:`, updates);
+        console.log(`Updating DN details:`, payload);
 
         const token = localStorage.getItem('accessToken'); // Ensure token is fetched properly
 
@@ -389,7 +390,7 @@
                 'Content-Type': 'application/json',
             },
             // Send the array of updates
-            body: JSON.stringify({ updates }),  // Example payload: { updates: [{ no_detail: 1, qty_confirm: 10 }, { no_detail: 2, qty_confirm: 20 }] }
+            body: JSON.stringify(payload, null, 2),  // Example payload: { updates: [{ no_detail: 1, qty_confirm: 10 }, { no_detail: 2, qty_confirm: 20 }] }
         });
 
         if (!response.ok) {
@@ -432,7 +433,7 @@
         const dn = details.find(dn => dn.noDN === noDN);
 
         // Debug: Check if the correct Delivery Note object is found
-        console.log('Delivery Note found:', dn);
+        // console.log('Delivery Note found:', dn);
 
         if (dn) {
             const noPO = dn.noPO || 'No PO provided';
@@ -441,6 +442,34 @@
             document.getElementById('dnNumber').textContent = dn.noDN;
             document.getElementById('poNumber').textContent = noPO;
             document.getElementById('planDelivery').textContent = planDNDate;
+
+            // Periksa status_desc, jika "Confirmed", tombol dihilangkan
+            const confirmButton = document.getElementById('confirm-button');
+            const confirmSection = document.getElementById('confirm-section'); // Seksi yang memuat tombol
+
+            // Periksa apakah confirm_update_at null atau sudah terisi
+
+            if (dn.confirmUpdateAt === null) {
+              confirmButton.textContent = 'Confirm Order';
+              confirmButton.disabled = false;
+            } else {
+              confirmButton.textContent = 'Edit';
+              confirmButton.disabled = false;
+            }
+
+            if (dn.statusDN === "Confirmed") {
+              // Jika status confirmed, sembunyikan tombol
+              confirmSection.style.display = "none";
+            } else {
+              // Periksa apakah confirm_update_at null atau sudah terisi
+              if (dn.confirmUpdateAt === null) {
+                confirmButton.textContent = 'Confirm Order';
+                confirmButton.disabled = false;
+              } else {
+                confirmButton.textContent = 'Edit';
+                confirmButton.disabled = false;
+              }
+            }
 
             // Store the details array into filteredDnDetailData
             filteredDnDetailData = dn.details;
@@ -463,14 +492,33 @@
         displayDNDetails(filteredDnDetailData);  // Adjust display when resized
     });
 
-    document.getElementById('search-input').addEventListener('input', searchTable);
+    
   }
+
+  // document.getElementById('search-input').addEventListener('input', searchTableData);
+
+  // function searchTableData() {
+  //   const searchInput = document.getElementById('search-input').value.toLowerCase();
+  //   if (searchInput === "") {
+  //     // Jika input kosong, kembalikan data ke originalData
+  //     filteredData = originalData;
+  //   } else {
+  //     // Filter data berdasarkan input
+  //     filteredData = originalData.filter(detail =>
+  //       detail.partName.toLowerCase().includes(searchInput) ||
+  //       detail.partNumber.toLowerCase().includes(searchInput)
+  //     );
+  //   }
+
+  //   displayDNDetails(filteredDnDetailData);
+  // }
+
 
   function displayDNDetails(details) {
     const tableBody = document.getElementById('table-body-detail');
     tableBody.innerHTML = '';
 
-    details.forEach((detail, index) => {
+    details.forEach(detail => {
         const tableRow = document.createElement('tr');
         tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
         tableRow.innerHTML = `
@@ -556,7 +604,7 @@
 
             qtyConfirm = parseInt(qtyConfirm);
 
-            updates.push({ dn_detail_no: dnDetailNo, qty_confirm: qtyConfirm });
+            updates.push({ dn_detail_no: parseInt(dnDetailNo), qty_confirm: qtyConfirm });
 
             // Update the local data array
             const dataIndex = filteredDnDetailData.findIndex(detail => detail.dnDetailNo === dnDetailNo);
@@ -565,8 +613,21 @@
             }
         }
 
+        // Create the payload with dn_no separate from updates
+      const payload = {
+          no_dn : noDN,   // Top-level no_dn
+          updates: updates // Separate updates array
+      };
+
+      console.log('Payload to send:', JSON.stringify(payload, null, 2));
+
+        
+        // Log the payload to inspect its content before sending
+        console.log('Payload to send:', JSON.stringify(payload));
+
+        // Example of sending payload to the API
         try {
-            await updateDNDetails(updates);
+            await updateDNDetails(payload);  // Assuming this function sends the payload to your backend
         } catch (error) {
             console.error('Failed to update DN details:', error);
             displayNotification(`Failed to update DN details. ${error}`,'error');

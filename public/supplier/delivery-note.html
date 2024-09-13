@@ -230,6 +230,7 @@
 
               // Set filteredData to match deliveryNote initially
               filteredData = deliveryNote;
+              originalData = filteredData;
 
               displayTableData(1);
               updatePagination();
@@ -251,6 +252,11 @@
       const start = (page - 1) * rowsPerPage;
       const end = start + rowsPerPage;
       const paginatedData = filteredData.slice(start, end);
+  
+      if (paginatedData.length === 0) {
+        tableBody.innerHTML = '<tr><td colspan="4" class="text-center">No data available for this supplier</td></tr>';
+        return;
+      }
 
       // Iterate through filteredData to display in the table
       paginatedData.forEach(row => {
@@ -269,51 +275,31 @@
       });
   }
 
-  function searchTable() {
-      const searchInput = document.getElementById('search-input').value.toLowerCase();
-      filteredData = deliveryNote.filter(row => row.noDN.toLowerCase().includes(searchInput));
-      displayTableData(); // Re-display data after searching
-  }
+  function searchTableData() {
 
-  function sortTable(columnIndex) {
-      const table = document.querySelector('table');
-      const tbody = table.querySelector('tbody');
-      const rows = Array.from(tbody.querySelectorAll('tr'));
-      const isAscending = table.querySelectorAll('th')[columnIndex].classList.toggle('asc');
-      table.querySelectorAll('th').forEach((th, index) => {
-          if (index !== columnIndex) th.classList.remove('asc', 'desc');
-      });
 
-      rows.sort((a, b) => {
-          const cellA = a.querySelectorAll('td')[columnIndex].textContent.trim();
-          const cellB = b.querySelectorAll('td')[columnIndex].textContent.trim();
-
-          if (columnIndex === 2) { // For planDNDate, handle date sorting
-              return new Date(cellA) - new Date(cellB);
-          }
-
-          return cellA.localeCompare(cellB, undefined, { numeric: true, sensitivity: 'base' });
-      });
-
-      if (!isAscending) {
-          rows.reverse();
-      }
-
-      tbody.innerHTML = '';
-      tbody.append(...rows);
+    const searchInput = document.getElementById('search-input').value.toLowerCase();
+    console.log(searchInput);
+    if (searchInput === "") {
+      // Jika input kosong, kembalikan data ke originalData
+      filteredData = originalData;
+    } else {
+      // Filter data berdasarkan input
+      filteredData = originalData.filter(row =>
+        row.noDN.toLowerCase().includes(searchInput) ||
+        row.noPO.toLowerCase().includes(searchInput) ||
+        row.statusDN.toLowerCase().includes(searchInput)
+      );
+    }
+    console.log(filteredData);
+  
+    displayTableData(1);
+    updatePagination();
   }
 
   // Execute after DOM is loaded
   document.addEventListener('DOMContentLoaded', () => {
-      const name = localStorage.getItem('name');
-      const bpCode = localStorage.getItem('bpCode');
-
-      document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
-
-      // Fetch and display delivery notes
-      fetchDeliveryNotes();
-
-      document.getElementById('search-input').addEventListener('input', searchTable);
+    document.getElementById('search-input').addEventListener('input', searchTableData);
   });
 
 </script>
