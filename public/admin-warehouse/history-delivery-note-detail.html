@@ -270,6 +270,7 @@
 
   async function fetchHistoryDeliveryNotes(noDN) {
     const token = localStorage.getItem('accessToken');
+    const selectSupplierNew = localStorage.getItem('selectedSupplierId');
 
     if (!bpCode) {
         console.error('bpCode not found in localStorage.');
@@ -277,7 +278,7 @@
     }
 
     try {
-        const response = await fetch(`${APIdnhistory2}/${bpCode}`, {
+        const response = await fetch(`${APIdnhistory2}/${selectSupplierNew}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -313,7 +314,7 @@
 
           // Set filteredData to match deliveryNote initially
           filteredData = details;
-          originalData = filteredData;
+          
 
           // Call function to display data
           historyDNDetails();
@@ -351,6 +352,7 @@
 
             // Store the details array into filteredData
             filteredData = dn.details;
+            originalData = filteredData;
 
             // Display the details
             if (typeof displayDNDetails === 'function') {
@@ -378,10 +380,11 @@
         updatePagination();
     });
 
-    document.getElementById('search-input').addEventListener('input', searchTable);
+    // document.getElementById('search-input').addEventListener('input', searchTableData);
   }
 
   function searchTableData() {
+    
     const searchInput = document.getElementById('search-input').value.toLowerCase();
     if (searchInput === "") {
       // Jika input kosong, kembalikan data ke originalData
@@ -430,7 +433,7 @@
       updatePagination(); // Re-render pagination
     });
 
-    document.getElementById('search-input').addEventListener('input', searchTable);
+    document.getElementById('search-input').addEventListener('input', searchTableData);
 
     displayDNDetails(filteredData);
     updatePagination();
