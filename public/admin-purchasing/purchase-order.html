@@ -235,13 +235,17 @@
   cekToken();
 
   let sortOrder = {}; // Object to keep track of sort order for each column
-  let rowsPerPage = 6; // Default rows per page
-  let currentPage = 1; // Default to the first page
 
   document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM fully loaded and parsed');
 
     fetchSuppliers();
+
+    window.addEventListener('resize', () => {
+    adjustRowsPerPage();
+    displayTableData(currentPage);
+    updatePagination();
+    });
 
     const supplierSelect = document.getElementById('supplier_id'); // Get supplier dropdown element
     const searchButton = document.getElementById('search-button'); // Get search button element
@@ -257,15 +261,13 @@
         await fetchPurchaseOrder(selectedSupplierId); // Fetch delivery notes based on the selected supplier
         displaySelectedSupplier(); // Display selected supplier in the table
         displayTableData(currentPage); // Display data for the first page
+        updatePagination();
       } else {
         console.error('No supplier selected.');
       }
     });
 
-    // Event listener for search input
-    if (searchButton) {
-      searchButton.addEventListener('input', searchTable); // Add search event listener
-    }
+    document.getElementById('search-input').addEventListener('input', searchTableData);
   });
 
   // Fungsi untuk mengambil data supplier
@@ -301,8 +303,6 @@
       console.error('Error during fetching suppliers:', error);
     }
   }
-
-
 
   // Fungsi untuk mengisi dropdown supplier
   function populateSupplierDropdown(suppliersData) {
@@ -355,12 +355,14 @@
           planDelivery: po.planned_receipt_date || 'Unknown Plan Delivery',
           poRevision: po.po_revision_no || 'Unknown Revision No',
           revisionDate: po.po_revision_date || 'Unknown Revision Date',
-          status: po.status || 'Unknown Status',
+          status: po.po_status || 'Unknown Status',
           response: po.response || 'Unknown Response'
         }));
 
         filteredData = [...purchaseOrder];
+        originalData = [...filteredData];
         displayTableData(currentPage);
+        updatePagination();
       } else {
         const tableBody = document.getElementById('table-body');
         if (tableBody) {
@@ -455,18 +457,34 @@
 
 
   // Function to search table data
-  function searchTable() {
+  function searchTableData() {
     const searchInput = document.getElementById('search-input').value.toLowerCase();
     if (!searchInput) {
       console.warn('Search input is empty');
-      return;
+      filteredData = originalData;
+    } else {
+      filteredData = originalData.filter(row =>
+        row.noPO.toLowerCase().includes(searchInput) || 
+        row.poDate.toLowerCase().includes(searchInput) || 
+        row.status.toLowerCase().includes(searchInput)
+      );
     }
 
-    filteredData = purchaseOrder.filter(po => po.noPO.toLowerCase().includes(searchInput));
-    console.log(`Search result: Found ${filteredData.length} matching rows`);
     currentPage = 1; // Reset to page 1 after search
     displayTableData(currentPage); // Display filtered data
+    updatePagination();
   }
+
+  function adjustRowsPerPage() {
+    if (window.innerHeight < 768) {
+      rowsPerPage = 6; // Update the existing variable, no need to redeclare
+    } else if (window.innerHeight < 1280) {
+      rowsPerPage = 8; // Update the existing variable
+    } else {
+      rowsPerPage = 10; // Update the existing variable
+    }
+}
+
 
 </script>
 
