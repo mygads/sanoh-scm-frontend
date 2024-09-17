@@ -47,6 +47,7 @@ APIpartner2 = API + `/partner2`;
 APIindexdnheader2 = API + `/indexdnheader2`;
 APIindexdndetail2 = API + '/indexdndetail2/';
 APIdnhistory2 = API + `/dnhistory2`;
+APIdnViewWarehouse2 = API + `/dnhview2/`;
 
 
 // supplier

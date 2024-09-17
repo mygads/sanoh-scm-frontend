@@ -414,18 +414,18 @@
   function searchTableData() {
     const searchInput = document.getElementById('search-input').value.toLowerCase();
     if (searchInput === "") {
-      // Jika input kosong, kembalikan data ke originalData
+      // If input is empty, reset the data to originalData
       filteredData = originalData;
     } else {
-      // Filter data berdasarkan input
+      // Filter data based on input
       filteredData = originalData.filter(row =>
-        row.partNumber.toLowerCase().includes(searchInput) ||
-        row.partName.toLowerCase().includes(searchInput)
+        row.partName.toLowerCase().includes(searchInput) ||
+        row.partNumber.toLowerCase().includes(searchInput)
       );
     }
-  
-    currentPage = 1;
-    displayTableData(currentPage);
+
+    // Correctly pass the filtered data to displayTableData
+    displayTableData(filteredData);
     updatePagination();
   }
 
