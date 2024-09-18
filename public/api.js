@@ -40,6 +40,7 @@ APIindexlistingreport = API + `/indexlistingreport3`;
 APIuploadlisting = API + `/createlistingreport3`;
 APIindexpoheader3 = API + `/indexpoheader3`;
 APIpohistory3 = API + `/pohistory3`;
+API_SyncPurchasing = API + `/sync`;
 
 
 // warehouse
@@ -48,6 +49,7 @@ APIindexdnheader2 = API + `/indexdnheader2`;
 APIindexdndetail2 = API + '/indexdndetail2/';
 APIdnhistory2 = API + `/dnhistory2`;
 APIdnViewWarehouse2 = API + `/dnhview2/`;
+API_SyncWarehouse = API + `/sync`;
 
 
 // supplier
