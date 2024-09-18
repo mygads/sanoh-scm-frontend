@@ -12,6 +12,9 @@
     rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
   <link rel="icon" type="image/png" href="../assets/icon_sanoh.png">
+  <!-- Select2 CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
@@ -186,6 +189,10 @@
 <script src="../api.js"></script>
 <script src="../script.js"></script>
 <script src="../table.js"></script>
+<!-- jQuery for Select2 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
 
@@ -209,9 +216,9 @@
     const searchButton = document.getElementById('search-button'); // Get search button element
 
     // Event listener for supplier selection
-    supplierSelect.addEventListener('change', async (event) => {
-      const selectedSupplierId = event.target.value;
-      console.log('Supplier selected:', selectedSupplierId);
+    $(supplierSelect).on('change', async function (event) {
+      const selectedSupplierId = $(this).val();
+      console.log('Supplier dipilih:', selectedSupplierId);
 
       if (selectedSupplierId) {
         localStorage.setItem('bpCode', selectedSupplierId); // Store bpCode in localStorage
@@ -276,6 +283,10 @@
 
     console.log('Supplier dropdown populated');
     // Re-initialize Select2 after adding options if necessary
+    $(supplierSelect).select2({
+      placeholder: 'Search Supplier',
+      allowClear: true
+    });
   }
 
   // Function to fetch purchase orders from the API
