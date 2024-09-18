@@ -315,7 +315,8 @@
           // Set filteredData to match deliveryNote initially
           filteredData = details;
           
-
+          displayTableData(1);
+          updatePagination();
           // Call function to display data
           historyDNDetails();
 
@@ -355,10 +356,10 @@
             originalData = filteredData;
 
             // Display the details
-            if (typeof displayDNDetails === 'function') {
-                displayDNDetails(filteredData);  // Show first page of details
+            if (typeof displayTableData === 'function') {
+                displayTableData(1);  // Show first page of details
             } else {
-                console.error('displayDNDetails function is not defined.');
+                console.error('displayTableData function is not defined.');
             }
 
             // Update pagination for details
@@ -376,7 +377,7 @@
     }
 
     window.addEventListener('resize', () => {
-        displayDNDetails(filteredData);  // Adjust display when resized
+        displayTableData(1);  // Adjust display when resized
         updatePagination();
     });
 
@@ -397,26 +398,30 @@
       );
     }
 
-    // Correctly pass the filtered data to displayDNDetails
-    displayDNDetails(filteredData);
+    // Correctly pass the filtered data to displayTableData
+    displayTableData(1);
     updatePagination();
   }
 
-  function displayDNDetails(details) {
+  function displayTableData(page) {
     const tableBody = document.getElementById('table-body-detail');
     tableBody.innerHTML = '';
 
-    details.forEach((detail, index) => {
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+    const paginatedData = filteredData.slice(start, end);
+
+    paginatedData.forEach((row, index) => {
       const tableRow = document.createElement('tr');
       tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
       tableRow.innerHTML = `
-        <td class="px-2 py-4 text-center font-medium text-gray-900">${detail.no}</td>
-        <td class="px-2 py-4 text-center">${detail.partNumber}</td>
-        <td class="px-2 py-4 text-center">${detail.partName}</td>
-        <td class="px-2 py-4 text-center">${detail.QTY}</td>
-        <td class="px-2 py-4 text-center">${detail.qtyLabel}</td>
-        <td class="px-2 py-4 text-center">${detail.qtyDelivered}</td>
-        <td class="px-2 py-4 text-center">${detail.qtyReceived}</td>
+        <td class="px-2 py-4 text-center font-medium text-gray-900">${row.no}</td>
+        <td class="px-2 py-4 text-center">${row.partNumber}</td>
+        <td class="px-2 py-4 text-center">${row.partName}</td>
+        <td class="px-2 py-4 text-center">${row.QTY}</td>
+        <td class="px-2 py-4 text-center">${row.qtyLabel}</td>
+        <td class="px-2 py-4 text-center">${row.qtyDelivered}</td>
+        <td class="px-2 py-4 text-center">${row.qtyReceived}</td>
       `;
       tableBody.appendChild(tableRow);
     });
@@ -429,13 +434,13 @@
     document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
     
     window.addEventListener('resize', () => {
-      displayDNDetails(filteredData); // Re-render table data
+      displayTableData(1); // Re-render table data
       updatePagination(); // Re-render pagination
     });
 
     document.getElementById('search-input').addEventListener('input', searchTableData);
 
-    displayDNDetails(filteredData);
+    displayTableData(1);
     updatePagination();
   });
 
