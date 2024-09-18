@@ -93,19 +93,19 @@
       <div class="flex flex-col ml-auto w-6/12 max-md:ml-0 max-md:w-full">
         <img loading="lazy" src="assets/foto-sanoh-2.png" alt="Login illustration" class="object-contain grow w-full h-auto aspect-[0.71] max-w-[710px] max-md:mt-10 max-md:max-w-[286px] max-sm:self-stretch max-sm:m-auto max-sm:w-full max-sm:max-w-[296px]" />
       </div>
-      <div class="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
-        <div class="flex flex-col my-auto mr-auto w-full max-w-[500px] max-md:mt-10 max-md:ml-0 max-sm:mt-5 max-sm:ml-auto max-sm:max-w-[301px]">
+      <div class="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full my-auto">
+        <div class="flex flex-col  mr-auto w-full max-w-[500px] max-md:mt-10 max-md:ml-0 max-sm:mt-5 max-sm:ml-auto max-sm:max-w-[301px]">
           <img loading="lazy" src="assets/logo-sanoh.png" alt="Company logo" class="object-contain max-w-full aspect-[2.79] w-[120px] max-md:ml-1" />
 
           <form class="flex flex-col mt-6 w-full" onsubmit="handleLogin(event)" >
-            <div class="flex flex-col mb-5">
+            <div class="flex flex-col ">
               <label for="username" class="text-base text-slate-800 mb-2">
                 Username
               </label>
               <input type="text" id="username" placeholder="Enter Username" class="px-4 py-3.5 w-full bg-white rounded-lg border border-solid border-indigo-600 border-opacity-40 min-h-[48px] shadow-[0px_4px_8px_rgba(70,95,241,0.1)] text-sm text-zinc-400" />
             </div>
 
-            <div class="flex flex-col mb-7 "></div>
+            <div class="flex flex-col mb-5 "></div>
               <label for="password" class="mb-2 text-base text-slate-800">
                 Password
               </label>
@@ -123,7 +123,7 @@
                     </svg>
                   </button>
                 </div>
-              
+              </div>
             </div>
             <button id="login-button" type="submit" class="gap-2 self-stretch px-5 py-3 mt-7 text-base text-white whitespace-nowrap rounded-lg bg-blue-950 min-h-[48px] hover:bg-blue-800 focus:ring-4 focus:ring-blue-300">
               Login
