@@ -147,10 +147,11 @@
 <script>
 
   if (token) {
-    displayNotification('You are already logged in!', 'info');
+    console.log(token);
+    displayNotification(`You are already logged in!, ${name}`,'success');
     setTimeout(() => {
       redirectToDashboardIndex(localStorage.getItem('userRole'));
-    }, 1500);
+    }, 2000);
   }
 
   document.addEventListener('DOMContentLoaded', prefillLoginFields);
