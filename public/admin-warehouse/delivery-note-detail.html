@@ -329,10 +329,12 @@
           });
 
           // Ensure that filteredData is properly initialized
-          filterData = details;
+          filteredData = details;
 
+          displayTableData(1);
+          updatePagination();
           // Check if there's any data to display
-          if (filterData.length > 0) {
+          if (filteredData.length > 0) {
             // Ensure that DNDetails gets called to display data
             DNDetails();
             updatePagination();
@@ -362,9 +364,9 @@
 
   function DNDetails() {
     if (noDN) {
-      console.log('Details array:', filterData);  // Ensure filterData is being logged correctly
+      console.log('Details array:', filteredData);  // Ensure filteredData is being logged correctly
 
-      const dn = filterData.find(dn => dn.noDN === noDN);
+      const dn = filteredData.find(dn => dn.noDN === noDN);
 
       console.log('Delivery Note found:', dn);
 
@@ -377,7 +379,7 @@
         originalData = filteredData;
 
         if (typeof displayTableData === 'function') {
-          displayTableData(filteredData);  // Pass the correct details to the table display function
+          displayTableData(1);  // Pass the correct details to the table display function
         } else {
           console.error('displayTableData function is not defined.');
         }
@@ -396,7 +398,7 @@
 
     window.addEventListener('resize', () => {
       if (typeof displayTableData === 'function') {
-        displayTableData(filteredData);
+        displayTableData(1);
       }
       if (typeof updatePagination === 'function') {
         updatePagination();
@@ -425,25 +427,29 @@
     }
 
     // Correctly pass the filtered data to displayTableData
-    displayTableData(filteredData);
+    displayTableData(1);
     updatePagination();
   }
 
   // Function to display table data
-  function displayTableData(details) {
+  function displayTableData(page) {
     const tableBody = document.getElementById('table-body-detail');
     if (tableBody) {
       tableBody.innerHTML = '';
 
-      details.forEach((detail, index) => {
+      const start = (page - 1) * rowsPerPage;
+      const end = start + rowsPerPage;
+      const paginatedData = filteredData.slice(start, end);
+
+      paginatedData.forEach((row, index) => {
         const tableRow = document.createElement('tr');
         tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
         tableRow.innerHTML = `
-          <td class="px-2 py-4 text-center font-medium text-gray-900">${detail.no}</td>
-          <td class="px-2 py-4 text-center">${detail.partNumber}</td>
-          <td class="px-2 py-4 text-center">${detail.partName}</td>
-          <td class="px-2 py-4 text-center">${detail.UoM}</td>
-          <td class="px-2 py-4 text-center">${detail.QTY}</td>
+          <td class="px-2 py-4 text-center font-medium text-gray-900">${row.no}</td>
+          <td class="px-2 py-4 text-center">${row.partNumber}</td>
+          <td class="px-2 py-4 text-center">${row.partName}</td>
+          <td class="px-2 py-4 text-center">${row.UoM}</td>
+          <td class="px-2 py-4 text-center">${row.QTY}</td>
         `;
         tableBody.appendChild(tableRow);
       });
