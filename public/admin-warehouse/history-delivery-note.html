@@ -246,9 +246,9 @@
     // const searchButton = document.getElementById('search-button');
 
     // Event listener for supplier dropdown change
-    supplierSelect.addEventListener('change', async (event) => {
-      const selectedSupplierId = event.target.value;
-      console.log('Supplier selected:', selectedSupplierId); // Debugging
+    $(supplierSelect).on('change', async function (event) {
+      const selectedSupplierId = $(this).val();
+      console.log('Supplier dipilih:', selectedSupplierId);
 
       if (selectedSupplierId) {
         localStorage.setItem('selectedSupplierId', selectedSupplierId); // Menyimpan bpCode ke localStorage
@@ -317,6 +317,10 @@
 
     console.log('Supplier dropdown populated');
     // Re-initialize Select2 after adding options
+    $(supplierSelect).select2({
+      placeholder: 'Search Supplier',
+      allowClear: true
+    });
   }
 
   async function fetchHistoryDeliveryNotes(bpCode) {

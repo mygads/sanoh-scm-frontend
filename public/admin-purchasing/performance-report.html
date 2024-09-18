@@ -234,9 +234,10 @@
 
     // const selectedSupplierId = $('#supplier_id').val(); 
 
-    supplierSelect.addEventListener('change', async (event) => {
-      const selectedSupplierId = event.target.value;
-      console.log('Supplier dipilih:', selectedSupplierId); // Debugging
+    $(supplierSelect).on('change', async function (event) {
+      const selectedSupplierId = $(this).val();
+      console.log('Supplier dipilih:', selectedSupplierId);
+
 
       if (selectedSupplierId) {
         // Tampilkan section setelah supplier dipilih
@@ -358,10 +359,7 @@
   // Fungsi untuk mengisi dropdown supplier
   function populateSupplierDropdown(suppliersData) {
     const supplierSelect = document.getElementById('supplier_id');
-    // supplierSelect.innerHTML = '<option value="">Search Supplier</option>'; // Reset dropdown
-
-    
-
+    // Populate options...
     suppliersData.forEach(supplier => {
       const option = document.createElement('option');
       option.value = supplier.bp_code;
@@ -369,12 +367,13 @@
       supplierSelect.appendChild(option);
     });
 
-    // Initialize Select2 again after options are populated
-    // $(supplierSelect).select2({
-    //   placeholder: 'Search Supplier',
-    //   allowClear: true
-    // });
+    // Initialize Select2
+    $(supplierSelect).select2({
+      placeholder: 'Search Supplier',
+      allowClear: true
+    });
   }
+
 
   async function fetchPerformanceReport(supplierId, selectedMonth = null) {
     const token = localStorage.getItem('accessToken');

@@ -214,9 +214,9 @@
     // const searchButton = document.getElementById('search-button'); // Get search button element
   
     // Event listener for supplier selection
-    supplierSelect.addEventListener('change', async (event) => {
-      const selectedSupplierId = event.target.value;
-      console.log('Supplier selected:', selectedSupplierId);
+    $(supplierSelect).on('change', async function (event) {
+      const selectedSupplierId = $(this).val();
+      console.log('Supplier dipilih:', selectedSupplierId);
   
       if (selectedSupplierId) {
         localStorage.setItem('selectedSupplierId', selectedSupplierId); // Store bpCode in localStorage
@@ -285,6 +285,10 @@
 
     console.log('Supplier dropdown populated');
     // Re-initialize Select2 after adding options
+    $(supplierSelect).select2({
+      placeholder: 'Search Supplier',
+      allowClear: true
+    });
   }
 
   // Function to fetch delivery notes based on supplier
