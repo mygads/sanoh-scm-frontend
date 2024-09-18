@@ -328,8 +328,8 @@
         // Check for `note` value and handle all possible cases
         const note = po.note !== null && po.note !== undefined && po.note.trim() !== '' 
           ? po.note 
-          : '';
-        const planDelivery = po.planDelivery || '';
+          : '-';
+        const planDelivery = po.planDelivery || '-';
 
         document.getElementById('poNumber').textContent = po.noPO;
         document.getElementById('planDelivery').textContent = po.planDelivery;
