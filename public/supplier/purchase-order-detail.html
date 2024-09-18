@@ -139,7 +139,7 @@
               </div>
               
               <div class="flex gap-3  items-center self-stretch my-auto text-white text-[10px] ">
-                <a href="" target="_blank" id="print-po-link" class="flex gap-2  items-center self-stretch px-6  py-2  my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5" onclick="updatePrintButton(noPO)">
+                <a  onclick="handlePrint(noPO)" id="print-po-link" class="flex gap-2  items-center self-stretch px-6  py-2  my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5">
                     <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
                     <span class="flex-1 shrink self-stretch my-auto basis-0">Print PO</span>
                 </a>
@@ -231,14 +231,31 @@
   }
 
   // Function to update the Print PO button href dynamically
-  function updatePrintButton(noPO) {
-    const printPoLink = document.getElementById('print-po-link');
-    if (noPO) {
-      printPoLink.href = `print/print-po.html?noPO=${noPO}`;
-    } else {
-      console.error('noPO is not available.');
-    }
+  // function updatePrintButton(noPO) {
+  //   const printPoLink = document.getElementById('print-po-link');
+  //   if (noPO) {
+  //     printPoLink.href = `/pohview1/${noPO}`;
+  //   } else {
+  //     console.error('noPO is not available.');
+  //   }
+  // }
+
+  // Function to update the Print PO button href dynamically and open the PDF
+  function handlePrint(noPO) {
+      if (noPO) {
+          // Assuming API_poViewSupplier is the base URL for your PO view API
+          const pdfUrl = `${API_poView}${noPO}`;
+          
+          // Open the PDF in a new tab
+          window.open(pdfUrl, '_blank');
+      } else {
+          console.error('No PO number provided.');
+      }
   }
+
+
+
+
 
   async function fetchPurchaseOrders() {
     const token = localStorage.getItem('accessToken');
