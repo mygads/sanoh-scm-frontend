@@ -24,9 +24,9 @@ APIlogin = API + '/login';
 APIreadfile = API + '/listingreporttest/file/';
 
 // API Global
-API_poView = API + `/pohview1/`;
-API_dnView = API + `/dnhview1/`;
-API_labelView = API + `/lbview1/`;
+API_poView = API + `/pohview/`;
+API_dnView = API + `/dnhview/`;
+API_labelView = API + `/lbview/`;
 
 // supper admin 
 APIpartner4 = API + '/partner4';
