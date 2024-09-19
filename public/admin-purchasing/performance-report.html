@@ -124,12 +124,12 @@
             <div id="addFileSection" class="flex flex-col mt-6 2xl:mt-8 2xl:text-base text-xs font-medium hidden">
               <div class="flex items-center mb-4  ">
                 <label for="month-picker" class="mr-4 text-base 2xl:text-xl">Periode :</label>
-                <input type="month" id="month-picker" class=" pl-4 pr-4 border rounded-md">
+                <input type="month" id="month-picker" class=" pl-4 pr-4 border rounded-md" required>
               </div>
 
               <div class="flex items-center mb-4">
                 <label for="file-upload" class=" text-base 2xl:text-xl">Add File :</label>
-                <input type="file" id="file-upload" class="rounded-md p-2 ml-2 text-gray-600">
+                <input type="file" id="file-upload" class="rounded-md p-2 ml-2 text-gray-600" required>
                 
                 <button id="upload-button"
                   class="px-4 py-2 bg-gray-400 text-white text-xs 2xl:text-base rounded-md" disabled>
@@ -232,11 +232,20 @@
     const fileUpload = document.getElementById('file-upload');
     const monthPicker = document.getElementById('month-picker');
 
+    // Set default value of month-picker and month-input to current month
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = (now.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+    const currentMonth = `${year}-${month}`;
+    document.getElementById('month-picker').value = currentMonth;
+
+
     // const selectedSupplierId = $('#supplier_id').val(); 
 
-    supplierSelect.addEventListener('change', async (event) => {
-      const selectedSupplierId = event.target.value;
-      console.log('Supplier dipilih:', selectedSupplierId); // Debugging
+    $(supplierSelect).on('change', async function (event) {
+      const selectedSupplierId = $(this).val();
+      console.log('Supplier dipilih:', selectedSupplierId);
+
 
       if (selectedSupplierId) {
         // Tampilkan section setelah supplier dipilih
@@ -305,6 +314,13 @@
           // Kembalikan tombol ke teks "Upload" setelah selesai
           uploadButton.innerHTML = 'Upload';
           uploadButton.disabled = false;
+
+          // Reset file input
+          fileUpload.value = '';
+          uploadButton.disabled = true;
+          uploadButton.classList.remove('bg-blue-500', 'hover:bg-blue-700');
+          uploadButton.classList.add('bg-gray-400');
+
         }
       }
     });
@@ -358,10 +374,7 @@
   // Fungsi untuk mengisi dropdown supplier
   function populateSupplierDropdown(suppliersData) {
     const supplierSelect = document.getElementById('supplier_id');
-    // supplierSelect.innerHTML = '<option value="">Search Supplier</option>'; // Reset dropdown
-
-    
-
+    // Populate options...
     suppliersData.forEach(supplier => {
       const option = document.createElement('option');
       option.value = supplier.bp_code;
@@ -369,12 +382,13 @@
       supplierSelect.appendChild(option);
     });
 
-    // Initialize Select2 again after options are populated
-    // $(supplierSelect).select2({
-    //   placeholder: 'Search Supplier',
-    //   allowClear: true
-    // });
+    // Initialize Select2
+    $(supplierSelect).select2({
+      placeholder: 'Search Supplier',
+      allowClear: true
+    });
   }
+
 
   async function fetchPerformanceReport(supplierId, selectedMonth = null) {
     const token = localStorage.getItem('accessToken');

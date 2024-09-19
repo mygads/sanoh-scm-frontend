@@ -261,6 +261,7 @@
       // Iterate through filteredData to display in the table
       paginatedData.forEach(row => {
           const tableRow = document.createElement('tr');
+          tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
           tableRow.innerHTML = `
               <td class="px-2 py-4 text-center">
                   <a href="delivery-note-detail.html?noDN=${row.noDN}" class="text-blue-600 underline">${row.noDN}</a>
