@@ -139,10 +139,18 @@
 
             <div class="flex flex-wrap gap-[10%] justify-between items-center mt-4 2xl:mt-6 w-full">
 
-              <!-- No PO -->
-              <div class="flex gap-[13px] 2xl:gap-10 items-center self-stretch my-auto text-black min-w-[10%]">
-                <div class="self-stretch my-auto ">No. PO</div>
-                <div id="poNumber" type="text" class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap ounded border border-solid border-neutral-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
+              <div class="flex gap-5">
+                <!-- No PO -->
+                <div class="flex gap-3 2xl:gap-6 items-center self-stretch my-auto text-black min-w-[10%]">
+                  <div class="self-stretch my-auto ">No. PO</div>
+                  <div id="poNumber" class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap rounded bg-stone-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
+                </div>
+
+                <!-- Plan Delivery Date -->
+                <div class="flex gap-3 2xl:gap-6 items-center self-stretch my-auto text-black min-w-[10%]">
+                  <div class="self-stretch my-auto ">Plan Delivery Date</div>
+                  <div id="planDelivery" class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap rounded bg-stone-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
+                </div>
               </div>
 
               <div
@@ -169,33 +177,51 @@
             <table class="w-full text-[11px] 2xl:text-base text-left text-gray-700 dark:text-gray-700">
               <thead class="text-[14px] 2xl:text-[20px] text-gray-700">
                 <tr>
-                  <th id="sort-no" scope="col"
+                  <th scope="col"
                     class="cursor-pointer px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 w-[5%]"
-                    onclick="sortTableByNo()">
+                    onclick="sortTableByNo(0)">
                     No
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
-                      class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
-                    onclick="sortTable(1)">
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(1)">
                     Part Number
                     <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" /> -->
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
-                    onclick="sortTable(2)">
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(2)">
                     Part Name
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
-                    onclick="sortTable(3)">
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(3)">
                     UoM
                   </th>
-                  <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
-                    onclick="sortTable(4)">
-                    QTY
+                  <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(4)">
+                    QTY PO
                     <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" /> -->
                     <!-- <span class="sort-indicator"></span> -->
+                  </th>
+                  <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(5)">
+                    QTY Label
+                    <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" /> -->
+                    <!-- <span class="sort-indicator"></span> -->
+                  </th>
+                  <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(6)">
+                    QTY Requested
+                    <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" /> -->
+                    <!-- <span class="sort-indicator"></span> -->
+                  </th>
+                  <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(7)">
+                    QTY Confirm
+                    <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" /> -->
+                    <!-- <span class="sort-indicator"></span> -->
+                  </th>
+                  <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer " onclick="sortTable(8)">
+                    QTY Delivered
+                    <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" /> -->
+                    <!-- <span class="sort-indicator"></span> -->
+                  </th>
+                  <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(9)">
+                    QTY Minus
+                    
                   </th>
                 </tr>
               </thead>
@@ -341,10 +367,17 @@
               statusDN: dn.status_desc || '',
               details: dn.detail ? dn.detail.map((detail, index) => ({
                   no: (index + 1).toString(),
+                  planDelivery: detail.plan_delivery_date || '',
                   partNumber: detail.part_no || '',
                   partName: detail.item_desc_a || '',
                   UoM: detail.dn_unit || '',
                   QTY: detail.dn_qty || 0,
+                  qtyLabel: detail.dn_snp || '',
+                  qtyRequested: detail.dn_qty || 0,
+                  qtyConfirm: (detail.qty_confirm && detail.qty_confirm !== 0) ? detail.qty_confirm : detail.dn_qty, // Updated logic
+                  qtyDelivered: detail.receipt_qty || 0,
+                  qtyReceived: detail.receipt_qty || 0,
+                  qtyMinus: ((detail.dn_qty || 0) - (detail.receipt_qty || 0)).toString() // Handle undefined dn_qty or receipt_qty
               })) : []
             };
           });
@@ -384,6 +417,9 @@
   }
 
   function DNDetails() {
+    const params = new URLSearchParams(window.location.search);
+    const noDN = params.get('noDN');
+
     if (noDN) {
       console.log('Details array:', filteredData);  // Ensure filteredData is being logged correctly
 
@@ -393,9 +429,11 @@
 
       if (dn) {
         const noPO = dn.noPO || 'No PO provided';
+        const planDNDate = dn.planDNDate || 'No Plan Delivery provided';
 
         document.getElementById('dnNumber').textContent = dn.noDN;
         document.getElementById('poNumber').textContent = noPO;
+        document.getElementById('planDelivery').textContent = planDNDate;
         filteredData = dn.details;  // Update filteredData with details of this specific DN
         originalData = filteredData;
 
@@ -471,6 +509,11 @@
           <td class="px-2 py-4 text-center">${row.partName}</td>
           <td class="px-2 py-4 text-center">${row.UoM}</td>
           <td class="px-2 py-4 text-center">${row.QTY}</td>
+          <td class="px-2 py-4 text-center">${row.qtyLabel}</td>
+          <td class="px-2 py-4 text-center">${row.qtyRequested}</td>
+          <td class="px-2 py-4 text-center">${row.qtyConfirm}</td>
+          <td class="px-2 py-4 text-center">${row.qtyDelivered}</td>
+          <td class="px-2 py-4 text-center">${row.qtyMinus}</td>
         `;
         tableBody.appendChild(tableRow);
       });

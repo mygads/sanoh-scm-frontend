@@ -129,11 +129,17 @@
 
             <div class="flex flex-wrap gap-[10%] justify-between items-center mt-4 2xl:mt-6 w-full">
 
-              <!-- Note -->
-              <div class="flex gap-6 2xl:gap-10 items-center self-stretch my-auto text-black min-w-[10%]">
-                <div class="self-stretch my-auto ">Note</div>
-                <div id="noteInput" type="text"
-                  class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap ounded border border-solid border-neutral-300 min-h-[10%] w-[8%] max-md:px-5">
+              <div class="flex gap-5">
+                <!-- Note -->
+                <div class="flex gap-6 2xl:gap-10 items-center self-stretch my-auto text-black min-w-[10%]">
+                  <div class="self-stretch my-auto ">Note</div>
+                  <div id="noteInput" type="text" class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap rounded bg-stone-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
+                </div>
+
+                <!-- Plan Delivery Date -->
+                <div class="flex gap-3 2xl:gap-6 items-center self-stretch my-auto text-black min-w-[10%]">
+                  <div class="self-stretch my-auto ">Plan Delivery Date</div>
+                  <div id="planDelivery" class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap rounded bg-stone-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
                 </div>
               </div>
 
@@ -159,53 +165,29 @@
             <table class="w-full text-[11px] 2xl:text-base text-left text-gray-700 dark:text-gray-700">
               <thead class="text-[14px] 2xl:text-[20px] text-gray-700">
                 <tr>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
-                    onclick="sortTable(0)">
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(0)">
+                    No
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <span class="sort-indicator"></span>
+                  </th>
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(1)">
                     Part Number
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
-                      class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
-                    onclick="sortTable(1)">
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(2)">
                     Part Name
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
-                      class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
-                    onclick="sortTable(2)">
-                    Delivery Date
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
-                      class="w-3 2xl:w-4 inline-block text-gray-600" />
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(3)">
+                    QTY PO
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
-                    onclick="sortTable(3)">
-                    QTY
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
-                      class="w-3 2xl:w-4 inline-block text-gray-600" />
-                    <span class="sort-indicator"></span>
-                  </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
-                    onclick="sortTable(4)">
-                    UoM
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
-                      class="w-3 2xl:w-4 inline-block text-gray-600" />
-                    <span class="sort-indicator"></span>
-                  </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
-                    onclick="sortTable(5)">
-                    Total
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
-                      class="w-3 2xl:w-4 inline-block text-gray-600" />
-                    <span class="sort-indicator"></span>
-                  </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
-                    onclick="sortTable(6)">
-                    Unit Price
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
-                      class="w-3 2xl:w-4 inline-block text-gray-600" />
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(4)">
+                    QTY Delivered
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
                 </tr>
@@ -240,11 +222,8 @@
 
   cekToken();
 
-  document.getElementById('search-input').addEventListener('input', searchTableDataHistoryDetail);
-
   let details = [];
   // Adjust rows per page based on screen size
-  fetchHistoryPurchaseOrders();
 
   // Assign the noPO from URL
   let noPO = getUrlParameter('noPO');
@@ -309,22 +288,19 @@
 
         if (Array.isArray(data.data)) {
             details = data.data.map(po => ({
-                noPO: po.po_number ? po.po_number.toString() : "",
-                poDate: po.po_date || "",
-                status: po.po_status || "",
-                note: po.note || "",
-                details: (po.detail && Array.isArray(po.detail)) ? po.detail.map(detail => ({
-                    partNumber: detail.part_number || "",
-                    partName: detail.part_name || "",
-                    deliveryDate: detail.delivery_date || "",
-                    QTY: detail.quantity || "",
-                    UoM: detail.unit || "",
-                    amount: detail.amount || "",
-                    unitPrice: detail.unit_price || "",
-                })) : []  
+              noPO: po.po_number ? po.po_number.toString() : 'No PO Number',
+              poDate: po.po_date || '-',                  
+              status: po.po_status || 'Unknown Status',
+              note: po.note || '-',  // Check the correct field for the note here
+              details: po.detail ? po.detail.map((detail, index) => ({
+                  no: (index + 1).toString(),
+                  partNumber: detail.part_number || 'No Part Number',
+                  partName: detail.part_name || 'No Item Description',
+                  UoM: detail.unit || 'No UoM',
+                  QTY: detail.quantity || 'No Quantity'
+              })) : []
             }));
 
-            filteredData = details;
             HistoryPODetails();  // Ensure you call only once, not in fetch and HistoryPODetails both
         } else {
             console.error('No valid data array found in response');
@@ -332,86 +308,117 @@
     } catch (error) {
         console.error('Error fetching history purchase orders:', error);
     }
-}
+  }
 
-function HistoryPODetails() {
-  const params = new URLSearchParams(window.location.search);
-  const noPO = params.get('noPO');
+  fetchHistoryPurchaseOrders();
 
-  if (noPO) {
+  function HistoryPODetails() {
+    const params = new URLSearchParams(window.location.search);
+    const noPO = params.get('noPO');
+
+    if (noPO) {
       const po = details.find(po => po.noPO === noPO);
 
       if (po) {
           const note = po.note ? po.note : 'No note provided';
           document.getElementById('poNumber').textContent = po.noPO;
-          document.getElementById('noteInput').textContent = note;
+          document.getElementById('planDelivery').textContent = po.poDate || '-';
+          document.getElementById('noteInput').textContent = po.note || '-';
 
-          dataDetail = po.details;
-          console.log('dataDetail:', dataDetail);
-          displayTableData(1);
-      } else {
-          console.error('Purchase Order data not found in details array.');
-      }
-  } else {
-      console.error('Parameter noPO not found in the URL.');
+          filteredData = po.details;
+
+            // Display the details
+            if (typeof displayTableData === 'function') {
+                displayTableData(1);  // Show first page of details
+            } else {
+                console.error('displayTableData function is not defined.');
+            }
+
+            // Update pagination for details
+            if (typeof updatePagination === 'function') {
+                updatePagination();
+            } else {
+                console.error('updatePagination function is not defined.');
+            }
+
+        } else {
+            console.error('Purchase Order data not found in historyPurchaseOrder array.');
+        }
+    } else {
+        console.error('Parameter noPO not found in the URL.');
+    }
+
+    window.addEventListener('resize', () => {
+        displayTableData(1);  // Adjust display when resized
+        updatePagination();
+    });
+
+    document.getElementById('search-input').addEventListener('input', searchTable);
   }
 
-  window.addEventListener('resize', () => {
-      displayTableData(1);  
-  });
-
-  document.getElementById('search-input').addEventListener('input', searchTable);
-}
-
-  function displayTableData(currentPage) {
+  function displayTableData(page) {
     const tableBody = document.getElementById('table-body-detail');
-    tableBody.innerHTML = '';
 
-    if (!Array.isArray(dataDetail)) {
-        console.error('dataDetail is not an array');
+    if (!tableBody) {
+        console.error('table-body element not found.');
         return;
     }
 
-    const start = (currentPage - 1) * rowsPerPage;
+    tableBody.innerHTML = '';  // Clear the table
+
+    const rowsPerPage = 5;  // Define how many rows to display per page
+    const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
-    const paginatedData = dataDetail.slice(start, end);
+    const paginatedData = filteredData.slice(start, end);  // Paginate the details data
 
-    console.log(paginatedData)
+    if (paginatedData.length === 0) {
+        const noDataRow = document.createElement('tr');
+        noDataRow.innerHTML = `
+            <td colspan="5" class="px-2 py-4 text-center font-medium text-gray-900">
+                No purchase order details available.
+            </td>
+        `;
+        tableBody.appendChild(noDataRow);
+        return;
+    }
 
+    // Loop over the details and create table rows
     paginatedData.forEach((detail, index) => {
         const tableRow = document.createElement('tr');
         tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
         tableRow.innerHTML = `
+            <td class="px-2 py-4 text-center font-medium text-gray-900">${detail.no}</td>
             <td class="px-2 py-4 text-center">${detail.partNumber}</td>
             <td class="px-2 py-4 text-center">${detail.partName}</td>
-            <td class="px-2 py-4 text-center">${detail.deliveryDate}</td>
-            <td class="px-2 py-4 text-center">${detail.QTY}</td>
             <td class="px-2 py-4 text-center">${detail.UoM}</td>
-            <td class="px-2 py-4 text-center">${detail.amount}</td>
-            <td class="px-2 py-4 text-center">${detail.unitPrice}</td>
+            <td class="px-2 py-4 text-center">${detail.QTY}</td>
         `;
         tableBody.appendChild(tableRow);
     });
-    updatePagination();  // Only call after table is rendered
-}
-
-function searchTableDataHistoryDetail() {
-  // Get the search input element value
-  const searchInput = document.getElementById('search-input').value.toLowerCase();
-  
-  if (!searchInput) {
-      filteredData = dataDetail;
-  } else {
-      filteredData = dataDetail.filter(row =>
-          row.partNumber.toLowerCase().includes(searchInput) || 
-          row.partName.toLowerCase().includes(searchInput)
-      );
   }
 
-  currentPage = 1; // Reset to page 1 after search
-  displayTableData(currentPage); // Display filtered data
-  updatePagination();
-}
+  function searchTable() {
+    const searchInput = document.getElementById('search-input').value.toLowerCase();
+    const params = new URLSearchParams(window.location.search);
+    const noPO = params.get('noPO');
+
+    if (!noPO) {
+        console.error('noPO parameter is missing from the URL.');
+        return;
+    }
+
+    const po = details.find(po => po.noPO === noPO);
+    if (po) {
+        filteredData = po.details.filter(row => 
+            row.partNumber.toLowerCase().includes(searchInput) || 
+            row.partName.toLowerCase().includes(searchInput)
+        );
+        displayTableData(1);  // Re-display data with the search filter applied
+        updatePagination();
+    } else {
+        console.error('No matching PO found for search.');
+    }
+  }
 
 </script>
 

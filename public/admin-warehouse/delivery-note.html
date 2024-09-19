@@ -326,10 +326,17 @@
                   statusDN: dn.status_desc || '',
                   details: dn.detail ? dn.detail.map((detail, index) => ({
                       no: (index + 1).toString(),
+                      planDelivery: detail.plan_delivery_date || '',
                       partNumber: detail.part_no || '',
                       partName: detail.item_desc_a || '',
                       UoM: detail.dn_unit || '',
                       QTY: detail.dn_qty || 0,
+                      qtyLabel: detail.dn_snp || '',
+                      qtyRequested: detail.dn_qty || 0,
+                      qtyConfirm: detail.qty_confirm || 0,
+                      qtyDelivered: detail.receipt_qty || 0,
+                      qtyReceived: detail.receipt_qty || 0,
+                      qtyMinus: (detail.dn_qty - (detail.receipt_qty || 0)).toString()
                   })) : []
               }));
 
@@ -444,20 +451,6 @@
     
     console.log(`Displayed ${dataToShow.length} rows of data in table`);
   }
-
-  // Function to search table data
-  // function searchTable() {
-  //   const searchInput = document.getElementById('search-input').value.toLowerCase();
-  //   if (!searchInput) {
-  //     console.warn('Search input is empty');
-  //     return;
-  //   }
-
-  //   filteredData = deliveryNote.filter(row => row.noDN.toLowerCase().includes(searchInput));
-  //   console.log(`Search result: Found ${filteredData.length} matching rows`);
-  //   currentPage = 1; // Reset to page 1 after search
-  //   displayTableData(currentPage); // Display filtered data
-  // }
 
 </script>
 

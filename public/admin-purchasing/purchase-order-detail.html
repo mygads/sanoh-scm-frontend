@@ -128,11 +128,17 @@
 
             <div class="flex flex-wrap gap-[10%] justify-between items-center mt-4 2xl:mt-6 w-full">
 
-              <!-- Note -->
-              <div class="flex gap-6 2xl:gap-10 items-center self-stretch my-auto text-black min-w-[10%]">
-                <div class="self-stretch my-auto ">Note</div>
-                <div id="noteInput" type="text"
-                  class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap ounded border border-solid border-neutral-300 min-h-[10%] w-[8%] max-md:px-5">
+              <div class="flex gap-5">
+                <!-- Note -->
+                <div class="flex gap-6 2xl:gap-10 items-center self-stretch my-auto text-black min-w-[10%]">
+                  <div class="self-stretch my-auto ">Note</div>
+                  <div id="noteInput" type="text" class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap rounded bg-stone-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
+                </div>
+
+                <!-- Plan Delivery Date -->
+                <div class="flex gap-3 2xl:gap-6 items-center self-stretch my-auto text-black min-w-[10%]">
+                  <div class="self-stretch my-auto ">Plan Delivery Date</div>
+                  <div id="planDelivery" class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap rounded bg-stone-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
                 </div>
               </div>
 
@@ -243,8 +249,8 @@
     }
   }
 
-  document.getElementById('search-input').addEventListener('input', searchTableData);
-
+  let pendingResponseIndex = null;
+  let pendingResponseAction = '';
   let details = [];
 
   fetchPurchaseOrders();
@@ -311,7 +317,6 @@
 
         // console.log("Filtered Purchase Orders:", details);
         filteredData = details;
-        originalData = filteredData;
 
         displayTableData(1);
         updatePagination();
@@ -347,13 +352,17 @@
         // Check for `note` value and handle all possible cases
         const note = po.note !== null && po.note !== undefined && po.note.trim() !== ''
           ? po.note
-          : 'No note provided';
+          : '-';
+        const planDelivery = po.planDelivery || '-';
 
         document.getElementById('poNumber').textContent = po.noPO;
+        document.getElementById('planDelivery').textContent = po.planDelivery;
         document.getElementById('noteInput').textContent = note;
 
         // Store the details array into filteredData
         filteredData = po.details;
+
+        originalData = filteredData;
 
         // Display the details
         if (typeof displayTableData === 'function') {
@@ -381,7 +390,6 @@
       updatePagination();
     });
 
-    document.getElementById('search-input').addEventListener('input', searchTable);
   }
 
   // Function to display PO details in a table
@@ -407,30 +415,24 @@
     });
   }
 
+  document.getElementById('search-input').addEventListener('input', searchTableData);
+
   function searchTableData() {
-    // Ambil nilai dari search input
     const searchInput = document.getElementById('search-input').value.toLowerCase();
-
-    // Jika input kosong, tampilkan kembali data original
-    if (searchInput === '') {
-        filteredData = originalData; // Kembali ke data asli
-    } else {aaa
-        // Filter data berdasarkan partNumber dan partName, pastikan untuk menghindari error undefined
-        filteredData = originalData.filter(row => {
-            // Cek apakah partNumber ada dan merupakan string, jika tidak, berikan nilai default string kosong
-            const partNumber = (row.partNumber && typeof row.partNumber === 'string') ? row.partNumber.toLowerCase() : '';
-            // Cek apakah partName ada dan merupakan string, jika tidak, berikan nilai default string kosong
-            const partName = (row.partName && typeof row.partName === 'string') ? row.partName.toLowerCase() : '';
-
-            // Lakukan pencarian pada partNumber atau partName
-            return partNumber.includes(searchInput) || partName.includes(searchInput);
-        });
+    if (searchInput === "") {
+      // Jika input kosong, kembalikan data ke originalData
+      filteredData = originalData;
+    } else {
+      // Filter data berdasarkan input
+      filteredData = originalData.filter(row =>
+        row.partName.toLowerCase().includes(searchInput) ||
+        row.partNumber.toLowerCase().includes(searchInput)
+      );
     }
 
-    currentPage = 1; // Reset ke halaman pertama setelah pencarian
-    displayTableData(currentPage); // Tampilkan data yang difilter
+    displayTableData(1);
     updatePagination();
-}
+  }
 
 </script>
 

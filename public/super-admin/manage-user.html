@@ -346,7 +346,7 @@
 
     // Update status in the row
     const row = toggle.closest('tr');
-    const statusCell = row.querySelector('td:nth-child(6)');
+    const statusCell = row.querySelector('td:nth-child(5)');
     statusCell.textContent = status === "1" ? 'Active' : 'Deactive';  // Use 'status' here
 
     // Call API to update status
