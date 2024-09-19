@@ -179,12 +179,12 @@
       
                   </th>
                   <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(3)">
-                    QTY PO
+                    UoM
                     <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
                   <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(4)">
-                    QTY Delivered
+                    QTY PO
                     <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
@@ -272,9 +272,9 @@
                 .filter(po => po.po_status && po.po_status.toLowerCase() === 'closed')  // Filter by status
                 .map(po => ({
                     noPO: po.po_number ? po.po_number.toString() : 'No PO Number',
-                    poDate: po.po_date || 'No Date Provided',                  
+                    poDate: po.po_date || '-',                  
                     status: po.po_status || 'Unknown Status',
-                    note: po.note || 'No note provided',  // Check the correct field for the note here
+                    note: po.note || '-',  // Check the correct field for the note here
                     details: po.detail ? po.detail.map((detail, index) => ({
                         no: (index + 1).toString(),
                         partNumber: detail.part_number || 'No Part Number',
