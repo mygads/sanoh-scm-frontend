@@ -212,7 +212,7 @@
         //   title: 'Sync Failed',
         //   text: 'An error occurred during synchronization.',
         // });
-        displayNotification('No Connection during synchronization.','error')
+        displayNotification(error ||'No Connection during synchronization.','error')
       } finally {
         // Reset button
         syncButton.disabled = false;
