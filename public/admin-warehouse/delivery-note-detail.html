@@ -153,7 +153,7 @@
                     class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-5 aspect-square" />
                   <span class="flex-1 shrink self-stretch my-auto ">Export CSV</span>
                 </a> -->
-                <a href="" target="_blank" id="print-dn-link" class="flex gap-2  items-center self-stretch px-6 py-2 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5" onclick="updatePrintButton(noDN)">
+                <a onclick="handlePrintDN(noDN)" id="print-dn-link" class="flex gap-2  items-center self-stretch px-6 py-2 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5" >
                   <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
                   <span class="flex-1 shrink self-stretch my-auto basis-0">Print DN </span>
                 </a>
@@ -170,7 +170,7 @@
               <thead class="text-[14px] 2xl:text-[20px] text-gray-700">
                 <tr>
                   <th id="sort-no" scope="col"
-                    class="cursor-pointer px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer w-[5%]"
+                    class="cursor-pointer px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 w-[5%]"
                     onclick="sortTableByNo()">
                     No
                     <img loading="lazy" src="../assets/icon_sort.svg" alt=""
@@ -245,6 +245,27 @@
 
   // Assign the noPO from URL
   let noDN = getUrlParameter('noDN');
+
+  async function handlePrintDN(noDN) {
+    try {
+        const response = await fetch(`${API_dnView}${noDN}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (response.ok) {
+            // Open PDF in a new tab
+            window.open(`${API_dnView}${noDN}`, '_blank');
+        } else {
+            console.error('Failed to fetch PDF:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+  }
 
   // Function to get URL parameters
   function getUrlParameter(name) {
