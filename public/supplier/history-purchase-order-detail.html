@@ -278,9 +278,9 @@
                 .filter(po => po.po_status && po.po_status.toLowerCase() === 'closed')  // Filter by status
                 .map(po => ({
                     noPO: po.po_number ? po.po_number.toString() : 'No PO Number',
-                    poDate: po.po_date || 'No Date Provided',                  
+                    poDate: po.po_date || '-',                  
                     status: po.po_status || 'Unknown Status',
-                    note: po.note || 'No note provided',  // Check the correct field for the note here
+                    note: po.note || '-',  // Check the correct field for the note here
                     details: po.detail ? po.detail.map((detail, index) => ({
                         no: (index + 1).toString(),
                         partNumber: detail.part_number || 'No Part Number',
