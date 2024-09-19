@@ -21,43 +21,51 @@
   <section class="overflow-hidden w-screen h-screen bg-white">
     <div class="flex h-screen">
 
+         <!-- Burger Menu Button (visible only on small screens) -->
+         <div class="absolute top-4 left-4 sm:hidden z-50">
+          <button id="burger-btn" class="text-gray-800 focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
+          </button>
+        </div> 
+
       <!-- nav-side bar -->
-      <aside class="flex flex-col w-[20%] h-screen border-r border-r-neutral-400 bg-stone-300">
-        <nav class="flex flex-col grow py-9 2xl:py-14 text-base font-medium">
+      <aside id="sidebar" class="transform -translate-x-full transition-transform duration-300 fixed sm:relative sm:translate-x-0 flex flex-col xl:w-[24%] lg:w-[26%] md:w-[28%] sm:w-[30%] w-[34%] h-screen bg-stone-300 border-r border-neutral-400 z-40">
+        <nav class="flex flex-col grow py-9 w-full h-screen text-base font-medium border-r border-solid bg-stone-300 border-r-neutral-400 ">
 
           <!-- Logo Sanoh -->
-          <img loading="lazy" src="../assets/logosanoh.svg"
-            class="object-contain self-center w-30 2xl:w-48 max-w-full cursor-pointer" />
+          <img loading="lazy" src="../assets/logosanoh.svg" class="object-contain self-center xl:w-30 lg:w-28 md:w-26 sm:w-24 w-20 max-w-full cursor-pointer pointer-events-auto aspect-[2.79]" />
 
           <!-- Menu Items -->
           <ul class="flex flex-col mt-7 2xl:mt-10 w-full text-gray-500">
             <!-- Dashboard -->
             <li>
               <a href="index.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 active">
+                class="flex gap-4 items-center xl:p-[9px] lg:p-[9px] md:p-[8px] sm:p-[8px] p-[8px] w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 active">
                 <img loading="lazy" src="../assets/icon_home_default.svg" alt="Dashboard"
-                  class="object-contain w-4 2xl:w-6 icon-home-active" />
-                <span class="text-sm 2xl:text-xl">Dashboard</span>
+                  class="object-contain xl:w-4 lg:w-4 md:w-3 sm:w-3 w-3 icon-home-active" />
+                <span class="xl:text-sm lg:text-sm md:text-xs sm:text-xs text-xs">Dashboard</span>
               </a>
             </li>
 
             <!-- Delivery Note -->
             <li>
               <a href="delivery-note.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
+                class="flex gap-4 items-center xl:p-[9px] lg:p-[9px] md:p-[8px] sm:p-[8px] p-[8px] mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
                 <img loading="lazy" src="../assets/icon_dn_default.svg" alt="Purchase Order"
-                  class="object-contain w-4 2xl:w-6" />
-                <span class="text-sm 2xl:text-xl">Delivery Note</span>
+                  class="object-contain xl:w-4 lg:w-4 md:w-3 sm:w-3 w-3" />
+                <span class="xl:text-sm lg:text-sm md:text-xs sm:text-xs text-xs">Delivery Note</span>
               </a>
             </li>
 
             <!-- History Delivery Note -->
             <li>
               <a href="history-delivery-note.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
+                class="flex gap-4 items-center xl:p-[9px] lg:p-[9px] md:p-[8px] sm:p-[8px] p-[8px] mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
                 <img loading="lazy" src="../assets/icon_history_default.svg" alt="History Purchase Order"
-                  class="object-contain w-4 2xl:w-6" />
-                <span class="text-sm 2xl:text-xl">History Delivery Note</span>
+                  class="object-contain xl:w-4 lg:w-4 md:w-3 sm:w-3 w-3" />
+                <span class="xl:text-sm lg:text-sm md:text-xs sm:text-xs text-xs">History Delivery Note</span>
               </a>
             </li>
           </ul>
@@ -66,16 +74,16 @@
           <div class="mt-auto flex flex-col w-full">
             <!-- User Info -->
             <div class="flex gap-4 items-center p-2 2xl:p-4 w-full bg-blue-950 bg-opacity-10 text-blue-950">
-              <img loading="lazy" src="../assets/icon_people.svg" alt="User Info" class="object-contain w-4 2xl:w-6" />
-              <span id="user-info" class="text-sm 2xl:text-xl"></span>
+              <img loading="lazy" src="../assets/icon_people.svg" alt="User Info" class="object-contain xl:w-4 lg:w-4 md:w-3 sm:w-3 w-3" />
+              <span id="user-info" class="xl:text-sm lg:text-sm md:text-xs sm:text-xs text-xs"></span>
             </div>
 
             <!-- Logout Button -->
             <a href="javascript:void(0)" onclick="handleLogout()"
               class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
               <img loading="lazy" src="../assets/icon_logout.svg" alt=""
-                class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square logout-icon hover:icon_logout_white.svg" />
-              <span class="self-stretch my-auto text-sm 2xl:text-xl">Logout</span>
+                class="object-contain shrink-0 self-stretch my-auto xl:w-4 lg:w-4 md:w-3 sm:w-3 w-3 aspect-square logout-icon hover:icon_logout_white.svg" />
+              <span class="self-stretch my-auto xl:text-sm lg:text-sm md:text-xs sm:text-xs text-xs">Logout</span>
             </a>
           </div>
         </nav>
@@ -89,7 +97,7 @@
               Welcome Warehouse!
             </span>
           </h1>
-          <p class="mx-auto my-auto xl:mt-3 2xl:mt-6 text-center text-neutral-400 xl:text-sm 2xl:text-xl xl:w-[500px] 2xl:w-[700px]">
+          <p class="mx-auto my-auto xl:mt-3 2xl:mt-6 text-center text-neutral-400 xl:xl:text-sm lg:text-sm md:text-xs sm:text-xs text-xs xl:w-[500px] 2xl:w-[700px]">
             Welcome to our dashboard, where you can seamlessly manage and <br> monitor all your supply chain operations with ease and efficiency.
           </p>
         </header>
