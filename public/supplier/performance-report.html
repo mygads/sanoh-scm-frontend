@@ -331,7 +331,7 @@ function displayTableData(page) {
   const paginatedData = filteredData.slice(start, end);
 
   if (paginatedData.length === 0) {
-    tableBody.innerHTML = '<tr><td colspan="4" class="text-center">No data available for this supplier</td></tr>';
+    tableBody.innerHTML = '<tr><td colspan="5" class="text-center">No data available for now</td></tr>';
     return;
   }
   // Generate the row number based on the current page and index
