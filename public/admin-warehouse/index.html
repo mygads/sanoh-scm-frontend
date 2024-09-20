@@ -123,6 +123,9 @@
 
 cekToken();
 
+const nameUser = localStorage.getItem('name')
+displayNotification(`Welcome ${nameUser}`, 'success');
+
 
 // JavaScript code for sync functionality
 document.addEventListener('DOMContentLoaded', () => {

@@ -259,10 +259,10 @@
   // Function to fetch suppliers
   async function fetchPurchaseOrders() {
     const token = localStorage.getItem('accessToken');
-    const bpCode = localStorage.getItem('bpCode');
+    const selectedSupplierId = localStorage.getItem('selectedSupplierId');
 
     try {
-      const response = await fetch(`${APIindexpoheader3}/${bpCode}`, {
+      const response = await fetch(`${APIindexpoheader3}/${selectedSupplierId}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
