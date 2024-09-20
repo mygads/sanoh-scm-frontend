@@ -21,90 +21,38 @@
     <div class="flex h-screen">
 
       <!-- nav-side bar -->
-      <aside class="flex flex-col w-[20%] h-screen">
-        <nav
-          class="flex flex-col grow py-9 2xl:py-14 w-full text-base font-medium border-r border-solid bg-stone-300 border-r-neutral-400">
-
+      <aside class="w-[15%]">
+        <nav class="flex flex-col grow py-9 w-full h-screen text-sm font-medium border-r border-solid bg-stone-300 border-r-neutral-400 max-md:mt-9">
+          
           <!-- Logo Sanoh -->
-          <img loading="lazy" src="../assets/logosanoh.svg"
-            class="object-contain self-center w-30 2xl:w-48 max-w-full cursor-pointer pointer-events-auto aspect-[2.79]" />
-
+          <img loading="lazy" src="../assets/logosanoh.svg" class="object-contain self-center w-30 max-w-full " />
+          
           <!-- Menu Items -->
-          <ul class="flex flex-col mt-7 2xl:mt-10 w-full text-gray-500">
-
-            <!-- Manage Account (visible) -->
-            <li id="manage-account">
-              <a href="manage-user.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 w-full whitespace-nowrap cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 active">
-                <img loading="lazy" src="../assets/icon_home_default.svg" alt=""
-                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square icon-home-active" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Manage Account</span>
+          <ul class="flex flex-col mt-7 w-full text-gray-500">
+            
+            <!-- Dashboard (Visible) -->
+            <li> 
+              <a href="manage-user.html" class="flex gap-3 items-center p-2 w-full whitespace-normal cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 active">
+                <img loading="lazy" src="../assets/icon_home_default.svg" alt="" class="object-contain self-stretch my-auto w-4 aspect-square icon-home-active" />
+                <span class="self-stretch my-auto text-sm ">Manage Account</span>
               </a>
             </li>
-
-            <!-- Hidden Menu Items -->
-            <li class="hidden">
-              <a href="purchase-order.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../../assets/icon_po_default.svg" alt=""
-                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-[0.89] fill-blue-950 icon-po-active" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Purchase Order</span>
-              </a>
-            </li>
-
-            <li class="hidden">
-              <a href="delivery-note.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../../assets/icon_dn_default.svg" alt=""
-                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Delivery Note</span>
-              </a>
-            </li>
-
-            <li class="hidden">
-              <a href="history-purchase-order.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../../assets/icon_history_default.svg" alt=""
-                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">History Purchase Order</span>
-              </a>
-            </li>
-
-            <li class="hidden">
-              <a href="history-delivery-note.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../../assets/icon_history_default.svg" alt=""
-                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">History Delivery Note</span>
-              </a>
-            </li>
-
-            <li class="hidden">
-              <a href="listing-report"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../../assets/icon_listing_default.svg" alt=""
-                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Listing Report</span>
-              </a>
-            </li>
+          
           </ul>
-
+  
           <!-- User and Logout Section at the Bottom -->
           <div class="mt-auto flex flex-col w-full">
-
+            
             <!-- User Info -->
-            <div class="flex gap-4 items-center p-2 2xl:p-4 w-full bg-blue-950 bg-opacity-10 text-blue-950">
-              <img loading="lazy" src="../assets/icon_people.svg" alt=""
-                class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-              <span id="user-info" class="self-stretch my-auto text-sm 2xl:text-xl"></span>
+            <div class="flex gap-3 items-center p-2  w-full bg-blue-950 bg-opacity-10 text-blue-950">
+              <img loading="lazy" src="../assets/icon_people.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
+              <span id="user-info" class="self-stretch my-auto text-sm "></span>
             </div>
-
+            
             <!-- Logout Button -->
-            <a href="javascript:void(0)" onclick="handleLogout()"
-              class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
-              <img loading="lazy" src="../assets/icon_logout.svg" alt=""
-                class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square logout-icon hover:icon_logout_white.svg" />
-              <span class="self-stretch my-auto text-sm 2xl:text-xl">Logout</span>
+            <a href="javascript:void(0)" onclick="handleLogout()" class="flex gap-3 items-center p-2   w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
+              <img loading="lazy" src="../assets/icon_logout.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4  aspect-square logout-icon hover:icon_logout_white.svg" />
+              <span class="self-stretch my-auto text-sm ">Logout</span>
             </a>
           </div>
         </nav>
@@ -112,36 +60,33 @@
 
 
       <!-- Main Content -->
-      <main class="flex flex-col w-[80%] mb-[100%] mt-[3%] mx-auto px-6 2xl:px-10">
+      <main class="flex flex-col w-[85%] mb-auto mt-12 mx-auto px-6 ">
 
-        <section class="flex flex-col self-stretch py-px my-auto w-full">
+        <section class="flex flex-col self-stretch  my-auto w-full">
 
-          <header class="flex gap-3 items-center self-start text-2xl font-semibold text-black">
-            <h1 class="self-stretch my-auto text-[80%] 2xl:text-[120%]">Users Dashboard</h1>
+          <header class="items-center self-start text-2xl font-semibold text-black">
+            <h1 class="self-stretch my-auto ">Users Dashboard</h1>
           </header>
 
-          <div class="flex flex-col mt-4 2xl:mt-6 w-full 2xl:text-base text-xs font-medium">
+          <div class="mt-4  w-full  text-base font-medium">
 
-            <div class="flex flex-wrap gap-10 justify-between items-center w-full">
-
-            </div>
-
-            <div class="flex flex-wrap gap-4 justify-between items-center mt-4 2xl:mt-6 w-full">
+      
+            <div class="flex flex-wrap gap-4 items-center mt-4 justify-end w-full">
 
               <!-- Search Bar -->
-              <div class="flex items-center text-neutral-500 ml-auto">
-                <div class="flex px-4 2xl:px-8 py-2 2xl:py-4 bg-neutral-100 rounded w-full max-w-xs">
-                  <input id="search-input" type="text" placeholder="Find name user here"
-                    class="flex-1 bg-neutral-100 outline-none 2xl:text-base">
-                  <img src="../assets/icon_search.svg" alt="Search Icon" class="w-3 2xl:w-4 h-4 2xl:h-10 ml-3 ">
+              <div class=" items-center text-neutral-500">
+                <div class="flex px-4  py-3  bg-neutral-100 rounded ">
+                  <input id="search-input" type="text" placeholder="Find username here"
+                    class=" bg-neutral-100 outline-none text-xs">
+                  <img src="../assets/icon_search.svg" alt="Search Icon">
                 </div>
               </div>
 
               <!-- Add User Button -->
-              <div class="flex gap-3 2xl:gap-6 items-center text-white 2xl:min-w-[20px] text-[10px] 2xl:text-lg">
+              <div class="items-center text-white  text-xs ">
                 <a href="add-user.html"
-                  class="flex gap-2 2xl:gap-4 items-center px-6 2xl:px-9 py-2 2xl:py-3 bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5">
-                  <span class="flex-1 shrink self-stretch my-auto basis-0">Add User +</span>
+                  class=" items-center px-6  py-3 bg-blue-500 rounded cursor-pointer pointer-events-auto ">
+                  <span class=" self-stretch my-auto ">Add User +</span>
                 </a>
               </div>
             </div>
@@ -151,33 +96,33 @@
         </section>
 
         <!-- table -->
-        <div class="flex flex-col mt-5 2xl:mt-8">
+        <div class="mt-5 ">
           <div class="relative overflow-x-auto shadow-md rounded-lg border border-gray-300">
-            <table class="w-full text-[11px] 2xl:text-base text-left text-gray-700 dark:text-gray-700">
-              <thead class="text-[14px] 2xl:text-[20px] text-gray-700">
+            <table class="w-full text-xs text-left text-gray-700 dark:text-gray-700">
+              <thead class="text-base  text-gray-700">
                 <tr>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer">
+                  <th scope="col" class="px-2 py-3 text-center border-b border-b-gray-400 cursor-pointer">
                     Username
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer">
+                  <th scope="col" class="px-2 py-3 text-center border-b border-b-gray-400 cursor-pointer">
                     Supplier ID
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer">
+                  <th scope="col" class="px-2 py-3 text-center border-b border-b-gray-400 cursor-pointer">
                     Name
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer">
+                  <th scope="col" class="px-2 py-3 text-center border-b border-b-gray-400 cursor-pointer">
                     Role
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"        onclick="sortTable(5)">
+                  <th scope="col" class="px-2 py-3 text-center border-b border-b-gray-400 cursor-pointer"        onclick="sortTable(5)">
                     Status
                     <img loading="lazy" src="../assets/icon_sort.svg" alt=""
-                      class="w-3 2xl:w-4 inline-block text-gray-600" />
+                      class="w-3 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-0 2xl:py-4 py-0 text-center border-b border-b-gray-400 cursor-pointer">
+                  <th scope="col" class="px-0 py-0 text-center border-b border-b-gray-400 cursor-pointer">
                     Action                    
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                  <th scope="col" class="px-2 py-3 text-center border-b border-b-gray-400 cursor-pointer"
                     >
                     Edit
                   </th>
@@ -192,7 +137,7 @@
 
         <!-- Pagination -->
         <div class="flex justify-end my-6">
-          <div class="flex gap-2 2xl:gap-4 items-center pagination">
+          <div class="flex gap-2 items-center pagination">
             <!-- Pagination buttons will be inserted here by JavaScript -->
           </div>
         </div>
@@ -211,11 +156,13 @@
 <script>
 
   cekToken();
-  adjustRowsPerPage();
+  
 
   document.addEventListener('DOMContentLoaded', () => {
+    adjustRowsPerPage();
 
     fetchProtectedData();
+    
     
     document.getElementById('search-input').addEventListener('input', searchTable);
       
@@ -230,6 +177,7 @@
 
 
   async function fetchProtectedData() {
+    displayNotification('Waiting get user data','warning')
     const token = localStorage.getItem('accessToken');
 
     try {
@@ -243,6 +191,7 @@
 
       if (response.ok) {
         const data = await response.json();
+        displayNotification('Successfully get user data','success')
         // console.log('Data berhasil diambil:', data);
 
         // Map data to filteredData and update table
@@ -273,12 +222,24 @@
   }
 
   function adjustRowsPerPage() {
-  if (window.innerHeight <= 720) {
-      rowsPerPage = 7;
-    } else if (window.innerHeight <= 1080) {
-      rowsPerPage = 8;
-    } else {
-      rowsPerPage = 9;
+    if (window.innerWidth <= 640) {
+        rowsPerPage = 10;
+      } else if (window.innerWidth <= 768) {
+        rowsPerPage = 4;
+      } else if (window.innerWidth <= 1024) {
+        rowsPerPage = 4;
+      } else if (window.innerWidth <= 1280) {
+        rowsPerPage = 5;
+      } else if (window.innerWidth <= 1436) {
+        rowsPerPage = 6;
+      } else if (window.innerWidth <= 1550) {
+        rowsPerPage = 7;
+      } else if (window.innerWidth <= 1736) {
+        rowsPerPage = 9;
+      } else if (window.innerWidth <= 1920) {
+        rowsPerPage = 11;
+      } else {
+        rowsPerPage = 12;
     }
   }
 
