@@ -277,13 +277,15 @@
         }
 
     </style>
-    
+
 </head>
 
 <body>
 
 <!-- Page Content Container -->
 <div id="page-content"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
 
 <script src="../../api.js"></script>
 <script src="../../script.js"></script>
@@ -592,6 +594,25 @@ function renderTable(data, items) {
     return pageContent;
 }
 
+function generatePDF() {
+    // Choose the element that our PDF will be generated from.
+    const element = document.getElementById('page-content');
+
+    // Define the options for the PDF generation
+    const opt = {
+        margin:       [2, 2, 2, 2], // top, left, bottom, right
+        filename:     'PurchaseOrder.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 }, // higher scale for better quality
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    // Generate the PDF and trigger the download
+    html2pdf().set(opt).from(element).save().then(() => {
+        window.history.back();
+    });
+}
+
 // Render the purchase order content on the page
 function renderPurchaseOrder(data) {
     if (!data) {
@@ -615,11 +636,9 @@ function renderPurchaseOrder(data) {
         }
     });
 
-    // Print the page
-    window.print();
+    // Generate PDF and trigger download
+    generatePDF();
 }
-
-
 
 </script>
 
