@@ -139,10 +139,9 @@
             <table class="w-full text-[11px] 2xl:text-base text-left text-gray-700 dark:text-gray-700">
               <thead class="text-[14px] 2xl:text-[20px] text-gray-700">
                 <tr>
-                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(0)">
+                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer" >
                     No. PO
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
-                    <span class="sort-indicator"></span>
+                    
                   </th>
                   <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(1)">
                     PO Date
@@ -156,8 +155,7 @@
                   </th>
                   <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(3)">
                     Revision No.
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
-                    <span class="sort-indicator"></span>
+                    
                   </th>
                   <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(4)">
                     Revision Date
@@ -358,7 +356,7 @@
     const paginatedData = filteredData.slice(start, end);
     
     if (paginatedData.length === 0) {
-      tableBody.innerHTML = '<tr><td colspan="4" class="text-center">No data available for this supplier</td></tr>';
+      tableBody.innerHTML = '<tr><td colspan="7" class="text-center">No Purchase Order available for now</td></tr>';
       return;
     }
 

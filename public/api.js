@@ -23,6 +23,10 @@ APIlogin = API + '/login';
 // API Test No Auth
 APIreadfile = API + '/listingreporttest/file/';
 
+// API Global
+API_poView = API + `/pohview/`;
+API_dnView = API + `/dnhview/`;
+API_labelView = API + `/lbview/`;
 
 // supper admin 
 APIpartner4 = API + '/partner4';
@@ -40,6 +44,7 @@ APIindexlistingreport = API + `/indexlistingreport3`;
 APIuploadlisting = API + `/createlistingreport3`;
 APIindexpoheader3 = API + `/indexpoheader3`;
 APIpohistory3 = API + `/pohistory3`;
+API_SyncPurchasing = API + `/sync`;
 
 
 // warehouse
@@ -48,6 +53,7 @@ APIindexdnheader2 = API + `/indexdnheader2`;
 APIindexdndetail2 = API + '/indexdndetail2/';
 APIdnhistory2 = API + `/dnhistory2`;
 APIdnViewWarehouse2 = API + `/dnhview2/`;
+API_SyncWarehouse = API + `/sync`;
 
 
 // supplier
@@ -60,8 +66,5 @@ API_indexPOHistorySupplier = API + `/pohistory1/`;
 API_indexDNHistorySupplier = API + `/dnhistory1/`;
 API_readPerformanceReportSupplier = API + `/listingreport1/file/`;
 API_indexPODetailSupplier = API + `/indexpodetail1/`;
-API_poViewSupplier = API + `/pohview1/`;
-API_dnViewSupplier = API + `/dnhview1/`;
-API_labelViewSupplier = API + `/lbview1/`;
 API_indexDNDetailUpdateSupplier = API + `/updatedndetail1`;
 
