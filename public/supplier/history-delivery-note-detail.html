@@ -152,12 +152,10 @@
                 </div>
               </div>
               <div class="flex gap-3 items-center self-stretch my-auto text-white text-[10px]">
-
-                <a onclick="handlePrintDN(noDN)" id="print-dn-link" class="flex gap-2  items-center self-stretch px-6 py-2 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5" >
+                <a href="" id="print-dn-link" class="flex gap-2  items-center self-stretch px-6 py-2 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5" onclick="updatePrintButton(noDN)">
                   <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
                   <span class="flex-1 shrink self-stretch my-auto basis-0">Print DN </span>
                 </a>
-                
               </div>
             </div>
 
@@ -185,22 +183,22 @@
                     Part Name
                   </th>
                   <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer w-[13%]" onclick="sortTable(3)">
-                    Quantity Order
+                    QTY Requested
                     <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
                   <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer w-[13%]" onclick="sortTable(4)">
-                    Quantity Label
+                    QTY Label
                     <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" /> -->
                     <!-- <span class="sort-indicator"></span> -->
                   </th>
                   <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer w-[15%]" onclick="sortTable(5)">
-                    Quantity Delivered
+                    QTY Delivered
                     <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" /> -->
                     <!-- <span class="sort-indicator"></span> -->
                   </th>
                   <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer w-[15%]" onclick="sortTable(6)">
-                    Quantity Received
+                    QTY Received
                     <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" /> -->
                     <!-- <span class="sort-indicator"></span> -->
                   </th>
@@ -243,37 +241,25 @@
   // Assign the noPO from URL
   let noDN = getUrlParameter('noDN');
 
-  async function handlePrintDN(noDN) {
-    try {
-        const response = await fetch(`${API_dnView}${noDN}`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
-            },
-        });
-
-        if (response.ok) {
-            // Open PDF in a new tab
-            window.open(`${API_dnView}${noDN}`, '_blank');
-        } else {
-            console.error('Failed to fetch PDF:', response.statusText);
-        }
-    } catch (error) {
-        console.error('Error:', error);
-    }
-  }
-
   // Function to get URL parameters
   function getUrlParameter(name) {
     const params = new URLSearchParams(window.location.search);
     return params.get(name);
   }
 
-  function updateCSVButton(noDN) {
-    const printdcsvLink = document.getElementById('print-csv-link');
+  // function updateCSVButton(noDN) {
+  //   const printdcsvLink = document.getElementById('print-csv-link');
+  //   if (noDN) {
+  //     printdcsvLink.href = `print/print-dn.html?noDN=${noDN}`;
+  //   } else {
+  //     console.error('noDN is not available.');
+  //   }
+  // }
+
+  function updatePrintButton(noDN) {
+    const printdnLink = document.getElementById('print-dn-link');
     if (noDN) {
-      printdcsvLink.href = `print/print-dn.html?noDN=${noDN}`;
+      printdnLink.href = `print/print-dn.html?noDN=${noDN}`;
     } else {
       console.error('noDN is not available.');
     }

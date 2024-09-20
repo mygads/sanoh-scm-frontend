@@ -44,7 +44,8 @@ APIindexlistingreport = API + `/indexlistingreport3`;
 APIuploadlisting = API + `/createlistingreport3`;
 APIindexpoheader3 = API + `/indexpoheader3`;
 APIpohistory3 = API + `/pohistory3`;
-API_SyncPurchasing = API + `/syncPurchasing`;
+APIpoViewPurchasing3 = API + `/pohview3/`
+API_SyncPurchasing = API + `/sync`;
 
 
 // warehouse
@@ -67,4 +68,6 @@ API_indexDNHistorySupplier = API + `/dnhistory1/`;
 API_readPerformanceReportSupplier = API + `/listingreport1/file/`;
 API_indexPODetailSupplier = API + `/indexpodetail1/`;
 API_indexDNDetailUpdateSupplier = API + `/updatedndetail1`;
-
+API_poViewSupplier = API + `/pohview1/`;
+API_dnViewSupplier = API + `/dnhview1/`;
+API_labelViewSupplier = API + `/lbview1/`;
