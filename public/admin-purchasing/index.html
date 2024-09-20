@@ -197,7 +197,7 @@
         const data = await response.json();
 
         if (response.ok) {
-          displayNotification('Data has been synchronized successfully.')
+          displayNotification('Data has been synchronized successfully.','success')
         } else {
           displayNotification(data.message || 'An error occurred during synchronization.','error')
           // Swal.fire({
