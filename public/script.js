@@ -101,6 +101,7 @@ function handleLogout() {
   }).then((result) => {
     if (result.isConfirmed) {
       // If confirmed, proceed with logout
+      displayNotification('Waiting save history to logout','warning')
       logout();
     } else {
       // If canceled, log a message or do nothing

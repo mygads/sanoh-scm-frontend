@@ -220,7 +220,7 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
-
+  fetchSuppliers();
   cekToken();
 
   let deliveryNote = []; // Initialize the deliveryNote array
@@ -232,7 +232,7 @@
     console.log('DOM fully loaded and parsed');
   
     // Adjust rows per page based on screen size
-    fetchSuppliers();
+    
     //adjustRowsPerPage(); // Atur jumlah data per halaman berdasarkan ukuran layar
 
     window.addEventListener('resize', () => {
