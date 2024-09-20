@@ -128,6 +128,31 @@
 <script src="../table.js"></script>
 <script>
 
+  const burgerBtn = document.getElementById('burger-btn');
+    const sidebar = document.getElementById('sidebar');
+    
+    burgerBtn.addEventListener('click', () => {
+      if (sidebar.classList.contains('-translate-x-full')) {
+        sidebar.classList.remove('-translate-x-full');
+      } else {
+        sidebar.classList.add('-translate-x-full');
+      }
+    });
+
+    function adjustRowsPerPage() {
+      if (window.innerHeight < 620) {
+        rowsPerPage = 4; // Atur menjadi 3 jika ukuran layar < 768
+      } else if (window.innerHeight < 640) {
+        rowsPerPage = 6
+      } else if (window.innerHeight < 768) {
+        rowsPerPage = 8
+      } else if (window.innerHeight < 1280) {
+        rowsPerPage = 9; // Atur menjadi 4 jika ukuran layar >= 768
+      } else {
+        rowsPerPage = 10;   
+      }
+    }
+
 cekToken();
 
 
