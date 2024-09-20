@@ -237,7 +237,6 @@
   let sortOrder = {}; // Object to keep track of sort order for each column
 
   document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM fully loaded and parsed');
 
     fetchSuppliers();
 
@@ -252,18 +251,18 @@
 
     // Event listener for supplier selection
     $(supplierSelect).on('change', async function (event) {
+      localStorage.removeItem('selectedSupplierId'); 
       const selectedSupplierId = $(this).val();
       console.log('Supplier dipilih:', selectedSupplierId);
 
       if (selectedSupplierId) {
-        localStorage.setItem('bpCode', selectedSupplierId); // Store bpCode in localStorage
-        console.log('Fetching delivery notes for supplier:', selectedSupplierId);
+        localStorage.setItem('selectedSupplierId', selectedSupplierId); // Store selectedSupplierId in localStorage
+        // console.log('Fetching delivery notes for supplier:', selectedSupplierId);
         await fetchPurchaseOrder(selectedSupplierId); // Fetch delivery notes based on the selected supplier
-        displaySelectedSupplier(); // Display selected supplier in the table
         displayTableData(currentPage); // Display data for the first page
         updatePagination();
       } else {
-        console.error('No supplier selected.');
+        
       }
     });
 
@@ -279,7 +278,6 @@
     }
 
     try {
-      console.log('Fetching suppliers...');
       const response = await fetch(APIpartner3, {
         method: 'GET',
         headers: {
@@ -290,7 +288,7 @@
 
       if (response.ok) {
         const data = await response.json();
-        console.log('Suppliers data received:', data);
+        // console.log('Suppliers data received:', data);
         if (data.success) {
           populateSupplierDropdown(data.data); // Populate dropdown with supplier data
         } else {
@@ -316,7 +314,6 @@
       supplierSelect.appendChild(option);
     });
 
-    console.log('Supplier dropdown populated');
     // Re-initialize Select2 after adding options
     $(supplierSelect).select2({
       placeholder: 'Search Supplier',
@@ -325,16 +322,11 @@
   }
 
   // Function to fetch purchase order based on supplier
-  async function fetchPurchaseOrder(bpCode) {
-    const token = localStorage.getItem('accessToken');
-    if (!token) {
-      console.error('No access token found for fetching purchase order');
-      return;
-    }
+  async function fetchPurchaseOrder(selectedSupplierId) {
 
     try {
-      console.log(`Fetching purchaseOrder for bpCode: ${bpCode}`);
-      const response = await fetch(`${APIindexpoheader3}/${bpCode}`, {
+      // console.log(`Fetching purchaseOrder for selectedSupplierId: ${selectedSupplierId}`);
+      const response = await fetch(`${APIindexpoheader3}/${selectedSupplierId}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -347,10 +339,10 @@
       }
 
       const data = await response.json();
-      console.log('Parsed data:', data);
+      // console.log('Parsed data:', data);
 
       if (data.status) { // Adjust this based on your API's actual response
-        console.log('Success:', data.message);
+        displayNotification(data.message,'success');
         let purchaseOrder = [];
         // Process the data
         purchaseOrder = data.data.map(po => ({
@@ -369,51 +361,20 @@
         updatePagination();
       } else {
         const tableBody = document.getElementById('table-body');
-        if (tableBody) {
-          tableBody.innerHTML = '<tr><td colspan="6" class="text-center">No purchase orders found for this supplier</td></tr>';
-        }
-        console.warn('Failed to fetch purchase order:', data.message);
+        tableBody.innerHTML = '<tr><td colspan="6" class="text-center">No purchase orders found for this supplier</td></tr>';
+      
+        displayNotification(data.message,'success');
       }
     } catch (error) {
       const tableBody = document.getElementById('table-body');
       if (tableBody) {
         tableBody.innerHTML = '<tr><td colspan="6" class="text-center text-red-500">Failed to fetch purchase orders. Please try again later.</td></tr>';
       }
-      console.error('Fetch error during purchase order retrieval:', error);
+      displayNotification(`Fetch error during purchase order retrieval: , ${error}`, 'error');
     }
   }
 
-  // Function to display selected supplier at the top of the table
-  function displaySelectedSupplier() {
-    const bpCode = localStorage.getItem('bpCode');
-    if (!bpCode) {
-      console.error('No selected supplier found in localStorage');
-      return;
-    }
 
-    const tableBody = document.getElementById('table-body');
-    if (!tableBody) {
-      console.error('Table body element not found');
-      return;
-    }
-
-    // Remove any previously displayed supplier rows to avoid duplicates
-    const existingSupplierRow = tableBody.querySelector('.bg-blue-100');
-    if (existingSupplierRow) {
-      existingSupplierRow.remove();
-    }
-
-    const supplierRow = document.createElement('tr');
-    supplierRow.classList.add('bg-blue-100', 'border-b');
-    supplierRow.innerHTML = `
-      <td colspan="4" class="text-center font-bold text-blue-900">
-        Supplier yang Dipilih: ${bpCode}
-      </td>
-    `;
-
-    tableBody.prepend(supplierRow); // Add the selected supplier row at the top
-    console.log('Displayed selected supplier in table:', bpCode);
-  }
 
   // Fungsi untuk menampilkan data tabel
   function displayTableData(page) {

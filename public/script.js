@@ -71,6 +71,8 @@ function clearLocalStorage() {
   localStorage.removeItem('APIlogout');
   localStorage.removeItem('lastUrl'); 
   localStorage.removeItem('lastRole'); 
+  localStorage.removeItem('editUserId'); 
+  localStorage.removeItem('selectedSupplierId'); 
 }
 
 function clearSession() {
@@ -80,6 +82,8 @@ function clearSession() {
   localStorage.removeItem('bpCode');
   localStorage.removeItem('userRole');
   localStorage.removeItem('APIlogout');
+  localStorage.removeItem('editUserId'); 
+  localStorage.removeItem('selectedSupplierId'); 
   // localStorage.clear();
 }
 
