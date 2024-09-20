@@ -154,9 +154,8 @@
                   <div id="planDelivery" class="xl:text-[100%] lg:text-[100%] md:text-[90%] sm:text-[90%] text-[80%] flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap rounded bg-stone-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
                 </div>
               </div>
-              
               <div class="flex gap-3 xl:mt-0 lg:mt-4 md:mt-4 sm:mt-4 mt-4 items-center self-stretch my-auto text-white -[240px] text-[10px]">
-                <a href="" target="_blank" id="print-label-link"  class="xl:text-[100%] lg:text-[100%] md:text-[90%] sm:text-[90%] text-[80%] flex gap-2  items-center self-stretch px-4 py-2 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5"  onclick="updatePrintLabelButton(noDN)">
+                <a onclick="handlePrintLabel(noDN)" id="print-label-link" class="xl:text-[100%] lg:text-[100%] md:text-[90%] sm:text-[90%] text-[80%] flex gap-2  items-center self-stretch px-4 py-2 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5">
                   <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto xl:w-4 lg:w-4 md:w-3 sm:w-3 w-3 spect-square" />
                   <span class="flex-1 shrink self-stretch my-auto ">Print Label</span>
                 </a>
@@ -164,7 +163,7 @@
                   <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto xl:w-4 lg:w-4 md:w-3 sm:w-3 w-3 aspect-square" />
                   <span class="flex-1 shrink self-stretch my-auto ">Export CSV</span>
                 </a>
-                <a href="" target="_blank" id="print-dn-link" class="xl:text-[100%] lg:text-[100%] md:text-[90%] sm:text-[90%] text-[80%] flex gap-2  items-center self-stretch px-6 py-2 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5" onclick="updatePrintButton(noDN)">
+                <a onclick="handlePrintDN(noDN)" id="print-dn-link" class="xl:text-[100%] lg:text-[100%] md:text-[90%] sm:text-[90%] text-[80%] flex gap-2  items-center self-stretch px-6 py-2 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5">
                   <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto xl:w-4 lg:w-4 md:w-3 sm:w-3 w-3 aspect-square" />
                   <span class="flex-1 shrink self-stretch my-auto basis-0">Print DN </span>
                 </a>
@@ -198,7 +197,7 @@
                     UoM
                   </th>
                   <th scope="col" class="px-1 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(4)">
-                    QTY
+                    QTY PO
                     <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" /> -->
                     <!-- <span class="sort-indicator"></span> -->
                   </th>
@@ -317,12 +316,56 @@
   }
 
   // Function to update the Print DN button href dynamically
-  function updatePrintButton(noDN) {
-    const printdnLink = document.getElementById('print-dn-link');
-    if (noDN) {
-      printdnLink.href = `print/print-dn.html?noDN=${noDN}`;
-    } else {
-      console.error('noDN is not available.');
+  // function updatePrintButton(noDN) {
+  //   const printdnLink = document.getElementById('print-dn-link');
+  //   if (noDN) {
+  //     printdnLink.href = `print/print-dn.html?noDN=${noDN}`;
+  //   } else {
+  //     console.error('noDN is not available.');
+  //   }
+  // }
+
+  // Print label
+  async function handlePrintLabel(noDN) {
+    try {
+        const response = await fetch(`${API_labelView}${noDN}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (response.ok) {
+            // Open PDF in a new tab
+            window.open(`${API_labelView}${noDN}`, '_blank');
+        } else {
+            console.error('Failed to fetch PDF:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+  }
+
+  // Print DN
+  async function handlePrintDN(noDN) {
+    try {
+        const response = await fetch(`${API_dnView}${noDN}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (response.ok) {
+            // Open PDF in a new tab
+            window.open(`${API_dnView}${noDN}`, '_blank');
+        } else {
+            console.error('Failed to fetch PDF:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Error:', error);
     }
   }
   
@@ -336,14 +379,14 @@
   }
   
   // Function to update the Print Label button href dynamically
-  function updatePrintLabelButton(noDN) {
-    const printdnLink = document.getElementById('print-label-link');
-    if (noDN) {
-      printdnLink.href = `print/print-label.html?noDN=${noDN}`;
-    } else {
-      console.error('noDN is not available.');
-    }
-  }
+  // function updatePrintLabelButton(noDN) {
+  //   const printdnLink = document.getElementById('print-label-link');
+  //   if (noDN) {
+  //     printdnLink.href = `print/print-label.html?noDN=${noDN}`;
+  //   } else {
+  //     console.error('noDN is not available.');
+  //   }
+  // }
 
 
   // Function to fetch delivery notes from the API
