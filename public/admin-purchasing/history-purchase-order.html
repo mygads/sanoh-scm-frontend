@@ -234,6 +234,7 @@
 
   // Function to fetch suppliers data
   async function fetchSuppliers() {
+
     const token = localStorage.getItem('accessToken');
     if (!token) {
       console.error('No access token found');
@@ -287,6 +288,7 @@
 
   // Function to fetch purchase orders from the API
   async function fetchHistoryPurchaseOrders(selectedSupplierId) {
+    displayNotification(`waiting get data for ${selectedSupplierId}`,'warning')
     const token = localStorage.getItem('accessToken');
 
     try {
@@ -301,6 +303,7 @@
       // console.log(`Response status: ${response.status} ${response.statusText}`);
 
       if (!response.ok) {
+        displayNotification(`${response.status}`,'error')
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
@@ -308,6 +311,7 @@
       // console.log("Data fetched:", data);
 
       if (data.success) {
+        displayNotification(`${data.message}`,'success')
         // console.log('Success:', data.message);
         let historyPurchaseOrder = [];
         historyPurchaseOrder = data.data.map(po => ({

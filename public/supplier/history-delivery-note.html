@@ -189,6 +189,7 @@
 
   // Function to fetch delivery notes from the API
   async function fetchHistoryDeliveryNotes() {
+    displayNotification('Waiting for get data history','warning')
     const token = localStorage.getItem('accessToken');
     const bpCode = localStorage.getItem('bpCode'); 
 
@@ -214,6 +215,7 @@
         console.log("Data fetched:", data);
 
         if (data.success && data.data) {
+          displayNotification(data.message,'success')
           deliveryNote = data.data
               .map(dn => ({
                   noDN: dn.dn_number ? dn.dn_number.toString() : 'No DN Number',
@@ -307,15 +309,6 @@
 
 
   document.addEventListener('DOMContentLoaded', () => {
-  const name = localStorage.getItem('name');
-  const bpCode = localStorage.getItem('bpCode');
-
-  if (!bpCode) {
-      console.error('bpCode is not set in localStorage.');
-      return;
-  }
-
-  document.getElementById('user-info').textContent = `${name} - ${bpCode}`;
 
   // Fetch and display delivery notes
   fetchHistoryDeliveryNotes();
