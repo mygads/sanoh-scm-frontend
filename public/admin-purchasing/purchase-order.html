@@ -254,6 +254,7 @@
       localStorage.removeItem('selectedSupplierId'); 
       const selectedSupplierId = $(this).val();
       console.log('Supplier dipilih:', selectedSupplierId);
+      displayNotification(`Waiting get data PO ${selectedSupplierId}`,'warning');
 
       if (selectedSupplierId) {
         localStorage.setItem('selectedSupplierId', selectedSupplierId); // Store selectedSupplierId in localStorage
@@ -343,6 +344,7 @@
 
       if (data.status) { // Adjust this based on your API's actual response
         displayNotification(data.message,'success');
+        
         let purchaseOrder = [];
         // Process the data
         purchaseOrder = data.data.map(po => ({
