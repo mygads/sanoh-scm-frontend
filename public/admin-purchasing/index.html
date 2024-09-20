@@ -137,7 +137,8 @@
 
   cekToken();
 
-  // Set default month to current month when page loads
+  const nameUser = localStorage.getItem('name')
+  displayNotification(`Welcome ${nameUser}`, 'success');
 
 
 
