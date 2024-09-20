@@ -181,12 +181,17 @@
                     <span class="sort-indicator"></span>
                   </th>
                   <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(3)">
+                    UoM
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <span class="sort-indicator"></span>
+                  </th>
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(4)">
                     QTY PO
                     <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
                   <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(4)">
-                    QTY Delivered
+                    QTY Receipt
                     <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
@@ -297,7 +302,8 @@
                   partNumber: detail.part_number || 'No Part Number',
                   partName: detail.part_name || 'No Item Description',
                   UoM: detail.unit || 'No UoM',
-                  QTY: detail.quantity || 'No Quantity'
+                  QTY: detail.quantity || 'No Quantity',
+                  QTYReceipt: detail.receipt_qty || '',
               })) : []
             }));
 
@@ -392,6 +398,7 @@
             <td class="px-2 py-4 text-center">${detail.partName}</td>
             <td class="px-2 py-4 text-center">${detail.UoM}</td>
             <td class="px-2 py-4 text-center">${detail.QTY}</td>
+            <td class="px-2 py-4 text-center">${detail.QTYReceipt}</td>
         `;
         tableBody.appendChild(tableRow);
     });
