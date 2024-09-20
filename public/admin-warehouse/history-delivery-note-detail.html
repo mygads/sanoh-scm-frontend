@@ -164,11 +164,10 @@
               </div>
               <div
                 class="flex gap-3 2xl:gap-6 items-center self-stretch my-auto text-white 2xl:min-w-[240px] text-[10px] 2xl:text-lg">
-                <a onclick="handlePrintDN(noDN)" id="print-dn-link" class="flex gap-2  items-center self-stretch px-6 py-2 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5" >
+                <a href="" id="print-dn-link" class="flex gap-2  items-center self-stretch px-6 py-2 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5" onclick="updatePrintButton(noDN)">
                   <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
                   <span class="flex-1 shrink self-stretch my-auto basis-0">Print DN </span>
                 </a>
-
               </div>
             </div>
 
@@ -268,24 +267,12 @@
   const params = new URLSearchParams(window.location.search);
   const noDN = params.get('noDN');
 
-  async function handlePrintDN(noDN) {
-    try {
-        const response = await fetch(`${API_dnView}${noDN}`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
-            },
-        });
-
-        if (response.ok) {
-            // Open PDF in a new tab
-            window.open(`${API_dnView}${noDN}`, '_blank');
-        } else {
-            console.error('Failed to fetch PDF:', response.statusText);
-        }
-    } catch (error) {
-        console.error('Error:', error);
+  function updatePrintButton(noDN) {
+    const printdnLink = document.getElementById('print-dn-link');
+    if (printdnLink && noDN) {
+      printdnLink.href = `print/print-dn.html?noDN=${noDN}`;
+    } else {
+      console.error('Print DN link or noDN is not available.');
     }
   }
 

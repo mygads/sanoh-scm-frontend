@@ -44,6 +44,7 @@ APIindexlistingreport = API + `/indexlistingreport3`;
 APIuploadlisting = API + `/createlistingreport3`;
 APIindexpoheader3 = API + `/indexpoheader3`;
 APIpohistory3 = API + `/pohistory3`;
+APIpoViewPurchasing3 = API + `/pohview3/`
 API_SyncPurchasing = API + `/sync`;
 
 

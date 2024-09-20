@@ -147,9 +147,9 @@
               </div>
               
               <div class="flex gap-3  items-center self-stretch my-auto text-white text-[10px] ">
-                <a  onclick="handlePrintPo(noPO)" id="print-po-link" class="flex gap-2  items-center self-stretch px-6  py-2  my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5">
-                  <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
-                  <span class="flex-1 shrink self-stretch my-auto basis-0">Print PO</span>
+                <a href="" id="print-po-link" class="flex gap-2  items-center self-stretch px-6  py-2  my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5" onclick="updatePrintButton(noPO)">
+                    <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
+                    <span class="flex-1 shrink self-stretch my-auto basis-0">Print PO</span>
                 </a>
               </div>
             </div>
@@ -226,24 +226,12 @@
 
   let historyPurchaseOrder = [];  // This stores the purchase orders from the API
 
-  async function handlePrintPo(noPO) {
-    try {
-      const response = await fetch(`${API_poView}${noPO}`, {
-        method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
-        },
-      });
-
-      if (response.ok) {
-        // Open PDF in a new tab
-        window.open(`${API_poView}${noPO}`, '_blank');
-      } else {
-        console.error('Failed to fetch PDF:', response.statusText);
-      }
-    } catch (error) {
-        console.error('Error:', error);
+  function updatePrintButton(noPO) {
+    const printPoLink = document.getElementById('print-po-link');
+    if (noPO) {
+      printPoLink.href = `print/print-po.html?noPO=${noPO}`;
+    } else {
+      console.error('noPO is not available.');
     }
   }
   
