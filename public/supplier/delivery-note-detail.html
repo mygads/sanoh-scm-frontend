@@ -271,7 +271,6 @@
   cekToken();
 
   let details = [];
-  let filteredDnDetailData = [];
 
   // Assign the noPO from URL
   let noDN = getUrlParameter('noDN');
@@ -314,7 +313,7 @@
 
   // Function to fetch delivery notes from the API
   async function fetchDeliveryNotes() {
-
+    const token = localStorage.getItem('accessToken');
     try {
         const response = await fetch(`${API_indexDNSupplier}`, {
           method: 'GET',
@@ -471,14 +470,14 @@
               }
             }
 
-            // Store the details array into filteredDnDetailData
-            filteredDnDetailData = dn.details;
+            // Store the details array into filteredData
+            filteredData = dn.details;
 
             // Display the details
-            if (typeof displayDNDetails === 'function') {
-                displayDNDetails(filteredDnDetailData);  // Show first page of details
+            if (typeof displayTableData === 'function') {
+                displayTableData(filteredData);  // Show first page of details
             } else {
-                console.error('displayDNDetails function is not defined.');
+                console.error('displayTableData function is not defined.');
             }
 
         } else {
@@ -489,7 +488,7 @@
     }
 
     window.addEventListener('resize', () => {
-        displayDNDetails(filteredDnDetailData);  // Adjust display when resized
+        displayTableData(filteredData);  // Adjust display when resized
     });
 
     
@@ -510,11 +509,11 @@
   //     );
   //   }
 
-  //   displayDNDetails(filteredDnDetailData);
+  //   displayTableData(filteredData);
   // }
 
 
-  function displayDNDetails(details) {
+  function displayTableData(details) {
     const tableBody = document.getElementById('table-body-detail');
     tableBody.innerHTML = '';
 
@@ -580,7 +579,7 @@
 
         // Aksi tombol cancel
         cancelButton.addEventListener('click', () => {
-            displayDNDetails(filteredDnDetailData);
+            displayTableData(filteredData);
             confirmationSection.classList.add('hidden');
             cancelButton.remove();
             confirmButton.textContent = 'Edit';
@@ -607,9 +606,9 @@
             updates.push({ dn_detail_no: parseInt(dnDetailNo), qty_confirm: qtyConfirm });
 
             // Update the local data array
-            const dataIndex = filteredDnDetailData.findIndex(detail => detail.dnDetailNo === dnDetailNo);
+            const dataIndex = filteredData.findIndex(detail => detail.dnDetailNo === dnDetailNo);
             if (dataIndex !== -1) {
-                filteredDnDetailData[dataIndex].qtyConfirm = qtyConfirm;
+                filteredData[dataIndex].qtyConfirm = qtyConfirm;
             }
         }
 
@@ -638,7 +637,7 @@
         // Fetch data ulang setelah submit berhasil
         await fetchDeliveryNotes();
         
-        displayDNDetails(filteredDnDetailData);
+        displayTableData(filteredData);
         updateButtonState();
 
         confirmationSection.classList.add('hidden');
@@ -648,8 +647,8 @@
 
 function updateButtonState() {
     const confirmButton = document.getElementById('confirm-button');
-    const hasData = filteredDnDetailData.length > 0;
-    const hasUnconfirmedQty = filteredDnDetailData.some(detail => !detail.qtyConfirm || detail.qtyConfirm === null);
+    const hasData = filteredData.length > 0;
+    const hasUnconfirmedQty = filteredData.some(detail => !detail.qtyConfirm || detail.qtyConfirm === null);
 
     console.log('Checking button state...');
     console.log('Has data:', hasData);
