@@ -24,21 +24,24 @@
   <section class="overflow-hidden w-screen h-screen bg-white">
     <div class="flex h-screen">
 
-         <!-- Burger Menu Button (visible only on small screens) -->
-         <div class="absolute top-4 left-4 sm:hidden z-50">
-          <button id="burger-btn" class="text-gray-800 focus:outline-none">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-            </svg>
-          </button>
-        </div>  
+      <!-- Burger Menu Button (visible only on small screens) -->
+      <div class="absolute top-4 left-4 sm:hidden z-50">
+        <button id="burger-btn" class="text-gray-800 focus:outline-none">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+          </svg>
+        </button>
+      </div>
 
       <!-- nav-side bar -->
-      <aside id="sidebar" class="transform -translate-x-full transition-transform duration-300 fixed sm:relative sm:translate-x-0 flex flex-col  xl:w-[15%] lg:w-[18%] md:w-[24%] sm:w-[30%] w-[32%] h-screen bg-stone-300 border-r border-neutral-400 z-40">
-        <nav class="flex flex-col grow py-9 w-full h-screen text-base font-medium border-r border-solid bg-stone-300 border-r-neutral-400 ">
+      <aside id="sidebar"
+        class="transform -translate-x-full transition-transform duration-300 fixed sm:relative sm:translate-x-0 flex flex-col  xl:w-[15%] lg:w-[18%] md:w-[24%] sm:w-[30%] w-[32%] h-screen bg-stone-300 border-r border-neutral-400 z-40">
+        <nav
+          class="flex flex-col grow py-9 w-full h-screen text-base font-medium border-r border-solid bg-stone-300 border-r-neutral-400 ">
 
           <!-- Logo Sanoh -->
-          <img loading="lazy" src="../assets/logosanoh.svg" class="object-contain self-center xl:w-30 lg:w-28 md:w-26 sm:w-24 w-24 max-w-full cursor-pointer pointer-events-auto aspect-[2.79]" />
+          <img loading="lazy" src="../assets/logosanoh.svg"
+            class="object-contain self-center xl:w-30 lg:w-28 md:w-26 sm:w-24 w-24 max-w-full cursor-pointer pointer-events-auto aspect-[2.79]" />
 
           <!-- Menu Items -->
           <ul class="flex flex-col mt-7 w-full text-gray-500">
@@ -47,7 +50,7 @@
               <a href="index.html"
                 class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer hover:bg-blue fvv-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
                 <img loading="lazy" src="../assets/icon_home_default.svg" alt="Dashboard"
-                  class="object-contain w-4" />
+                  class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
                 <span class="self-strech text-sm">Dashboard</span>
               </a>
             </li>
@@ -57,7 +60,7 @@
               <a href="purchase-order.html"
                 class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
                 <img loading="lazy" src="../assets/icon_po_default.svg" alt="Purchase Order"
-                  class="object-contain w-4" />
+                  class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
                 <span class="self-strech text-sm">Purchase Order</span>
               </a>
             </li>
@@ -67,7 +70,7 @@
               <a href="history-purchase-order.html"
                 class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
                 <img loading="lazy" src="../assets/icon_history_default.svg" alt="History Purchase Order"
-                  class="object-contain w-4" />
+                  class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
                 <span class="self-strech text-sm">History Purchase Order</span>
               </a>
             </li>
@@ -77,7 +80,7 @@
               <a
                 class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 active">
                 <img loading="lazy" src="../assets/icon_performance_default.svg" alt="Performance Report"
-                  class="object-contain w-4 icon-performance-active" />
+                  class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square  icon-performance-active" />
                 <span class="self-strech text-sm">Performance Report</span>
               </a>
             </li>
@@ -86,14 +89,15 @@
           <!-- User and Logout Section at the Bottom -->
           <div class="mt-auto flex flex-col w-full">
             <!-- User Info -->
-            <div class="flex gap-4 items-center p-2 2xl:p-4 w-full bg-blue-950 bg-opacity-10 text-blue-950">
-              <img loading="lazy" src="../assets/icon_people.svg" alt="User Info" class="object-contain w-4" />
+            <div class="flex gap-4 items-center p-2 w-full bg-blue-950 bg-opacity-10 text-blue-950">
+              <img loading="lazy" src="../assets/icon_people.svg" alt="User Info"
+                class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
               <span id="user-info" class="self-strech text-sm"></span>
             </div>
 
             <!-- Logout Button -->
             <a href="javascript:void(0)" onclick="handleLogout()"
-              class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
+              class="flex gap-4 items-center p-2 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
               <img loading="lazy" src="../assets/icon_logout.svg" alt=""
                 class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square logout-icon hover:icon_logout_white.svg" />
               <span class="self-stretch my-auto self-strech text-sm">Logout</span>
@@ -103,21 +107,25 @@
       </aside>
 
       <!-- Main Content -->
-      <main class="flex flex-col w-[80%] mb-[100%] xl:mt-[3%] lg:mt-[3%] md:mt-[4%] sm:mt-[0%] mt-[2%] mx-auto xl:px-6 lg:px-6 md:px-6 sm:px-6 px-0">
+      <main
+        class="flex flex-col w-[80%] mb-[100%] xl:mt-[3%] lg:mt-[3%] md:mt-[4%] sm:mt-[0%] mt-[2%] mx-auto xl:px-6 lg:px-6 md:px-6 sm:px-6 px-0">
 
         <section class="flex flex-col self-stretch py-px my-auto w-full max-md:mt-10 max-md:max-w-full">
 
           <header class="flex gap-3 items-center self-start text-2xl font-semibold text-black">
-            <h1 class="self-stretch my-auto xl:text-[100%] lg:text-[90%] md:text-[80%] sm:text-[70%] text-[70%]">Performance Report</h1>
+            <h1 class="self-stretch my-auto xl:text-[100%] lg:text-[90%] md:text-[80%] sm:text-[70%] text-[70%]">
+              Performance Report</h1>
           </header>
 
           <article class="flex flex-col items-start w-full text-base">
-            <h1 class="xl:text-[100%] lg:text-[100%] md:text-[90%] sm:text-[90%] text-[90%] font-semibold text-black xl:mt-6 lg:mt-5 md:mt-4 sm:mt-3 mt-2">Select Supplier</h1>
+            <h1
+              class="xl:text-[100%] lg:text-[100%] md:text-[90%] sm:text-[90%] text-[90%] font-semibold text-black xl:mt-6 lg:mt-5 md:mt-4 sm:mt-3 mt-2">
+              Select Supplier</h1>
           </article>
-          
+
           <form id="supplierForm" class="flex flex-col w-full text-neutral-500">
-            <div class="flex xl:mt-4 lg:mt-4 md:mt-4 sm:mt-3 mt-3 xl:w-[500px] 2xl:w-[600px]">
-              <label for="Supplier" class="block xl:mb-6 2xl:mb-8 xl:text-base 2xl:text-lg text-neutral-500"></label>
+            <div class="flex xl:mt-4 lg:mt-4 md:mt-4 sm:mt-3 mt-3 xl:w-[500px]">
+              <label for="Supplier" class="block xl:mb-6 xl:text-base text-neutral-500"></label>
               <select id="supplier_id"
                 class="scrollable-select bg-transparent border border-neutral-300 rounded-lg block xl:w-[80%] lg:w-[50%] md:w-[50%] sm:w-[60%] w-[60%] xl:p-4 lg:p-4 md:p-3 sm:p-3 p-3 text-neutral-500 xl:text-[90%] lg:text-[80%] md:text-[70%] sm:text-[60%] text-[50%]">
                 <option value="">Search Supplier</option>
@@ -125,22 +133,20 @@
               </select>
             </div>
           </form>
-         
 
-           <!-- Add File Section -->
+          <!-- Add File Section -->
           <form id="upload-file">
-            <div id="addFileSection" class="flex flex-col mt-6 2xl:mt-8 2xl:text-base text-xs font-medium hidden">
+            <div id="addFileSection" class="flex flex-col mt-6 text-xs font-medium hidden">
               <div class="flex items-center mb-4  ">
-                <label for="month-picker" class="mr-4 text-base 2xl:text-xl">Periode :</label>
+                <label for="month-picker" class="mr-4 text-base">Periode :</label>
                 <input type="month" id="month-picker" class=" pl-4 pr-4 border rounded-md" required>
               </div>
 
               <div class="flex items-center mb-4">
-                <label for="file-upload" class=" text-base 2xl:text-xl">Add File :</label>
+                <label for="file-upload" class=" text-base">Add File :</label>
                 <input type="file" id="file-upload" class="rounded-md p-2 ml-2 text-gray-600" required>
-                
-                <button id="upload-button"
-                  class="px-4 py-2 bg-gray-400 text-white text-xs 2xl:text-base rounded-md" disabled>
+
+                <button id="upload-button" class="px-4 py-2 bg-gray-400 text-white text-xs rounded-md" disabled>
                   Upload
                 </button>
               </div>
@@ -151,7 +157,7 @@
           <div id="periodeSection" class="items-center mt-4 hidden">
             <div class="flex items-center">
               <input type="month" id="month-input" class="px-4 border rounded-md" />
-              <button id="search-button" class="ml-4 px-4 py-2 bg-blue-500 text-white text-xs 2xl:text-base rounded-md">
+              <button id="search-button" class="ml-4 px-4 py-2 bg-blue-500 text-white text-xs rounded-md">
                 Search
               </button>
             </div>
@@ -165,33 +171,44 @@
         </div>
 
         <!-- Table Section -->
-        <div id="tableSection" class="flex flex-col mt-5 2xl:mt-8 hidden">
+        <div id="tableSection" class="flex flex-col mt-5 hidden">
           <div class="relative overflow-x-auto shadow-md rounded-lg border border-gray-300">
 
             <table class="w-full text-[11px] text-left text-gray-700 dark:text-gray-700">
-              <thead class="text-[14px] 2xl:text-[20px] text-gray-700">
+              <thead class="text-[14px] text-gray-700">
                 <tr>
-                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer " data-sort="no" " >
+                  <th scope="col"
+                    class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer "
+                    data-sort="no" " >
                     No
                   </th>
-                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer" data-sort="periode" onclick="sortTable(1)">
-                   Periode
+                  <th scope=" col"
+                    class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer"
+                    data-sort="periode" onclick="sortTable(1)">
+                    Periode
                     <img loading="lazy" src="../assets/icon_sort.svg" alt=""
-                    class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
+                      class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer" data-sort="filename">
+                  <th scope="col"
+                    class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer"
+                    data-sort="filename">
                     FIle Name
                   </th>
-                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer" data-sort="attachedFile">
+                  <th scope="col"
+                    class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer"
+                    data-sort="attachedFile">
                     Attached File
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(2)">
+                  <th scope="col"
+                    class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer"
+                    onclick="sortTable(2)">
                     Created At
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
+                      class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
-                  </th>                  
+                  </th>
                 </tr>
               </thead>
               <tbody id="table-body-detail">
@@ -203,7 +220,7 @@
 
         <!-- Pagination -->
         <div id="paginationSection" class="flex justify-end my-6 hidden">
-          <div class="flex gap-2 2xl:gap-4 items-center pagination">
+          <div class="flex gap-2 items-center pagination">
             <!-- Pagination buttons will be inserted here by JavaScript -->
           </div>
         </div>
@@ -223,29 +240,29 @@
 <script>
 
   const burgerBtn = document.getElementById('burger-btn');
-    const sidebar = document.getElementById('sidebar');
-    
-    burgerBtn.addEventListener('click', () => {
-      if (sidebar.classList.contains('-translate-x-full')) {
-        sidebar.classList.remove('-translate-x-full');
-      } else {
-        sidebar.classList.add('-translate-x-full');
-      }
-    });
+  const sidebar = document.getElementById('sidebar');
 
-    function adjustRowsPerPage() {
-      if (window.innerHeight < 620) {
-        rowsPerPage = 4; // Atur menjadi 3 jika ukuran layar < 768
-      } else if (window.innerHeight < 640) {
-        rowsPerPage = 6
-      } else if (window.innerHeight < 768) {
-        rowsPerPage = 8
-      } else if (window.innerHeight < 1280) {
-        rowsPerPage = 9; // Atur menjadi 4 jika ukuran layar >= 768
-      } else {
-        rowsPerPage = 10;   
-      }
+  burgerBtn.addEventListener('click', () => {
+    if (sidebar.classList.contains('-translate-x-full')) {
+      sidebar.classList.remove('-translate-x-full');
+    } else {
+      sidebar.classList.add('-translate-x-full');
     }
+  });
+
+  function adjustRowsPerPage() {
+    if (window.innerHeight < 620) {
+      rowsPerPage = 4; // Atur menjadi 3 jika ukuran layar < 768
+    } else if (window.innerHeight < 640) {
+      rowsPerPage = 6
+    } else if (window.innerHeight < 768) {
+      rowsPerPage = 8
+    } else if (window.innerHeight < 1280) {
+      rowsPerPage = 9; // Atur menjadi 4 jika ukuran layar >= 768
+    } else {
+      rowsPerPage = 10;
+    }
+  }
 
   cekToken();
 
@@ -286,7 +303,7 @@
         document.getElementById('periodeSection').classList.remove('hidden');
         document.getElementById('tableSection').classList.remove('hidden');
         document.getElementById('paginationSection').classList.remove('hidden');
-        
+
         localStorage.setItem('selectedSupplierId', selectedSupplierId);
 
         // Panggil fetchPerformanceReport untuk memperbarui data tabel berdasarkan supplier yang dipilih
@@ -322,11 +339,11 @@
       const file = fileUpload.files[0];
       let period = monthPicker.value;
       period = `${period}-05`;
-      console.log(period);      
+      console.log(period);
       const supplierId = localStorage.getItem('selectedSupplierId');
       const valid = validateForm(file, period, supplierId);
 
-      
+
       if (valid) {
         const uploadButton = document.getElementById('upload-button');
 
@@ -385,7 +402,7 @@
           'Content-Type': 'application/json',
         },
       });
-      
+
       if (response.ok) {
         const data = await response.json();
         if (data.success) {
@@ -395,11 +412,11 @@
         } else {
           console.error('Failed to fetch suppliers:', data.message);
         }
-        
+
       } else {
         console.error('Kesalahan saat mengambil data supplier:', response.status, response.statusText);
       }
-    } catch (error) {        
+    } catch (error) {
       console.error('Error Token Not Valid', error);
     }
   }
@@ -425,12 +442,12 @@
 
   async function fetchPerformanceReport(supplierId, selectedMonth = null) {
     const token = localStorage.getItem('accessToken');
-  
+
     if (!supplierId) {
       alert('Supplier belum dipilih.');
       return;
     }
-  
+
     try {
       const response = await fetch(`${APIindexlistingreport}/${supplierId}`, {
         headers: {
@@ -438,11 +455,11 @@
           'Content-Type': 'application/json'
         }
       });
-  
+
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-  
+
       const result = await response.json();
       console.log('Data listing report:', result); // Debugging
 
@@ -478,15 +495,15 @@
       alert(`Error fetching data: ${error.message}`);
     }
   }
-  
+
   async function uploadFile(token, supplierId, file, period) {
-    
-  
+
+
     const formData = new FormData();
     formData.append('file', file);
     formData.append('date', period);
     formData.append('bp_code', supplierId);
-  
+
     try {
       const response = await fetch(APIuploadlisting, {
         method: 'POST',
@@ -503,7 +520,7 @@
       // Ubah kembali ke JSON jika respons valid
       const result = JSON.parse(textResponse);
       if (response.ok && result.status) {
-        displayNotification('Success uploading file','success');
+        displayNotification('Success uploading file', 'success');
         await fetchPerformanceReport(supplierId); // Refresh data setelah upload
         displayTableData(currentPage); // Perbarui tampilan tabel
       } else {
@@ -521,21 +538,21 @@
 
     switch (extension) {
       case 'pdf':
-          return `<img src="../assets/icon_pdf.svg" alt="PDF Icon" class="w-6 h-6" />`;
+        return `<img src="../assets/icon_pdf.svg" alt="PDF Icon" class="w-6 h-6" />`;
       case 'doc':
-          return `<img src="../assets/icon_doc.svg" alt="png Icon" class="w-6 h-6" />`;
+        return `<img src="../assets/icon_doc.svg" alt="png Icon" class="w-6 h-6" />`;
       case 'docx':
-          return `<img src="../assets/icon_docx.svg" alt="Word Icon" class="w-6 h-6" />`;
+        return `<img src="../assets/icon_docx.svg" alt="Word Icon" class="w-6 h-6" />`;
       case 'jpg':
       case 'jpeg':
-          return `<img src="../assets/icon_jpg.svg" alt="png Icon" class="w-6 h-6" />`;
+        return `<img src="../assets/icon_jpg.svg" alt="png Icon" class="w-6 h-6" />`;
       case 'png':
-          return `<img src="../assets/icon_png.svg" alt="png Icon" class="w-6 h-6" />`;
+        return `<img src="../assets/icon_png.svg" alt="png Icon" class="w-6 h-6" />`;
       case 'xls':
       case 'xlsx':
-          return `<img src="../assets/icon_excel.svg" alt="Excel Icon" class="w-6 h-6" />`;
+        return `<img src="../assets/icon_excel.svg" alt="Excel Icon" class="w-6 h-6" />`;
       default:
-          return `<img src="../assets/icon_file.svg" alt="File Icon" class="w-6 h-6" />`;
+        return `<img src="../assets/icon_file.svg" alt="File Icon" class="w-6 h-6" />`;
     }
   }
 
@@ -548,8 +565,8 @@
   function displayTableData(page) {
     const tableBody = document.getElementById('table-body-detail');
     if (!tableBody) {
-        console.error('Table body element not found!');
-        return;
+      console.error('Table body element not found!');
+      return;
     }
 
     tableBody.innerHTML = '';
@@ -559,18 +576,18 @@
     const paginatedData = filteredData.slice(start, end);
 
     paginatedData.forEach((row, index) => {
-        const tableRow = document.createElement('tr');
-        tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b');
-        const rowNumber = start + index + 1;
+      const tableRow = document.createElement('tr');
+      tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b');
+      const rowNumber = start + index + 1;
 
-        // Pisahkan angka dan nama file dengan memanfaatkan split dan slice
-        const fileName = row.filedata.split('_').slice(1).join('_');
+      // Pisahkan angka dan nama file dengan memanfaatkan split dan slice
+      const fileName = row.filedata.split('_').slice(1).join('_');
 
-        // Konversi periode ke format "Month YYYY"
-        const periodDate = new Date(row.periode);
-        const formattedPeriod = periodDate.toLocaleString('en-US', { month: 'long', year: 'numeric' });
+      // Konversi periode ke format "Month YYYY"
+      const periodDate = new Date(row.periode);
+      const formattedPeriod = periodDate.toLocaleString('en-US', { month: 'long', year: 'numeric' });
 
-        tableRow.innerHTML = `
+      tableRow.innerHTML = `
           <td class="px-2 py-4 text-center font-medium text-gray-900">${rowNumber}</td>
           <td class="px-2 py-4 text-center">${formattedPeriod}</td>
           <td class="px-1 py-4 w-[30%] text-center">${fileName}</td>          
@@ -581,9 +598,9 @@
           </td>
           <td class="px-2 py-4 text-center">${row.upload_at}</td>
         `;
-        tableBody.appendChild(tableRow);
+      tableBody.appendChild(tableRow);
     });
-}
+  }
 
   function adjustRowsPerPage() {
     if (window.innerHeight < 768) {
