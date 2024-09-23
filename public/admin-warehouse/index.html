@@ -202,6 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       // Construct the URL with separate month and year parameters
       const url = `${API_SyncWarehouse}?month=${month}&year=${year}`;
+      displayNotification('Waiting for synchronization', 'warning')
 
       const response = await fetch(url, {
         method: 'GET',
