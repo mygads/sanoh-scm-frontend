@@ -40,13 +40,13 @@
           <img loading="lazy" src="../assets/logosanoh.svg" class="object-contain self-center xl:w-30 lg:w-28 md:w-26 sm:w-24 w-24 max-w-full cursor-pointer pointer-events-auto aspect-[2.79]" />
 
           <!-- Menu Items -->
-          <ul class="flex flex-col mt-7 2xl:mt-10 w-full text-gray-500">
+          <ul class="flex flex-col mt-7 w-full text-gray-500">
             <!-- Dashboard -->
             <li>
               <a href="index.html"
                 class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
                 <img loading="lazy" src="../assets/icon_home_default.svg" alt="Dashboard"
-                  class="object-contain xl:w-4 lg:w-4 md:w-3 sm:w-3 w-3" />
+                  class="object-contain shrink-0 self-stretch my-auto w-4 aspect-[0.89]" />
                 <span class="self-strech text-sm">Dashboard</span>
               </a>
             </li>
@@ -56,7 +56,7 @@
               <a href="purchase-order.html"
                 class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 ">
                 <img loading="lazy" src="../assets/icon_po_default.svg" alt="Purchase Order"
-                  class="object-containxl:w-4 lg:w-4 md:w-3 sm:w-3 w-3" />
+                  class="object-contain shrink-0 self-stretch my-auto w-4 aspect-[0.89]" />
                 <span class="self-strech text-sm">Purchase Order</span>
               </a>
             </li>
@@ -66,7 +66,7 @@
               <a href="history-purchase-order.html"
                 class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 active">
                 <img loading="lazy" src="../assets/icon_history_default.svg" alt="History Purchase Order"
-                  class="object-contain w-5 2xl:w-6 icon-history-active" />
+                  class="object-contain shrink-0 self-stretch my-auto w-4 aspect-[0.89] fill-blue-950  icon-history-active" />
                 <span class="self-strech text-sm">History Purchase Order</span>
               </a>
             </li>
@@ -76,8 +76,8 @@
               <a href="performance-report.html"
                 class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
                 <img loading="lazy" src="../assets/icon_performance_default.svg" alt=""
-                  class="object-contain shrink-0 self-stretch my-autoxl:w-4 lg:w-4 md:w-3 sm:w-3 w-3 aspect-square" />
-                <span class="self-stretch my-auto self-strech text-sm">Performance Report</span>
+                  class="object-contain shrink-0 self-stretch my-auto w-4 aspect-[0.89]" />
+                <span class="self-stretch text-sm">Performance Report</span>
               </a>
             </li>
           </ul>
@@ -85,16 +85,16 @@
           <!-- User and Logout Section at the Bottom -->
           <div class="mt-auto flex flex-col w-full">
             <!-- User Info -->
-            <div class="flex gap-4 items-center p-2 2xl:p-4 w-full bg-blue-950 bg-opacity-10 text-blue-950">
-              <img loading="lazy" src="../assets/icon_people.svg" alt="User Info" class="object-containxl:w-4 lg:w-4 md:w-3 sm:w-3 w-3" />
+            <div class="flex gap-4 items-center p-2 w-full bg-blue-950 bg-opacity-10 text-blue-950">
+              <img loading="lazy" src="../assets/icon_people.svg" alt="User Info" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-[0.89]" />
               <span id="user-info" class="self-strech text-sm"></span>
             </div>
 
             <!-- Logout Button -->
             <a href="javascript:void(0)" onclick="handleLogout()"
-              class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
+              class="flex gap-4 items-center p-2 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
               <img loading="lazy" src="../assets/icon_logout.svg" alt=""
-                class="object-contain shrink-0 self-stretch my-autoxl:w-4 lg:w-4 md:w-3 sm:w-3 w-3 aspect-square logout-icon hover:icon_logout_white.svg" />
+                class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square logout-icon hover:icon_logout_white.svg" />
               <span class="self-stretch text-sm">Logout</span>
             </a>
           </div>
@@ -115,8 +115,8 @@
           
 
           <form id="supplierForm" class="flex flex-col w-full text-neutral-500">
-            <div class="flex xl:mt-4 lg:mt-4 md:mt-4 sm:mt-3 mt-3 xl:w-[500px] 2xl:w-[600px]">
-              <label for="supplier_id" class="block xl:mb-6 2xl:mb-8 xl:text-base 2xl:text-lg text-neutral-500"></label>
+            <div class="flex xl:mt-4 lg:mt-4 md:mt-4 sm:mt-3 mt-3 xl:w-[500px]">
+              <label for="supplier_id" class="block xl:mb-6 xl:text-base text-neutral-500"></label>
               <select id="supplier_id"
                 class="scrollable-select bg-transparent border border-neutral-300 rounded-lg block xl:w-[80%] lg:w-[50%] md:w-[50%] sm:w-[60%] w-[60%] xl:p-4 lg:p-4 md:p-3 sm:p-3 p-3 text-neutral-500 xl:text-[90%] lg:text-[80%] md:text-[70%] sm:text-[60%] text-[50%]">
                 <option value="">Cari Supplier</option>
@@ -126,7 +126,7 @@
           </form>
           </article>
 
-          <div class="flex flex-col mt-4 2xl:mt-6 w-full 2xl:text-base text-xs font-medium">
+          <div class="flex flex-col mt-4 w-full text-xs font-medium">
 
             <div class="flex flex-wrap gap-10 justify-end items-center w-full">
 
@@ -134,7 +134,7 @@
               <div class="flex flex-wrap items-center self-stretch my-auto  text-neutral-500">
                 <div class="flex items-center xl:px-4 lg:px-4 md:px-3 sm:px-3 px-3 py-2 bg-neutral-100 rounded w-full ml-auto">
                   <input id="search-input" type="text" placeholder="Search no purchase order here"
-                    class="flex-1 bg-neutral-100 outline-none 2xl:text-base">
+                    class="flex-1 bg-neutral-100 outline-none">
                   <img src="../assets/icon_search.svg" alt="Search Icon" class="xl:w-4 lg:w-4 md:w-3 sm:w-3 w-3 h-4 xl:ml-3 lg:ml-3 md:ml-2 sm:ml-2 ml-1">
                 </div>
               </div>
@@ -182,7 +182,7 @@
 
         <!-- Pagination -->
         <div class="flex justify-end my-6">
-          <div class="flex gap-2 2xl:gap-4 items-center pagination">
+          <div class="flex gap-2 items-center pagination">
             <!-- Pagination buttons will be inserted here by JavaScript -->
           </div>
         </div>
