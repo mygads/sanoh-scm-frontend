@@ -239,6 +239,7 @@
 
         // Check if data and data.data exist
         if (data.success && data.data) {
+          displayNotification(data.message,'success')
             historyPurchaseOrder = data.data
                 .filter(po => po.po_status && po.po_status.toLowerCase() === 'closed')  // Filter by status
                 .map(po => ({

@@ -260,7 +260,7 @@
 
           <!-- Submit and Cancel Buttons -->
           <div id="confirm-button-section" class="flex">
-            <button id="confirm-button" class="px-4 py-2 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5 text-white xl:text-[100%] lg:text-[100%] md:text-[90%] sm:text-[90%] text-[80%]">Confirm Order</button>
+            <button id="confirm-button" class="px-4 2xl:px-6 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5 text-white text-xs 2xl:text-sm">Confirm Order</button>
           </div>
         </div>
       </main>
@@ -564,7 +564,7 @@
             <td class="px-2 py-4 text-center">${detail.qtyLabel}</td>
             <td class="px-2 py-4 text-center">${detail.qtyRequested}</td>
             <td class="py-4 text-center">
-              <input type="text" class="qty-confirm-input border border-gray-300 rounded py-1 text-center ${detail.qtyConfirm ? 'input-enabled' : ''}" value="${detail.qtyConfirm || '-'}" data-dn-detail-no="${detail.dnDetailNo || ''}" dnNumber="${detail.noDN}" disabled>
+              <input type="text" class="qty-confirm-input border border-gray-300 rounded py-1 text-center ${detail.qtyConfirm ? 'input-enabled' : ''}" value="${detail.qtyConfirm}" data-dn-detail-no="${detail.dnDetailNo || ''}" dnNumber="${detail.noDN}" disabled>
             </td>
             <td class="px-2 py-4 text-center">${detail.qtyDelivered}</td>
             <td class="px-2 py-4 text-center">${detail.qtyMinus}</td>
@@ -614,10 +614,7 @@
 
         // Aksi tombol cancel
         cancelButton.addEventListener('click', () => {
-            displayTableData(filteredData);
-            confirmationSection.classList.add('hidden');
-            cancelButton.remove();
-            confirmButton.textContent = 'Edit';
+          window.location.reload();
         });
 
         confirmButton.disabled = true;

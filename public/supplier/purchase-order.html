@@ -264,6 +264,7 @@
 
         const data = await response.json();
         console.log("Data fetched:", data);
+        displayNotification(data.message,'success')
 
         purchaseOrder = data.data.map(po => ({
             noPO: po.po_no ? po.po_no.toString() : "",
@@ -313,6 +314,7 @@
 
         const result = await updateResponse.json();
         console.log(`Response updated for PO ${po_no}:`, result);
+        displayNotification(result.message,'success')
 
         if (result.status === 'success') {
             updatePOStatusInUI(po_no, response);

@@ -236,6 +236,7 @@
 
           // Ensure data exists and is in expected format
           if (data && data.data && Array.isArray(data.data)) {
+            displayNotification(data.message,'success')
               // Map and manipulate your data accordingly
               deliveryNote = data.data.map(dn => ({
                   noDN: dn.no_dn ? dn.no_dn.toString() : '',

@@ -295,6 +295,7 @@ async function fetchPerformanceReport(bpCode, selectedMonth = null) {
     console.log('Data listing report:', result); // Debugging
 
     if (result.success) {
+      displayNotification(result.message,'success')
       originalData = result.data.map(item => ({
         no: item.po_listing_no,
         periode: formatDate(item.date),
