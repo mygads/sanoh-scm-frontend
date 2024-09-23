@@ -389,7 +389,7 @@
                         QTY: detail.dn_qty || 0,
                         qtyLabel: detail.dn_snp || '',
                         qtyRequested: detail.dn_qty || 0,
-                        qtyConfirm: (detail.qty_confirm && detail.qty_confirm !== 0) ? detail.qty_confirm : detail.dn_qty, // Updated logic
+                        qtyConfirm: (detail.qty_confirm !== null && detail.qty_confirm !== undefined) ? detail.qty_confirm : detail.dn_qty, // Updated logic
                         qtyDelivered: detail.receipt_qty || 0,
                         qtyReceived: detail.receipt_qty || 0,
                         qtyMinus: ((detail.dn_qty || 0) - (detail.receipt_qty || 0)).toString() // Handle undefined dn_qty or receipt_qty
