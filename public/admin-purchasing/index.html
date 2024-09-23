@@ -20,77 +20,88 @@
   <section class="overflow-hidden w-screen h-screen bg-white">
     <div class="flex h-screen">
 
+      <!-- Burger Menu Button (visible only on small screens) -->
+      <div class="absolute top-4 left-4 sm:hidden z-50">
+        <button id="burger-btn" class="text-gray-800 focus:outline-none">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+          </svg>
+        </button>
+      </div>
+
       <!-- nav-side bar -->
-      <aside class="flex flex-col w-[20%] h-screen border-r border-r-neutral-400 bg-stone-300">
-        <nav class="flex flex-col grow py-9 2xl:py-14 text-base font-medium">
+      <aside id="sidebar"
+        class="transform -translate-x-full transition-transform duration-300 fixed sm:relative sm:translate-x-0 flex flex-col  xl:w-[15%] lg:w-[18%] md:w-[24%] sm:w-[32%] w-[32%] h-screen bg-stone-300 border-r border-neutral-400 z-40">
+        <nav
+          class="flex flex-col grow py-9 w-full h-screen text-base font-medium border-r border-solid bg-stone-300 border-r-neutral-400 ">
 
           <!-- Logo Sanoh -->
           <img loading="lazy" src="../assets/logosanoh.svg"
-            class="object-contain self-center w-30 2xl:w-48 max-w-full cursor-pointer" />
+            class="object-contain self-center xl:w-30 lg:w-28 md:w-26 sm:w-24 w-24 max-w-full cursor-pointer pointer-events-auto aspect-[2.79]" />
 
           <!-- Menu Items -->
-          <ul class="flex flex-col mt-7 2xl:mt-10 w-full text-gray-500">
+          <ul class="flex flex-col mt-7 w-full text-gray-500">
             <!-- Dashboard -->
             <li>
               <a href="index.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 active">
+                class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 active">
                 <img loading="lazy" src="../assets/icon_home_default.svg" alt="Dashboard"
-                  class="object-contain w-4 2xl:w-6 icon-home-active" />
-                <span class="text-sm 2xl:text-xl">Dashboard</span>
+                  class="object-contain shrink-0 self-stretch my-auto w-5 aspect-square fill-blue-950 icon-home-active" />
+                <span class="self-strech text-sm">Dashboard</span>
               </a>
             </li>
 
             <!-- Purchase Order -->
             <li>
               <a href="purchase-order.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
+                class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
                 <img loading="lazy" src="../assets/icon_po_default.svg" alt="Purchase Order"
-                  class="object-contain w-4 2xl:w-6" />
-                <span class="text-sm 2xl:text-xl">Purchase Order</span>
+                  class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
+                <span class="self-strech text-sm">Purchase Order</span>
               </a>
             </li>
 
             <!-- History Purchase Order -->
             <li>
               <a href="history-purchase-order.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
+                class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
                 <img loading="lazy" src="../assets/icon_history_default.svg" alt="History Purchase Order"
-                  class="object-contain w-4 2xl:w-6" />
-                <span class="text-sm 2xl:text-xl">History Purchase Order</span>
+                  class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
+                <span class="self-strech text-sm">History Purchase Order</span>
               </a>
             </li>
 
-             <!-- Performance Report -->
-             <li>
+            <!-- Performance Report -->
+            <li>
               <a href="performance-report.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
-                <img loading="lazy" src="../assets/icon_performance.svg" alt="History Purchase Order"
-                  class="object-contain w-4 2xl:w-6" />
-                <span class="text-sm 2xl:text-xl">Performance Report</span>
+                class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
+                <img loading="lazy" src="../assets/icon_performance_default.svg" alt="History Purchase Order"
+                  class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
+                <span class="self-strech text-sm">Performance Report</span>
               </a>
             </li>
           </ul>
 
           <!-- User and Logout Section at the Bottom -->
           <div class="mt-auto flex flex-col w-full">
-            
+
             <!-- User Info -->
-            <div class="flex gap-4 items-center p-2 2xl:p-4 w-full bg-blue-950 bg-opacity-10 text-blue-950">
-              <img loading="lazy" src="../assets/icon_people.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-              <span id="user-info" class="self-stretch my-auto text-sm 2xl:text-xl"></span>
+            <div class="flex gap-4 items-center p-2 w-full bg-blue-950 bg-opacity-10 text-blue-950">
+              <img loading="lazy" src="../assets/icon_people.svg" alt=""
+                class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
+              <span id="user-info" class="self-strech text-sm"></span>
             </div>
 
             <!-- Logout Button -->
             <a href="javascript:void(0)" onclick="handleLogout()"
-              class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
+              class="flex gap-4 items-center p-2 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
               <img loading="lazy" src="../assets/icon_logout.svg" alt=""
-                class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square logout-icon hover:icon_logout_white.svg" />
-              <span class="self-stretch my-auto text-sm 2xl:text-xl">Logout</span>
+                class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square logout-icon hover:icon_logout_white.svg" />
+              <span class="self-strech text-sm">Logout</span>
             </a>
           </div>
         </nav>
       </aside>
-
 
       <!-- Main Content -->
       <main class="flex flex-col items-center m-auto max-md:max-w-full">
@@ -99,7 +110,8 @@
           <div class="flex items-center">
             <label for="month-picker" class="mr-2 text-lg font-semibold text-gray-700">Select Month:</label>
             <input type="month" id="month-picker" class="border border-gray-300 rounded-md p-2 mr-4" />
-            <button id="sync-button" class="flex items-center px-4 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+            <button id="sync-button"
+              class="flex items-center px-4 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600">
               <!-- Sync Icon -->
               <img src="../assets/icon_sync.png" class="w-8 mr-2" />
               Sync
@@ -108,20 +120,19 @@
         </div>
 
         <!-- Existing header and content -->
-        <header class="flex flex-col items-center self-center max-w-full mt-[10%] 2xl:w-[1100px]">
+        <header class="flex flex-col items-center self-center m-auto max-w-[1000px]">
           <h1 class="flex flex-col justify-between items-center text-black w-full text-center">
-            <span class="font-semibold max-w-full xl:text-4xl 2xl:text-5xl">
+            <span class="font-semibold text-4xl">
               Welcome Purchasing!
             </span>
           </h1>
-          <p
-            class="mx-auto my-auto xl:mt-3 2xl:mt-6 text-center text-neutral-400 xl:text-sm 2xl:text-lg xl:w-[500px] 2xl:w-[700px]">
+          <p class="text-center text-neutral-400 text-sm mt-4 max-w-[800px] mx-auto">
             Welcome to our dashboard, where efficiency meets
             <br> seamless procurement management!
           </p>
         </header>
         <img src="../assets/dashboard_purchasing.png" alt="Dashboard overview"
-          class="object-contain mx-auto xl:w-[550px] 2xl:w-[750px] mt-6" />
+          class="object-contain mx-auto xl:w-[500px]" />
       </main>
     </div>
   </section>
@@ -134,6 +145,31 @@
 <script src="../table.js"></script>
 
 <script>
+
+  const burgerBtn = document.getElementById('burger-btn');
+  const sidebar = document.getElementById('sidebar');
+
+  burgerBtn.addEventListener('click', () => {
+    if (sidebar.classList.contains('-translate-x-full')) {
+      sidebar.classList.remove('-translate-x-full');
+    } else {
+      sidebar.classList.add('-translate-x-full');
+    }
+  });
+
+  function adjustRowsPerPage() {
+    if (window.innerHeight < 620) {
+      rowsPerPage = 4; // Atur menjadi 3 jika ukuran layar < 768
+    } else if (window.innerHeight < 640) {
+      rowsPerPage = 6
+    } else if (window.innerHeight < 768) {
+      rowsPerPage = 8
+    } else if (window.innerHeight < 1280) {
+      rowsPerPage = 9; // Atur menjadi 4 jika ukuran layar >= 768
+    } else {
+      rowsPerPage = 10;
+    }
+  }
 
   cekToken();
 
@@ -197,9 +233,9 @@
         const data = await response.json();
 
         if (response.ok) {
-          displayNotification('Data has been synchronized successfully.','success')
+          displayNotification('Data has been synchronized successfully.', 'success')
         } else {
-          displayNotification(data.message || 'An error occurred during synchronization.','error')
+          displayNotification(data.message || 'An error occurred during synchronization.', 'error')
           // Swal.fire({
           //   icon: 'error',
           //   title: 'Sync Failed',
@@ -213,7 +249,7 @@
         //   title: 'Sync Failed',
         //   text: 'An error occurred during synchronization.',
         // });
-        displayNotification(error ||'No Connection during synchronization.','error')
+        displayNotification(error || 'No Connection during synchronization.', 'error')
       } finally {
         // Reset button
         syncButton.disabled = false;
@@ -225,7 +261,7 @@
       }
     });
   });
-  
+
 </script>
 
 

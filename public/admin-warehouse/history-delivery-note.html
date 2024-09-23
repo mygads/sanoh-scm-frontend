@@ -24,63 +24,71 @@
   <section class="overflow-hidden w-screen h-screen bg-white">
     <div class="flex h-screen">
 
+         <!-- Burger Menu Button (visible only on small screens) -->
+         <div class="absolute top-4 left-4 sm:hidden z-50">
+          <button id="burger-btn" class="text-gray-800 focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
+          </button>
+        </div> 
+
       <!-- nav-side bar -->
-      <aside class="flex flex-col w-[20%] h-screen border-r border-r-neutral-400 bg-stone-300">
-        <nav class="flex flex-col grow py-9 2xl:py-14 text-base font-medium">
+      <aside id="sidebar" class="transform -translate-x-full transition-transform duration-300 fixed sm:relative sm:translate-x-0 flex flex-col xl:w-[15%] lg:w-[18%] md:w-[24%] sm:w-[32%] w-[32%] h-screen bg-stone-300 border-r border-neutral-400 z-40">
+        <nav class="flex flex-col grow py-9 w-full h-screen text-base font-medium border-r border-solid bg-stone-300 border-r-neutral-400 ">
 
           <!-- Logo Sanoh -->
-          <img loading="lazy" src="../assets/logosanoh.svg"
-            class="object-contain self-center w-30 2xl:w-48 max-w-full cursor-pointer" />
+          <img loading="lazy" src="../assets/logosanoh.svg" class="object-contain self-center xl:w-30 lg:w-28 md:w-26 sm:w-24 w-24 max-w-full cursor-pointer pointer-events-auto aspect-[2.79]" />
 
           <!-- Menu Items -->
-          <ul class="flex flex-col mt-7 2xl:mt-10 w-full text-gray-500">
+          <ul class="flex flex-col mt-7 w-full text-gray-500">
             <!-- Dashboard -->
             <li>
               <a href="index.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
+                class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
                 <img loading="lazy" src="../assets/icon_home_default.svg" alt="Dashboard"
-                  class="object-contain w-4 2xl:w-6" />
-                <span class="text-sm 2xl:text-xl">Dashboard</span>
+                  class="object-contain shrink-0 self-stretch my-auto w-4 aspect-[0.89]" />
+                <span class="self-strech text-sm">Dashboard</span>
               </a>
             </li>
 
             <!-- Purchase Order -->
             <li class="hidden">
               <a href="purchase-order.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 ">
+                class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 ">
                 <img loading="lazy" src="../assets/icon_po_default.svg" alt="Purchase Order"
-                  class="object-contain w-4 2xl:w-6 " />
-                <span class="text-sm 2xl:text-xl">Purchase Order</span>
+                  class="object-contain shrink-0 self-stretch my-auto w-4 aspect-[0.89] " />
+                <span class="self-strech text-sm">Purchase Order</span>
               </a>
             </li>
 
             <!-- Delivery Note -->
             <li>
               <a href="delivery-note.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
+                class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
                 <img loading="lazy" src="../assets/icon_dn_default.svg" alt="Purchase Order"
-                  class="object-contain w-4 2xl:w-6" />
-                <span class="text-sm 2xl:text-xl">Delivery Note</span>
+                  class="object-contain shrink-0 self-stretch my-auto w-4 aspect-[0.89]" />
+                <span class="self-strech text-sm">Delivery Note</span>
               </a>
             </li>
 
             <!-- History Purchase Order -->
             <li class="hidden">
               <a href="history-purchase-order.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
+                class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
                 <img loading="lazy" src="../assets/icon_history_default.svg" alt="History Purchase Order"
-                  class="object-contain w-4 2xl:w-6" />
-                <span class="text-sm 2xl:text-xl">History Purchase Order</span>
+                  class="object-contain shrink-0 self-stretch my-auto w-4 aspect-[0.89]" />
+                <span class="self-strech text-sm">History Purchase Order</span>
               </a>
             </li>
 
             <!-- History Delivery Note -->
             <li>
               <a href="history-delivery-note.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 active">
+                class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 active">
                 <img loading="lazy" src="../assets/icon_history_default.svg" alt="History Purchase Order"
-                  class="object-contain w-4 2xl:w-6 icon-history-active" />
-                <span class="text-sm 2xl:text-xl">History Delivery Note</span>
+                  class="object-contain shrink-0 self-stretch my-auto w-5 aspect-[0.89] fill-blue-950 icon-history-active" />
+                <span class="self-strech text-sm">History Delivery Note</span>
               </a>
             </li>
           </ul>
@@ -88,39 +96,39 @@
           <!-- User and Logout Section at the Bottom -->
           <div class="mt-auto flex flex-col w-full">
             <!-- User Info -->
-            <div class="flex gap-4 items-center p-2 2xl:p-4 w-full bg-blue-950 bg-opacity-10 text-blue-950">
-              <img loading="lazy" src="../assets/icon_people.svg" alt="User Info" class="object-contain w-4 2xl:w-6" />
-              <span id="user-info" class="text-sm 2xl:text-xl"></span>
+            <div class="flex gap-4 items-center p-2 w-full bg-blue-950 bg-opacity-10 text-blue-950">
+              <img loading="lazy" src="../assets/icon_people.svg" alt="User Info" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-[0.89]" />
+              <span id="user-info" class="self-strech text-sm"></span>
             </div>
 
             <!-- Logout Button -->
             <a href="javascript:void(0)" onclick="handleLogout()"
-              class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 cursor-pointer bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50">
-              <img loading="lazy" src="../assets/icon_logout.svg" alt="Logout" class="object-contain w-4 2xl:w-6" />
-              <span class="text-sm 2xl:text-xl">Logout</span>
+              class="flex gap-4 items-center p-2 w-full text-red-600 cursor-pointer bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50">
+              <img loading="lazy" src="../assets/icon_logout.svg" alt="Logout" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-[0.89]" />
+              <span class="self-strech text-sm">Logout</span>
             </a>
           </div>
         </nav>
       </aside>
 
       <!-- Main Content -->
-      <main class="flex flex-col w-[80%] mb-[100%] mt-[3%] mx-auto px-6 2xl:px-10">
+      <main class="flex flex-col w-[85%] mb-[100%] xl:mt-[3%] lg:mt-[3%] md:mt-[4%] sm:mt-[0%] mt-[2%] mx-auto xl:px-6 lg:px-6 md:px-6 sm:px-6 px-0">
 
         <section class="flex flex-col self-stretch py-px my-auto w-full max-md:mt-10 max-md:max-w-full">
 
           <header class="flex items-center self-start text-2xl font-semibold text-black">
-            <h1 class="self-stretch my-auto text-[80%] 2xl:text-[120%]">History Delivery Note (DN)</h1>
+            <h1 class="self-stretch my-auto xl:text-[100%] lg:text-[90%] md:text-[80%] sm:text-[70%] text-[70%]">History Delivery Note (DN)</h1>
           </header>
 
           <article class="flex flex-col items-start w-full text-base">
-            <h1 class="text-base 2xl:text-xl font-semibold text-black mt-4">Select Supplier</h1>
+            <h1 class="xl:text-[100%] lg:text-[100%] md:text-[90%] sm:text-[90%] text-[90%] font-semibold text-black xl:mt-6 lg:mt-5 md:mt-4 sm:mt-3 mt-2">Select Supplier</h1>
 
             <form id="supplierForm" class="flex flex-col w-full text-neutral-500">
-              <div class="flex flex-col xl:w-[500px] 2xl:w-[600px]">
+              <div class="flex xl:mt-4 lg:mt-4 md:mt-4 sm:mt-3 mt-3 xl:w-[500px]">
                 <label for="supplier_id"
-                  class="block xl:mb-6 2xl:mb-8 xl:text-base 2xl:text-lg text-neutral-500"></label>
+                  class="block xl:mb-6 xl:text-base text-neutral-500"></label>
                 <select id="supplier_id"
-                  class="scrollable-select bg-transparent border border-neutral-300 rounded-lg block w-full p-4 2xl:p-7 text-neutral-500 text-sm 2xl:text-lg">
+                  class="scrollable-select bg-transparent border border-neutral-300 rounded-lg block xl:w-[80%] lg:w-[50%] md:w-[50%] sm:w-[60%] w-[60%] xl:p-4 lg:p-4 md:p-3 sm:p-3 p-3 text-neutral-500 xl:text-[90%] lg:text-[80%] md:text-[70%] sm:text-[60%] text-[50%]">
                   <option value="">Cari Supplier</option>
                   <!-- Options will be added here by JavaScript -->
                 </select>
@@ -129,62 +137,61 @@
           </article>
 
 
-          <div class="flex flex-col mt-4 2xl:mt-6 w-full 2xl:text-base text-xs font-medium">
-
+          <div class="flex flex-col mt-4 w-full text-xs font-medium">
             <div class="flex flex-wrap gap-10 justify-end items-center w-full">
 
               <!-- Search Bar -->
               <div class="flex flex-wrap items-center self-stretch my-auto  text-neutral-500">
-                <div class="flex items-center px-4 2xl:px-6 py-2 2xl:py-4 bg-neutral-100 rounded w-full ml-auto">
-                  <input id="search-input" type="text" placeholder="Search no delivery note"
-                    class="flex-1 bg-neutral-100 outline-none 2xl:text-base">
-                  <img src="../assets/icon_search.svg" alt="Search Icon" class="w-4 2xl:w-5 h-4 2xl:h-5 ml-3">
+                <div class="flex items-center xl:px-4 lg:px-4 md:px-3 sm:px-3 px-3 py-2 bg-neutral-100 rounded w-full ml-auto">
+                  <input id="search-input" type="text" placeholder="Search no delivery note here"
+                    class="flex-1 bg-neutral-100 outline-none">
+                    <img src="../assets/icon_search.svg" alt="Search Icon" class="w-4 h-4 xl:ml-3 lg:ml-3 md:ml-2 sm:ml-2 ml-1">
                 </div>
               </div>
             </div>
-
+          </div>
         </section>
 
         <!-- Table -->
-        <div class="flex flex-col mt-5 2xl:mt-8">
+        <div class="flex flex-col mt-5">
           <div class="relative overflow-x-auto shadow-md rounded-lg border border-gray-300">
 
-            <table class="w-full text-[11px] 2xl:text-base text-left text-gray-700 dark:text-gray-700">
-              <thead class="text-[14px] 2xl:text-[20px] text-gray-700">
+            <table class="w-full text-[11px] text-left text-gray-700 dark:text-gray-700">
+              <thead class="text-[14px] text-gray-700">
                 <tr>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer"
                     onclick="sortTable(0)">
                     No. DN
                     <img loading="lazy" src="../assets/icon_sort.svg" alt=""
-                      class="w-3 2xl:w-4 inline-block text-gray-600" />
+                      class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer"
                     onclick="sortTable(1)">
                     No. PO
                     <img loading="lazy" src="../assets/icon_sort.svg" alt=""
-                      class="w-3 2xl:w-4 inline-block text-gray-600" />
+                      class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer"
                     onclick="sortTable(2)">
                     Status DN
                     <img loading="lazy" src="../assets/icon_sort.svg" alt=""
-                      class="w-3 2xl:w-4 inline-block text-gray-600" />
+                      class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer"
                     onclick="sortTable(3)">
                     Sent Date
                     <img loading="lazy" src="../assets/icon_sort.svg" alt=""
-                      class="w-3 2xl:w-4 inline-block text-gray-600" />
+                      class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer"
                     onclick="sortTable(4)">
                     Received Date
                     <img loading="lazy" src="../assets/icon_sort.svg" alt=""
-                      class="w-3 2xl:w-4 inline-block text-gray-600" />
+                      class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
                 </tr>
@@ -199,7 +206,7 @@
 
         <!-- Pagination -->
         <div class="flex justify-end my-6">
-          <div class="flex gap-2 2xl:gap-4 items-center pagination">
+          <div class="flex gap-2 items-center pagination">
             <!-- Pagination buttons will be inserted here by JavaScript -->
           </div>
         </div>
@@ -222,6 +229,31 @@
 <script>
   fetchSuppliers();
   cekToken();
+
+  const burgerBtn = document.getElementById('burger-btn');
+    const sidebar = document.getElementById('sidebar');
+    
+    burgerBtn.addEventListener('click', () => {
+      if (sidebar.classList.contains('-translate-x-full')) {
+        sidebar.classList.remove('-translate-x-full');
+      } else {
+        sidebar.classList.add('-translate-x-full');
+      }
+    });
+
+    function adjustRowsPerPage() {
+      if (window.innerHeight < 620) {
+        rowsPerPage = 4; // Atur menjadi 3 jika ukuran layar < 768
+      } else if (window.innerHeight < 640) {
+        rowsPerPage = 6
+      } else if (window.innerHeight < 768) {
+        rowsPerPage = 8
+      } else if (window.innerHeight < 1280) {
+        rowsPerPage = 9; // Atur menjadi 4 jika ukuran layar >= 768
+      } else {
+        rowsPerPage = 10;   
+      }
+    }
 
   let deliveryNote = []; // Initialize the deliveryNote array
   let sortOrder = {}; // Objek untuk melacak urutan pengurutan setiap kolom
@@ -467,7 +499,7 @@
     const dataToShow = filteredData.slice(start, end);
   
     if (dataToShow.length === 0) {
-      tableBody.innerHTML = '<tr><td colspan="4" class="text-center">No data available for this supplier</td></tr>';
+      tableBody.innerHTML = '<tr><td colspan="5" class="text-center">No data available for this supplier</td></tr>';
       return;
     }
   
