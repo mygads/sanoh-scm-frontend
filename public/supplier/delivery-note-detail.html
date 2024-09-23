@@ -563,8 +563,8 @@
             <td class="px-2 py-4 text-center">${detail.QTY}</td>
             <td class="px-2 py-4 text-center">${detail.qtyLabel}</td>
             <td class="px-2 py-4 text-center">${detail.qtyRequested}</td>
-            <td class="px-2 py-4 text-center">
-              <input type="text" class="qty-confirm-input border border-gray-300 rounded px-2 py-1 text-center w-full ${detail.qtyConfirm ? 'input-enabled' : ''}" value="${detail.qtyConfirm || '-'}" data-dn-detail-no="${detail.dnDetailNo || ''}" dnNumber="${detail.noDN}" disabled>
+            <td class="py-4 text-center">
+              <input type="text" class="qty-confirm-input border border-gray-300 rounded py-1 text-center ${detail.qtyConfirm ? 'input-enabled' : ''}" value="${detail.qtyConfirm || '-'}" data-dn-detail-no="${detail.dnDetailNo || ''}" dnNumber="${detail.noDN}" disabled>
             </td>
             <td class="px-2 py-4 text-center">${detail.qtyDelivered}</td>
             <td class="px-2 py-4 text-center">${detail.qtyMinus}</td>
