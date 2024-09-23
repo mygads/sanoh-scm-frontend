@@ -155,9 +155,9 @@
               </div>
               
               <div class="flex gap-3  items-center self-stretch my-auto text-white text-[10px] ">
-                <a  onclick="handlePrintPo(noPO)" id="print-po-link" class="xl:text-[100%] lg:text-[100%] md:text-[90%] sm:text-[90%] text-[80%] flex gap-2 items-center self-stretch px-6 py-2 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5">
-                  <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto xl:w-4 lg:w-4 md:w-3 sm:w-3 w-3 aspect-square" />
-                  <span class="flex-1 shrink self-stretch my-auto basis-0">Print PO</span>
+                <a href="" id="print-po-link" class="xl:text-[100%] lg:text-[100%] md:text-[90%] sm:text-[90%] text-[80%] flex gap-2 items-center self-stretch px-6 py-2 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5" onclick="updatePrintButton(noPO)">
+                    <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto xl:w-4 lg:w-4 md:w-3 sm:w-3 w-3 aspect-square" />
+                    <span class="flex-1 shrink self-stretch my-auto basis-0">Print PO</span>
                 </a>
               </div>
             </div>
@@ -191,8 +191,13 @@
                     
                   </th>
                   <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(4)">
-                    QTY
+                    QTY Order
                     <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
+                    <span class="sort-indicator"></span>
+                  </th>
+                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(5)">
+                    QTY Receipt
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
                 </tr>
@@ -269,49 +274,14 @@
   }
 
   // Function to update the Print PO button href dynamically
-  // function updatePrintButton(noPO) {
-  //   const printPoLink = document.getElementById('print-po-link');
-  //   if (noPO) {
-  //     printPoLink.href = `/pohview1/${noPO}`;
-  //   } else {
-  //     console.error('noPO is not available.');
-  //   }
-  // }
-
-  // Function to update the Print PO button href dynamically and open the PDF
-  // function handlePrint(noPO) {
-  //     if (noPO) {
-  //         // Assuming API_poViewSupplier is the base URL for your PO view API
-  //         const pdfUrl = `${API_poView}${noPO}`;
-          
-  //         // Open the PDF in a new tab
-  //         window.open(pdfUrl, '_blank');
-  //     } else {
-  //         console.error('No PO number provided.');
-  //     }
-  // }
-
-  async function handlePrintPo(noPO) {
-    try {
-        const response = await fetch(`${API_poView}${noPO}`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
-            },
-        });
-
-        if (response.ok) {
-            // Open PDF in a new tab
-            window.open(`${API_poView}${noPO}`, '_blank');
-        } else {
-            console.error('Failed to fetch PDF:', response.statusText);
-        }
-    } catch (error) {
-        console.error('Error:', error);
+  function updatePrintButton(noPO) {
+    const printPoLink = document.getElementById('print-po-link');
+    if (noPO) {
+      printPoLink.href = `print/print-po.html?noPO=${noPO}`;
+    } else {
+      console.error('noPO is not available.');
     }
-}
-
+  }
 
   async function fetchPurchaseOrders() {
     const token = localStorage.getItem('accessToken');
@@ -351,6 +321,7 @@
             partName: detail.item_desc_a || "",
             UoM: detail.purchase_unit || "",
             QTY: detail.po_qty || "",
+            QTYReceipt: detail.receipt_qty || "",
           })) : []  // Ensure details is an array, even if no data is found
         }));
 
@@ -451,6 +422,7 @@
         <td class="px-2 py-4 text-center">${row.partName}</td>
         <td class="px-2 py-4 text-center">${row.UoM}</td>
         <td class="px-2 py-4 text-center">${row.QTY}</td>
+        <td class="px-2 py-4 text-center">${row.QTYReceipt}</td>
       `;
       tableBody.appendChild(tableRow);
     });

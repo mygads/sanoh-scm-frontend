@@ -277,6 +277,9 @@
 
 cekToken();
 
+const nameUser = localStorage.getItem('name')
+displayNotification(`Welcome ${nameUser}`, 'success');
+
 loadDashboardData()
 
 // Function to check token and load dashboard data

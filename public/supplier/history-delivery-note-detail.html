@@ -160,12 +160,10 @@
                 </div>
               </div>
               <div class="flex gap-3 xl:mt-0 lg:mt-0 md:mt-0 sm:mt-2 mt-2 items-center self-stretch my-auto text-white 2xl:min-w-[240px] text-[10px] 2xl:text-lg">
-
-                <a onclick="handlePrintDN(noDN)" id="print-dn-link" class="xl:text-[100%] lg:text-[100%] md:text-[90%] sm:text-[90%] text-[80%] flex gap-2  items-center self-stretch px-6 py-2 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5" >
+                <a href="" id="print-dn-link" class="xl:text-[100%] lg:text-[100%] md:text-[90%] sm:text-[90%] text-[80%] flex gap-2  items-center self-stretch px-6 py-2 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5" onclick="updatePrintButton(noDN)">
                   <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto  w-4 aspect-square" />
                   <span class="flex-1 shrink self-stretch my-auto xl:text-[100%] lg:text-[100%] md:text-[90%] sm:text-[90%] text-[90%]basis-0">Print DN </span>
                 </a>
-                
               </div>
             </div>
 
@@ -192,23 +190,23 @@
                   <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(2)">
                     Part Name
                   </th>
-                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer w-[13%]" onclick="sortTable(3)">
-                    Quantiy Order
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
+                  <th scope="col" class="px-1 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer w-[13%]" onclick="sortTable(3)">
+                    QTY Requested
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
                   <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer w-[13%]" onclick="sortTable(4)">
-                    Quantity Label
+                    QTY Label
                     <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" /> -->
                     <!-- <span class="sort-indicator"></span> -->
                   </th>
                   <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer w-[15%]" onclick="sortTable(5)">
-                    Quantity Delivered
+                    QTY Delivered
                     <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" /> -->
                     <!-- <span class="sort-indicator"></span> -->
                   </th>
                   <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer w-[15%]" onclick="sortTable(6)">
-                    Quantity Received
+                    QTY Received
                     <!-- <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" /> -->
                     <!-- <span class="sort-indicator"></span> -->
                   </th>
@@ -276,37 +274,25 @@
   // Assign the noPO from URL
   let noDN = getUrlParameter('noDN');
 
-  async function handlePrintDN(noDN) {
-    try {
-        const response = await fetch(`${API_dnView}${noDN}`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
-            },
-        });
-
-        if (response.ok) {
-            // Open PDF in a new tab
-            window.open(`${API_dnView}${noDN}`, '_blank');
-        } else {
-            console.error('Failed to fetch PDF:', response.statusText);
-        }
-    } catch (error) {
-        console.error('Error:', error);
-    }
-  }
-
   // Function to get URL parameters
   function getUrlParameter(name) {
     const params = new URLSearchParams(window.location.search);
     return params.get(name);
   }
 
-  function updateCSVButton(noDN) {
-    const printdcsvLink = document.getElementById('print-csv-link');
+  // function updateCSVButton(noDN) {
+  //   const printdcsvLink = document.getElementById('print-csv-link');
+  //   if (noDN) {
+  //     printdcsvLink.href = `print/print-dn.html?noDN=${noDN}`;
+  //   } else {
+  //     console.error('noDN is not available.');
+  //   }
+  // }
+
+  function updatePrintButton(noDN) {
+    const printdnLink = document.getElementById('print-dn-link');
     if (noDN) {
-      printdcsvLink.href = `print/print-dn.html?noDN=${noDN}`;
+      printdnLink.href = `print/print-dn.html?noDN=${noDN}`;
     } else {
       console.error('noDN is not available.');
     }
@@ -359,6 +345,10 @@
 
           // Set filteredData to match deliveryNote initially
           filteredData = details;
+          originalData = filteredData;
+
+          displayTableData(1);
+          updatePagination();
 
           // Call function to display data
           historyDNDetails();
@@ -394,14 +384,15 @@
             document.getElementById('poNumber').textContent = noPO;
             document.getElementById('planDelivery').textContent = planDNDate;
 
-            // Store the details array into filteredDnDetailData
-            filteredDnDetailData = dn.details;
+            // Store the details array into filteredData
+            filteredData = dn.details;
+            originalData = filteredData;
 
             // Display the details
-            if (typeof displayDNDetails === 'function') {
-                displayDNDetails(filteredDnDetailData);  // Show first page of details
+            if (typeof displayTableData === 'function') {
+                displayTableData(1);  // Show first page of details
             } else {
-                console.error('displayDNDetails function is not defined.');
+                console.error('displayTableData function is not defined.');
             }
 
             // Update pagination for details
@@ -419,32 +410,32 @@
     }
 
     window.addEventListener('resize', () => {
-        displayDNDetails(filteredData);  // Adjust display when resized
+        displayTableData(1);  // Adjust display when resized
         updatePagination();
     });
 
-    document.getElementById('search-input').addEventListener('input', searchTable);
+    // document.getElementById('search-input').addEventListener('input', searchTableData);
   }
 
-  function displayDNDetails(details) {
+  function displayTableData(page) {
     const tableBody = document.getElementById('table-body-detail');
     tableBody.innerHTML = '';
 
-    const start = (currentPage - 1) * rowsPerPage;
+    const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
-    const paginatedData = details.slice(start, end);
+    const paginatedData = filteredData.slice(start, end);
 
-    paginatedData.forEach((detail, index) => {
+    paginatedData.forEach((row, index) => {
       const tableRow = document.createElement('tr');
       tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
       tableRow.innerHTML = `
-        <td class="px-2 py-4 text-center font-medium text-gray-900">${detail.no}</td>
-        <td class="px-2 py-4 text-center">${detail.partNumber}</td>
-        <td class="px-2 py-4 text-center">${detail.partName}</td>
-        <td class="px-2 py-4 text-center">${detail.QTY}</td>
-        <td class="px-2 py-4 text-center">${detail.qtyLabel}</td>
-        <td class="px-2 py-4 text-center">${detail.qtyDelivered}</td>
-        <td class="px-2 py-4 text-center">${detail.qtyReceived}</td>
+        <td class="px-2 py-4 text-center font-medium text-gray-900">${row.no}</td>
+        <td class="px-2 py-4 text-center">${row.partNumber}</td>
+        <td class="px-2 py-4 text-center">${row.partName}</td>
+        <td class="px-2 py-4 text-center">${row.QTY}</td>
+        <td class="px-2 py-4 text-center">${row.qtyLabel}</td>
+        <td class="px-2 py-4 text-center">${row.qtyDelivered}</td>
+        <td class="px-2 py-4 text-center">${row.qtyReceived}</td>
       `;
       tableBody.appendChild(tableRow);
     });
@@ -459,25 +450,25 @@
     // adjustRowsPerPage(); // Set rows per page based on initial screen size
     window.addEventListener('resize', () => {
       // adjustRowsPerPage(); // Adjust rows per page on screen resize
-      displayDNDetails(filteredData); // Re-render table data
+      displayTableData(filteredData); // Re-render table data
       updatePagination(); // Re-render pagination
     });
 
     document.getElementById('search-input').addEventListener('input', searchTable);
 
-    displayDNDetails(filteredData);
+    displayTableData(filteredData);
     updatePagination();
   });
 
   // Function to handle search
   function searchTable() {
     const searchInput = document.getElementById('search-input').value.toLowerCase();
-    filteredData = deliveryNote.find(dn => dn.noDN === noDN).details.filter(row => 
-      detail.partNumber.toLowerCase().includes(searchInput) || 
-      detail.partName.toLowerCase().includes(searchInput)
+    filteredData = originalData.filter(row => 
+      row.partNumber.toLowerCase().includes(searchInput) || 
+      row.partName.toLowerCase().includes(searchInput)
     );
     currentPage = 1;
-    displayDNDetails(filteredData);
+    displayTableData(currentPage);
     updatePagination();
   }
 

@@ -122,7 +122,7 @@
               <!-- Search Bar -->
               <div class="flex flex-wrap items-center self-stretch my-auto text-neutral-500">
                 <div class="flex items-center xl:px-4 lg:px-4 md:px-3 sm:px-3 px-3 py-2 bg-neutral-100 rounded w-full ml-auto">
-                  <input id="search-input" type="text" placeholder="Search no purchase order here"
+                  <input id="search-input" type="text" placeholder="Search no delivery note here"
                     class="flex-1 bg-neutral-100 outline-none">
                   <img src="../assets/icon_search.svg" alt="Search Icon" class="w-4 h-4 xl:ml-3 lg:ml-3 md:ml-2 sm:ml-2 ml-1">
                 </div>
@@ -223,6 +223,7 @@
     }
 
   cekToken(); // Memeriksa token autentikasi pengguna
+  fetchSuppliers();
 
   let deliveryNote = []; // Initialize the deliveryNote array
   let sortOrder = {}; // Objek untuk melacak urutan pengurutan setiap kolom
@@ -232,7 +233,6 @@
   document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM fully loaded and parsed');
   
-    fetchSuppliers(); // Fetch suppliers on page load
    // adjustRowsPerPage(); // Adjust rows per page based on screen size
 
    
@@ -251,6 +251,7 @@
     $(supplierSelect).on('change', async function (event) {
       const selectedSupplierId = $(this).val();
       console.log('Supplier dipilih:', selectedSupplierId);
+      displayNotification(`Waiting get data DN ${selectedSupplierId}`,'warning');
   
       if (selectedSupplierId) {
         localStorage.setItem('selectedSupplierId', selectedSupplierId); // Store bpCode in localStorage
@@ -326,9 +327,7 @@
   }
 
   // Function to fetch delivery notes based on supplier
-  async function fetchDeliveryNotes(bpCode) {
-    const token = localStorage.getItem('accessToken');
-    const noDN = localStorage.getItem('noDN');
+  async function fetchDeliveryNotes(selectedSupplierId) {
 
     if (!token) {
       console.error('No access token found for fetching delivery notes');
@@ -336,8 +335,8 @@
     }
 
     try {
-      console.log(`Fetching delivery notes for bpCode: ${bpCode}`);
-      const response = await fetch(`${APIindexdnheader2}/${bpCode}`, {
+      console.log(`Fetching delivery notes for selectedSupplierId: ${selectedSupplierId}`);
+      const response = await fetch(`${APIindexdnheader2}/${selectedSupplierId}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -352,6 +351,7 @@
         console.log('Raw Delivery notes data received:', data);
 
         if (data && data.data && Array.isArray(data.data)) {
+          displayNotification(data.message,'success');
               // Map and manipulate your data accordingly
               deliveryNote = data.data.map(dn => ({
                   noDN: dn.no_dn ? dn.no_dn.toString() : '',

@@ -219,30 +219,27 @@ async function handleLogin(event) {
 
       // Check if a previous URL exists
       const lastUrl = localStorage.getItem('lastUrl');
+      const lastRole = localStorage.getItem('lastRole');
 
-      displayNotification(`Welcome ${data.name}`, 'success');
-      
-      // setTimeout(() => {
-      //   saveLogout();
-      //   redirectToDashboardIndex(data.role);
-      // }, 1000);
-      setTimeout(() => {
-        if (lastUrl) {
-          // Redirect to the last accessed URL if available
+      if (lastUrl) {
+        // Pengecekan apakah peran lama sama dengan peran baru
+        if (lastRole === data.role) {
           saveLogout();
-          window.location.href = lastUrl;
-          localStorage.removeItem('lastUrl'); // Clear the URL after redirecting
+          window.location.href = lastUrl; // Jika peran sama, arahkan ke URL terakhir
+          localStorage.removeItem('lastUrl');
         } else {
+          // Jika peran berbeda, hapus lastUrl dan lastRole, lalu redirect ke dashboard baru
           saveLogout();
+          localStorage.removeItem('lastUrl'); // Clear the URL after redirecting
+          localStorage.removeItem('lastRole');
           // Redirect to the appropriate dashboard based on role
           redirectToDashboardIndex(data.role);
         }
-      }, 1000);
-
-      // setTimeout(() => {
-      //   saveLogout();
-      //   redirectToDashboardIndex(data.role);
-      // }, 1000);
+      } else {
+        // Jika tidak ada URL sebelumnya, langsung redirect ke dashboard berdasarkan role
+        saveLogout();
+        redirectToDashboardIndex(data.role);
+      }
 
     } else {
       displayNotification(`Invalid Username and Password`, 'error');

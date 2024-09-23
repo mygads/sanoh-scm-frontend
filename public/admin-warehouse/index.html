@@ -155,6 +155,9 @@
 
 cekToken();
 
+const nameUser = localStorage.getItem('name')
+displayNotification(`Welcome ${nameUser}`, 'success');
+
 
 // JavaScript code for sync functionality
 document.addEventListener('DOMContentLoaded', () => {
@@ -211,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await response.json();
 
       if (response.ok) {
-        displayNotification('Data has been synchronized successfully.')
+        displayNotification('Data has been synchronized successfully.', 'success')
       } else {
         displayNotification(data.message || 'An error occurred during synchronization.','error')
         // Swal.fire({

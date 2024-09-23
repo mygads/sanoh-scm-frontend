@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <title>Delivery Note PT Sanoh Indonesia</title>
-    <link rel="icon" type="image/png" href="../assets/icon_sanoh.png">
+    <link rel="icon" type="image/png" href="../../assets/icon_sanoh.png">
     
     <style>
         body {
@@ -306,8 +306,8 @@
         <div id="page-content"></div>
     </div>
         <!-- Page Content Container -->
-        
-</body>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
 
 <script src="../../api.js"></script>
 <script src="../../script.js"></script>
@@ -324,7 +324,7 @@ if (!noDN || noDN.trim() === "" || noDN === 'undefined' || noDN === null) {
     // If noDN is valid, fetch and display the Purchase Order data
     fetchDeliveryNoteData(noDN).then(data => {
         renderDeliveryNote(data);
-        window.print();
+        generatePDF(data.dn_number);
     });
 }
 
@@ -338,7 +338,7 @@ if (!noDN || noDN.trim() === "" || noDN === 'undefined' || noDN === null) {
         if (token && noDN) {
             const data = await fetchDeliveryNoteData(noDN, token);
             renderDeliveryNote(data);
-            window.print(); // Cetak setelah data berhasil ditampilkan
+            generatePDF(data.dn_number);
         } else {
             throw new Error("Token or Delivery Note number is invalid.");
         }
@@ -360,6 +360,7 @@ async function getToken() {
         }
     });
 }
+
 
 function getQueryParams() {
     const params = new URLSearchParams(window.location.search);
@@ -405,6 +406,7 @@ async function fetchDeliveryNoteData(noDN, token) {
                     internal_part_number: detail.internal_part_number,
                     part_name: concatenatePartName(detail.part_name),
                     pcs_per_kamban: detail.pcs_per_kamban,
+                    qty_confirm: detail.qty_confirm,
                     no_of_kamban: calculateNoOfKanban(detail.total_quantity, detail.pcs_per_kamban),
                     total_quantity: detail.total_quantity,
                     box_quantity: calculateNoOfKanban(detail.total_quantity, detail.pcs_per_kamban),
@@ -573,7 +575,7 @@ if (index % rowsPerPage === 0) {
             <td>${item.pcs_per_kamban || '0'}</td>
             <td>${item.no_of_kamban || '0'}</td>
             <td>${item.total_quantity || '0'}</td>
-            <td>${item.confirmation_supp || ''}</td>
+            <td>${item.qty_confirm || ''}</td>
             <td>${item.confirmation_sanoh || ''}</td>
             <td>${item.box_quantity || '0'}</td>
         </tr>
@@ -728,7 +730,22 @@ if (items.length === 0) {
         document.getElementById('page-content').innerHTML = pageContent;
     }
         
+    function generatePDF(dnNumber) {
+        const element = document.getElementById('page-content');
+
+        const opt = {
+            margin:       [2, 2, 2, 2], // top, left, bottom, right
+            filename:     dnNumber ? `DeliveryNote_${dnNumber}.pdf` : 'DeliveryNote.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2 },
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+
+        html2pdf().set(opt).from(element).save().then(() => {
+            window.history.back();
+        });
+    }
 
 </script>
-
+</body>
 </html>
