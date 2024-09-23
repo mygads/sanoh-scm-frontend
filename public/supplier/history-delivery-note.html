@@ -311,12 +311,23 @@
     dataToShow.forEach(dn => {
       const row = document.createElement('tr');
       row.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
+
+      // Condition link route if po still open 
+      let poLink;
+      if (dn.statusPO != 'Confirmed' | 'Closed' | 'Cancelled') {
+        // If PO is confirmed, create a clickable link
+        poLink = `<a href="purchase-order-detail.html?noPO=${dn.noPO}" class="text-blue-600 underline">${dn.noPO}</a>`;
+      } else {
+        // If PO is not confirmed, display the PO number without a link
+        poLink = `<span class="text-gray-600">${dn.noPO}</span>`;
+      }
+      
       row.innerHTML = `
         <td class="px-2 py-4 text-center font-medium text-gray-900">
           <a href="history-delivery-note-detail.html?noDN=${dn.noDN}" class="text-blue-600 underline">${dn.noDN}</a>
         </td>
         <td class="px-2 py-4 text-center font-medium text-gray-900">
-          <a href="history-purchase-order-detail.html?noPO=${dn.noPO}" class="text-blue-600 underline">${dn.noPO}</a>
+          ${poLink}
         </td>
         <td class="px-2 py-4 text-center">${dn.statusDN}</td>
         <td class="px-2 py-4 text-center">${dn.planDNDate}</td>
