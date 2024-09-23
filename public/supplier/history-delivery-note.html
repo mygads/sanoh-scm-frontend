@@ -259,6 +259,7 @@
                   noDN: dn.dn_number ? dn.dn_number.toString() : 'No DN Number',
                   noPO: dn.po_number ? dn.po_number.toString() : 'No PO Number',                  
                   statusDN: dn.dn_status || '-',
+                  statusPO: dn.po_status || '-',
                   planDNDate: dn.send_date || 'Date Unknown',
                   receivedDNDate: dn.receive_date || 'Date Unknown',
                   details: dn.detail ? dn.detail.map((detail, index) => ({
@@ -314,12 +315,14 @@
 
       // Condition link route if po still open 
       let poLink;
-      if (dn.statusPO != 'Confirmed' | 'Closed' | 'Cancelled') {
-        // If PO is confirmed, create a clickable link
+
+      // Check if the PO is not 'Confirmed', 'Closed', or 'Cancelled'
+      if (dn.statusPO !== 'Confirmed' && dn.statusPO !== 'Closed' && dn.statusPO !== 'Cancelled') {
+        // If PO is still open (not confirmed, closed, or cancelled), create a clickable link
         poLink = `<a href="purchase-order-detail.html?noPO=${dn.noPO}" class="text-blue-600 underline">${dn.noPO}</a>`;
-      } else {
-        // If PO is not confirmed, display the PO number without a link
-        poLink = `<span class="text-gray-600">${dn.noPO}</span>`;
+      } else if (dn.statusPO === 'Cancelled' || dn.statusPO === 'Closed') {
+        // If PO is 'Cancelled' or 'Closed', create a history link
+        poLink = `<a href="history-purchase-order-detail.html?noPO=${dn.noPO}" class="text-blue-600 underline">${dn.noPO}</a>`;
       }
       
       row.innerHTML = `
