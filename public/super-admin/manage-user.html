@@ -202,11 +202,12 @@
             Username: user.username,
             Name: user.name,
             Role: user.role,
-            Status: user.status === "1" ? 'active' : 'deactive',  // Correct mapping of status
+            Status: user.status === 1 ? 'active' : 'deactive',  // Correct mapping of status
             StatusValue: user.status  // Keep the original status for toggle
           }));
 
           originalData = filteredData;
+          // console.log(filteredData);
           displayTableData(currentPage);
           updatePagination();
         }
@@ -264,7 +265,7 @@
 
         <td class="px-2 py-3 text-center border-b">
          <label class="inline-flex items-center cursor-pointer">
-            <input type="checkbox" ${row.StatusValue === "1" ? 'checked' : ''} class="sr-only peer" data-user-id="${row.UserID}" username="${row.Username}" onchange="updateStatus(this)">
+            <input type="checkbox" ${row.StatusValue === 1 ? 'checked' : ''} class="sr-only peer" data-user-id="${row.UserID}" username="${row.Username}" onchange="updateStatus(this)">
             <div class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring- peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
           </label>
         </td>
@@ -308,7 +309,7 @@
     // Update status in the row
     const row = toggle.closest('tr');
     const statusCell = row.querySelector('td:nth-child(5)');
-    statusCell.textContent = status === "1" ? 'Active' : 'Deactive';  // Use 'status' here
+    statusCell.textContent = status === 1 ? 'Active' : 'Deactive';  // Use 'status' here
 
     // Call API to update status
     updateStatusAPI(userId, status, username);  // Pass 'status' to the API function
@@ -333,7 +334,7 @@
       }
     })
     .then(data => {
-      displayNotification(`Status for "${username}" successfully updated`, 'warning');
+      displayNotification(`Status for "${username}" successfully updated`, 'Success');
     })
     .catch(error => {
       console.error(`Error updating status for "${username}":`, error);
@@ -349,7 +350,7 @@
       const userId = toggle.getAttribute('data-user-id');
       const statusValue = filteredData.find(user => user.UserID == userId)?.StatusValue;
 
-      if (statusValue === "1") {
+      if (statusValue === 1) {
         toggle.checked = true;
       } else {
         toggle.checked = false;
@@ -358,7 +359,7 @@
       // Update the status cell
       const row = toggle.closest('tr');
       const statusCell = row.querySelector('td:nth-child(5)');
-      statusCell.textContent = statusValue === "1" ? 'Active' : 'Deactive';
+      statusCell.textContent = statusValue === 1 ? 'Active' : 'Deactive';
     });
   }
 
