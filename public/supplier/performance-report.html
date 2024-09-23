@@ -40,7 +40,7 @@
           <img loading="lazy" src="../assets/logosanoh.svg" class="object-contain self-center xl:w-30 lg:w-28 md:w-26 sm:w-24 w-24 max-w-full cursor-pointer pointer-events-auto aspect-[2.79]" />
 
           <!-- Menu Items -->
-          <ul class="flex flex-col mt-7 2xl:mt-10 w-full text-gray-500">
+          <ul class="flex flex-col mt-7 w-full text-gray-500">
 
             <!-- Dashboard -->
             <li>
@@ -49,7 +49,7 @@
                 <img loading="lazy" src="../assets/icon_home_default.svg" alt=""
                   class="object-contain shrink-0 self-stretch my-auto w-4
                   aspect-square" />
-                <span class="self-stretch text-xs">Dashboard</span>
+                <span class="self-strech text-sm">Dashboard</span>
               </a>
             </li>
 
@@ -60,7 +60,7 @@
                 <img loading="lazy" src="../assets/icon_po_default.svg" alt=""
                   class="object-contain shrink-0 self-stretch my-auto w-4
                   aspect-[0.89] fill-blue-950" />
-                <span class="self-stretch text-xs">Purchase Order</span>
+                <span class="self-strech text-sm">Purchase Order</span>
               </a>
             </li>
 
@@ -71,7 +71,7 @@
                 <img loading="lazy" src="../assets/icon_dn_default.svg" alt=""
                   class="object-contain shrink-0 self-stretch my-auto w-4
                   aspect-square" />
-                <span class="self-stretch text-xs">Delivery Note</span>
+                <span class="self-strech text-sm">Delivery Note</span>
               </a>
             </li>
 
@@ -82,7 +82,7 @@
                 <img loading="lazy" src="../assets/icon_history_default.svg" alt=""
                   class="object-contain shrink-0 self-stretch my-auto w-4
                   aspect-square" />
-                <span class="self-stretch text-xs">History Purchase Order</span>
+                <span class="self-strech text-sm">History Purchase Order</span>
               </a>
             </li>
 
@@ -93,7 +93,7 @@
                 <img loading="lazy" src="../assets/icon_history_default.svg" alt=""
                   class="object-contain shrink-0 self-stretch my-auto w-4
                   aspect-square" />
-                <span class="self-stretch text-xs">History Delivery Note</span>
+                <span class="self-strech text-sm">History Delivery Note</span>
               </a>
             </li>
 
@@ -102,7 +102,7 @@
               <a href="performance-report.html" class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 active">
                 <img loading="lazy" src="../assets/icon_performance_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4
                 aspect-square icon-performance-active" />
-                <span class="self-stretch text-xs">Performance Report</span>
+                <span class="self-strech text-sm">Performance Report</span>
               </a>
             </li>
           </ul>
@@ -111,20 +111,20 @@
           <div class="mt-auto flex flex-col w-full">
 
             <!-- User Info -->
-            <div class="flex gap-4 items-center p-2 2xl:p-4 w-full bg-blue-950 bg-opacity-10 text-blue-950">
+            <div class="flex gap-4 items-center p-2 w-full bg-blue-950 bg-opacity-10 text-blue-950">
               <img loading="lazy" src="../assets/icon_people.svg" alt=""
                 class="object-contain shrink-0 self-stretch my-auto w-4
                 aspect-square" />
-              <span id="user-info" class="self-stretch text-xs"></span>
+              <span id="user-info" class="self-strech text-sm"></span>
             </div>
 
             <!-- Logout Button -->
             <a href="javascript:void(0)" onclick="handleLogout()"
-              class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
+              class="flex gap-4 items-center p-2 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
               <img loading="lazy" src="../assets/icon_logout.svg" alt=""
                 class="object-contain shrink-0 self-stretch my-auto w-4
                 aspect-square logout-icon hover:icon_logout_white.svg" />
-              <span class="self-stretch text-xs">Logout</span>
+              <span class="self-strech text-sm">Logout</span>
             </a>
           </div>
         </nav>
@@ -139,7 +139,7 @@
             <h1 class="self-stretch my-auto xl:text-[100%] lg:text-[90%] md:text-[80%] sm:text-[70%] text-[70%]">Performance Report</h1>
           </header>
 
-          <div class="flex flex-col mt-4 2xl:mt-6 w-full 2xl:text-base text-xs font-medium">
+          <div class="flex flex-col mt-4 w-full text-xs font-medium">
 
             <div class="flex flex-wrap gap-10 justify-between items-center w-full">
               
@@ -157,11 +157,11 @@
 
         </section>
 
-        <div id="tableSection" class="flex flex-col mt-5 2xl:mt-8">
+        <div id="tableSection" class="flex flex-col mt-5">
           <div class="relative overflow-x-auto shadow-md rounded-lg border border-gray-300">
 
-            <table class="w-full text-[11px] 2xl:text-base text-left text-gray-700 dark:text-gray-700">
-              <thead class="text-[14px] 2xl:text-[20px] text-gray-700">
+            <table class="w-full text-[11px] text-left text-gray-700 dark:text-gray-700">
+              <thead class="text-[14px] text-gray-700">
                 <tr>
                   <th scope="col" class="xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs py-3 text-center border-b border-b-gray-400 cursor-pointer " data-sort="no">
                     No
@@ -195,7 +195,7 @@
 
         <!-- Pagination -->
         <div class="flex justify-end my-6">
-          <div class="flex gap-2 2xl:gap-4 items-center pagination">
+          <div class="flex gap-2 items-center pagination">
             <!-- Pagination buttons will be inserted here by JavaScript -->
           </div>
         </div>
