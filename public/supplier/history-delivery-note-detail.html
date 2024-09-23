@@ -392,6 +392,11 @@
     const end = start + rowsPerPage;
     const paginatedData = filteredData.slice(start, end);
 
+    if (paginatedData.length === 0) {
+      tableBody.innerHTML = '<tr><td colspan="6" class="text-center">No data available for this supplier</td></tr>';
+      return;
+    }
+
     paginatedData.forEach((row, index) => {
       const tableRow = document.createElement('tr');
       tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
