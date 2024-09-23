@@ -20,92 +20,75 @@
 </head>
 
 <body class="font-poppins bg-white">
-  <section class="overflow-hidden w-screen h-screen bg-white ]">
+  <section class="overflow-hidden w-screen h-screen bg-white">
     <div class="flex h-screen">
 
       <!-- nav-side bar -->
-      <aside class="flex flex-col w-[20%] h-screen">
-        <nav
-          class="flex flex-col grow py-9 2xl:py-14 w-full text-base font-medium border-r border-solid bg-stone-300 border-r-neutral-400">
-
+      <aside class="w-[15%]">
+        <nav class="flex flex-col grow py-9 w-full h-screen text-sm font-medium border-r border-solid bg-stone-300 border-r-neutral-400 max-md:mt-9">
+          
           <!-- Logo Sanoh -->
-          <img loading="lazy" src="../assets/logosanoh.svg"
-            class="object-contain self-center w-30 2xl:w-48 max-w-full cursor-pointer pointer-events-auto aspect-[2.79]" />
-
+          <img loading="lazy" src="../assets/logosanoh.svg" class="object-contain self-center w-30 max-w-full " />
+          
           <!-- Menu Items -->
-          <ul class="flex flex-col mt-7 2xl:mt-10 w-full text-gray-500">
-
-            <!-- Manage Account (visible) -->
-            <li id="manage-account">
-              <a href="index.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 w-full whitespace-nowrap cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 active">
-                <img loading="lazy" src=../assets/icon_home_default.svg alt=""
-                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square icon-home-active" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Manage Account</span>
+          <ul class="flex flex-col mt-7 w-full text-gray-500">
+            
+            <!-- Dashboard (Visible) -->
+            <li> 
+              <a href="manage-user.html" class="flex gap-3 items-center p-2 w-full whitespace-normal cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 active">
+                <img loading="lazy" src="../assets/icon_home_default.svg" alt="" class="object-contain self-stretch my-auto w-5 aspect-square icon-home-active" />
+                <span class="self-stretch my-auto text-sm ">Manage Account</span>
               </a>
             </li>
-
-        
+          
           </ul>
-
+  
           <!-- User and Logout Section at the Bottom -->
           <div class="mt-auto flex flex-col w-full">
-
+            
             <!-- User Info -->
-            <div class="flex gap-4 items-center p-2 2xl:p-4 w-full bg-blue-950 bg-opacity-10 text-blue-950">
-              <img loading="lazy" src="../assets/icon_people.svg" alt=""
-                class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-              <span id="user-info" class="self-stretch my-auto text-sm 2xl:text-xl"></span>
+            <div class="flex gap-3 items-center p-2  w-full bg-blue-950 bg-opacity-10 text-blue-950">
+              <img loading="lazy" src="../assets/icon_people.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
+              <span id="user-info" class="self-stretch my-auto text-sm "></span>
             </div>
-
+            
             <!-- Logout Button -->
-            <a href="javascript:void(0)" onclick="handleLogout()"
-              class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
-              <img loading="lazy" src="../assets/icon_logout.svg" alt=""
-                class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square logout-icon hover:icon_logout_white.svg" />
-              <span class="self-stretch my-auto text-sm 2xl:text-xl">Logout</span>
+            <a href="javascript:void(0)" onclick="handleLogout()" class="flex gap-3 items-center p-2   w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
+              <img loading="lazy" src="../assets/icon_logout.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4  aspect-square logout-icon hover:icon_logout_white.svg" />
+              <span class="self-stretch my-auto text-sm ">Logout</span>
             </a>
           </div>
         </nav>
       </aside>
 
 
-    <!-- Main Content -->
-      <main class="flex flex-col w-[80%] mb-[100%] mt-[3%] mx-auto px-6 2xl:px-12">
-        <section class="flex flex-col self-stretch py-px my-auto w-full pb-4 2xl:pb-10">
-          <header class="flex gap-3 items-center self-start text-2xl font-semibold text-black">
+      <!-- Main Content -->
+      <main class="flex flex-col w-[85%] mb-auto mt-12 mx-auto px-6 ">
+        <section class="flex flex-col self-stretch  my-auto w-full">
+          <header class="flex gap-3 items-center self-start text-2xl font-semibold text-black mb-7">
             <img loading="lazy" src="../assets/icon_back.svg" alt=""
-              class="object-contain shrink-0 self-stretch my-auto w-5 2xl:w-7 cursor-pointer pointer-events-auto aspect-square" onclick="window.location.href='manage-user.html';"/>
-            <h1 class="self-stretch my-auto text-[80%] 2xl:text-[120%]">Edit User</h1>
+              class="object-contain shrink-0 self-stretch my-auto w-5 cursor-pointer pointer-events-auto aspect-square" onclick="window.location.href='manage-user.html' "/>
+            <h1 class="self-stretch my-auto">Edit User</h1>
           </header>
-          <div class="flex flex-col mt-4 2xl:mt-6 w-full 2xl:text-base text-xs font-medium">
-            <form class="flex flex-col mb-6" id="edit-user-form">
-              <!-- <div class="flex items-center gap-4 mb-6 2xl:mb-8">
-                <label for="user_id" class="text-base 2xl:text-lg font-medium dark:text-black w-[15%] 2xl:w-[10%]">User ID</label>
-                <input type="text" id="user_id" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block p-3 dark:text-black" placeholder="User ID" required readonly disabled/>
-              </div> -->
+          <div class="w-full text-base font-medium">
+            <form class="flex flex-col justify-start gap-6" id="edit-user-form">
 
-              <!-- <div class="flex items-center gap-4 mb-6 2xl:mb-8">
-                <label for="supplier_id" class="text-base 2xl:text-lg font-medium dark:text-black w-[15%] 2xl:w-[10%]">Supplier ID</label>
-                <input type="text" id="supplier_id" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block p-3 dark:text-black" placeholder="Supplier ID" required />
-              </div> -->
-
-              <div class="flex w-[70%] items-center gap-4 mb-6 2xl:mb-8">
-                <label for="supplier_id" class="text-base 2xl:text-lg font-medium dark:text-black w-[21%] 2xl:w-[10%]">Select Supplier</label>
-                <select id="supplier_id" class="scrollable-select bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[70%] p-3 dark:text-black" required>
+              <div class="flex items-center ">
+                <label for="supplier_id" class="text-lg mr-8">Select Supplier</label>
+                <select id="supplier_id" class="scrollable-select bg-white border border-neutral-300 text-black text-base rounded-lg block p-3" required>
                   <option value="">Search Supplier</option>
                   <!-- Options will be dynamically populated -->
                 </select>
               </div>
 
-              <div class="flex gap-6 mb-6 2xl:mb-8">
-                <div class="flex-1 flex items-center gap-4">
-                  <label for="first_name" class="text-base 2xl:text-lg font-medium dark:text-black w-[32%] 2xl:w-[20%]">Name</label>
-                  <input type="text" id="first_name" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[70%] 2xl:w-[50%] p-3 dark:text-black" placeholder="Name" required />
+              <div class="flex gap-16">
+                <div class="flex items-center">
+                  <label for="first_name" class="text-lg mr-28">Name</label>
+                  <input type="text" id="first_name" class="bg-white border border-neutral-300 text-black text-base rounded-lg block min-w-96 p-3" placeholder="Name" required />
                 </div>
-                <div class="flex-1 flex items-center gap-4">
-                  <label for="role" class="text-base 2xl:text-lg font-medium dark:text-black w-[10%] 2xl:w-[7%]">Role</label>
-                  <select id="role" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[40%] 2xl:w-[30%] p-3 dark:text-black" required>
+                <div class="flex items-center">
+                  <label for="role" class="text-lg mr-12">Role</label>
+                  <select id="role" class="bg-white border border-neutral-300 text-black text-base rounded-lg block p-3" required>
                     <option value="" disabled>Select a role</option>
                     <option value="1">Supplier</option>
                     <option value="2">Warehouse</option>
@@ -115,25 +98,25 @@
                 </div>
               </div>
 
-              <div class="flex items-center gap-4 mb-6 2xl:mb-8">
-                <label for="username" class="text-base 2xl:text-lg font-medium dark:text-black w-[15%] 2xl:w-[10%]">Username</label>
-                <input type="text" id="username" class="bg-gray-200 border border-neutral-300 text-gray-500 text-sm rounded-lg block w-[32%] p-3 cursor-not-allowed " placeholder="Username" required readonly disabled />
+              <div class="flex items-center">
+                <label for="username" class="text-lg mr-16">Username</label>
+                <input type="text" id="username" class="bg-gray-200 border border-neutral-300 text-gray-500 text-base rounded-lg block min-w-96 p-3 cursor-not-allowed ml-2" placeholder="Username" required readonly disabled />
               </div>
 
-              <div class="flex items-center gap-4 mb-6 2xl:mb-8">
-                <label for="email" class="text-base 2xl:text-lg font-medium dark:text-black w-[15%] 2xl:w-[10%]">Email</label>
-                <input type="email" id="email" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[32%] p-3 dark:text-black" placeholder="example@example.com" required />
+              <div class="flex items-center">
+                <label for="email" class="text-lg mr-28">Email</label>
+                <input type="email" id="email" class="bg-white border border-neutral-300 text-black text-base rounded-lg block min-w-96 p-3 dark:text-black ml-1" placeholder="example@example.com" required />
               </div>
 
-              <div class="flex items-center gap-4 mb-6 2xl:mb-8">
-                <label for="password" class="text-base 2xl:text-lg font-medium dark:text-black w-[15%] 2xl:w-[10%]">Password</label>
-                <input type="password" id="password" class="bg-white border border-neutral-300 text-black text-sm rounded-lg block w-[32%] p-3 dark:text-black" placeholder="Enter new password or leave blank to keep current" />
+              <div class="flex items-center">
+                <label for="password" class="text-lg mr-16">Password</label>
+                <input type="password" id="password" class="bg-white border border-neutral-300 text-black text-base rounded-lg block min-w-96 p-3 dark:text-black ml-3" placeholder="Enter new password or leave blank to keep current" />
                 <img id="toggle_password" src="../assets/icon_see.svg" alt="Toggle Password Visibility" class="ml-2 cursor-pointer w-6 h-6" />
-                <button type="button" id="generate_password" class="ml-2 bg-blue-500 hover:bg-blue-700 text-white rounded px-4 py-3 text-xs 2xl:text-sm">Generate Password</button>
+                <button type="button" id="generate_password" class="ml-3 bg-blue-500 hover:bg-blue-700 text-white rounded-full px-4 py-3 text-xs ">Generate Password</button>
               </div>
 
               <div class="flex justify-end">
-                <button type="submit" class="text-white bg-blue-500 hover:bg-blue-800  font-medium rounded-md text-base 2xl:text-xl px-6 2xl:px-8 py-2 2xl:py-4 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save</button>
+                <button type="submit" class="text-white bg-blue-500 hover:bg-blue-800  font-medium rounded-md text-sm  px-6 py-2 ">Save</button>
               </div>
             </form>
           </div>

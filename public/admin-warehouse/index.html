@@ -31,41 +31,41 @@
         </div> 
 
       <!-- nav-side bar -->
-      <aside id="sidebar" class="transform -translate-x-full transition-transform duration-300 fixed sm:relative sm:translate-x-0 flex flex-col xl:w-[24%] lg:w-[26%] md:w-[28%] sm:w-[30%] w-[34%] h-screen bg-stone-300 border-r border-neutral-400 z-40">
+      <aside id="sidebar" class="transform -translate-x-full transition-transform duration-300 fixed sm:relative sm:translate-x-0 flex flex-col  xl:w-[15%] lg:w-[18%] md:w-[24%] sm:w-[32%] w-[32%] h-screen bg-stone-300 border-r border-neutral-400 z-40">
         <nav class="flex flex-col grow py-9 w-full h-screen text-base font-medium border-r border-solid bg-stone-300 border-r-neutral-400 ">
 
           <!-- Logo Sanoh -->
-          <img loading="lazy" src="../assets/logosanoh.svg" class="object-contain self-center xl:w-30 lg:w-28 md:w-26 sm:w-24 w-20 max-w-full cursor-pointer pointer-events-auto aspect-[2.79]" />
+          <img loading="lazy" src="../assets/logosanoh.svg" class="object-contain self-center xl:w-30 lg:w-28 md:w-26 sm:w-24 w-24 max-w-full cursor-pointer pointer-events-auto aspect-[2.79]" />
 
           <!-- Menu Items -->
-          <ul class="flex flex-col mt-7 2xl:mt-10 w-full text-gray-500">
+          <ul class="flex flex-col mt-7 w-full text-gray-500">
             <!-- Dashboard -->
             <li>
               <a href="index.html"
-                class="flex gap-4 items-center xl:p-[9px] lg:p-[9px] md:p-[8px] sm:p-[8px] p-[8px] w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 active">
+                class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 active">
                 <img loading="lazy" src="../assets/icon_home_default.svg" alt="Dashboard"
-                  class="object-contain xl:w-4 lg:w-4 md:w-3 sm:w-3 w-3 icon-home-active" />
-                <span class="xl:text-sm lg:text-sm md:text-xs sm:text-xs text-xs">Dashboard</span>
+                  class="object-contain w-5 icon-home-active" />
+                <span class="self-strech text-sm">Dashboard</span>
               </a>
             </li>
 
             <!-- Delivery Note -->
             <li>
               <a href="delivery-note.html"
-                class="flex gap-4 items-center xl:p-[9px] lg:p-[9px] md:p-[8px] sm:p-[8px] p-[8px] mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
+                class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
                 <img loading="lazy" src="../assets/icon_dn_default.svg" alt="Purchase Order"
-                  class="object-contain xl:w-4 lg:w-4 md:w-3 sm:w-3 w-3" />
-                <span class="xl:text-sm lg:text-sm md:text-xs sm:text-xs text-xs">Delivery Note</span>
+                  class="object-contain w-4" />
+                <span class="self-strech text-sm">Delivery Note</span>
               </a>
             </li>
 
             <!-- History Delivery Note -->
             <li>
               <a href="history-delivery-note.html"
-                class="flex gap-4 items-center xl:p-[9px] lg:p-[9px] md:p-[8px] sm:p-[8px] p-[8px] mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
+                class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
                 <img loading="lazy" src="../assets/icon_history_default.svg" alt="History Purchase Order"
-                  class="object-contain xl:w-4 lg:w-4 md:w-3 sm:w-3 w-3" />
-                <span class="xl:text-sm lg:text-sm md:text-xs sm:text-xs text-xs">History Delivery Note</span>
+                  class="object-contain w-4" />
+                <span class="self-strech text-sm">History Delivery Note</span>
               </a>
             </li>
           </ul>
@@ -73,36 +73,50 @@
           <!-- User and Logout Section at the Bottom -->
           <div class="mt-auto flex flex-col w-full">
             <!-- User Info -->
-            <div class="flex gap-4 items-center p-2 2xl:p-4 w-full bg-blue-950 bg-opacity-10 text-blue-950">
-              <img loading="lazy" src="../assets/icon_people.svg" alt="User Info" class="object-contain xl:w-4 lg:w-4 md:w-3 sm:w-3 w-3" />
-              <span id="user-info" class="xl:text-sm lg:text-sm md:text-xs sm:text-xs text-xs"></span>
+            <div class="flex gap-4 items-center p-2 w-full bg-blue-950 bg-opacity-10 text-blue-950">
+              <img loading="lazy" src="../assets/icon_people.svg" alt="User Info" class="object-contain w-4" />
+              <span id="user-info" class="self-strech text-sm"></span>
             </div>
 
             <!-- Logout Button -->
             <a href="javascript:void(0)" onclick="handleLogout()"
-              class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
+              class="flex gap-4 items-center p-2 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
               <img loading="lazy" src="../assets/icon_logout.svg" alt=""
-                class="object-contain shrink-0 self-stretch my-auto xl:w-4 lg:w-4 md:w-3 sm:w-3 w-3 aspect-square logout-icon hover:icon_logout_white.svg" />
-              <span class="self-stretch my-auto xl:text-sm lg:text-sm md:text-xs sm:text-xs text-xs">Logout</span>
+                class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square logout-icon hover:icon_logout_white.svg" />
+              <span class="self-stretch my-auto self-strech text-sm">Logout</span>
             </a>
           </div>
         </nav>
       </aside>
 
       <!-- Main Content -->
-      <main class="flex flex-col justify-center items-center m-auto max-md:max-w-full">
-        <header class="flex flex-col items-center self-center max-w-full  2xl:w-[1100px]">
+      <main class="flex flex-col items-center m-auto max-md:max-w-full">
+        <!-- Sync Section -->
+        <div class="flex flex-col items-center w-full mt-4">
+          <div class="flex items-center">
+            <label for="month-picker" class="mr-2 text-lg font-semibold text-gray-700">Select Month:</label>
+            <input type="month" id="month-picker" class="border border-gray-300 rounded-md p-2 mr-4" />
+            <button id="sync-button" class="flex items-center px-4 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+              <!-- Sync Icon -->
+              <img src="../assets/icon_sync.png" class="w-8 mr-2" />
+              Sync
+            </button>
+          </div>
+        </div>
+
+        <!-- Existing header and content -->
+        <header class="flex flex-col items-center self-center m-auto max-w-[1000px] mt-9">
           <h1 class="flex flex-col justify-between items-center text-black w-full text-center">
-            <span class="font-semibold max-w-full xl:text-4xl 2xl:text-6xl">
+            <span class="font-semibold text-4xl">
               Welcome Warehouse!
             </span>
           </h1>
-          <p class="mx-auto my-auto xl:mt-3 2xl:mt-6 text-center text-neutral-400 xl:xl:text-sm lg:text-sm md:text-xs sm:text-xs text-xs xl:w-[500px] 2xl:w-[700px]">
+          <p class="text-center text-neutral-400 text-sm mt-4 max-w-[800px] mx-auto">
             Welcome to our dashboard, where you can seamlessly manage and <br> monitor all your supply chain operations with ease and efficiency.
           </p>
         </header>
         <img src="../assets/dashboard_warehouse.png" alt="Dashboard overview"
-          class="object-contain mx-auto xl:w-[500px] 2xl:w-[700px]" />
+          class="object-contain mx-auto xl:w-[500px]" />
       </main>
     </div>
   </section>
@@ -113,7 +127,122 @@
 <script src="../script.js"></script>
 <script src="../table.js"></script>
 <script>
+
+  const burgerBtn = document.getElementById('burger-btn');
+    const sidebar = document.getElementById('sidebar');
+    
+    burgerBtn.addEventListener('click', () => {
+      if (sidebar.classList.contains('-translate-x-full')) {
+        sidebar.classList.remove('-translate-x-full');
+      } else {
+        sidebar.classList.add('-translate-x-full');
+      }
+    });
+
+    function adjustRowsPerPage() {
+      if (window.innerHeight < 620) {
+        rowsPerPage = 4; // Atur menjadi 3 jika ukuran layar < 768
+      } else if (window.innerHeight < 640) {
+        rowsPerPage = 6
+      } else if (window.innerHeight < 768) {
+        rowsPerPage = 8
+      } else if (window.innerHeight < 1280) {
+        rowsPerPage = 9; // Atur menjadi 4 jika ukuran layar >= 768
+      } else {
+        rowsPerPage = 10;   
+      }
+    }
+
 cekToken();
+
+const nameUser = localStorage.getItem('name')
+displayNotification(`Welcome ${nameUser}`, 'success');
+
+
+// JavaScript code for sync functionality
+document.addEventListener('DOMContentLoaded', () => {
+  const syncButton = document.getElementById('sync-button');
+  const monthPicker = document.getElementById('month-picker');
+
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = (now.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+  const currentMonth = `${year}-${month}`;
+  monthPicker.value = currentMonth;
+
+  syncButton.addEventListener('click', async () => {
+    const selectedMonth = monthPicker.value;
+    if (!selectedMonth) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Please select a month',
+        text: 'You need to select a month before syncing.',
+      });
+      return;
+    }
+
+    // Extract year and month from selectedMonth (format: YYYY-MM)
+    const [year, month] = selectedMonth.split('-');
+
+    // Get the token
+    const token = localStorage.getItem('accessToken');
+
+    // Show loading indicator on the button
+    syncButton.disabled = true;
+    syncButton.innerHTML = `
+      <svg class="animate-spin w-8 mr-2 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+        viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"></circle>
+        <path class="opacity-75" fill="currentColor"
+          d="M4 12a8 8 0 018-8v8H4z"></path>
+      </svg>
+      Syncing...
+    `;
+
+    try {
+      // Construct the URL with separate month and year parameters
+      const url = `${API_SyncWarehouse}?month=${month}&year=${year}`;
+      displayNotification('Waiting for synchronization', 'warning')
+
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        displayNotification('Data has been synchronized successfully.', 'success')
+      } else {
+        displayNotification(data.message || 'An error occurred during synchronization.','error')
+        // Swal.fire({
+        //   icon: 'error',
+        //   title: 'Sync Failed',
+        //   text: data.message || 'An error occurred during synchronization.',
+        // });
+      }
+    } catch (error) {
+      console.error('Error syncing data:', error);
+      // Swal.fire({
+      //   icon: 'error',
+      //   title: 'Sync Failed',
+      //   text: 'An error occurred during synchronization.',
+      // });
+      displayNotification(error ||'No Connection during synchronization.','error')
+    } finally {
+      // Reset button
+      syncButton.disabled = false;
+      syncButton.innerHTML = `
+        <!-- Sync Icon -->
+        <img src="../assets/icon_sync.png" class="w-8 mr-2" />
+        Sync
+      `;
+    }
+  });
+});
 </script>
 
 </html>

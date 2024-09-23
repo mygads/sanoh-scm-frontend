@@ -20,17 +20,17 @@
   <section class="overflow-hidden w-screen h-screen bg-white">
     <div class="flex h-screen">
 
-    <!-- nav-side bar -->
-    <aside class="flex flex-col w-[20%] max-md:ml-0 max-md:w-full">
+    
+    <!-- <aside class="flex flex-col w-[20%] max-md:ml-0 max-md:w-full">
       <nav class="flex flex-col grow py-9 2xl:py-14 w-full h-screen text-base font-medium border-r border-solid bg-stone-300 border-r-neutral-400 max-md:mt-9">
         
-        <!-- Logo Sanoh -->
+        
         <img loading="lazy" src="../assets/logosanoh.svg" class="object-contain self-center w-30 2xl:w-48 max-w-full cursor-pointer pointer-events-auto aspect-[2.79]" />
         
-        <!-- Menu Items -->
+        
         <ul class="flex flex-col mt-7 2xl:mt-10 w-full text-gray-500">
           
-          <!-- Dashboard (Visible) -->
+          
           <li> 
             <a href="manage-user.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 w-full whitespace-nowrap cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
               <img loading="lazy" src="../assets/icon_home_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square " />
@@ -38,7 +38,7 @@
             </a>
           </li>
           
-          <!-- Hidden Menu Items -->
+          
           <li class="hidden">
             <a href="purchase-order.html"
               class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
@@ -85,16 +85,16 @@
           </li>
         </ul>
 
-        <!-- User and Logout Section at the Bottom -->
+        
         <div class="mt-auto flex flex-col w-full">
           
-          <!-- User Info -->
+          
           <div class="flex gap-4 items-center p-2 2xl:p-4 w-full bg-blue-950 bg-opacity-10 text-blue-950">
             <img loading="lazy" src="../assets/icon_people.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
             <span id="user-info" class="self-stretch my-auto text-sm 2xl:text-xl"></span>
           </div>
           
-          <!-- Logout Button -->
+          
           <a href="javascript:void(0)" onclick="handleLogout()" class="flex gap-4 items-center p-2 2xl:p-4  w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
             <img loading="lazy" src="../assets/icon_logout.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square logout-icon hover:icon_logout_white.svg" />
             <span class="self-stretch my-auto text-sm 2xl:text-xl">Logout</span>
@@ -104,7 +104,7 @@
     </aside>
 
 
-    <!-- Main Content -->
+    
     <main class="flex flex-col justify-center items-center m-auto max-md:max-w-full">
       <header class="flex flex-col items-center self-center max-w-full  2xl:w-[1100px]">
         <h1 class="flex flex-col justify-between items-center text-black w-full text-center">
@@ -120,7 +120,65 @@
       </header>
       <img src="../assets/dashboard_admin.png" alt="Dashboard overview"
         class="object-contain mx-auto xl:w-[400px] 2xl:w-[600px]" />
+    </main> -->
+
+    <!-- nav-side bar -->
+    <aside class="w-[15%]">
+      <nav class="flex flex-col grow py-9 w-full h-screen text-sm font-medium border-r border-solid bg-stone-300 border-r-neutral-400 max-md:mt-9">
+        
+        <!-- Logo Sanoh -->
+        <img loading="lazy" src="../assets/logosanoh.svg" class="object-contain self-center w-30 max-w-full " />
+        
+        <!-- Menu Items -->
+        <ul class="flex flex-col mt-7 w-full text-gray-500">
+          
+          <!-- Dashboard (Visible) -->
+          <li> 
+            <a href="manage-user.html" class="flex gap-3 items-center p-2 w-full whitespace-normal cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+              <img loading="lazy" src="../assets/icon_home_default.svg" alt="" class="object-contain self-stretch my-auto w-4 aspect-square " />
+              <span class="self-stretch my-auto text-sm ">Manage Account</span>
+            </a>
+          </li>
+        
+        </ul>
+
+        <!-- User and Logout Section at the Bottom -->
+        <div class="mt-auto flex flex-col w-full">
+          
+          <!-- User Info -->
+          <div class="flex gap-3 items-center p-2  w-full bg-blue-950 bg-opacity-10 text-blue-950">
+            <img loading="lazy" src="../assets/icon_people.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
+            <span id="user-info" class="self-stretch my-auto text-sm "></span>
+          </div>
+          
+          <!-- Logout Button -->
+          <a href="javascript:void(0)" onclick="handleLogout()" class="flex gap-3 items-center p-2   w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
+            <img loading="lazy" src="../assets/icon_logout.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4  aspect-square logout-icon hover:icon_logout_white.svg" />
+            <span class="self-stretch my-auto text-sm ">Logout</span>
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="flex-1 p-10 m-auto max-w-[1000px]">
+      <header class="flex flex-col items-center self-center  ">
+        <h1 class="text-black text-center">
+          <span class="font-semibold text-4xl ">
+            Welcome Admin!
+          </span>
+        </h1>
+        <p class="text-center text-neutral-400 text-sm mt-4 max-w-[800px] mx-auto ">
+          Welcome to the Super Admin Dashboard, where you can 
+          <br>efficiently manage and oversee supplier accounts and 
+          <br>warehouse admin operations with ease.
+        </p>
+      </header>
+      <img src="../assets/dashboard_admin.png" alt="Dashboard overview"
+        class="object-contain mx-auto xl:w-[400px] " />
     </main>
+  </div>
 </body>
 
 <script src="script.js"></script>
@@ -129,6 +187,9 @@
 <script>
 
 cekToken();
+
+const nameUser = localStorage.getItem('name')
+displayNotification(`Welcome ${nameUser}`, 'success');
 
   
 </script>

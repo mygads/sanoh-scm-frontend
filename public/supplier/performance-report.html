@@ -33,70 +33,76 @@
         </div> 
 
       <!-- nav-side bar -->
-      <aside id="sidebar" class="transform -translate-x-full transition-transform duration-300 fixed sm:relative sm:translate-x-0 flex flex-col xl:w-[24%] lg:w-[26%] md:w-[28%] sm:w-[30%] w-[34%] h-screen bg-stone-300 border-r border-neutral-400 z-40">
+      <aside id="sidebar" class="transform -translate-x-full transition-transform duration-300 fixed sm:relative sm:translate-x-0 flex flex-col  xl:w-[15%] lg:w-[18%] md:w-[24%] sm:w-[32%] w-[32%] h-screen bg-stone-300 border-r border-neutral-400 z-40">
         <nav class="flex flex-col grow py-9 w-full h-screen text-base font-medium border-r border-solid bg-stone-300 border-r-neutral-400 ">
 
           <!-- Logo Sanoh -->
-          <img loading="lazy" src="../assets/logosanoh.svg" class="object-contain self-center xl:w-30 lg:w-28 md:w-26 sm:w-24 w-20 max-w-full cursor-pointer pointer-events-auto aspect-[2.79]" />
+          <img loading="lazy" src="../assets/logosanoh.svg" class="object-contain self-center xl:w-30 lg:w-28 md:w-26 sm:w-24 w-24 max-w-full cursor-pointer pointer-events-auto aspect-[2.79]" />
 
           <!-- Menu Items -->
-          <ul class="flex flex-col mt-7 2xl:mt-10 w-full text-gray-500">
+          <ul class="flex flex-col mt-7 w-full text-gray-500">
 
             <!-- Dashboard -->
             <li>
               <a href="index.html"
-                class="flex gap-4 items-center xl:p-[9px] lg:p-[9px] md:p-[8px] sm:p-[8px] p-[8px] w-full whitespace-nowrap cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+                class="flex gap-4 items-center p-2 mt-4 w-full whitespace-nowrap cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
                 <img loading="lazy" src="../assets/icon_home_default.svg" alt=""
-                  class="object-contain shrink-0 self-stretch my-auto xl:w-4 lg:w-4 md:w-3 sm:w-3 w-3 aspect-square" />
-                <span class="self-stretch my-auto xl:text-sm lg:text-sm md:text-xs sm:text-xs text-xs">Dashboard</span>
+                  class="object-contain shrink-0 self-stretch my-auto w-4
+                  aspect-square" />
+                <span class="self-strech text-sm">Dashboard</span>
               </a>
             </li>
 
             <!-- Purchase Order -->
             <li>
               <a href="purchase-order.html"
-                class="flex gap-4 items-center xl:p-[9px] lg:p-[9px] md:p-[8px] sm:p-[8px] p-[8px] mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+                class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
                 <img loading="lazy" src="../assets/icon_po_default.svg" alt=""
-                  class="object-contain shrink-0 self-stretch my-auto xl:w-4 lg:w-4 md:w-3 sm:w-3 w-3 aspect-[0.89] fill-blue-950" />
-                <span class="self-stretch my-auto xl:text-sm lg:text-sm md:text-xs sm:text-xs text-xs">Purchase Order</span>
+                  class="object-contain shrink-0 self-stretch my-auto w-4
+                  aspect-[0.89] fill-blue-950" />
+                <span class="self-strech text-sm">Purchase Order</span>
               </a>
             </li>
 
             <!-- Delivery Note -->
             <li>
               <a href="delivery-note.html"
-                class="flex gap-4 items-center xl:p-[9px] lg:p-[9px] md:p-[8px] sm:p-[8px] p-[8px] mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+                class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
                 <img loading="lazy" src="../assets/icon_dn_default.svg" alt=""
-                  class="object-contain shrink-0 self-stretch my-auto xl:w-4 lg:w-4 md:w-3 sm:w-3 w-3 aspect-square" />
-                <span class="self-stretch my-auto xl:text-sm lg:text-sm md:text-xs sm:text-xs text-xs">Delivery Note</span>
+                  class="object-contain shrink-0 self-stretch my-auto w-4
+                  aspect-square" />
+                <span class="self-strech text-sm">Delivery Note</span>
               </a>
             </li>
 
             <!-- History Purchase Order -->
             <li>
               <a href="history-purchase-order.html"
-                class="flex gap-4 items-center xl:p-[9px] lg:p-[9px] md:p-[8px] sm:p-[8px] p-[8px] mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+                class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
                 <img loading="lazy" src="../assets/icon_history_default.svg" alt=""
-                  class="object-contain shrink-0 self-stretch my-auto xl:w-4 lg:w-4 md:w-3 sm:w-3 w-3 aspect-square" />
-                <span class="self-stretch my-auto xl:text-sm lg:text-sm md:text-xs sm:text-xs text-xs">History Purchase Order</span>
+                  class="object-contain shrink-0 self-stretch my-auto w-4
+                  aspect-square" />
+                <span class="self-strech text-sm">History Purchase Order</span>
               </a>
             </li>
 
             <!-- History Delivery Note -->
             <li>
               <a href="history-delivery-note.html"
-                class="flex gap-4 items-center xl:p-[9px] lg:p-[9px] md:p-[8px] sm:p-[8px] p-[8px] mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+                class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
                 <img loading="lazy" src="../assets/icon_history_default.svg" alt=""
-                  class="object-contain shrink-0 self-stretch my-auto xl:w-4 lg:w-4 md:w-3 sm:w-3 w-3 aspect-square" />
-                <span class="self-stretch my-auto xl:text-sm lg:text-sm md:text-xs sm:text-xs text-xs">History Delivery Note</span>
+                  class="object-contain shrink-0 self-stretch my-auto w-4
+                  aspect-square" />
+                <span class="self-strech text-sm">History Delivery Note</span>
               </a>
             </li>
 
             <!-- Performance Report -->
             <li>
-              <a href="performance-report.html" class="flex gap-4 items-center xl:p-[9px] lg:p-[9px] md:p-[8px] sm:p-[8px] p-[8px] mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 active">
-                <img loading="lazy" src="../assets/icon_performance_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto xl:w-4 lg:w-4 md:w-3 sm:w-3 w-3 aspect-square icon-performance-active" />
-                <span class="self-stretch my-auto xl:text-sm lg:text-sm md:text-xs sm:text-xs text-xs">Performance Report</span>
+              <a href="performance-report.html" class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 active">
+                <img loading="lazy" src="../assets/icon_performance_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-5
+                aspect-square icon-performance-active" />
+                <span class="self-strech text-sm">Performance Report</span>
               </a>
             </li>
           </ul>
@@ -105,33 +111,35 @@
           <div class="mt-auto flex flex-col w-full">
 
             <!-- User Info -->
-            <div class="flex gap-4 items-center p-2 2xl:p-4 w-full bg-blue-950 bg-opacity-10 text-blue-950">
+            <div class="flex gap-4 items-center p-2 w-full bg-blue-950 bg-opacity-10 text-blue-950">
               <img loading="lazy" src="../assets/icon_people.svg" alt=""
-                class="object-contain shrink-0 self-stretch my-auto xl:w-4 lg:w-4 md:w-3 sm:w-3 w-3 aspect-square" />
-              <span id="user-info" class="self-stretch my-auto xl:text-sm lg:text-sm md:text-xs sm:text-xs text-xs"></span>
+                class="object-contain shrink-0 self-stretch my-auto w-4
+                aspect-square" />
+              <span id="user-info" class="self-strech text-sm"></span>
             </div>
 
             <!-- Logout Button -->
             <a href="javascript:void(0)" onclick="handleLogout()"
-              class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
+              class="flex gap-4 items-center p-2 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
               <img loading="lazy" src="../assets/icon_logout.svg" alt=""
-                class="object-contain shrink-0 self-stretch my-auto xl:w-4 lg:w-4 md:w-3 sm:w-3 w-3 aspect-square logout-icon hover:icon_logout_white.svg" />
-              <span class="self-stretch my-auto xl:text-sm lg:text-sm md:text-xs sm:text-xs text-xs">Logout</span>
+                class="object-contain shrink-0 self-stretch my-auto w-4
+                aspect-square logout-icon hover:icon_logout_white.svg" />
+              <span class="self-strech text-sm">Logout</span>
             </a>
           </div>
         </nav>
       </aside>
 
       <!-- Main Content -->
-      <main class="flex flex-col w-[80%] mb-[100%] mt-[3%] mx-auto px-6 2xl:px-10">
+      <main class="flex flex-col w-[85%] mb-[100%] xl:mt-[3%] lg:mt-[3%] md:mt-[4%] sm:mt-[0%] mt-[2%] mx-auto xl:px-6 lg:px-6 md:px-6 sm:px-6 px-0">
 
-        <section class="flex flex-col self-stretch py-px my-auto w-full ">
+        <section class="flex flex-col self-stretch py-px my-auto w-full max-md:mt-10 max-md:max-w-full">
 
           <header class="flex gap-3 items-center self-start text-2xl font-semibold text-black">
-            <h1 class="self-stretch my-auto xl:text-[90%] lg:text-[80%] md:text-[70%] sm:text-[60%] text-[50%]">Performance Report</h1>
+            <h1 class="self-stretch my-auto xl:text-[100%] lg:text-[90%] md:text-[80%] sm:text-[70%] text-[70%]">Performance Report</h1>
           </header>
 
-          <div class="flex flex-col mt-4 2xl:mt-6 w-full 2xl:text-base text-xs font-medium">
+          <div class="flex flex-col mt-4 w-full text-xs font-medium">
 
             <div class="flex flex-wrap gap-10 justify-between items-center w-full">
               
@@ -149,13 +157,13 @@
 
         </section>
 
-        <div id="tableSection" class="flex flex-col mt-5 2xl:mt-8">
+        <div id="tableSection" class="flex flex-col mt-5">
           <div class="relative overflow-x-auto shadow-md rounded-lg border border-gray-300">
 
-            <table class="w-full text-[11px] 2xl:text-base text-left text-gray-700 dark:text-gray-700">
-              <thead class="text-[14px] 2xl:text-[20px] text-gray-700">
+            <table class="w-full text-[11px] text-left text-gray-700 dark:text-gray-700">
+              <thead class="text-[14px] text-gray-700">
                 <tr>
-                  <th scope="col" class="xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs py-3 text-center border-b border-b-gray-400 cursor-pointer " data-sort="no" " >
+                  <th scope="col" class="xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs py-3 text-center border-b border-b-gray-400 cursor-pointer " data-sort="no">
                     No
                   </th>
                   <th scope="col" class="xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs py-3 text-center border-b border-b-gray-400 cursor-pointer" data-sort="periode" onclick="sortTable(1)">
@@ -171,7 +179,7 @@
                     Attached File
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(2)">
+                  <th scope="col" class="xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(4)">
                     Upload At
                     <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
@@ -187,7 +195,7 @@
 
         <!-- Pagination -->
         <div class="flex justify-end my-6">
-          <div class="flex gap-2 2xl:gap-4 items-center pagination">
+          <div class="flex gap-2 items-center pagination">
             <!-- Pagination buttons will be inserted here by JavaScript -->
           </div>
         </div>
@@ -287,6 +295,7 @@ async function fetchPerformanceReport(bpCode, selectedMonth = null) {
     console.log('Data listing report:', result); // Debugging
 
     if (result.success) {
+      displayNotification(result.message,'success')
       originalData = result.data.map(item => ({
         no: item.po_listing_no,
         periode: formatDate(item.date),
@@ -363,7 +372,7 @@ function displayTableData(page) {
   const paginatedData = filteredData.slice(start, end);
 
   if (paginatedData.length === 0) {
-    tableBody.innerHTML = '<tr><td colspan="4" class="text-center">No data available for this supplier</td></tr>';
+    tableBody.innerHTML = '<tr><td colspan="5" class="text-center">No data available for now</td></tr>';
     return;
   }
   // Generate the row number based on the current page and index
