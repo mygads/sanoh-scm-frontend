@@ -240,7 +240,7 @@
 
 
           // Call function to display data
-          displayTableData();
+          displayTableData(currentPage);
           updatePagination();
 
         } else {
@@ -252,7 +252,7 @@
   }
 
   // Function to display data in the table
-  function displayTableData() {
+  function displayTableData(page) {
     const tableBody = document.getElementById('table-body');
 
     if (!tableBody) {
@@ -260,30 +260,35 @@
         return;
     }
 
-    // Jika filteredData kosong, tampilkan pesan "No data available for this supplier"
-    if (filteredData.length === 0) {
-      tableBody.innerHTML = '<tr><td colspan="5" class="text-center py-4">No history Delivery Note available for now</td></tr>';
-      return;
-    }
-
     tableBody.innerHTML = '';
 
-    filteredData.forEach((row) => {
-      const tableRow = document.createElement('tr');
-      tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
-      tableRow.innerHTML = `
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+    const dataToShow = filteredData.slice(start, end);
+  
+    if (dataToShow.length === 0) {
+      tableBody.innerHTML = '<tr><td colspan="4" class="text-center">No data available for this supplier</td></tr>';
+      return;
+    }
+  
+    dataToShow.forEach(dn => {
+      const row = document.createElement('tr');
+      row.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
+      row.innerHTML = `
         <td class="px-2 py-4 text-center font-medium text-gray-900">
-            <a href="history-delivery-note-detail.html?noDN=${row.noDN}" class="text-blue-600 underline">${row.noDN}</a>
+          <a href="history-delivery-note-detail.html?noDN=${dn.noDN}" class="text-blue-600 underline">${dn.noDN}</a>
         </td>
         <td class="px-2 py-4 text-center font-medium text-gray-900">
-            <a href="history-purchase-order-detail.html?noPO=${row.noPO}" class="text-blue-600 underline">${row.noPO}</a>
-        </td>        
-        <td class="px-2 py-4 text-center">${row.statusDN}</td>
-        <td class="px-2 py-4 text-center">${row.planDNDate}</td>
-        <td class="px-2 py-4 text-center">${row.receivedDNDate}</td>
+          <a href="history-purchase-order-detail.html?noPO=${dn.noPO}" class="text-blue-600 underline">${dn.noPO}</a>
+        </td>
+        <td class="px-2 py-4 text-center">${dn.statusDN}</td>
+        <td class="px-2 py-4 text-center">${dn.planDNDate}</td>
+        <td class="px-2 py-4 text-center">${dn.receivedDNDate}</td>
       `;
-      tableBody.appendChild(tableRow);
+      tableBody.appendChild(row);
     });
+
+    console.log(`Displayed ${dataToShow.length} rows of data in table`);
   }
 
   // Function for search
