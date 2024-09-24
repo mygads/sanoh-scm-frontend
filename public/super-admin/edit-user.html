@@ -267,15 +267,15 @@
           populateForm(dataResponse.data); // Pindahkan ini agar hanya dipanggil setelah supplier dimuat
         } else {
           console.error('Failed to fetch user data:', data.message);
-          displayNotification(`Failed to fetch user data:, ${data.message}`);
+          displayNotification(`Failed to fetch user data:, ${data.message}`,'error');
         }
       } else {
         console.error('Failed to fetch user data:', response.statusText);
-        displayNotification(`Failed to fetch user data:, ${response.statusText}`);
+        displayNotification(`Failed to fetch user data:, ${response.statusText}`,'error');
       }
     } catch (error) {
       console.error('Error fetching user data:', error);
-      displayNotification(`Error fetching user data::, ${error}`);
+      displayNotification(`Error fetching user data::, ${error}`,'error');
     }
   }
 
