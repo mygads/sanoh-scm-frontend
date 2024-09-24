@@ -20,21 +20,30 @@
   <section class="overflow-hidden w-screen h-screen bg-white">
     <div class="flex h-screen">
 
+         <!-- Burger Menu Button (visible only on small screens) -->
+         <div class="absolute top-4 left-4 sm:hidden z-50">
+          <button id="burger-btn" class="text-gray-800 focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
+          </button>
+        </div>  
+
       <!-- nav-side bar -->
-      <aside class="w-[15%]">
-        <nav class="flex flex-col grow py-9 w-full h-screen text-sm font-medium border-r border-solid bg-stone-300 border-r-neutral-400 max-md:mt-9">
-          
+      <aside id="sidebar" class="transform -translate-x-full transition-transform duration-300 fixed sm:relative sm:translate-x-0 flex flex-col  xl:w-[15%] lg:w-[18%] md:w-[24%] sm:w-[30%] w-[32%] h-screen bg-stone-300 border-r border-neutral-400 z-40">
+        <nav class="flex flex-col grow py-9 w-full h-screen text-base font-medium border-r border-solid bg-stone-300 border-r-neutral-400 ">
+
           <!-- Logo Sanoh -->
-          <img loading="lazy" src="../assets/logosanoh.svg" class="object-contain self-center w-30 max-w-full " />
+          <img loading="lazy" src="../assets/logosanoh.svg" class="object-contain self-center xl:w-30 lg:w-28 md:w-26 sm:w-24 w-24 max-w-full cursor-pointer pointer-events-auto aspect-[2.79]" />
           
           <!-- Menu Items -->
           <ul class="flex flex-col mt-7 w-full text-gray-500">
             
             <!-- Dashboard (Visible) -->
             <li> 
-              <a href="manage-user.html" class="flex gap-3 items-center p-2 w-full whitespace-normal cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 active">
-                <img loading="lazy" src="../assets/icon_home_default.svg" alt="" class="object-contain self-stretch my-auto w-5 aspect-square icon-home-active" />
-                <span class="self-stretch my-auto text-sm ">Manage Account</span>
+              <a href="manage-user.html" class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 active">
+                <img loading="lazy" src="../assets/icon_home_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-5 aspect-square fill-blue-950 icon-home-active" />
+                <span class="self-stretch text-sm">Manage Account</span>
               </a>
             </li>
           
@@ -44,15 +53,15 @@
           <div class="mt-auto flex flex-col w-full">
             
             <!-- User Info -->
-            <div class="flex gap-3 items-center p-2  w-full bg-blue-950 bg-opacity-10 text-blue-950">
-              <img loading="lazy" src="../assets/icon_people.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
-              <span id="user-info" class="self-stretch my-auto text-sm "></span>
+            <div class="flex gap-4 items-center p-2 w-full bg-blue-950 bg-opacity-10 text-blue-950">
+              <img loading="lazy" src="../assets/icon_people.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square"/>
+              <span id="user-info" class="self-stretch text-sm "></span>
             </div>
             
             <!-- Logout Button -->
-            <a href="javascript:void(0)" onclick="handleLogout()" class="flex gap-3 items-center p-2   w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
-              <img loading="lazy" src="../assets/icon_logout.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4  aspect-square logout-icon hover:icon_logout_white.svg" />
-              <span class="self-stretch my-auto text-sm ">Logout</span>
+            <a href="javascript:void(0)" onclick="handleLogout()" class="flex gap-4 items-center p-2 w-full text-red-600 cursor-pointer bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50">
+              <img loading="lazy" src="../assets/icon_logout.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
+              <span class="self-stretch  text-sm ">Logout</span>
             </a>
           </div>
         </nav>
@@ -60,12 +69,12 @@
 
 
       <!-- Main Content -->
-      <main class="flex flex-col w-[85%] mb-auto mt-12 mx-auto px-6 ">
+      <main class="flex flex-col w-[85%] mb-[100%] xl:mt-[3%] lg:mt-[3%] md:mt-[4%] sm:mt-[0%] mt-[2%] mx-auto xl:px-6 lg:px-6 md:px-6 sm:px-6 px-0">
 
-        <section class="flex flex-col self-stretch  my-auto w-full">
+        <section class="flex flex-col self-stretch py-px my-auto w-full max-md:mt-10 max-md:max-w-full">
 
           <header class="items-center self-start text-2xl font-semibold text-black">
-            <h1 class="self-stretch my-auto ">Users Dashboard</h1>
+            <h1 class="self-stretch my-auto xl:text-[100%] lg:text-[90%] md:text-[80%] sm:text-[70%] text-[70%]">Users Dashboard</h1>
           </header>
 
           <div class="mt-4  w-full  text-base font-medium">
@@ -74,19 +83,19 @@
             <div class="flex flex-wrap gap-4 items-center mt-4 justify-end w-full">
 
               <!-- Search Bar -->
-              <div class=" items-center text-neutral-500">
-                <div class="flex px-4  py-3  bg-neutral-100 rounded ">
+              <div class="flex flex-wrap items-center self-stretch my-auto text-neutral-500">
+                <div class="flex items-center xl:px-4 lg:px-4 md:px-3 sm:px-3 px-3 py-2 bg-neutral-100 rounded w-full ml-auto">
                   <input id="search-input" type="text" placeholder="Find username here"
-                    class=" bg-neutral-100 outline-none text-xs">
-                  <img src="../assets/icon_search.svg" alt="Search Icon">
+                    class="flex-1 bg-neutral-100 outline-none text-xs">
+                  <img src="../assets/icon_search.svg" alt="Search Icon" class="w-4 h-4 xl:ml-3 lg:ml-3 md:ml-2 sm:ml-2 ml-1">
                 </div>
               </div>
 
               <!-- Add User Button -->
               <div class="items-center text-white  text-xs ">
                 <a href="add-user.html"
-                  class=" items-center px-6  py-3 bg-blue-500 rounded cursor-pointer pointer-events-auto ">
-                  <span class=" self-stretch my-auto ">Add User +</span>
+                  class="items-center px-6 py-3 bg-blue-500 rounded cursor-pointer pointer-events-auto ">
+                  <span class="flex-1 shrink self-stretch my-auto basis-0 xl:text-[100%] lg:text-[100%] md:text-[90%] sm:text-[90%] text-[100%]">Add User +</span>
                 </a>
               </div>
             </div>
@@ -96,33 +105,33 @@
         </section>
 
         <!-- table -->
-        <div class="mt-5 ">
+        <div class="flex flex-col mt-5 ">
           <div class="relative overflow-x-auto shadow-md rounded-lg border border-gray-300">
-            <table class="w-full text-xs text-left text-gray-700 dark:text-gray-700">
-              <thead class="text-base  text-gray-700">
+            <table class="w-full text-[11px] text-left text-gray-700 dark:text-gray-700">
+              <thead class="text-[14px] text-gray-700">
                 <tr>
-                  <th scope="col" class="px-2 py-3 text-center border-b border-b-gray-400 cursor-pointer">
+                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer">
                     Username
                   </th>
-                  <th scope="col" class="px-2 py-3 text-center border-b border-b-gray-400 cursor-pointer">
+                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer">
                     Supplier ID
                   </th>
-                  <th scope="col" class="px-2 py-3 text-center border-b border-b-gray-400 cursor-pointer">
+                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer">
                     Name
                   </th>
-                  <th scope="col" class="px-2 py-3 text-center border-b border-b-gray-400 cursor-pointer">
+                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer">
                     Role
                   </th>
-                  <th scope="col" class="px-2 py-3 text-center border-b border-b-gray-400 cursor-pointer"        onclick="sortTable(5)">
+                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer"        onclick="sortTable(5)">
                     Status
                     <img loading="lazy" src="../assets/icon_sort.svg" alt=""
-                      class="w-3 inline-block text-gray-600" />
+                      class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
                   <th scope="col" class="px-0 py-0 text-center border-b border-b-gray-400 cursor-pointer">
                     Action                    
                   </th>
-                  <th scope="col" class="px-2 py-3 text-center border-b border-b-gray-400 cursor-pointer"
+                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer"
                     >
                     Edit
                   </th>
@@ -154,6 +163,18 @@
 
 
 <script>
+
+  const burgerBtn = document.getElementById('burger-btn');
+    const sidebar = document.getElementById('sidebar');
+    
+    burgerBtn.addEventListener('click', () => {
+      if (sidebar.classList.contains('-translate-x-full')) {
+        sidebar.classList.remove('-translate-x-full');
+      } else {
+        sidebar.classList.add('-translate-x-full');
+      }
+    });
+
 
   cekToken();
   
