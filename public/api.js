@@ -1,4 +1,4 @@
-const API = 'http://be-ssp.ns1.sanoh.co.id/api';
+const API = 'https://be-ssp.ns1.sanoh.co.id/api';
 
 function saveLogout() {
   const userRole = localStorage.getItem('userRole');
