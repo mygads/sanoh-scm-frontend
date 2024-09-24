@@ -594,14 +594,14 @@ function renderTable(data, items) {
     return pageContent;
 }
 
-function generatePDF() {
+function generatePDF(poNumber) {
     // Choose the element that our PDF will be generated from.
     const element = document.getElementById('page-content');
 
     // Define the options for the PDF generation
     const opt = {
         margin:       [2, 2, 2, 2], // top, left, bottom, right
-        filename:     'PurchaseOrder.pdf',
+        filename:     poNumber ? `PurchaseOrder_${poNumber}.pdf` : 'PurchaseOrder.pdf',
         image:        { type: 'jpeg', quality: 0.98 },
         html2canvas:  { scale: 2 }, // higher scale for better quality
         jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
@@ -636,8 +636,8 @@ function renderPurchaseOrder(data) {
         }
     });
 
-    // Generate PDF and trigger download
-    generatePDF();
+    // Generate PDF and trigger download with the correct PO number
+    generatePDF(data.header.po_number);
 }
 
 </script>
