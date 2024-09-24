@@ -23,73 +23,86 @@
   <section class="overflow-hidden w-screen h-screen bg-white">
     <div class="flex h-screen">
 
+         <!-- Burger Menu Button (visible only on small screens) -->
+         <div class="absolute top-4 left-4 sm:hidden z-50">
+          <button id="burger-btn" class="text-gray-800 focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
+          </button>
+        </div> 
+
       <!-- nav-side bar -->
-      <aside class="flex flex-col w-[20%]">
-        <nav
-          class="flex flex-col grow py-9 2xl:py-14 w-full h-screen text-base font-medium border-r border-solid bg-stone-300 border-r-neutral-400 ">
+      <aside id="sidebar" class="transform -translate-x-full transition-transform duration-300 fixed sm:relative sm:translate-x-0 flex flex-col  xl:w-[15%] lg:w-[18%] md:w-[24%] sm:w-[32%] w-[32%] h-screen bg-stone-300 border-r border-neutral-400 z-40">
+        <nav class="flex flex-col grow py-9 w-full h-screen text-base font-medium border-r border-solid bg-stone-300 border-r-neutral-400 ">
 
           <!-- Logo Sanoh -->
-          <img loading="lazy" src="../assets/logosanoh.svg"
-            class="object-contain self-center w-30 2xl:w-48 max-w-full cursor-pointer pointer-events-auto aspect-[2.79]" />
+          <img loading="lazy" src="../assets/logosanoh.svg" class="object-contain self-center xl:w-30 lg:w-28 md:w-26 sm:w-24 w-24 max-w-full cursor-pointer pointer-events-auto aspect-[2.79]" />
 
           <!-- Menu Items -->
-          <ul class="flex flex-col mt-7 2xl:mt-10 w-full text-gray-500">
+          <ul class="flex flex-col mt-7 w-full text-gray-500">
 
             <!-- Dashboard -->
             <li>
               <a href="index.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 w-full whitespace-nowrap cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+                class="flex gap-4 items-center p-2 mt-4 w-full whitespace-nowrap cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
                 <img loading="lazy" src="../assets/icon_home_default.svg" alt=""
-                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Dashboard</span>
+                  class="object-contain shrink-0 self-stretch my-auto w-4
+                  aspect-square" />
+                <span class="self-strech text-sm">Dashboard</span>
               </a>
             </li>
 
             <!-- Purchase Order -->
             <li>
               <a href="purchase-order.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+                class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
                 <img loading="lazy" src="../assets/icon_po_default.svg" alt=""
-                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-[0.89] fill-blue-950" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Purchase Order</span>
+                  class="object-contain shrink-0 self-stretch my-auto w-4
+                  aspect-[0.89] fill-blue-950" />
+                <span class="self-strech text-sm">Purchase Order</span>
               </a>
             </li>
 
             <!-- Delivery Note -->
             <li>
               <a href="delivery-note.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+                class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
                 <img loading="lazy" src="../assets/icon_dn_default.svg" alt=""
-                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Delivery Note</span>
+                  class="object-contain shrink-0 self-stretch my-auto w-4
+                  aspect-square" />
+                <span class="self-strech text-sm">Delivery Note</span>
               </a>
             </li>
 
             <!-- History Purchase Order -->
             <li>
               <a href="history-purchase-order.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+                class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
                 <img loading="lazy" src="../assets/icon_history_default.svg" alt=""
-                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">History Purchase Order</span>
+                  class="object-contain shrink-0 self-stretch my-auto w-4
+                  aspect-square" />
+                <span class="self-strech text-sm">History Purchase Order</span>
               </a>
             </li>
 
             <!-- History Delivery Note -->
             <li>
               <a href="history-delivery-note.html"
-                class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
+                class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
                 <img loading="lazy" src="../assets/icon_history_default.svg" alt=""
-                  class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">History Delivery Note</span>
+                  class="object-contain shrink-0 self-stretch my-auto w-4
+                  aspect-square" />
+                <span class="self-strech text-sm">History Delivery Note</span>
               </a>
             </li>
 
             <!-- Performance Report -->
             <li>
-              <a href="performance-report.html" class="flex gap-4 items-center p-[9px] 2xl:p-4 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 active">
-                <img loading="lazy" src="../assets/icon_performance_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square icon-performance-active" />
-                <span class="self-stretch my-auto text-sm 2xl:text-xl">Performance Report</span>
+              <a href="performance-report.html" class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 active">
+                <img loading="lazy" src="../assets/icon_performance_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-5
+                aspect-square icon-performance-active" />
+                <span class="self-strech text-sm">Performance Report</span>
               </a>
             </li>
           </ul>
@@ -98,33 +111,35 @@
           <div class="mt-auto flex flex-col w-full">
 
             <!-- User Info -->
-            <div class="flex gap-4 items-center p-2 2xl:p-4 w-full bg-blue-950 bg-opacity-10 text-blue-950">
+            <div class="flex gap-4 items-center p-2 w-full bg-blue-950 bg-opacity-10 text-blue-950">
               <img loading="lazy" src="../assets/icon_people.svg" alt=""
-                class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square" />
-              <span id="user-info" class="self-stretch my-auto text-sm 2xl:text-xl"></span>
+                class="object-contain shrink-0 self-stretch my-auto w-4
+                aspect-square" />
+              <span id="user-info" class="self-strech text-sm"></span>
             </div>
 
             <!-- Logout Button -->
             <a href="javascript:void(0)" onclick="handleLogout()"
-              class="flex gap-4 items-center p-2 2xl:p-4 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
+              class="flex gap-4 items-center p-2 w-full text-red-600 whitespace-nowrap cursor-pointer pointer-events-auto bg-red-600 bg-opacity-20 hover:bg-red-600 hover:text-green-50 hover:logout-icon">
               <img loading="lazy" src="../assets/icon_logout.svg" alt=""
-                class="object-contain shrink-0 self-stretch my-auto w-4 2xl:w-6 aspect-square logout-icon hover:icon_logout_white.svg" />
-              <span class="self-stretch my-auto text-sm 2xl:text-xl">Logout</span>
+                class="object-contain shrink-0 self-stretch my-auto w-4
+                aspect-square logout-icon hover:icon_logout_white.svg" />
+              <span class="self-strech text-sm">Logout</span>
             </a>
           </div>
         </nav>
       </aside>
 
       <!-- Main Content -->
-      <main class="flex flex-col w-[80%] mb-[100%] mt-[3%] mx-auto px-6 2xl:px-10">
+      <main class="flex flex-col w-[85%] mb-[100%] xl:mt-[3%] lg:mt-[3%] md:mt-[4%] sm:mt-[0%] mt-[2%] mx-auto xl:px-6 lg:px-6 md:px-6 sm:px-6 px-0">
 
-        <section class="flex flex-col self-stretch py-px my-auto w-full ">
+        <section class="flex flex-col self-stretch py-px my-auto w-full max-md:mt-10 max-md:max-w-full">
 
           <header class="flex gap-3 items-center self-start text-2xl font-semibold text-black">
-            <h1 class="self-stretch my-auto text-[80%] 2xl:text-[120%]">Performance Report</h1>
+            <h1 class="self-stretch my-auto xl:text-[100%] lg:text-[90%] md:text-[80%] sm:text-[70%] text-[70%]">Performance Report</h1>
           </header>
 
-          <div class="flex flex-col mt-4 2xl:mt-6 w-full 2xl:text-base text-xs font-medium">
+          <div class="flex flex-col mt-4 w-full text-xs font-medium">
 
             <div class="flex flex-wrap gap-10 justify-between items-center w-full">
               
@@ -132,7 +147,7 @@
               <div id="periodeSection" class="items-center mt-4 ">
                 <div class="flex items-center">
                   <input type="month" id="month-input" class="px-4 py-1 border rounded-md" />
-                  <button id="search-button" class="ml-4 px-4 py-2 bg-blue-500 text-white text-xs 2xl:text-base rounded-md">
+                  <button id="search-button" class="ml-4 px-4 py-2 bg-blue-500 text-white xl:text-[100%] lg:text-[100%] md:text-[90%] sm:text-[90%] text-[80%] rounded-md">
                     Search
                   </button>
                 </div>
@@ -142,31 +157,31 @@
 
         </section>
 
-        <div id="tableSection" class="flex flex-col mt-5 2xl:mt-8">
+        <div id="tableSection" class="flex flex-col mt-5">
           <div class="relative overflow-x-auto shadow-md rounded-lg border border-gray-300">
 
-            <table class="w-full text-[11px] 2xl:text-base text-left text-gray-700 dark:text-gray-700">
-              <thead class="text-[14px] 2xl:text-[20px] text-gray-700">
+            <table class="w-full text-[11px] text-left text-gray-700 dark:text-gray-700">
+              <thead class="text-[14px] text-gray-700">
                 <tr>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer " data-sort="no" " >
+                  <th scope="col" class="xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs py-3 text-center border-b border-b-gray-400 cursor-pointer " data-sort="no">
                     No
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" data-sort="periode" onclick="sortTable(1)">
+                  <th scope="col" class="xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs py-3 text-center border-b border-b-gray-400 cursor-pointer" data-sort="periode" onclick="sortTable(1)">
                    Periode
                     <img loading="lazy" src="../assets/icon_sort.svg" alt=""
-                    class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" data-sort="filename">
+                  <th scope="col" class="xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs py-3 text-center border-b border-b-gray-400 cursor-pointer" data-sort="filename">
                     FIle Name
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" data-sort="attachedFile">
+                  <th scope="col" class="xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs py-3 text-center border-b border-b-gray-400 cursor-pointer" data-sort="attachedFile">
                     Attached File
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-2 2xl:py-4 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(2)">
+                  <th scope="col" class="xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(4)">
                     Upload At
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 2xl:w-4 inline-block text-gray-600" />
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>                  
                 </tr>
@@ -180,7 +195,7 @@
 
         <!-- Pagination -->
         <div class="flex justify-end my-6">
-          <div class="flex gap-2 2xl:gap-4 items-center pagination">
+          <div class="flex gap-2 items-center pagination">
             <!-- Pagination buttons will be inserted here by JavaScript -->
           </div>
         </div>
@@ -199,6 +214,31 @@
 
 <!-- Add the script to handle table sorting and pagination -->
 <script>
+
+  const burgerBtn = document.getElementById('burger-btn');
+  const sidebar = document.getElementById('sidebar');
+  
+  burgerBtn.addEventListener('click', () => {
+    if (sidebar.classList.contains('-translate-x-full')) {
+      sidebar.classList.remove('-translate-x-full');
+    } else {
+      sidebar.classList.add('-translate-x-full');
+    }
+  });
+
+  function adjustRowsPerPage() {
+    if (window.innerHeight < 620) {
+      rowsPerPage = 4; 
+    } else if (window.innerHeight < 640) {
+      rowsPerPage = 5
+    } else if (window.innerHeight < 768) {
+      rowsPerPage = 7
+    } else if (window.innerHeight < 1280) {
+      rowsPerPage = 9; 
+    } else {
+      rowsPerPage = 10;   
+    }
+  }
 
 cekToken();
 
@@ -255,6 +295,7 @@ async function fetchPerformanceReport(bpCode, selectedMonth = null) {
     console.log('Data listing report:', result); // Debugging
 
     if (result.success) {
+      displayNotification(result.message,'success')
       originalData = result.data.map(item => ({
         no: item.po_listing_no,
         periode: formatDate(item.date),
@@ -331,7 +372,7 @@ function displayTableData(page) {
   const paginatedData = filteredData.slice(start, end);
 
   if (paginatedData.length === 0) {
-    tableBody.innerHTML = '<tr><td colspan="4" class="text-center">No data available for this supplier</td></tr>';
+    tableBody.innerHTML = '<tr><td colspan="5" class="text-center">No data available for now</td></tr>';
     return;
   }
   // Generate the row number based on the current page and index
@@ -363,15 +404,15 @@ function displayTableData(page) {
   });
 }
 
-function adjustRowsPerPage() {
-  if (window.innerHeight < 768) {
-    rowsPerPage = 7; // Atur menjadi 3 jika ukuran layar < 768
-  } else if (window.innerHeight < 1280) {
-    rowsPerPage = 8; // Atur menjadi 4 jika ukuran layar >= 768
-  } else {
-    rowsPerPage = 9;
-  }
-}
+//function adjustRowsPerPage() {
+  //if (window.innerHeight < 768) {
+    //rowsPerPage = 7; // Atur menjadi 3 jika ukuran layar < 768
+  //} else if (window.innerHeight < 1280) {
+    //rowsPerPage = 8; // Atur menjadi 4 jika ukuran layar >= 768
+  //} else {
+   // rowsPerPage = 9;
+  //}
+//}
 
 </script>
 
