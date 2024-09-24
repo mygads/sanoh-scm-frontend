@@ -45,7 +45,7 @@
             <!-- Dashboard (Visible) -->
             <li> 
               <a href="manage-user.html" class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 fill-blue-950 active">
-                <img loading="lazy" src="../assets/icon_home_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-5 aspect-square fill-blue-950 icon-history-active" />
+                <img loading="lazy" src="../assets/icon_home_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-5 aspect-square fill-blue-950 icon-home-active" />
                 <span class="self-stretch text-sm ">Manage Account</span>
               </a>
             </li>
@@ -76,7 +76,7 @@
         <section class="flex flex-col self-stretch py-px my-auto w-full max-md:mt-10 max-md:max-w-full">
           <header class="flex gap-3 items-center self-start text-2xl font-semibold text-black mb-7">
             <img loading="lazy" src="../assets/icon_back.svg" alt=""
-              class="object-contain shrink-0 self-stretch my-autoxl:w-5 lg:w-5 md:w-4 sm:w-4 w-4 cursor-pointer pointer-events-auto aspect-square" onclick="window.location.href='manage-user.html' "/>
+              class="object-contain shrink-0 self-stretch my-auto xl:w-5 lg:w-5 md:w-4 sm:w-4 w-4 cursor-pointer pointer-events-auto aspect-square" onclick="window.location.href='manage-user.html' "/>
             <h1 class="self-stretch my-auto xl:text-[100%] lg:text-[90%] md:text-[80%] sm:text-[70%] text-[70%]">Edit User</h1>
           </header>
           <div class="w-full text-base font-medium">
@@ -155,19 +155,7 @@
       }
     });
 
-    function adjustRowsPerPage() {
-      if (window.innerHeight < 620) {
-        rowsPerPage = 4; // Atur menjadi 3 jika ukuran layar < 768
-      } else if (window.innerHeight < 640) {
-        rowsPerPage = 6
-      } else if (window.innerHeight < 768) {
-        rowsPerPage = 8
-      } else if (window.innerHeight < 1280) {
-        rowsPerPage = 9; // Atur menjadi 4 jika ukuran layar >= 768
-      } else {
-        rowsPerPage = 10;   
-      }
-    }
+
 
   cekToken();
   const userId = localStorage.getItem('editUserId');
