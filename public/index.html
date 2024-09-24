@@ -17,77 +17,6 @@
 </head>
 
 <body class="font-poppins ">
-  <!-- <section class="flex h-screen w-screen overflow-hidden flex-col self-stretch  bg-white ">
-    <div class=" flex gap-10 my-auto">
-
-      <div class="flex flex-col w-[50%] ">
-        <div class="flex relative flex-col w-[600px] ml-auto text-white h-full">
-          <img loading="lazy" alt="Sanoh Indonesia company background" src="assets/foto-sanoh.png" class="object-contain absolute size-full ml-[10%]" />
-          <div class=" flex relative flex-col grow justify-between items-center py-10 pl-[20%] h-auto">
-            <header class="flex relative flex-col items-center  mb-auto w-auto text-xs">
-              <h1 class="text-3xl font-semibold leading-tight">Welcome to</h1>
-              <p class="mt-1 text-xs text-center">Your Gateway to Effortless Management.</p>
-            </header>
-            <footer class="flex relative flex-col items-center  mt-auto w-auto text-xs text-center">
-              <h2 class="self-stretch w-auto text-xl font-semibold max-md:max-w-full">Seamless Collaboration</h2>
-              <p class="self-stretch mt-1 w-auto text-xs">Effortlessly work together with us in real-time.</p>
-            </footer>
-          </div>
-        </div>
-      </div>
-
-      <div class="flex flex-col w-[50%]">
-        <main class="flex flex-col mt-auto mr-auto w-[370px] max-md:mt-10 max-sm:mx-auto max-sm:mb-auto max-sm:w-[334px]">
-          <img loading="lazy" src="assets/logo-sanoh.png" alt="Company Logo" class="object-contain max-w-full aspect-[2.79] w-[120px] max-md:ml-1 max-sm:mx-auto" />
-        
-          
-          <form class="flex flex-col mt-6" onsubmit="handleLogin(event)">
-            <div class="flex flex-col w-full">
-              <label for="username" class="gap-0.5 self-start text-base whitespace-nowrap text-slate-800">
-                Username
-              </label>
-              <div class="flex flex-col mt-2 w-full text-sm text-zinc-400">
-                <input id="username" type="text" placeholder="Enter Username" class="gap-2.5 self-stretch px-4 py-3.5 w-full bg-white rounded-lg border border-solid border-[black] min-h-[48px]" />
-              </div>
-            </div>
-            <div class="flex flex-col mt-5 w-full">
-              <label for="password" class="gap-0.5 self-start text-base whitespace-nowrap text-slate-800">
-                Password
-              </label>
-              <div class="flex justify-between items-start mt-2 w-full text-sm min-h-[48px] text-zinc-400">
-                <div class="flex gap-5 justify-between items-center min-h-[48px] w-full relative">
-                  <input id="password" type="password" placeholder="Enter Password" class="self-stretch px-4 py-3.5 w-full bg-white rounded-lg border border-solid border-[black] min-h-[48px]" />
-                  <button type="button" onclick="togglePassword()" class="absolute inset-y-0 end-0 flex items-center z-20 px-3 cursor-pointer text-gray-400 rounded-e-md focus:outline-none focus:text-blue-600">
-                    <svg id="eye-icon" class="shrink-0 size-3.5" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path id="eye" d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
-                      <path id="eye" d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path>
-                      <path id="eye" d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path>
-                      <line id="eye-line" x1="2" x2="22" y1="2" y2="22"></line>
-                      <path id="eye-off" class="hidden" d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
-                      <circle id="eye-off" class="hidden" cx="12" cy="12" r="3"></circle>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-
-            <button id="login-button" type="submit" class="gap-2 self-stretch px-5 py-3 mt-7 text-base text-white whitespace-nowrap rounded-lg bg-blue-950 min-h-[48px] hover:bg-blue-800 focus:ring-4 focus:ring-blue-300">
-              Login
-            </button>
-            
-          </form>
-          
-          <p class="self-center mt-56 mb-5 text-xs font-medium text-center text-slate-800 w-[259px] max-md:mt-10">
-            <span class="text-zinc-400">By login an account I accept Company's</span>
-            <br />
-            <span class="text-slate-800">Terms of use & Privacy Policy.</span>
-          </p>
-        </main>
-      </div>
-    </div>
-
-  </section> -->
 
   <section class="flex h-screen w-screen overflow-hidden flex-col p-5 bg-white max-md:pr-12 max-sm:flex max-sm:flex-col max-sm:mx-5 max-sm:mt-5">
     <div class="flex gap-5 max-md:flex-col my-auto mx-auto">
@@ -155,7 +84,6 @@
     }, 2000);
   }
 
-  document.addEventListener('DOMContentLoaded', prefillLoginFields);
 
 // Toggle password visibility
 function togglePassword() {
@@ -212,10 +140,6 @@ async function handleLogin(event) {
       localStorage.setItem('name', data.name);
       localStorage.setItem('bpCode', data.bp_code);
       localStorage.setItem('userRole', data.role);
-
-      // Store username and password in localStorage for future use
-      localStorage.setItem('username', username);
-      localStorage.setItem('password', password);
 
       // Check if a previous URL exists
       const lastUrl = localStorage.getItem('lastUrl');
@@ -277,16 +201,7 @@ function redirectToDashboardIndex(role) {
   }
 }
 
-// Function to prefill username and password if available in localStorage
-function prefillLoginFields() {
-  const savedUsername = localStorage.getItem('username');
-  const savedPassword = localStorage.getItem('password');
 
-  if (savedUsername && savedPassword) {
-    document.getElementById('username').value = savedUsername;
-    document.getElementById('password').value = savedPassword;
-  }
-}
 
 // Function to show the loading spinner
 function showLoadingSpinner() {

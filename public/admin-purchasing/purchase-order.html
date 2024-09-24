@@ -281,10 +281,9 @@
 
     // Event listener for supplier selection
     $(supplierSelect).on('change', async function (event) {
-      localStorage.removeItem('selectedSupplierId');
       const selectedSupplierId = $(this).val();
       console.log('Supplier dipilih:', selectedSupplierId);
-      displayNotification(`Waiting to get PO data for supplier ${selectedSupplierId}`, 'warning');
+      // displayNotification(`Waiting to get PO data for supplier ${selectedSupplierId}`, 'warning');
 
       if (selectedSupplierId) {
         localStorage.setItem('selectedSupplierId', selectedSupplierId); // Store selectedSupplierId in localStorage
@@ -349,6 +348,13 @@
       placeholder: 'Search Supplier',
       allowClear: true
     });
+
+    // Tambahan: Cek apakah ada selectedSupplierId di localStorage
+    const selectedSupplierId = localStorage.getItem('selectedSupplierId');
+    if (selectedSupplierId) {
+      // Set dropdown ke supplier terpilih
+      $(supplierSelect).val(selectedSupplierId).trigger('change');
+    }
   }
 
   function displaySelectedSupplier() {
