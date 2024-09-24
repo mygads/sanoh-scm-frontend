@@ -58,7 +58,7 @@
             <!-- Delivery Note -->
             <li>
               <a href="delivery-note.html" class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 active">
-                <img loading="lazy" src="../assets/icon_dn_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square icon-dn-active" />
+                <img loading="lazy" src="../assets/icon_dn_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-5 aspect-square icon-dn-active" />
                 <span class="self-strech text-sm">Delivery Note</span>
               </a>
             </li>
@@ -107,7 +107,7 @@
       </aside>
 
       <!-- Main Content -->
-      <main class="flex flex-col w-[80%] mb-[100%] xl:mt-[3%] lg:mt-[3%] md:mt-[4%] sm:mt-[0%] mt-[2%] mx-auto xl:px-6 lg:px-6 md:px-6 sm:px-6 px-0">
+      <main class="flex flex-col w-[85%] mb-[100%] xl:mt-[3%] lg:mt-[3%] md:mt-[4%] sm:mt-[0%] mt-[2%] mx-auto xl:px-6 lg:px-6 md:px-6 sm:px-6 px-0">
 
         <section class="flex flex-col self-stretch py-px my-auto w-full max-md:mt-10 max-md:max-w-full">
 
@@ -260,7 +260,7 @@
 
           <!-- Submit and Cancel Buttons -->
           <div id="confirm-button-section" class="flex">
-            <button id="confirm-button" class="px-4 py-2 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5 text-white xl:text-[100%] lg:text-[100%] md:text-[90%] sm:text-[90%] text-[80%]">Confirm Order</button>
+            <button id="confirm-button" class="px-4 2xl:px-6 py-2 2xl:py-3 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5 text-white text-xs 2xl:text-sm">Confirm Order</button>
           </div>
         </div>
       </main>
@@ -389,7 +389,7 @@
                         QTY: detail.dn_qty || 0,
                         qtyLabel: detail.dn_snp || '',
                         qtyRequested: detail.dn_qty || 0,
-                        qtyConfirm: (detail.qty_confirm && detail.qty_confirm !== 0) ? detail.qty_confirm : detail.dn_qty, // Updated logic
+                        qtyConfirm: (detail.qty_confirm !== null && detail.qty_confirm !== undefined) ? detail.qty_confirm : detail.dn_qty, // Updated logic
                         qtyDelivered: detail.receipt_qty || 0,
                         qtyReceived: detail.receipt_qty || 0,
                         qtyMinus: ((detail.dn_qty || 0) - (detail.receipt_qty || 0)).toString() // Handle undefined dn_qty or receipt_qty
@@ -564,7 +564,7 @@
             <td class="px-2 py-4 text-center">${detail.qtyLabel}</td>
             <td class="px-2 py-4 text-center">${detail.qtyRequested}</td>
             <td class="py-4 text-center">
-              <input type="text" class="qty-confirm-input border border-gray-300 rounded py-1 text-center ${detail.qtyConfirm ? 'input-enabled' : ''}" value="${detail.qtyConfirm || '-'}" data-dn-detail-no="${detail.dnDetailNo || ''}" dnNumber="${detail.noDN}" disabled>
+              <input type="text" class="qty-confirm-input border border-gray-300 rounded py-1 text-center ${detail.qtyConfirm ? 'input-enabled' : ''}" value="${detail.qtyConfirm}" data-dn-detail-no="${detail.dnDetailNo || ''}" dnNumber="${detail.noDN}" disabled>
             </td>
             <td class="px-2 py-4 text-center">${detail.qtyDelivered}</td>
             <td class="px-2 py-4 text-center">${detail.qtyMinus}</td>
@@ -614,10 +614,7 @@
 
         // Aksi tombol cancel
         cancelButton.addEventListener('click', () => {
-            displayTableData(filteredData);
-            confirmationSection.classList.add('hidden');
-            cancelButton.remove();
-            confirmButton.textContent = 'Edit';
+          window.location.reload();
         });
 
         confirmButton.disabled = true;
