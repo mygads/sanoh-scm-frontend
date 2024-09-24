@@ -317,6 +317,12 @@
       placeholder: 'Search Supplier',
       allowClear: true
     });
+
+    const selectedSupplierId = localStorage.getItem('selectedSupplierId');
+    if (selectedSupplierId) {
+      // Set dropdown ke supplier terpilih
+      $(supplierSelect).val(selectedSupplierId).trigger('change');
+    }
   }
 
   // Function to fetch purchase orders from the API
@@ -375,6 +381,13 @@
 
   // Function to display table data
   function displayTableData(page) {
+    const selectSupplierNew = localStorage.getItem('selectedSupplierId');
+
+    if (!selectSupplierNew) {
+      console.error('No selected supplier found in localStorage');
+      return;
+    }
+    
     const tableBody = document.getElementById('table-body');
 
     if (!tableBody) {
