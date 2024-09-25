@@ -21,7 +21,6 @@
             padding: 20px;
             background-color: #fff; /* Latar belakang putih */
             box-sizing: border-box;
-            page-break-after: always; /* Pisahkan halaman setelah container */
             position: relative;
         }
     
@@ -58,6 +57,10 @@
             right: 10px;
             font-size: 12px;
             font-weight: bold;
+        }
+
+        .page-break {
+            page-break-before: always;
         }
     
         .details {
@@ -267,13 +270,13 @@
                 display: block !important;
             }
 
-
             footer {
-        display: none;
-      }
-    .page-break {
-        page-break-before: always;
-    }
+                display: none;
+            }
+            
+            .page-break {
+                page-break-before: always;
+            }
         }
 
     </style>
@@ -305,6 +308,10 @@ if (!noPO || noPO.trim() === "" || noPO === 'undefined' || noPO === null) {
 });
 }
 
+// Fetch and render data
+// fetchPurchaseOrderData(noPO).then(data => {
+//     renderPurchaseOrder(data);
+// });
 
 function getQueryParams() {
     const params = new URLSearchParams(window.location.search);
@@ -359,7 +366,9 @@ async function fetchPurchaseOrderData(noPO) {
                 accepted_confirmed_by: poData.data[0].accepted_confirmed_by,
                 terms: poData.data[0].terms,
                 attn: poData.data[0].attn,
-                printed_date: poData.data[0].printed_date
+                printed_date: poData.data[0].printed_date,
+                ppn: poData.data[0].ppn,
+                total: poData.data[0].total
             };
 
             const details = poData.data[0].detail ? poData.data[0].detail.map(item => ({
@@ -410,8 +419,7 @@ function renderTable(data, items) {
     items.forEach((item, index) => {
         if (index % rowsPerPage === 0) {
             if (index !== 0) {
-                pageContent += `</tbody></table></div>
-                <div class="page-break"></div>`;
+                pageContent += `</tbody></table></div>`;
             }
             pageContent += `
                 <div class="container">
@@ -510,17 +518,17 @@ function renderTable(data, items) {
         <tr>
             <th colspan="6"></th>
             <th style="text-align: right;">Subtotal</th>
-            <th style="text-align: right;">${subtotal}</th>
+            <th style="text-align: right;">${data.total_amount}</th>
         </tr>
         <tr>
             <th colspan="6"></th>
             <th style="text-align: right;">PPN 11%</th>
-            <th style="text-align: right;">${(subtotal * 0.11).toFixed(2)}</th>
+            <th style="text-align: right;">${data.ppn}</th>
         </tr>
         <tr>
             <th colspan="6"></th>
             <th style="text-align: right;">Total</th>
-            <th style="text-align: right;">${(subtotal * 1.11).toFixed(2)}</th>
+            <th style="text-align: right;">${data.total}</th>
         </tr>
 
             </tbody>
@@ -596,7 +604,7 @@ function generatePDF(poNumber) {
 
     // Define the options for the PDF generation
     const opt = {
-        margin:       [2, 2, 2, 2], // top, left, bottom, right
+        margin:       [0, 2, 0, 2], // top, left, bottom, right
         filename:     poNumber ? `PurchaseOrder_${poNumber}.pdf` : 'PurchaseOrder.pdf',
         image:        { type: 'jpeg', quality: 0.98 },
         html2canvas:  { scale: 2 }, // higher scale for better quality
@@ -632,7 +640,7 @@ function renderPurchaseOrder(data) {
         }
     });
 
-    // Generate PDF and trigger download
+    // Generate PDF and trigger download with the correct PO number
     generatePDF(data.header.po_number);
 }
 
