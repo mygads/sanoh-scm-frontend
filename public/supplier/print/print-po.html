@@ -366,7 +366,9 @@ async function fetchPurchaseOrderData(noPO) {
                 accepted_confirmed_by: poData.data[0].accepted_confirmed_by,
                 terms: poData.data[0].terms,
                 attn: poData.data[0].attn,
-                printed_date: poData.data[0].printed_date
+                printed_date: poData.data[0].printed_date,
+                ppn: poData.data[0].ppn,
+                total: poData.data[0].total
             };
 
             const details = poData.data[0].detail ? poData.data[0].detail.map(item => ({
@@ -507,7 +509,6 @@ function renderTable(data, items) {
                 <td>${item.unit_price}</td>
                 <td>${item.amount}</td>
             </tr>`;
-        subtotal = data.total_amount;
     });
 
     // Add subtotal, PPN, and total
@@ -516,17 +517,17 @@ function renderTable(data, items) {
         <tr>
             <th colspan="6"></th>
             <th style="text-align: right;">Subtotal</th>
-            <th style="text-align: right;">${subtotal}</th>
+            <th style="text-align: right;">${data.total_amount}</th>
         </tr>
         <tr>
             <th colspan="6"></th>
             <th style="text-align: right;">PPN 11%</th>
-            <th style="text-align: right;">${(subtotal * 0.11).toFixed(2)}</th>
+            <th style="text-align: right;">${data.ppn}</th>
         </tr>
         <tr>
             <th colspan="6"></th>
             <th style="text-align: right;">Total</th>
-            <th style="text-align: right;">${(subtotal * 1.11).toFixed(2)}</th>
+            <th style="text-align: right;">${data.total}</th>
         </tr>
 
             </tbody>
