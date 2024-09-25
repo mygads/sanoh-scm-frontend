@@ -21,7 +21,6 @@
             padding: 20px;
             background-color: #fff; /* Latar belakang putih */
             box-sizing: border-box;
-            page-break-after: always; /* Pisahkan halaman setelah container */
             position: relative;
         }
     
@@ -58,6 +57,10 @@
             right: 10px;
             font-size: 12px;
             font-weight: bold;
+        }
+
+        .page-break {
+            page-break-before: always;
         }
     
         .details {
@@ -267,13 +270,13 @@
                 display: block !important;
             }
 
-
             footer {
-        display: none;
-      }
-    .page-break {
-        page-break-before: always;
-    }
+                display: none;
+            }
+            
+            .page-break {
+                page-break-before: always;
+            }
         }
 
     </style>
@@ -414,8 +417,7 @@ function renderTable(data, items) {
     items.forEach((item, index) => {
         if (index % rowsPerPage === 0) {
             if (index !== 0) {
-                pageContent += `</tbody></table></div>
-                <div class="page-break"></div>`;
+                pageContent += `</tbody></table></div>`;
             }
             pageContent += `
                 <div class="container">
@@ -600,7 +602,7 @@ function generatePDF(poNumber) {
 
     // Define the options for the PDF generation
     const opt = {
-        margin:       [2, 2, 2, 2], // top, left, bottom, right
+        margin:       [0, 2, 0, 2], // top, left, bottom, right
         filename:     poNumber ? `PurchaseOrder_${poNumber}.pdf` : 'PurchaseOrder.pdf',
         image:        { type: 'jpeg', quality: 0.98 },
         html2canvas:  { scale: 2 }, // higher scale for better quality

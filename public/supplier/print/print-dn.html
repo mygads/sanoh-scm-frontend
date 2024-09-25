@@ -22,7 +22,6 @@
             padding: 10px;
             background-color: #fff; /* Latar belakang putih */
             box-sizing: border-box;
-            page-break-after: always; /* Pisahkan halaman setelah container */
             position: relative;
         }
 
@@ -274,27 +273,46 @@
         }
 
         @media print {
+            @page {
+                margin: 0;
+            }
 
-        .prints {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background-color: white;
-            padding-bottom: 10px;
-            border-bottom: 1px solid black;
+            .prints {
+                position: fixed;
+                top: 0;
+                width: 100%;
+                background-color: white;
+                padding-bottom: 10px;
+                border-bottom: 1px solid black;
+            }
+
+            body, .container {
+                margin: 0;
+                padding: 0;
+                box-shadow: none;
+            }
+
+            .dataTable1 {
+                margin-top: 350px;
+            }
+
+            thead {
+                display: table-header-group;
+            }
+
+            tfoot {
+                display: table-footer-group;
+            }
+
+            .page-break {
+                page-break-before: always;
+            }
         }
-        body, .container {
-            margin: 0;
-            padding: 0;
-            box-shadow: none;
-        }
-        .dataTable1{
-            margin-top:350px
-        }
-    }
+
         .page-break {
             page-break-before: always;
         }
+
 
         </style>
     
@@ -729,12 +747,12 @@ if (items.length === 0) {
         // Inject the rendered content into the page
         document.getElementById('page-content').innerHTML = pageContent;
     }
-        
+
     function generatePDF(dnNumber) {
         const element = document.getElementById('page-content');
 
         const opt = {
-            margin:       [2, 2, 2, 2], // top, left, bottom, right
+            margin:       [0, 2, 0, 2], // top, left, bottom, right
             filename:     dnNumber ? `DeliveryNote_${dnNumber}.pdf` : 'DeliveryNote.pdf',
             image:        { type: 'jpeg', quality: 0.98 },
             html2canvas:  { scale: 2 },
@@ -742,7 +760,7 @@ if (items.length === 0) {
         };
 
         html2pdf().set(opt).from(element).save().then(() => {
-            window.history.back();
+            // window.history.back();
         });
     }
 
