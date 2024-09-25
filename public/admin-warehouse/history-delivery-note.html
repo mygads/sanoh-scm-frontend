@@ -353,6 +353,12 @@
       placeholder: 'Search Supplier',
       allowClear: true
     });
+
+    const selectedSupplierId = localStorage.getItem('selectedSupplierId');
+    if (selectedSupplierId) {
+      // Set dropdown ke supplier terpilih
+      $(supplierSelect).val(selectedSupplierId).trigger('change');
+    }
   }
 
   async function fetchHistoryDeliveryNotes(bpCode) {
