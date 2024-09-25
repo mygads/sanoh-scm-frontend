@@ -18,7 +18,7 @@
 
 <body class="font-poppins ">
 
-  <section class="flex h-screen w-screen overflow-hidden flex-col p-5 bg-white max-md:pr-12 max-sm:flex max-sm:flex-col max-sm:mx-5 max-sm:mt-5">
+  <section class="flex h-screen w-screen overflow-y-auto flex-col p-5 bg-white max-md:pr-12 max-sm:flex max-sm:flex-col max-sm:mx-5 max-sm:mt-5">
     <div class="flex gap-5 max-md:flex-col my-auto mx-auto">
       <div class="flex flex-col ml-auto w-6/12 max-md:ml-0 max-md:w-full">
         <img loading="lazy" src="assets/foto-sanoh-2.png" alt="Login illustration" class="object-contain grow w-full h-auto aspect-[0.71] max-w-[710px] max-md:mt-10 max-md:max-w-[286px] max-sm:self-stretch max-sm:m-auto max-sm:w-full max-sm:max-w-[296px]" />
@@ -27,7 +27,7 @@
         <div class="flex flex-col  mr-auto w-full max-w-[500px] max-md:mt-10 max-md:ml-0 max-sm:mt-5 max-sm:ml-auto max-sm:max-w-[301px]">
           <img loading="lazy" src="assets/logo-sanoh.png" alt="Company logo" class="object-contain max-w-full aspect-[2.79] w-[120px] max-md:ml-1" />
 
-          <form class="flex flex-col mt-6 w-full" onsubmit="handleLogin(event)" >
+          <form class="flex flex-col mt-6 w-full" onsubmit="handleLogin(event)" autocomplete="off">
             <div class="flex flex-col ">
               <label for="username" class="text-base text-slate-800 mb-2">
                 Username
@@ -76,13 +76,23 @@
 
 <script>
 
-  if (token) {
-    console.log(token);
-    displayNotification(`You are already logged in!, ${name}`,'success');
-    setTimeout(() => {
-      redirectToDashboardIndex(localStorage.getItem('userRole'));
-    }, 2000);
+if (token) {
+  console.log(token);
+  displayNotification(`You are already logged in!, ${name}`,'success');
+  setTimeout(() => {
+    redirectToDashboardIndex(localStorage.getItem('userRole'));
+  }, 2000);
+}
+
+// Tambahkan event listener untuk memeriksa pesan error saat halaman dimuat
+document.addEventListener('DOMContentLoaded', () => {
+  // Cek apakah ada pesan error di sessionStorage
+  const loginErrorMessage = sessionStorage.getItem('loginErrorMessage');
+  if (loginErrorMessage) {
+    displayNotification(loginErrorMessage, 'error');
+    sessionStorage.removeItem('loginErrorMessage'); // Hapus pesan setelah ditampilkan
   }
+});
 
 
 // Toggle password visibility
@@ -106,7 +116,7 @@ function togglePassword() {
 // Handle form submission
 async function handleLogin(event) {
   event.preventDefault();
-  const username = document.getElementById('username').value;
+  const username = document.getElementById('username').value.trim();
   const password = document.getElementById('password').value;
   const loginButton = document.getElementById('login-button');
 
@@ -136,7 +146,7 @@ async function handleLogin(event) {
       expiryDate.setHours(expiryDate.getHours() + 1); // Misal, token berlaku selama 1 jam
 
       localStorage.setItem('accessToken', data.access_token);
-      localStorage.setItem('tokenExpiry', expiryDate.toISOString()); // Simpan waktu kedaluwarsa
+      localStorage.setItem('tokenExpiry', expiryDate.toISOString());
       localStorage.setItem('name', data.name);
       localStorage.setItem('bpCode', data.bp_code);
       localStorage.setItem('userRole', data.role);
@@ -166,14 +176,31 @@ async function handleLogin(event) {
       }
 
     } else {
-      displayNotification(`Invalid Username and Password`, 'error');
+      // Ambil pesan error dari server jika ada
+      let errorMessage = 'Invalid Username and Password';
+      try {
+        const errorData = await response.json();
+        if (errorData && errorData.message) {
+          errorMessage = errorData.message;
+        }
+      } catch (e) {
+        // Jika gagal parse JSON, gunakan pesan default
+      }
+
+      // Simpan pesan error ke sessionStorage
+      sessionStorage.setItem('loginErrorMessage', errorMessage);
+
+      // Reload halaman
+      window.location.reload();
     }
   } catch (error) {
     console.error('Error logging in:', error);
-    displayNotification(`Login failed Server Error`, 'error');
-    setTimeout(() => {
-      // handleDummyLogin(username, password);
-    }, 3000);
+
+    // Simpan pesan error ke sessionStorage
+    sessionStorage.setItem('loginErrorMessage', 'Login failed due to server error');
+
+    // Reload halaman
+    window.location.reload();
   } finally {
     // Reset button to original state after API response
     loginButton.innerHTML = 'Login';
