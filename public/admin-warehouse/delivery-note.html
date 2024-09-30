@@ -145,17 +145,27 @@
                   </th>
                   <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer"
                     data-sort="2"  onclick="sortTable(2)">
-                    Plan DN Date
+                    Created Date
                     <img loading="lazy" src="../assets/icon_sort.svg" alt=""
                       class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
                   <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer"
                     data-sort="3"  onclick="sortTable(3)">
+                    Plan Delivery Date
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
+                      class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
+                    <span class="sort-indicator"></span>
+                  </th>
+                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer"
+                    data-sort="4"  onclick="sortTable(4)">
                     Status DN
                     <img loading="lazy" src="../assets/icon_sort.svg" alt=""
                       class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
+                  </th>
+                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer" >
+                    Progress                    
                   </th>
                 </tr>
               </thead>
@@ -348,24 +358,12 @@
           displayNotification(data.message,'success');
               // Map and manipulate your data accordingly
               deliveryNote = data.data.map(dn => ({
-                  noDN: dn.no_dn ? dn.no_dn.toString() : '',
-                  noPO: dn.po_no ? dn.po_no.toString() : '',
-                  planDNDate: dn.plan_delivery_date || '',
-                  statusDN: dn.status_desc || '',
-                  details: dn.detail ? dn.detail.map((detail, index) => ({
-                      no: (index + 1).toString(),
-                      planDelivery: detail.plan_delivery_date || '',
-                      partNumber: detail.part_no || '',
-                      partName: detail.item_desc_a || '',
-                      UoM: detail.dn_unit || '',
-                      QTY: detail.dn_qty || 0,
-                      qtyLabel: detail.dn_snp || '',
-                      qtyRequested: detail.dn_qty || 0,
-                      qtyConfirm: detail.qty_confirm || 0,
-                      qtyDelivered: detail.receipt_qty || 0,
-                      qtyReceived: detail.receipt_qty || 0,
-                      qtyMinus: (detail.dn_qty - (detail.receipt_qty || 0)).toString()
-                  })) : []
+                  noDN: dn.no_dn ? dn.no_dn.toString() : '-',
+                  noPO: dn.po_no ? dn.po_no.toString() : '-',
+                  createdDate: dn.created_date || '-',
+                  planDNDate: dn.plan_delivery_date || '-',
+                  statusDN: dn.status_desc || '-',                           
+                  progress: dn.progress || '-',
               }));
 
           // Ensure that filteredData is properly initialized
@@ -471,8 +469,10 @@
           <a href="delivery-note-detail.html?noDN=${dn.noDN}" class="text-blue-600 underline">${dn.noDN}</a>
         </td>
         <td class="px-2 py-4 text-center font-medium text-gray-900">${dn.noPO}</td>
+        <td class="px-2 py-4 text-center">${dn.createdDate}</td>
         <td class="px-2 py-4 text-center">${dn.planDNDate}</td>
         <td class="px-2 py-4 text-center">${dn.statusDN}</td>
+        <td class="px-2 py-4 text-center">${dn.progress}</td>
       `;
       tableBody.appendChild(row);
     });

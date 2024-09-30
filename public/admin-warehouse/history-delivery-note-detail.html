@@ -333,7 +333,7 @@
         }
 
         const data = await response.json();
-        console.log("Data fetched:", data);
+        // console.log("Data fetched:", data);
 
         if (data.success && data.data) {
           details = data.data
@@ -378,12 +378,12 @@
 
     if (noDN) {
         // Debug: Check if `details` array is populated
-        console.log('Details array:', details);
+        // console.log('Details array:', details);
 
         const dn = details.find(dn => dn.noDN === noDN);
 
         // Debug: Check if the correct Delivery Note object is found
-        console.log('Delivery Note found:', dn);
+        // console.log('Delivery Note found:', dn);
 
         if (dn) {
             const noPO = dn.noPO || 'No PO provided';
