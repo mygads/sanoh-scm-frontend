@@ -87,33 +87,33 @@
         }
     
         .details-right {
-            display: grid;
-            grid-template-columns: auto auto;
-            justify-content: end;
-            text-align: left;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            text-align: right;
+            line-height: 1.2;
+            margin: 0;
+            padding: 0;
         }
-    
+
         .details-right .row {
-            display: contents;
-            margin-bottom: 2px;
-            line-height: 1;
+            display: flex;
+            margin: 0;
+            padding: 0;
         }
 
         .details-right .label {
-            padding-right: 0px; /* Kurangi padding untuk mendekatkan label dengan value */
-            min-width: 80px;
-            text-align: left;
             font-weight: bold;
-            padding-top: 2px;  /* Tambahkan padding atas-bawah jika perlu */
-            line-height: 0.5;
+            margin: 0;
+            padding: 0;
+            min-width: 80px;
         }
 
         .details-right .value {
-            min-width: 100px; /* Kurangi min-width untuk mendekatkan value dengan label */
-            text-align: left;
             font-weight: bold;
-            line-height: 1;
-            padding-left: 0px;
+            margin: 0;
+            padding: 0;
+            min-width: 100px;
         }
     
         table {
@@ -332,7 +332,7 @@ async function fetchPurchaseOrderData(noPO) {
     }
 
     try {
-        const response = await fetch(`${APIpoViewPurchasing3}${noPO}`, {
+        const response = await fetch(`${API_poViewSupplier}${noPO}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,  // Ensure the token is passed correctly
@@ -413,7 +413,7 @@ function concatAddress(address) {
 // Render table content for the purchase order
 function renderTable(data, items) {
     let pageContent = '';
-    let rowsPerPage = 16;
+    let rowsPerPage = 11;
     var subtotal = 0;
 
     items.forEach((item, index) => {
@@ -509,7 +509,6 @@ function renderTable(data, items) {
                 <td>${item.unit_price}</td>
                 <td>${item.amount}</td>
             </tr>`;
-        subtotal = data.total_amount;
     });
 
     // Add subtotal, PPN, and total
@@ -560,7 +559,7 @@ function renderTable(data, items) {
             </div>
         </div>
         <!-- Signature Section -->
-    <div style="display: flex; justify-content: space-between; margin-top: 150px;">
+    <div style="display: flex; justify-content: space-between; margin-top: 100px;">
         <div style="text-align: left; font-size: 12px;">
             <p>Accepted and Confirmed</p>
             <p>${data.supplier_name}</p>
@@ -640,7 +639,7 @@ function renderPurchaseOrder(data) {
         }
     });
 
-    // Generate PDF and trigger download with the correct PO number
+    // Generate PDF and trigger download
     generatePDF(data.header.po_number);
 }
 

@@ -87,33 +87,33 @@
         }
     
         .details-right {
-            display: grid;
-            grid-template-columns: auto auto;
-            justify-content: end;
-            text-align: left;
-            line-height: 0.5;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            text-align: right;
+            margin: 0;
+            padding: 0;
         }
-    
+
         .details-right .row {
-            display: contents;
-            line-height: 0.5;
+            display: flex;
+            margin: 0;
+            padding: 0;
+            line-height: 1.5; /* Mengurangi line-height untuk merapatkan jarak antar baris */
         }
 
         .details-right .label {
-            padding-right: 0px; /* Kurangi padding untuk mendekatkan label dengan value */
-            min-width: 80px;
-            text-align: left;
             font-weight: bold;
-            padding-top: 2px;  /* Tambahkan padding atas-bawah jika perlu */
-            line-height: 0.5;
+            margin: 0;
+            padding: 0;
+            min-width: 80px;
         }
 
         .details-right .value {
-            min-width: 100px; /* Kurangi min-width untuk mendekatkan value dengan label */
-            text-align: left;
             font-weight: bold;
-            line-height: 0.5;
-            padding-left: 0px;
+            margin: 0;
+            padding: 0;
+            min-width: 100px;
         }
     
         table {
@@ -413,7 +413,7 @@ function concatAddress(address) {
 // Render table content for the purchase order
 function renderTable(data, items) {
     let pageContent = '';
-    let rowsPerPage = 16;
+    let rowsPerPage = 11;
     var subtotal = 0;
 
     items.forEach((item, index) => {
@@ -559,7 +559,7 @@ function renderTable(data, items) {
             </div>
         </div>
         <!-- Signature Section -->
-    <div style="display: flex; justify-content: space-between; margin-top: 150px;">
+    <div style="display: flex; justify-content: space-between; margin-top: 100px;">
         <div style="text-align: left; font-size: 12px;">
             <p>Accepted and Confirmed</p>
             <p>${data.supplier_name}</p>
