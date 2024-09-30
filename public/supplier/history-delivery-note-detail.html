@@ -143,12 +143,6 @@
               
               <div class="flex gap-5">
                 <!-- No PO -->
-                <!-- <div class="flex gap-[13px] 2xl:gap-10 items-center self-stretch my-auto text-black min-w-[10%]">
-                  <div class="self-stretch my-auto ">No. PO</div>
-                  <div id="poNumber" type="text" class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap ounded border border-solid border-neutral-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
-                </div> -->
-                
-                <!-- No PO -->
                 <div class="flex gap-3 items-center self-stretch my-auto text-black min-w-[10%]">
                   <div class="self-stretch my-auto xl:text-[100%] lg:text-[100%] md:text-[90%] sm:text-[90%] text-[80%]">No. PO</div>
                   <div id="poNumber" class="xl:text-[100%] lg:text-[100%] md:text-[90%] sm:text-[90%] text-[80%] flex-1 shrink self-stretch px-4 py-2 my-auto text-center whitespace-nowrap rounded bg-stone-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
@@ -322,7 +316,7 @@
         }
 
         const data = await response.json();
-        console.log("Data fetched:", data);
+        // console.log("Data fetched:", data);
 
         if (data.success && data.data) {
           details = data.data
@@ -369,12 +363,12 @@
 
     if (noDN) {
         // Debug: Check if `details` array is populated
-        console.log('Details array:', details);
+        // console.log('Details array:', details);
 
         const dn = details.find(dn => dn.noDN === noDN);
 
         // Debug: Check if the correct Delivery Note object is found
-        console.log('Delivery Note found:', dn);
+        // console.log('Delivery Note found:', dn);
 
         if (dn) {
             const noPO = dn.noPO || 'No PO provided';

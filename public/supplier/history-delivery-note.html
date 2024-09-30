@@ -253,7 +253,7 @@
         }
 
         const data = await response.json();
-        console.log("Data fetched:", data);
+        // console.log("Data fetched:", data);
 
         if (data.success && data.data) {
           displayNotification(data.message,'success')
@@ -335,7 +335,7 @@
       tableBody.appendChild(row);
     });
 
-    console.log(`Displayed ${dataToShow.length} rows of data in table`);
+    // console.log(`Displayed ${dataToShow.length} rows of data in table`);
   }
 
   // Function for search

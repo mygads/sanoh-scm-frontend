@@ -240,7 +240,7 @@
           }
 
           const data = await response.json();
-          console.log(`Data fetched for DN:`, data);
+          // console.log(`Data fetched for DN:`, data);
 
           // Ensure data exists and is in expected format
           if (data && data.data && Array.isArray(data.data)) {
@@ -309,7 +309,7 @@
 
 
     const searchInput = document.getElementById('search-input').value.toLowerCase();
-    console.log(searchInput);
+    // console.log(searchInput);
     if (searchInput === "") {
       // Jika input kosong, kembalikan data ke originalData
       filteredData = originalData;
@@ -321,7 +321,7 @@
         row.statusDN.toLowerCase().includes(searchInput)
       );
     }
-    console.log(filteredData);
+    // console.log(filteredData);
   
     displayTableData(1);
     updatePagination();
