@@ -200,6 +200,11 @@
                     <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
+                  <th scope="col" class="px-2 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(5)">
+                    QTY Minus
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 inline-block text-gray-600" />
+                    <span class="sort-indicator"></span>
+                  </th>
                 </tr>
               </thead>
               <tbody id="table-body-detail">
@@ -306,20 +311,20 @@
       // Check if the response status is 'success' and if the data array exists
       if (data && data.status === true && Array.isArray(data.data)) {
         details = data.data.map(po => ({
-          noPO: po.po_no ? po.po_no.toString() : "",
-          poDate: po.po_date || "",
-          planDelivery: po.planned_receipt_date || "",
+          noPO: po.po_no ? po.po_no.toString() : "-",
+          poDate: po.po_date || "-",
+          planDelivery: po.planned_receipt_date || "-",
           poRevision: po.po_revision_no !== null && po.po_revision_no !== undefined ? 
             `Rev ${po.po_revision_no.toString().padStart(2, '0')}` : "Rev 00",
-          revisionDate: po.po_revision_date || "",
-          status: po.po_status || "",
-          response: po.response || "",
-          note: po.note || "",
+          revisionDate: po.po_revision_date || "-",
+          status: po.po_status || "-",
+          response: po.response || "-",
+          note: po.note || "-",
           details: (po.detail && Array.isArray(po.detail)) ? po.detail.map((detail, index) => ({
             no: (index + 1).toString(),
-            partNumber: detail.bp_part_no || "",
-            partName: detail.item_desc_a || "",
-            UoM: detail.purchase_unit || "",
+            partNumber: detail.bp_part_no || "-",
+            partName: detail.item_desc_a || "-",
+            UoM: detail.purchase_unit || "-",
             QTY: detail.po_qty || "",
             QTYReceipt: detail.receipt_qty || "",
           })) : []  // Ensure details is an array, even if no data is found
@@ -414,6 +419,7 @@
     const paginatedData = filteredData.slice(start, end);
 
     paginatedData.forEach(row => {
+      const qtyMinus = row.QTY - row.QTYReceipt;
       const tableRow = document.createElement('tr');
       tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
       tableRow.innerHTML = `
@@ -423,6 +429,7 @@
         <td class="px-2 py-4 text-center">${row.UoM}</td>
         <td class="px-2 py-4 text-center">${row.QTY}</td>
         <td class="px-2 py-4 text-center">${row.QTYReceipt}</td>
+        <td class="px-2 py-4 text-center">${qtyMinus}</td>
       `;
       tableBody.appendChild(tableRow);
     });

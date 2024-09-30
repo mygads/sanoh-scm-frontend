@@ -261,7 +261,7 @@
         }
 
         const data = await response.json();
-        console.log("Data fetched:", data);
+        // console.log("Data fetched:", data);
         displayNotification(data.message,'success')
 
         purchaseOrder = data.data.map(po => ({
@@ -293,7 +293,7 @@
         const updateURL = `${API_updatePOSupplier}${po_no}`;
         const responseBody = JSON.stringify({ response });
 
-        console.log(`Sending request to ${updateURL} with body: ${responseBody}`);
+        // console.log(`Sending request to ${updateURL} with body: ${responseBody}`);
 
         const updateResponse = await fetch(updateURL, {
             method: 'PUT',
@@ -304,14 +304,14 @@
             body: responseBody,
         });
 
-        console.log(`Response status: ${updateResponse.status}`);
+        // console.log(`Response status: ${updateResponse.status}`);
 
         if (!updateResponse.ok) {
             throw new Error(`HTTP error! status: ${updateResponse.status}`);
         }
 
         const result = await updateResponse.json();
-        console.log(`Response updated for PO ${po_no}:`, result);
+        // console.log(`Response updated for PO ${po_no}:`, result);
         displayNotification(result.message,'success')
 
         if (result.status === 'success') {
@@ -406,7 +406,7 @@
             });
         } else {
             // If the user cancels, you can handle the cancellation logic here if needed
-            console.log(`${action} action was cancelled.`);
+            // console.log(`${action} action was cancelled.`);
         }
     });
   }
