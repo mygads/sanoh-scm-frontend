@@ -340,17 +340,17 @@
               .map(dn => ({
                   noDN: dn.dn_number ? dn.dn_number.toString() : 'No DN Number',
                   noPO: dn.po_number ? dn.po_number.toString() : 'No PO Number',                  
-                  statusDN: dn.dn_status || 'Unknown Status',
+                  statusDN: dn.dn_status || '-',
                   planDNDate: dn.send_date || 'Date Unknown',
                   receivedDNDate: dn.receive_date || 'Date Unknown',
                   details: dn.detail ? dn.detail.map((detail, index) => ({
                       no: (index + 1).toString(),
-                      partNumber: detail.internal_part_number || 'No Part Number',
-                      partName: detail.part_name || 'No Item Description',
-                      QTY: detail.total_quantity || 'No Quantity',
-                      qtyLabel: detail.pcs_per_kamban || 'No Label',
-                      qtyDelivered: detail.total_quantity || 'No Quantity',
-                      qtyReceived: detail.total_quantity || 'No Quantity',
+                      partNumber: detail.internal_part_number || '-',
+                      partName: detail.part_name || '-',
+                      QTY: detail.total_quantity || '',
+                      qtyLabel: detail.pcs_per_kamban || '',
+                      qtyDelivered: detail.total_quantity || '',
+                      qtyReceived: detail.total_quantity || '',
                   })) : []
               }));
 

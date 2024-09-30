@@ -352,7 +352,7 @@
         const data = await response.json();
         
         // Log the raw data to ensure it's being fetched correctly
-        console.log('Delivery notes data received:', data);
+        // console.log('Delivery notes data received:', data);
 
         if (data && data.data && Array.isArray(data.data)) {
           displayNotification(data.message,'success');

@@ -151,7 +151,7 @@
                     <span class="sort-indicator"></span>
                   </th> 
                   <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(3)">
-                    Sent Date
+                    Delivery Date
                     <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th> 
@@ -265,16 +265,7 @@
                   statusPO: dn.po_status || '-',
                   planDNDate: dn.send_date || 'Date Unknown',
                   receivedDNDate: dn.receive_date || 'Date Unknown',
-                  details: dn.detail ? dn.detail.map((detail, index) => ({
-                      no: (index + 1).toString(),
-                      partNumber: detail.internal_part_number || '-',
-                      partName: detail.part_name || '-',
-                      QTY: detail.total_quantity || '-',
-                      qtyLabel: detail.pcs_per_kamban || '-',
-                      qtyDelivered: detail.total_quantity || '-',
-                      qtyReceived: detail.total_quantity || '-',
-                      noPackingSlip: detail.no_packing_slip || '-',
-                  })) : []
+                  noPackingSlip: dn.no_packing_slip || '-',
               }));
 
           // Set filteredData to match deliveryNote initially
