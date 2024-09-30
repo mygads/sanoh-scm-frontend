@@ -1,4 +1,4 @@
-const API = 'https://be-ssp.ns1.sanoh.co.id/api';
+const API = 'https://api.edutrashgo.com/api';
 
 function saveLogout() {
   const userRole = localStorage.getItem('userRole');
