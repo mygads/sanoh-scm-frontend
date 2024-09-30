@@ -269,7 +269,7 @@
             poDate: po.po_date || "-",
             planDelivery: po.planned_receipt_date || "-",
             poRevision: po.po_revision_no !== null && po.po_revision_no !== undefined ? 
-                `Rev ${po.po_revision_no.toString().padStart(2, '0')}` : "Rev 00",
+                `Rev ${po.po_revision_no.toString().padStart(2, '0')}` : "-",
             revisionDate: po.po_revision_date || "-",
             status: po.po_status || "-",
             response: po.response || "",
