@@ -272,6 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function fetchPerformanceReport(bpCode, selectedMonth = null) {
+  displayNotification("Waiting get data from server",'warning')
   const token = localStorage.getItem('accessToken');
 
   if (!bpCode) {

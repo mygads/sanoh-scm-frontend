@@ -223,6 +223,7 @@
 
   // Function to fetch delivery notes from the API
   async function fetchDeliveryNotes() {
+      displayNotification("Waiting for get data DN from server",'warning')
       const token = localStorage.getItem('accessToken');
       const bpCode = localStorage.getItem('bpCode');
 

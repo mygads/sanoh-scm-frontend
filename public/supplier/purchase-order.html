@@ -246,6 +246,7 @@
   });
 
   async function fetchPurchaseOrders() {
+    displayNotification("Waiting get data PO from server",'warning')
 
     try {
         const response = await fetch(`${API_indexPOSupplier}${bpCode}`, {
@@ -273,6 +274,7 @@
             revisionDate: po.po_revision_date || "-",
             status: po.po_status || "-",
             response: po.response || "",
+            reason: po.reason || "",
             note: po.note || "-",
         }));
 
@@ -280,69 +282,59 @@
         filteredData = purchaseOrder;
 
         // Call functions to display data and setup pagination        
-        displayTableData(1);
+        displayTableData(currentPage);
         updatePagination();
     } catch (error) {
         console.error('Error fetching purchase orders:', error);
     }
   }
 
-  async function updateResponse(po_no, response) {
- 
-    try {
-        const updateURL = `${API_updatePOSupplier}${po_no}`;
-        const responseBody = JSON.stringify({ response });
+  function updateResponse(po_no, response, reason = '') {
+    const updateURL = `${API_updatePOSupplier}${po_no}`;
+    const responseBody = JSON.stringify({ 
+      response: response,
+      reason: response === 'Declined' ? reason : '' 
+    });
 
-        // console.log(`Sending request to ${updateURL} with body: ${responseBody}`);
-
-        const updateResponse = await fetch(updateURL, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}` // Add the authorization header
-            },
-            body: responseBody,
-        });
-
-        // console.log(`Response status: ${updateResponse.status}`);
-
-        if (!updateResponse.ok) {
-            throw new Error(`HTTP error! status: ${updateResponse.status}`);
-        }
-
-        const result = await updateResponse.json();
-        // console.log(`Response updated for PO ${po_no}:`, result);
-        displayNotification(result.message,'success')
-
-        if (result.status === 'success') {
-            updatePOStatusInUI(po_no, response);
-        } else {
-            console.error('Failed to update response. API returned:', result);
-        }
-    } catch (error) {
-        console.error('Error updating response:', error);
-    }
+    fetch(updateURL, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: responseBody,
+    })
+    .then(res => res.json())
+    .then(result => {
+      displayNotification(result.message, 'success');
+      if (result.status === 'success') {
+        // After successfully updating the response, refetch the data and rerender the table
+        fetchPurchaseOrders(); 
+      } else {
+        console.error('Failed to update response. API returned:', result);
+      }
+    })
+    .catch(error => console.error('Error updating response:', error));
   }
 
-  function updatePOStatusInUI(po_no, response) {  
+  function updatePOStatusInUI(po_no, response, reason = '') {
     const poIndex = filteredData.findIndex(po => po.noPO === po_no);
     
     if (poIndex !== -1) {
         filteredData[poIndex].response = response;
+        filteredData[poIndex].reason = reason;
         displayTableData(currentPage);
+        updatePagination();
+        
     } else {
         console.error('PO not found in filteredData:', po_no);
     }
   }
 
-  function handleResponse(po_no, response) {  
-    // Store the PO number and the desired response (Accept/Decline)
-    pendingResponseAction = response;
-    pendingResponseIndex = po_no;
 
+  function handleResponse(po_no, response) {  
     // Show the confirmation modal
     showConfirmation(po_no, response);
-    // updateResponse(po_no, response);
   }
 
   function displayTableData(page) {
@@ -352,15 +344,33 @@
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
     const paginatedData = filteredData.slice(start, end);
-    
+
     if (paginatedData.length === 0) {
-      tableBody.innerHTML = '<tr><td colspan="7" class="text-center">No Purchase Order available for now</td></tr>';
-      return;
+        tableBody.innerHTML = '<tr><td colspan="7" class="text-center">No Purchase Order available for now</td></tr>';
+        return;
     }
 
     paginatedData.forEach((row, index) => {
         const tableRow = document.createElement('tr');
         tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
+        
+        // Kondisi untuk menampilkan tombol atau respons
+        let responseColumnContent = '';
+        if (row.response === 'Accepted') {
+            responseColumnContent = `<span class="text-black">${row.response}</span>`;
+        } else if (row.response === 'Declined') {
+            responseColumnContent = `
+                <span class="text-white">${row.response}</span>
+                <img id="reason-icon-${index}" src="../assets/icon_message.png" class="w-5 h-5 cursor-pointer" title="View reason">
+            `;
+        } else {
+            // Jika belum ada respons, tampilkan tombol
+            responseColumnContent = `
+                <button class="px-3 py-2 bg-green-400 text-black rounded" onclick="handleResponse('${row.noPO}', 'Accepted')">Accept</button>
+                <button class="px-3 py-2 bg-red-500 text-white rounded" onclick="handleResponse('${row.noPO}', 'Declined')">Decline</button>
+            `;
+        }
+
         tableRow.innerHTML = `
             <td class="px-2 py-4 text-center font-medium text-gray-900">
                 <a href="purchase-order-detail.html?noPO=${row.noPO}" class="text-blue-600 underline">${row.noPO}</a>
@@ -372,44 +382,98 @@
             <td class="px-2 py-4 text-center">${row.status}</td>
             <td class="text-center ${row.response === 'Accepted' ? 'bg-green-400' : row.response === 'Declined' ? 'bg-red-500' : ''}">
                 <div class="flex gap-2 justify-center">
-                    ${row.response ? `
-                        <span class="${row.response === 'Accepted' ? 'text-black' : 'text-white'}">${row.response}</span>` : `
-                        <button class="px-3 py-2 bg-green-400 text-black rounded" onclick="handleResponse('${row.noPO}', 'Accepted')">Accept</button>
-                        <button class="px-3 py-2 bg-red-500 text-white rounded" onclick="handleResponse('${row.noPO}', 'Declined')">Decline</button>
-                    `}
+                    ${responseColumnContent}
                 </div>
             </td>
         `;
-        tableBody.appendChild(tableRow);
-    });
-  }
 
-  // This function uses SweetAlert2 to show the confirmation modal
-  function showConfirmation(po_no, action) {
-    Swal.fire({
-        title: 'Are you sure?',
-        text: `You are about to ${action.toLowerCase()} this purchase order.`,
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: `Yes, ${action.toLowerCase()} it!`,
-        cancelButtonText: 'No, cancel'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // If the user confirms, proceed with the response update
-            updateResponse(po_no, action);
-            Swal.fire({
-                title: `${action}!`,
-                text: `The purchase order has been ${action.toLowerCase()}.`,
-                icon: 'success'
+        tableBody.appendChild(tableRow);
+
+        // Tambahkan event listener untuk icon reason jika ada reason
+        if (row.response === 'Declined' && row.reason) {
+            const reasonIcon = document.getElementById(`reason-icon-${index}`);
+            reasonIcon.addEventListener('click', () => {
+                showReason(row.reason);
             });
-        } else {
-            // If the user cancels, you can handle the cancellation logic here if needed
-            // console.log(`${action} action was cancelled.`);
         }
     });
   }
+
+
+
+  function showReason(reason) {
+    Swal.fire({
+        title: 'Reason for Decline',
+        html: `<p style="border: 1px solid #ccc; padding: 10px; font-size: 12px; text-align: left;">${reason}</p>`,
+        icon: 'info'
+    });
+}
+
+
+  // This function uses SweetAlert2 to show the confirmation modal
+  function showConfirmation(po_no, action) {
+    let inputReasonHtml = '';
+
+    if (action === 'Declined') {
+      inputReasonHtml = `
+        <textarea id="decline-reason" class="swal2-textarea" placeholder="Provide your reason for declining" 
+          style="width: 85%; height: 100px; font-size: 12px; padding: 10px; box-sizing: border-box;" 
+          maxlength="255" oninput="updateCharCount()"></textarea>
+        <div style="text-align: right; font-size: 12px;">
+          <span id="char-count">255</span> characters remaining
+        </div>
+      `;
+    }
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `You are about to ${action.toLowerCase()} this purchase order.`,
+      html: inputReasonHtml,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: `Yes, ${action.toLowerCase()} it!`,
+      cancelButtonText: 'No, cancel',
+      preConfirm: () => {
+        if (action === 'Declined') {
+          const reason = document.getElementById('decline-reason').value.trim();
+          if (!reason) {
+            Swal.showValidationMessage('Please provide a reason for declining');
+            return false;
+          }
+          return { reason };
+        }
+        return true;
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        let reason = '';
+        if (action === 'Declined') {
+          reason = result.value.reason;
+        }
+        updateResponse(po_no, action, reason);
+        Swal.fire({
+          title: `${action}!`,
+          text: `The purchase order has been ${action.toLowerCase()}.`,
+          icon: 'success'
+        });
+      }
+    });
+  }
+
+  function updateCharCount() {
+    const reasonTextarea = document.getElementById('decline-reason');
+    const charCountSpan = document.getElementById('char-count');
+    const remaining = 255 - reasonTextarea.value.length;
+    
+    charCountSpan.textContent = remaining;
+
+    if (remaining < 0) {
+      Swal.showValidationMessage('Reason exceeds 255 characters.');
+    }
+  }
+
 
   // Event listener for the "Yes" button in the confirmation modal
   document.getElementById('confirm-yes').addEventListener('click', () => {
@@ -430,16 +494,6 @@
       displayTableData(currentPage);
       updatePagination();
   }
-
-  //function adjustRowsPerPage() {
-    //if (window.innerHeight < 768) {
-      //rowsPerPage = 8; // Atur menjadi 3 jika ukuran layar < 768
-    //} else if (window.innerHeight < 1280) {
-      //rowsPerPage = 9; // Atur menjadi 4 jika ukuran layar >= 768
-    //} else {
-    //  rowsPerPage = 10;
-   // }
-  //}
   
   function adjustRowsPerPage() {
     if (window.innerHeight < 620) {

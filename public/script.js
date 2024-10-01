@@ -249,7 +249,7 @@ function displayNotification(message, type = 'success') {
     if (notificationContainer.children.length === 0) {
       notificationContainer.remove();
     }
-  }, 3000);
+  }, 2000);
 }
 
 // Contoh penggunaan:
