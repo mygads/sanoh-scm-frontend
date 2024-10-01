@@ -50,7 +50,7 @@
 
             <!-- Purchase Order -->
             <li>
-              <a
+              <a href="purchase-order.html"
                 class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 active">
                 <img loading="lazy" src="../assets/icon_po_default.svg" alt="Purchase Order"
                   class="object-contain w-5  icon-po-active" />
@@ -116,11 +116,19 @@
 
             <div class="flex flex-wrap gap-10 justify-between items-center w-full">
 
-              <!-- No PO -->
-              <div class="flex gap-3 items-center self-stretch my-auto text-black min-w-[10%]">
-                <div class="self-stretch my-auto xl:text-[100%] lg:text-[100%] md:text-[90%] sm:text-[90%] text-[80%] ">No. PO</div>
-                <div id="poNumber"
-                  class="xl:text-[100%] lg:text-[100%] md:text-[90%] sm:text-[90%] text-[80%] flex-1 shrink self-stretch px-4 py-2 my-auto text-center whitespace-nowrap rounded bg-stone-300 min-h-[10%] w-[8%] max-md:px-5">
+              <div class="flex gap-5">
+                <!-- No PO -->
+                <div class="flex gap-3 items-center self-stretch my-auto text-black min-w-[10%]">
+                  <div class="self-stretch my-auto xl:text-[100%] lg:text-[100%] md:text-[90%] sm:text-[90%] text-[80%] ">No. PO</div>
+                  <div id="poNumber"
+                    class="xl:text-[100%] lg:text-[100%] md:text-[90%] sm:text-[90%] text-[80%] flex-1 shrink self-stretch px-4 py-2 my-auto text-center whitespace-nowrap rounded bg-stone-300 min-h-[10%] w-[8%] max-md:px-5">
+                  </div>
+                </div>
+                <div class="flex gap-3 items-center self-stretch my-auto text-black min-w-[10%]">
+                  <div class="self-stretch my-auto xl:text-[100%] lg:text-[100%] md:text-[90%] sm:text-[90%] text-[80%] ">Supplier</div>
+                  <div id="selectedSupplierId"
+                    class="xl:text-[100%] lg:text-[100%] md:text-[90%] sm:text-[90%] text-[80%] flex-1 shrink self-stretch px-4 py-2 my-auto text-center whitespace-nowrap rounded bg-stone-300 min-h-[10%] w-[8%] max-md:px-5">
+                  </div>
                 </div>
               </div>
 
@@ -177,26 +185,14 @@
                       class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer"
-                    onclick="sortTable(1)">
-                    Part Number
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
-                      class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
-                    <span class="sort-indicator"></span>
+                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer">
+                    Part Number                    
                   </th>
-                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer"
-                    onclick="sortTable(2)">
-                    Part Name
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
-                      class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
-                    <span class="sort-indicator"></span>
+                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer">
+                    Part Name                    
                   </th>
-                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer"
-                    onclick="sortTable(3)">
-                    UoM
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
-                      class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
-                    <span class="sort-indicator"></span>
+                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer">
+                    UoM                    
                   </th>
                   <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer"
                     onclick="sortTable(4)">
@@ -205,8 +201,13 @@
                       class="w-3 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-                  <th scope="col" class="px-2 py-3 text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(5)">
+                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(5)">
                     QTY Receipt
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 inline-block text-gray-600" />
+                    <span class="sort-indicator"></span>
+                  </th>
+                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(6)">
+                    QTY Minus
                     <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="w-3 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
@@ -352,8 +353,8 @@
   function PODetails() {
     const params = new URLSearchParams(window.location.search);
     const noPO = params.get('noPO');
-    // const getNoPo = noPO;
-    // // console.log(getNoPo);
+    const selectedSupplierId = localStorage.getItem('selectedSupplierId');
+    console.log("Selected No PO : ",noPO);
 
     if (noPO) {
       // Debug: Check if `details` array is populated
@@ -374,6 +375,7 @@
         document.getElementById('poNumber').textContent = po.noPO;
         document.getElementById('planDelivery').textContent = po.planDelivery;
         document.getElementById('noteInput').textContent = note;
+        document.getElementById('selectedSupplierId').textContent = selectedSupplierId;
 
         // Store the details array into filteredData
         filteredData = po.details;
@@ -423,6 +425,8 @@
     }
 
     paginatedData.forEach((detail, index) => {
+      const qtyMinus = detail.QTY - detail.QTYReceipt;
+
       const tableRow = document.createElement('tr');
       tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
       tableRow.innerHTML = `
@@ -432,6 +436,8 @@
         <td class="px-2 py-4 text-center">${detail.UoM}</td>
         <td class="px-2 py-4 text-center">${detail.QTY}</td>
         <td class="px-2 py-4 text-center">${detail.QTYReceipt}</td>
+        <td class="px-2 py-4 text-center">${qtyMinus}</td>
+
       `;
       tableBody.appendChild(tableRow);
     });

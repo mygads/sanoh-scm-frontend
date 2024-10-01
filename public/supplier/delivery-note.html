@@ -144,15 +144,23 @@
                     No. PO
                   </th>
                   <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(2)">
-                    Plan DN Date
+                    Created Date
                     <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
                   <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(3)">
+                    Plan Delivery Date
+                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
+                    <span class="sort-indicator"></span>
+                  </th>
+                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(4)">
                     Status DN
                     <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
-                  </th>    
+                  </th>
+                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer" >
+                    Progress                    
+                  </th>
                 </tr>
               </thead>
               <tbody id="table-body">
@@ -232,31 +240,19 @@
           }
 
           const data = await response.json();
-          console.log(`Data fetched for DN:`, data);
+          // console.log(`Data fetched for DN:`, data);
 
           // Ensure data exists and is in expected format
           if (data && data.data && Array.isArray(data.data)) {
             displayNotification(data.message,'success')
               // Map and manipulate your data accordingly
               deliveryNote = data.data.map(dn => ({
-                  noDN: dn.no_dn ? dn.no_dn.toString() : '',
-                  noPO: dn.po_no ? dn.po_no.toString() : '',
-                  planDNDate: dn.plan_delivery_date || '',
-                  statusDN: dn.status_desc || '',
-                  details: dn.detail ? dn.detail.map((detail, index) => ({
-                      no: (index + 1).toString(),
-                      planDelivery: detail.plan_delivery_date || '',
-                      partNumber: detail.part_no || '',
-                      partName: detail.item_desc_a || '',
-                      UoM: detail.dn_unit || '',
-                      QTY: detail.dn_qty || 0,
-                      qtyLabel: detail.dn_snp || '',
-                      qtyRequested: detail.dn_qty || 0,
-                      qtyConfirm: detail.qty_confirm || 0,
-                      qtyDelivered: detail.receipt_qty || 0,
-                      qtyReceived: detail.receipt_qty || 0,
-                      qtyMinus: (detail.dn_qty - (detail.receipt_qty || 0)).toString()
-                  })) : []
+                  noDN: dn.no_dn ? dn.no_dn.toString() : '-',
+                  noPO: dn.po_no ? dn.po_no.toString() : '-',
+                  createdDate: dn.created_date || '-',
+                  planDNDate: dn.plan_delivery_date || '-',
+                  statusDN: dn.status_desc || '-',
+                  progress: dn.progress || '-',
               }));
 
               // Set filteredData to match deliveryNote initially
@@ -300,8 +296,10 @@
               <td class="px-2 py-4 text-center">
                   <a href="purchase-order-detail.html?noPO=${row.noPO}" class="text-blue-600 underline">${row.noPO}</a>
               </td>
+              <td class="px-2 py-4 text-center">${row.createdDate}</td>
               <td class="px-2 py-4 text-center">${row.planDNDate}</td>
               <td class="px-2 py-4 text-center">${row.statusDN}</td>
+              <td class="px-2 py-4 text-center">${row.progress}</td>
           `;
           tableBody.appendChild(tableRow);
       });
@@ -311,7 +309,7 @@
 
 
     const searchInput = document.getElementById('search-input').value.toLowerCase();
-    console.log(searchInput);
+    // console.log(searchInput);
     if (searchInput === "") {
       // Jika input kosong, kembalikan data ke originalData
       filteredData = originalData;
@@ -323,7 +321,7 @@
         row.statusDN.toLowerCase().includes(searchInput)
       );
     }
-    console.log(filteredData);
+    // console.log(filteredData);
   
     displayTableData(1);
     updatePagination();

@@ -151,7 +151,7 @@
                     <span class="sort-indicator"></span>
                   </th> 
                   <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(3)">
-                    Sent Date
+                    Delivery Date
                     <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th> 
@@ -159,6 +159,9 @@
                     Received Date
                     <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
+                  </th>  
+                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer">
+                    No Packing Slip                    
                   </th>  
                 </tr>
               </thead>
@@ -250,7 +253,7 @@
         }
 
         const data = await response.json();
-        console.log("Data fetched:", data);
+        // console.log("Data fetched:", data);
 
         if (data.success && data.data) {
           displayNotification(data.message,'success')
@@ -262,15 +265,7 @@
                   statusPO: dn.po_status || '-',
                   planDNDate: dn.send_date || 'Date Unknown',
                   receivedDNDate: dn.receive_date || 'Date Unknown',
-                  details: dn.detail ? dn.detail.map((detail, index) => ({
-                      no: (index + 1).toString(),
-                      partNumber: detail.internal_part_number || 'No Part Number',
-                      partName: detail.part_name || 'No Item Description',
-                      QTY: detail.total_quantity || 'No Quantity',
-                      qtyLabel: detail.pcs_per_kamban || 'No Label',
-                      qtyDelivered: detail.total_quantity || 'No Quantity',
-                      qtyReceived: detail.total_quantity || 'No Quantity',
-                  })) : []
+                  noPackingSlip: dn.no_packing_slip || '-',
               }));
 
           // Set filteredData to match deliveryNote initially
@@ -335,11 +330,12 @@
         <td class="px-2 py-4 text-center">${dn.statusDN}</td>
         <td class="px-2 py-4 text-center">${dn.planDNDate}</td>
         <td class="px-2 py-4 text-center">${dn.receivedDNDate}</td>
+        <td class="px-2 py-4 text-center">${dn.noPackingSlip}</td>
       `;
       tableBody.appendChild(row);
     });
 
-    console.log(`Displayed ${dataToShow.length} rows of data in table`);
+    // console.log(`Displayed ${dataToShow.length} rows of data in table`);
   }
 
   // Function for search

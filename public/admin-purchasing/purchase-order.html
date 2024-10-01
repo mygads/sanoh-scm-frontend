@@ -182,13 +182,9 @@
                       class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
                   </th>
-                  <th data-sort="revisionDate" scope="col"
-                    class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs  text-center border-b border-b-gray-400 cursor-pointer"
-                    onclick="sortTable(4)">
-                    Revision Date
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
-                      class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
-                    <span class="sort-indicator"></span>
+                  <th data-sort="note" scope="col"
+                    class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs  text-center border-b border-b-gray-400 cursor-pointer">
+                    Note
                   </th>
                   <th data-sort="status" scope="col"
                     class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs  text-center border-b border-b-gray-400 cursor-pointer"
@@ -386,7 +382,7 @@
     `;
 
     tableBody.prepend(supplierRow); // Add the selected supplier row at the top
-    console.log('Displayed selected supplier in table:', selectSupplierNew);
+    // console.log('Displayed selected supplier in table:', selectSupplierNew);
   }
 
   // Function to fetch purchase order based on supplier
@@ -399,7 +395,7 @@
   }
 
   const url = `${APIindexpoheader3}/${selectedSupplierId}`;
-  console.log('Fetching URL:', url);
+  // console.log('Fetching URL:', url);
 
   try {
     const response = await fetch(url, {
@@ -411,7 +407,6 @@
     });
 
     console.log('Response status:', response.status);
-    console.log('Response statusText:', response.statusText);
 
     // Check if response is OK (status code in the range 200-299)
     if (response) {
@@ -424,7 +419,7 @@
         return;
       }
 
-      console.log('Response data:', data);
+      // console.log('Response data:', data);
 
       if (data && data.status) {
         displayNotification(data.message, 'success');
@@ -435,7 +430,7 @@
             poDate: po.po_date || '-',
             planDelivery: po.planned_receipt_date || '-',
             poRevision: po.po_revision_no || '-',
-            revisionDate: po.po_revision_date || '-',
+            note: po.note || '-',
             status: po.po_status || '-',
             response: po.response || 'No Action',
           }));
@@ -499,7 +494,7 @@
     }
 
     dataToShow.forEach(po => {
-      console.log('Adding row for PO:', po.noPO);
+      // console.log('Adding row for PO:', po.noPO);
       const tableRow = document.createElement('tr');
       tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
       tableRow.innerHTML = `
@@ -509,14 +504,14 @@
         <td class="px-2 py-4 text-center">${po.poDate}</td>
         <td class="px-2 py-4 text-center">${po.planDelivery}</td>
         <td class="px-2 py-4 text-center">${po.poRevision}</td>
-        <td class="px-2 py-4 text-center">${po.revisionDate}</td>
+        <td class="px-2 py-4 text-center">${po.note}</td>
         <td class="px-2 py-4 text-center">${po.status}</td>
         <td class="text-center ${po.response === 'Accepted' ? 'bg-green-400' : po.response === 'Declined' ? 'bg-red-500' : ''}">${po.response}</td>
       `;
       tableBody.appendChild(tableRow);
     });
 
-    console.log(`Displayed ${dataToShow.length} rows of data in the table`);
+    // console.log(`Displayed ${dataToShow.length} rows of data in the table`);
   }
 
   // Function to search table data

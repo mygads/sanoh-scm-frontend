@@ -352,7 +352,7 @@
     }
 
     try {
-      console.log(`Fetching delivery notes for bpCode: ${noDN}`);
+      // console.log(`Fetching delivery notes for bpCode: ${noDN}`);
       const response = await fetch(`${APIindexdnheader2}/${selectSupplierNew}`, {
         method: 'GET',
         headers: {
@@ -365,12 +365,12 @@
         const data = await response.json();
         
         // Log the raw data to ensure it's being fetched correctly
-        console.log('Raw Delivery notes data received:', data);
+        // console.log('Raw Delivery notes data received:', data);
 
         if (data && data.data && Array.isArray(data.data)) {
           // Map and manipulate your data accordingly
           const details = data.data.map(dn => {
-            console.log('Current DN Object:', dn);
+            // console.log('Current DN Object:', dn);
 
             return {
               noDN: dn.no_dn ? dn.no_dn.toString() : '',
@@ -386,7 +386,7 @@
                   QTY: detail.dn_qty || 0,
                   qtyLabel: detail.dn_snp || '',
                   qtyRequested: detail.dn_qty || 0,
-                  qtyConfirm: (detail.qty_confirm && detail.qty_confirm !== 0) ? detail.qty_confirm : detail.dn_qty, // Updated logic
+                  qtyConfirm: (detail.qty_confirm && detail.qty_confirm !== 0) ? detail.qty_confirm : detail.dn_qty,
                   qtyDelivered: detail.receipt_qty || 0,
                   qtyReceived: detail.receipt_qty || 0,
                   qtyMinus: ((detail.dn_qty || 0) - (detail.receipt_qty || 0)).toString() // Handle undefined dn_qty or receipt_qty
@@ -433,11 +433,11 @@
     const noDN = params.get('noDN');
 
     if (noDN) {
-      console.log('Details array:', filteredData);  // Ensure filteredData is being logged correctly
+      // console.log('Details array:', filteredData);  // Ensure filteredData is being logged correctly
 
       const dn = filteredData.find(dn => dn.noDN === noDN);
 
-      console.log('Delivery Note found:', dn);
+      // console.log('Delivery Note found:', dn);
 
       if (dn) {
         const noPO = dn.noPO || 'No PO provided';

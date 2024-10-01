@@ -363,7 +363,7 @@
         }
 
         const data = await response.json();
-        console.log(`Data fetched for DN:`, data);
+        // console.log(`Data fetched for DN:`, data);
 
         // Ensure data exists and is in expected format
         if (data && data.data && Array.isArray(data.data)) {
@@ -389,7 +389,7 @@
                         QTY: detail.dn_qty || 0,
                         qtyLabel: detail.dn_snp || '',
                         qtyRequested: detail.dn_qty || 0,
-                        qtyConfirm: (detail.qty_confirm !== null && detail.qty_confirm !== undefined) ? detail.qty_confirm : detail.dn_qty, // Updated logic
+                        qtyConfirm: (detail.qty_confirm !== null && detail.qty_confirm !== undefined) ? detail.qty_confirm : detail.dn_qty,
                         qtyDelivered: detail.receipt_qty || 0,
                         qtyReceived: detail.receipt_qty || 0,
                         qtyMinus: ((detail.dn_qty || 0) - (detail.receipt_qty || 0)).toString() // Handle undefined dn_qty or receipt_qty
@@ -413,7 +413,7 @@
   async function updateDNDetails(payload) {
     try {
         // Log the payload being sent
-        console.log(`Updating DN details:`, payload);
+        // console.log(`Updating DN details:`, payload);
 
         const token = localStorage.getItem('accessToken'); // Ensure token is fetched properly
 
@@ -440,7 +440,7 @@
         }
 
         const updatedData = await response.json();
-        console.log(`Successfully updated DN details`, updatedData);
+        // console.log(`Successfully updated DN details`, updatedData);
 
         // Update the UI with the new data
         // Handle UI update for each record if needed
@@ -650,11 +650,11 @@
           updates: updates // Separate updates array
       };
 
-      console.log('Payload to send:', JSON.stringify(payload, null, 2));
+      // console.log('Payload to send:', JSON.stringify(payload, null, 2));
 
         
         // Log the payload to inspect its content before sending
-        console.log('Payload to send:', JSON.stringify(payload));
+        // console.log('Payload to send:', JSON.stringify(payload));
 
         // Example of sending payload to the API
         try {
@@ -682,9 +682,9 @@ function updateButtonState() {
     const hasData = filteredData.length > 0;
     const hasUnconfirmedQty = filteredData.some(detail => !detail.qtyConfirm || detail.qtyConfirm === null);
 
-    console.log('Checking button state...');
-    console.log('Has data:', hasData);
-    console.log('Has unconfirmed quantity:', hasUnconfirmedQty);
+    // console.log('Checking button state...');
+    // console.log('Has data:', hasData);
+    // console.log('Has unconfirmed quantity:', hasUnconfirmedQty);
 
     if (hasData) {
         confirmButton.disabled = false; 
@@ -699,7 +699,7 @@ function updateButtonState() {
         confirmButton.classList.add('hidden');
     }
 
-    console.log('Button state set to:', confirmButton.textContent);
+    // console.log('Button state set to:', confirmButton.textContent);
 }
   
 </script>

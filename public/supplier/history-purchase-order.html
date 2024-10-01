@@ -240,20 +240,10 @@
         // Check if data and data.data exist
         if (data.success && data.data) {
           displayNotification(data.message,'success')
-            historyPurchaseOrder = data.data
-                .filter(po => po.po_status && po.po_status.toLowerCase() === 'closed')  // Filter by status
-                .map(po => ({
-                    noPO: po.po_number ? po.po_number.toString() : 'No PO Number',
-                    poDate: po.po_date || 'No Date Provided',                  
-                    status: po.po_status || 'Unknown Status',
-                    note: po.note || 'Note Unknown',
-                    details: po.detail ? po.detail.map((detail, index) => ({
-                        no: (index + 1).toString(),
-                        partNumber: detail.bp_part_no || 'No Part Number',
-                        partName: detail.item_desc_a || 'No Item Description',
-                        UoM: detail.purchase_unit || 'No UoM',
-                        QTY: detail.po_qty || 'No Quantity'
-                    })) : []
+            historyPurchaseOrder = data.data.map(po => ({
+                    noPO: po.po_number ? po.po_number.toString() : '-',
+                    poDate: po.po_date || '-',                  
+                    status: po.po_status || '-',                         
                 }));
 
             // Set filteredData to match historyPurchaseOrder initially

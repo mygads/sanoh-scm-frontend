@@ -354,9 +354,9 @@
         // console.log('Success:', data.message);
         let historyPurchaseOrder = [];
         historyPurchaseOrder = data.data.map(po => ({
-          noPO: po.po_number ? po.po_number.toString() : 'N/A',
-          poDate: po.po_date || 'Unknown Date',
-          status: po.po_status || 'Unknown Status'
+          noPO: po.po_number ? po.po_number.toString() : '-',
+          poDate: po.po_date || '-',
+          status: po.po_status || '-'
         }));
 
         filteredData = [...historyPurchaseOrder];

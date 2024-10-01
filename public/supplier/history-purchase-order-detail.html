@@ -289,26 +289,24 @@
         console.log("Data fetched:", data);
 
         // Log the data to see the structure
-        data.data.forEach(po => console.log("PO Data:", po));
+        // data.data.forEach(po => console.log("PO Data:", po));
 
         // Check if data and data.data exist
-        if (data.success && data.data) {
-            historyPurchaseOrder = data.data
-                .filter(po => po.po_status && po.po_status.toLowerCase() === 'closed')  // Filter by status
-                .map(po => ({
-                    noPO: po.po_number ? po.po_number.toString() : 'No PO Number',
-                    poDate: po.po_date || '-',                  
-                    status: po.po_status || 'Unknown Status',
-                    note: po.note || '-',  // Check the correct field for the note here
-                    details: po.detail ? po.detail.map((detail, index) => ({
-                        no: (index + 1).toString(),
-                        partNumber: detail.part_number || 'No Part Number',
-                        partName: detail.part_name || 'No Item Description',
-                        UoM: detail.unit || 'No UoM',
-                        QTY: detail.quantity || 'No Quantity',
-                        QTYReceipt: detail.receipt_qty || '',
-                    })) : []
-                }));
+        if (Array.isArray(data.data)) {
+          historyPurchaseOrder = data.data.map(po => ({
+              noPO: po.po_number ? po.po_number.toString() : 'No PO Number',
+              poDate: po.po_date || '-',                  
+              status: po.po_status || 'Unknown Status',
+              note: po.note || '-',  // Check the correct field for the note here
+              details: po.detail ? po.detail.map((detail, index) => ({
+                  no: (index + 1).toString(),
+                  partNumber: detail.part_number || '-',
+                  partName: detail.part_name || '-',
+                  UoM: detail.unit || '-',
+                  QTY: detail.quantity || '',
+                  QTYReceipt: detail.receipt_qty || '',
+              })) : []
+            }));
 
             console.log("Filtered Purchase Orders:", historyPurchaseOrder);
 

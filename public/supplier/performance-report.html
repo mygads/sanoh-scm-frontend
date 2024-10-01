@@ -292,7 +292,7 @@ async function fetchPerformanceReport(bpCode, selectedMonth = null) {
     }
 
     const result = await response.json();
-    console.log('Data listing report:', result); // Debugging
+    // console.log('Data listing report:', result);
 
     if (result.success) {
       displayNotification(result.message,'success')

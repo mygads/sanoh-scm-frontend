@@ -155,10 +155,8 @@
                     Revision No.
                     
                   </th>
-                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer" onclick="sortTable(4)">
-                    Revision Date
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt="" class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
-                    <span class="sort-indicator"></span>
+                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer" >
+                    Note   
                   </th>
                   <th scope="col" class="px-2 py-3 text-center xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs border-b border-b-gray-400 cursor-pointer" onclick="sortTable(5)">
                     Status
@@ -263,19 +261,19 @@
         }
 
         const data = await response.json();
-        console.log("Data fetched:", data);
+        // console.log("Data fetched:", data);
         displayNotification(data.message,'success')
 
         purchaseOrder = data.data.map(po => ({
-            noPO: po.po_no ? po.po_no.toString() : "",
-            poDate: po.po_date || "",
-            planDelivery: po.planned_receipt_date || "",
+            noPO: po.po_no ? po.po_no.toString() : "-",
+            poDate: po.po_date || "-",
+            planDelivery: po.planned_receipt_date || "-",
             poRevision: po.po_revision_no !== null && po.po_revision_no !== undefined ? 
-                `Rev ${po.po_revision_no.toString().padStart(2, '0')}` : "Rev 00",
-            revisionDate: po.po_revision_date || "",
-            status: po.po_status || "",
+                `Rev ${po.po_revision_no.toString().padStart(2, '0')}` : "-",
+            revisionDate: po.po_revision_date || "-",
+            status: po.po_status || "-",
             response: po.response || "",
-            note: po.note || "",
+            note: po.note || "-",
         }));
 
         // Set filteredData to match purchaseOrder initially
@@ -295,7 +293,7 @@
         const updateURL = `${API_updatePOSupplier}${po_no}`;
         const responseBody = JSON.stringify({ response });
 
-        console.log(`Sending request to ${updateURL} with body: ${responseBody}`);
+        // console.log(`Sending request to ${updateURL} with body: ${responseBody}`);
 
         const updateResponse = await fetch(updateURL, {
             method: 'PUT',
@@ -306,14 +304,14 @@
             body: responseBody,
         });
 
-        console.log(`Response status: ${updateResponse.status}`);
+        // console.log(`Response status: ${updateResponse.status}`);
 
         if (!updateResponse.ok) {
             throw new Error(`HTTP error! status: ${updateResponse.status}`);
         }
 
         const result = await updateResponse.json();
-        console.log(`Response updated for PO ${po_no}:`, result);
+        // console.log(`Response updated for PO ${po_no}:`, result);
         displayNotification(result.message,'success')
 
         if (result.status === 'success') {
@@ -370,7 +368,7 @@
             <td class="px-2 py-4 text-center">${row.poDate}</td>
             <td class="px-2 py-4 text-center">${row.planDelivery}</td>
             <td class="px-2 py-4 text-center">${row.poRevision}</td>
-            <td class="px-2 py-4 text-center">${row.revisionDate}</td>
+            <td class="px-2 py-4 text-center">${row.note}</td>
             <td class="px-2 py-4 text-center">${row.status}</td>
             <td class="text-center ${row.response === 'Accepted' ? 'bg-green-400' : row.response === 'Declined' ? 'bg-red-500' : ''}">
                 <div class="flex gap-2 justify-center">
@@ -408,7 +406,7 @@
             });
         } else {
             // If the user cancels, you can handle the cancellation logic here if needed
-            console.log(`${action} action was cancelled.`);
+            // console.log(`${action} action was cancelled.`);
         }
     });
   }

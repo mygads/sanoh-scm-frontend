@@ -159,30 +159,18 @@
             <table class="w-full text-[11px] text-left text-gray-700 dark:text-gray-700">
               <thead class="text-[14px] text-gray-700">
                 <tr>
-                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer"
-                    onclick="sortTable(0)">
-                    No. DN
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
-                      class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
-                    <span class="sort-indicator"></span>
+                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer">
+                    No. DN                    
                   </th>
-                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer"
-                    onclick="sortTable(1)">
-                    No. PO
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
-                      class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
-                    <span class="sort-indicator"></span>
+                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer">
+                    No. PO                    
                   </th>
-                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer"
-                    onclick="sortTable(2)">
-                    Status DN
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
-                      class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
-                    <span class="sort-indicator"></span>
+                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer">
+                    Status DN                    
                   </th>
                   <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer"
                     onclick="sortTable(3)">
-                    Sent Date
+                    Delivery Date
                     <img loading="lazy" src="../assets/icon_sort.svg" alt=""
                       class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
@@ -193,6 +181,9 @@
                     <img loading="lazy" src="../assets/icon_sort.svg" alt=""
                       class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
                     <span class="sort-indicator"></span>
+                  </th>
+                  <th scope="col" class="px-2 py-3 xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs text-center border-b border-b-gray-400 cursor-pointer">
+                    No Packing Slip                    
                   </th>
                 </tr>
               </thead>
@@ -261,14 +252,14 @@
   // let currentPage = 1; // Default to the first page
 
   document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM fully loaded and parsed');
+
   
     // Adjust rows per page based on screen size
     
     //adjustRowsPerPage(); // Atur jumlah data per halaman berdasarkan ukuran layar
 
     window.addEventListener('resize', () => {
-      console.log('Window resized, adjusting table rows per page');
+
       adjustRowsPerPage();
       displayTableData(currentPage);
       updatePagination();
@@ -284,7 +275,7 @@
 
       if (selectedSupplierId) {
         localStorage.setItem('selectedSupplierId', selectedSupplierId); // Menyimpan bpCode ke localStorage
-        console.log('Fetching delivery notes for supplier:', selectedSupplierId);
+        // console.log('Fetching delivery notes for supplier:', selectedSupplierId);
         await fetchHistoryDeliveryNotes(selectedSupplierId); // Memanggil data delivery note berdasarkan supplier yang dipilih
         displaySelectedSupplier(); // Menampilkan supplier yang dipilih di tabel
         displayTableData(currentPage); // Display data for the first page
@@ -310,7 +301,7 @@
     }
 
     try {
-      console.log('Fetching suppliers...');
+      // console.log('Fetching suppliers...');
       const response = await fetch(APIpartner2, {
         method: 'GET',
         headers: {
@@ -321,7 +312,7 @@
 
       if (response.ok) {
         const data = await response.json();
-        console.log('Suppliers data received:', data);
+        // console.log('Suppliers data received:', data);
         if (data.success) {
           populateSupplierDropdown(data.data);
         }  else {
@@ -347,7 +338,7 @@
       supplierSelect.appendChild(option);
     });
 
-    console.log('Supplier dropdown populated');
+    // console.log('Supplier dropdown populated');
     // Re-initialize Select2 after adding options
     $(supplierSelect).select2({
       placeholder: 'Search Supplier',
@@ -371,7 +362,7 @@
     }
 
     try {
-        console.log(`Fetching delivery notes for bpCode: ${bpCode}`);
+        // console.log(`Fetching delivery notes for bpCode: ${bpCode}`);
         const response = await fetch(`${APIdnhistory2}/${bpCode}`, {
             method: 'GET',
             headers: {
@@ -399,25 +390,19 @@
 
         // Parse the JSON data from the response
         const data = await response.json();
-        console.log("Data fetched:", data);
+        // console.log("Data fetched:", data);
 
         // Check if data structure is valid
         if (data && data.data && Array.isArray(data.data)) {
+          displayNotification(data.message,'success');
             const deliveryNote = data.data.map(dn => ({
                 noDN: dn.dn_number ? dn.dn_number.toString() : 'No DN Number',
                 noPO: dn.po_number ? dn.po_number.toString() : 'No PO Number',                  
-                statusDN: dn.dn_status || 'Unknown Status',
+                statusDN: dn.dn_status || '-',
                 planDNDate: dn.send_date || 'Date Unknown',
                 receivedDNDate: dn.receive_date || 'Date Unknown',
-                details: dn.detail ? dn.detail.map((detail, index) => ({
-                    no: (index + 1).toString(),
-                    partNumber: detail.internal_part_number || 'No Part Number',
-                    partName: detail.part_name || 'No Item Description',
-                    QTY: detail.total_quantity || 'No Quantity',
-                    qtyLabel: detail.pcs_per_kamban || 'No Label',
-                    qtyDelivered: detail.total_quantity || 'No Quantity',
-                    qtyReceived: detail.total_quantity || 'No Quantity',
-                })) : []
+                noPackingSlip: dn.no_packing_slip || '-',
+              
             }));
 
             // Set filteredData to match deliveryNote initially
@@ -486,7 +471,7 @@
     supplierRow.innerHTML = ``;
   
     tableBody.prepend(supplierRow); // Add the selected supplier row at the top
-    console.log('Displayed selected supplier in table:', bpCode);
+    // console.log('Displayed selected supplier in table:', bpCode);
   }
 
 
@@ -520,6 +505,7 @@
         <td class="px-2 py-4 text-center">${dn.statusDN}</td>
         <td class="px-2 py-4 text-center">${dn.planDNDate}</td>
         <td class="px-2 py-4 text-center">${dn.receivedDNDate}</td>
+        <td class="px-2 py-4 text-center">${dn.noPackingSlip}</td>
       `;
       tableBody.appendChild(row);
     });
@@ -527,19 +513,6 @@
     console.log(`Displayed ${dataToShow.length} rows of data in table`);
   }
 
-// Function to search table data
-// function searchTable() {
-//   const searchInput = document.getElementById('search-input').value.toLowerCase();
-//   if (!searchInput) {
-//     console.warn('Search input is empty');
-//     return;
-//   }
-
-//   filteredData = deliveryNote.filter(row => row.noDN.toLowerCase().includes(searchInput));
-//   console.log(`Search result: Found ${filteredData.length} matching rows`);
-//   currentPage = 1; // Reset to page 1 after search
-//   displayTableData(currentPage); // Display filtered data
-// }
 
 </script>
 

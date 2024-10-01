@@ -146,35 +146,23 @@
             </div>
 
             <div class="flex flex-wrap gap-[10%] justify-between items-center mt-4 w-full">
-
+              
               <div class="flex gap-5">
-                <!-- No PO -->
-                <!-- <div class="flex gap-[13px] 2xl:gap-10 items-center self-stretch my-auto text-black min-w-[10%]">
-                  <div class="self-stretch my-auto ">No. PO</div>
-                  <div id="poNumber" type="text" class="flex-1 shrink self-stretch px-4 2xl:px-6 py-2 2xl:py-3 my-auto text-center whitespace-nowrap ounded border border-solid border-neutral-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
-                </div> -->
-
                 <!-- No PO -->
                 <div class="flex gap-3 items-center self-stretch my-auto text-black min-w-[10%]">
                   <div class="self-stretch my-auto xl:text-[100%] lg:text-[100%] md:text-[90%] sm:text-[90%] text-[80%]">No. PO</div>
-                  <div id="poNumber"
-                    class="xl:text-[100%] lg:text-[100%] md:text-[90%] sm:text-[90%] text-[80%] flex-1 shrink self-stretch px-4 py-2 my-auto text-center whitespace-nowrap rounded bg-stone-300 min-h-[10%] w-[8%] max-md:px-5">
-                  </div>
+                  <div id="poNumber" class="xl:text-[100%] lg:text-[100%] md:text-[90%] sm:text-[90%] text-[80%] flex-1 shrink self-stretch px-4 py-2 my-auto text-center whitespace-nowrap rounded bg-stone-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
                 </div>
 
-                <!-- Plan Delivery Date -->
-                <div class="flex gap-3 items-center self-stretch my-auto text-black min-w-[10%]">
+                <div class="flex gap-3 items-center self-stretch my-auto xl:text-[100%] lg:text-[100%] md:text-[90%] sm:text-[90%] text-[80%] text-black min-w-[10%]">
                   <div class="self-stretch my-auto ">Plan Delivery Date</div>
-                  <div id="planDelivery"
-                    class="flex-1 shrink self-stretch px-4 py-2 my-auto text-center whitespace-nowrap rounded bg-stone-300 min-h-[10%] w-[8%] max-md:px-5">
-                  </div>
+                  <div id="planDelivery" class="xl:text-[100%] lg:text-[100%] md:text-[90%] sm:text-[90%] text-[80%] flex-1 shrink self-stretch px-4 py-2 my-auto text-center whitespace-nowrap rounded bg-stone-300 min-h-[10%] w-[8%] max-md:px-5" ></div>
                 </div>
               </div>
-              <div
-                class="flex gap-3 xl:text-[100%] lg:text-[100%] md:text-[90%] sm:text-[90%] text-[80%] items-center self-stretch my-auto text-white">
-                <a href="" id="print-dn-link" class="flex gap-2 mt-4  items-center self-stretch px-6 py-2 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5" onclick="updatePrintButton(noDN)">
-                  <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto xl:w-4 lg:w-4 md:w-3 sm:w-3 w-3 aspect-square" />
-                  <span class="flex-1 shrink self-stretch my-auto basis-0 xl:text-[100%] lg:text-[100%] md:text-[90%] sm:text-[90%] text-[100%]">Print DN </span>
+              <div class="flex gap-3 xl:mt-0 lg:mt-0 md:mt-0 sm:mt-2 mt-2 items-center self-stretch my-auto text-white 2xl:min-w-[240px] text-[10px] 2xl:text-lg">
+                <a href="" id="print-dn-link" class="xl:text-[100%] lg:text-[100%] md:text-[90%] sm:text-[90%] text-[80%] flex gap-2  items-center self-stretch px-6 py-2 my-auto bg-blue-500 rounded cursor-pointer pointer-events-auto max-md:px-5" onclick="updatePrintButton(noDN)">
+                  <img loading="lazy" src="../assets/icon_print.png" alt="" class="object-contain shrink-0 self-stretch my-auto  w-4 aspect-square" />
+                  <span class="flex-1 shrink self-stretch my-auto xl:text-[100%] lg:text-[100%] md:text-[90%] sm:text-[90%] text-[90%]basis-0">Print DN </span>
                 </a>
               </div>
             </div>
@@ -333,24 +321,24 @@
         }
 
         const data = await response.json();
-        console.log("Data fetched:", data);
+        // console.log("Data fetched:", data);
 
         if (data.success && data.data) {
           details = data.data
               .map(dn => ({
                   noDN: dn.dn_number ? dn.dn_number.toString() : 'No DN Number',
                   noPO: dn.po_number ? dn.po_number.toString() : 'No PO Number',                  
-                  statusDN: dn.dn_status || 'Unknown Status',
+                  statusDN: dn.dn_status || '-',
                   planDNDate: dn.send_date || 'Date Unknown',
                   receivedDNDate: dn.receive_date || 'Date Unknown',
                   details: dn.detail ? dn.detail.map((detail, index) => ({
                       no: (index + 1).toString(),
-                      partNumber: detail.internal_part_number || 'No Part Number',
-                      partName: detail.part_name || 'No Item Description',
-                      QTY: detail.total_quantity || 'No Quantity',
-                      qtyLabel: detail.pcs_per_kamban || 'No Label',
-                      qtyDelivered: detail.total_quantity || 'No Quantity',
-                      qtyReceived: detail.total_quantity || 'No Quantity',
+                      partNumber: detail.internal_part_number || '-',
+                      partName: detail.part_name || '-',
+                      QTY: detail.total_quantity || '',
+                      qtyLabel: detail.pcs_per_kamban || '',
+                      qtyDelivered: detail.total_quantity || '',
+                      qtyReceived: detail.total_quantity || '',
                   })) : []
               }));
 
@@ -378,12 +366,12 @@
 
     if (noDN) {
         // Debug: Check if `details` array is populated
-        console.log('Details array:', details);
+        // console.log('Details array:', details);
 
         const dn = details.find(dn => dn.noDN === noDN);
 
         // Debug: Check if the correct Delivery Note object is found
-        console.log('Delivery Note found:', dn);
+        // console.log('Delivery Note found:', dn);
 
         if (dn) {
             const noPO = dn.noPO || 'No PO provided';
