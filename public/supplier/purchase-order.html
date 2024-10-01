@@ -246,7 +246,7 @@
   });
 
   async function fetchPurchaseOrders() {
-    displayNotification("Waiting to get PO Data",'warning')
+    displayNotification("Waiting get data PO from server",'warning')
 
     try {
         const response = await fetch(`${API_indexPOSupplier}${bpCode}`, {

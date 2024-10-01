@@ -216,6 +216,7 @@
   
   // Function to fetch purchase orders from the API
   async function fetchHistoryPurchaseOrders() {
+    displayNotification("Waiting for get data history PO",'warning')
     const token = localStorage.getItem('accessToken');
 
     try {
