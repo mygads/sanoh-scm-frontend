@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!-- Ensure proper rendering and touch zooming on mobile devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Include the Poppins font from Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <title>Purchase Order PT Sanoh Indonesia</title>
     <link rel="icon" type="image/png" href="../../assets/icon_sanoh.png">
@@ -16,12 +18,12 @@
     
         .container {
             width: 210mm;
-            height: auto;
-            max-width: 200mm;
+            min-height: 297mm; /* A4 page height */
             padding: 20px;
-            background-color: #fff; /* Latar belakang putih */
+            background-color: #fff;
             box-sizing: border-box;
             position: relative;
+            margin: auto;
         }
     
         .header, .footer {
@@ -50,18 +52,17 @@
             margin-right: 250px;
         }
 
-         /* Page Info: Position at top-right */
-         .page-info {
+        .page-info {
             position: absolute;
             top: 10px;
-            right: 10px;
+            right: 20px;
             font-size: 12px;
             font-weight: bold;
         }
-
-        .page-break {
+    
+        /* .page-break {
             page-break-before: always;
-        }
+        } */
     
         .details {
             display: grid;
@@ -91,7 +92,6 @@
             flex-direction: column;
             align-items: flex-end;
             text-align: right;
-            line-height: 1.2;
             margin: 0;
             padding: 0;
         }
@@ -100,6 +100,7 @@
             display: flex;
             margin: 0;
             padding: 0;
+            line-height: 1.5;
         }
 
         .details-right .label {
@@ -126,12 +127,12 @@
         }
     
         table, th, td {
-            border: 1px solid #e9e6e6;
+            border: 1px solid #000000;
             padding: 4px 6px;
             word-wrap: break-word;
             white-space: normal;
             text-align: center;
-            font-size: 7px; /* Ukuran font diubah menjadi 7px */
+            font-size: 10px;
         }
     
         th {
@@ -145,7 +146,7 @@
         td {
             vertical-align: middle;
             background-color: #ffffff;
-            border: 1px solid #e6e1e1;
+            border: 1px solid #000000;
             border-bottom: #ffffff;
             border-top: #ffffff;
         }
@@ -157,12 +158,6 @@
         }
     
         table td:nth-child(2) {
-            width: 3%;
-            font-size: 7px;
-            text-align: right;
-        }
-    
-        table td:nth-child(3) {
             width: 20%;
             font-size: 7px;
             border-left: #ffffff;
@@ -170,22 +165,28 @@
             text-align: left;
         }
     
-        table td:nth-child(4) {
+        table td:nth-child(3) {
             width: 10%;
             font-size: 7px;
-            text-align: left;
+            text-align: center;
         }
     
-        table td:nth-child(5) {
+        table td:nth-child(4) {
             width: 5%;
             font-size: 7px;
             text-align: right;
         }
     
-        table td:nth-child(6) {
+        table td:nth-child(5) {
             width: 5%;
             font-size: 7px;
-            text-align: center;
+            text-align: left;
+        }
+    
+        table td:nth-child(6) {
+            width: 10%;
+            font-size: 7px;
+            text-align: right;
         }
     
         table td:nth-child(7) {
@@ -194,14 +195,8 @@
             text-align: right;
         }
     
-        table td:nth-child(8) {
-            width: 10%;
-            font-size: 7px;
-            text-align: right;
-        }
-    
         .summary-row td {
-            border-top: 2px solid #eaeaea;
+            border-top: 2px solid #000000;
             font-weight: bold;
             min-width: 10px;
             padding: 8px;
@@ -210,13 +205,12 @@
         }
     
         .summary-row .summary-value {
-            background-color: #ffffff; /* Opsional: latar belakang untuk nilai */
-            border-top: 2px solid #eaeaea;
-            font-size: 9px; /* Ukuran font untuk nilai */
-            text-align: right; /* Pastikan nilai rata kanan */
-            padding-right: 10px; /* Menambahkan padding kanan untuk memberi jarak */
+            background-color: #ffffff;
+            font-size: 9px;
+            text-align: right;
+            padding-right: 10px;
         }
-
+    
         .footer {
             margin-top: 20px;
             font-family: Arial, sans-serif;
@@ -231,7 +225,7 @@
         }
     
         .label {
-            width: 150px; /* Adjust this width for better alignment */
+            width: 150px;
             text-align: left;
         }
     
@@ -248,37 +242,59 @@
             margin-bottom: 5px;
         }
     
-        /* Penyesuaian khusus untuk browser berbasis WebKit (Safari & Chrome) */
-        @media screen and (-webkit-min-device-pixel-ratio: 0) {
-            .container {
-                width: 209.9mm;
-                height: 296.9mm;
-            }
-        }
-    
-        /* Penyesuaian khusus untuk Safari */
-        @supports (-webkit-touch-callout: none) {
-            .container {
-                width: 209.9mm; /* Penyesuaian untuk Safari */
-                height: 296.9mm; /* Penyesuaian untuk Safari */
-            }
-        }
-
-        /* Print-specific styles */
+        /* Adjustments for print */
         @media print {
-            .page-info {
-                display: block !important;
+            body {
+                margin: 0;
+                padding: 0;
+                background-color: #fff;
             }
-
-            footer {
-                display: none;
+    
+            .container {
+                width: 210mm;
+                min-height: 297mm;
+                padding: 20mm;
+                margin: 0;
             }
-            
+    
+            .page {
+                page-break-after: always;
+            }
+    
+            .page:last-child {
+                page-break-after: auto;
+            }
+    
             .page-break {
                 page-break-before: always;
             }
+    
+            .header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 100px; /* Adjust as per your header height */
+                background-color: #fff;
+            }
+    
+            .page-content {
+                margin-top: 120px; /* Adjust based on header height */
+            }
+    
+            .footer {
+                position: fixed;
+                bottom: 20mm;
+                left: 0;
+                right: 0;
+            }
+    
+            .page-info {
+                position: fixed;
+                top: 10mm;
+                right: 10mm;
+            }
         }
-
     </style>
 
 </head>
@@ -288,12 +304,15 @@
 <!-- Page Content Container -->
 <div id="page-content"></div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+<!-- Include html2pdf.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
+<!-- Include your API script if needed -->
 <script src="../../api.js"></script>
+<!-- Include your custom script if needed -->
 <script src="../../script.js"></script>
-<script>
 
+<script>
 // Retrieve the noPO from the URL
 const noPO = getQueryParams();
 
@@ -304,15 +323,11 @@ if (!noPO || noPO.trim() === "" || noPO === 'undefined' || noPO === null) {
 } else {
     // If noPO is valid, fetch and display the Purchase Order data
     fetchPurchaseOrderData(noPO).then(data => {
-    renderPurchaseOrder(data);
-});
+        renderPurchaseOrder(data);
+    });
 }
 
-// Fetch and render data
-// fetchPurchaseOrderData(noPO).then(data => {
-//     renderPurchaseOrder(data);
-// });
-
+// Function to get query parameters from the URL
 function getQueryParams() {
     const params = new URLSearchParams(window.location.search);
     const noPO = params.get('noPO');  // Retrieve noPO from the URL
@@ -368,7 +383,8 @@ async function fetchPurchaseOrderData(noPO) {
                 attn: poData.data[0].attn,
                 printed_date: poData.data[0].printed_date,
                 ppn: poData.data[0].ppn,
-                total: poData.data[0].total
+                total: poData.data[0].total,
+                delivery: poData.data[0].delivery,
             };
 
             const details = poData.data[0].detail ? poData.data[0].detail.map(item => ({
@@ -400,9 +416,9 @@ async function fetchPurchaseOrderData(noPO) {
 function calculateDeliveryTerm(po_date, planned_receipt_date) {
     const date1 = new Date(po_date);
     const date2 = new Date(planned_receipt_date);
-    const diffTime = Math.abs(date2 - date1);
+    const diffTime = date2 - date1;
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays;
+    return diffDays + ' days';
 }
 
 // Function to concatenate address
@@ -410,142 +426,89 @@ function concatAddress(address) {
     return address || 'N/A';
 }
 
-// Render table content for the purchase order
-function renderTable(data, items) {
-    let pageContent = '';
-    let rowsPerPage = 11;
-    var subtotal = 0;
+// Render header
+function renderHeader(data) {
+    return `
+        <div class="header">
+            <div class="logo">
+                <img src="../../assets/logo_sanoh_address.png" alt="Sanoh Logo">
+            </div>
+            <div class="company-info">
+                <h3>Purchase Order</h3>
+            </div>
+            <div class="page-info">
+                <span class="page-number"></span>
+            </div>             
+        </div>
+    `;
+}
 
-    items.forEach((item, index) => {
-        if (index % rowsPerPage === 0) {
-            if (index !== 0) {
-                pageContent += `</tbody></table></div>`;
-            }
-            pageContent += `
-                <div class="container">
-                    <div class="header">
-                        <div class="logo">
-                            <img src="../../assets/logo_sanoh_address.png" alt="Sanoh Logo">
-                        </div>
-                        <div class="company-info">
-                            <h3>Purchase Order</h3>
-                        </div>
-                        <div class="page-info">
-                            <span class="page-number"></span>
-                        </div>             
-                    </div>
-                    <div class="details">
-                        <div class="details-left">
-                            <div><strong>To</strong> <span>: <strong>${data.supplier_name}</strong></span></div>
-                            <div><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>${data.supplier_code}</strong></span></div>
-                            <div><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>${data.supplier_address}</strong></span></div>
-                            <br>
-                            <div><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Phone Number: ${data.phone_number}</span></div>
-                            <div><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fax Number: ${data.fax_number}</span></div>
-                            <br>
-                            <div><strong>Attn</strong> <span>: ${data.attn}</span></div>
-                            <br>
-                            <div><span>Please supply the following</span></div>
-                            <br>
-                        </div>
+// Render details
+function renderDetails(data) {
+    return `
+        <div class="details">
+            <div class="details-left">
+                <div><strong>To</strong> <span>: <strong>${data.supplier_name}</strong></span></div>
+                <div><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>${data.supplier_code}</strong></span></div>
+                <div><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>${data.supplier_address}</strong></span></div>
+                <br>
+                <div><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Phone Number: ${data.phone_number}</span></div>
+                <div><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fax Number: ${data.fax_number}</span></div>
+                <br>
+                <div><strong>Attn</strong> <span>: ${data.attn}</span></div>
+                <br>
+                <div><span>Please supply the following</span></div>
+                <br>
+            </div>
 
-                        <div class="details-right">
-                            <div class="row">
-                                <div class="label">P/O NO</div>
-                                <div class="value">: ${data.po_number}</div>
-                            </div>
-                            <div class="row">
-                                <div class="label">Date</div>
-                                <div class="value">: ${data.po_date}</div>
-                            </div>
-                            <div class="row">
-                                <div class="label">P/O Type</div>
-                                <div class="value">: ${data.po_type}</div>
-                            </div>
-                            <div class="row">
-                                <div class="label">PR</div>
-                                <div class="value">: ${data.pr_no}</div>
-                            </div>
-                            <div class="row">
-                                <div class="label">Planned Receipt</div>
-                                <div class="value">: ${data.planned_receipt_date}</div>
-                            </div>
-                            <div class="row">
-                                <div class="label">Delivery Terms</div>
-                                <div class="value">: ${data.delivery_term}</div>
-                            </div>
-                            <div class="row">
-                                <div class="label">Currency</div>
-                                <div class="value">: ${data.currency}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Seq</th>
-                                <th>Description <br>Part No.</th>
-                                <th>Delivery Date</th>
-                                <th>Qty</th>
-                                <th>Unit</th>
-                                <th>Unit Price</th>
-                                <th>Amount</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                    `;
-        }
+            <div class="details-right">
+                <div class="row">
+                    <div class="label">P/O NO</div>
+                    <div class="value">: ${data.po_number}</div>
+                </div>
+                <div class="row">
+                    <div class="label">Date</div>
+                    <div class="value">: ${data.po_date}</div>
+                </div>
+                <div class="row">
+                    <div class="label">P/O Type</div>
+                    <div class="value">: ${data.po_type}</div>
+                </div>
+                <div class="row">
+                    <div class="label">PR</div>
+                    <div class="value">: ${data.pr_no}</div>
+                </div>
+                <div class="row">
+                    <div class="label">Planned Receipt</div>
+                    <div class="value">: ${data.planned_receipt_date}</div>
+                </div>
+                <div class="row">
+                    <div class="label">Currency</div>
+                    <div class="value">: ${data.currency}</div>
+                </div>
+            </div>
+        </div>
+    `;
+}
 
-        // Add item rows
-        pageContent += `
-            <tr>
-                <td>${index + 1}</td>
-                <td>${item.seq_no}</td>
-                <td>${item.part_name} <br> ${item.part_number}</td>
-                <td>${item.delivery_date}</td>
-                <td>${item.quantity}</td>
-                <td>${item.unit}</td>
-                <td>${item.unit_price}</td>
-                <td>${item.amount}</td>
-            </tr>`;
-    });
-
-    // Add subtotal, PPN, and total
-    if (items.length > 0) {
-        pageContent += `
-        <tr>
-            <th colspan="6"></th>
-            <th style="text-align: right;">Subtotal</th>
-            <th style="text-align: right;">${data.total_amount}</th>
-        </tr>
-        <tr>
-            <th colspan="6"></th>
-            <th style="text-align: right;">PPN 11%</th>
-            <th style="text-align: right;">${data.ppn}</th>
-        </tr>
-        <tr>
-            <th colspan="6"></th>
-            <th style="text-align: right;">Total</th>
-            <th style="text-align: right;">${data.total}</th>
-        </tr>
-
-            </tbody>
-            </table>
-            <div class="terms" style="margin-top: 20px;">
+// Render footer
+function renderFooter(data) {
+    return `
+        <div class="terms" style="margin-top: 20px;">
             <div style="display: flex; margin-bottom: 5px;">
                 <div style="min-width: 100px; font-weight: bold;">Note</div>
                 <div style="min-width: 10px;">:</div>
-                <div>${data.note}</div>
+                <div>${data.note || ''}</div>
             </div>
             <div style="display: flex; margin-bottom: 5px;">
                 <div style="min-width: 100px; font-weight: bold;">Delivery</div>
                 <div style="min-width: 10px;">:</div>
+                <div>${data.delivery || ''}</div>
             </div>
             <div style="display: flex; margin-bottom: 5px;">
                 <div style="min-width: 100px; font-weight: bold;">Terms</div>
                 <div style="min-width: 10px;">:</div>
-                <div>${data.terms}</div>
+                <div>${data.terms || ''}</div>
             </div>
             <div style="display: flex;">
                 <div style="min-width: 100px; font-weight: bold;">Delivery Place</div>
@@ -554,60 +517,157 @@ function renderTable(data, items) {
                     PT. SANOH INDONESIA <br>
                     JL. INTI II BLOK C4 NO. 10 KAWASAN INDUSTRI HYUNDAI, <br>
                     LEMAH ABANG - BEKASI 17750 <br> 
-                    <div>${data.phone_number} ${data.fax_number}</div>
+                    <div>${data.phone_number || ''} ${data.fax_number || ''}</div>
                 </div>
             </div>
         </div>
         <!-- Signature Section -->
-    <div style="display: flex; justify-content: space-between; margin-top: 100px;">
-        <div style="text-align: left; font-size: 12px;">
-            <p>Accepted and Confirmed</p>
-            <p>${data.supplier_name}</p>
-        </div>
+        <div class="signature-section">
+            <div style="display: flex; justify-content: space-between; margin-top: 50px;">
+                <div style="text-align: left; font-size: 12px;">
+                    <p>Accepted and Confirmed</p>
+                    <p>${data.supplier_name || ''}</p>
+                </div>
 
-        <table style="border-collapse: collapse; text-align: center; width: 60%;">
-            <thead>
+                <table style="border-collapse: collapse; text-align: center; width: 60%;">
+                    <thead>
+                        <tr>
+                            <th style="border: 1px solid rgb(222, 222, 222); width: 33%;">Prepared</th>
+                            <th style="border: 1px solid rgb(222, 222, 222); width: 33%;">Checked</th>
+                            <th style="border: 1px solid rgb(222, 222, 222); width: 33%;">Approved</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="border: 1px solid rgb(222, 222, 222); height: 100px;"></td>
+                            <td style="border: 1px solid rgb(222, 222, 222);"></td>
+                            <td style="border: 1px solid rgb(222, 222, 222);"></td>                                
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid rgb(222, 222, 222);"></td>
+                            <td style="border: 1px solid rgb(222, 222, 222);">FADLI YUSRAL</td>
+                            <td style="border: 1px solid rgb(222, 222, 222);">MISBAHUL MUNIR</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid rgb(222, 222, 222);">Purchasing</td>
+                            <td style="border: 1px solid rgb(222, 222, 222);">Dept. Manager</td>
+                            <td style="border: 1px solid rgb(222, 222, 222);">President Director</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    `;
+}
+
+// Render table
+function renderTable(data, items) {
+    let pageContent = '';
+    const rowsPerPage = 20;
+    const totalPages = Math.ceil(items.length / rowsPerPage) || 1;
+
+    for (let pageIndex = 0; pageIndex < totalPages; pageIndex++) {
+        const startIndex = pageIndex * rowsPerPage;
+        const endIndex = Math.min(startIndex + rowsPerPage, items.length);
+        const pageItems = items.slice(startIndex, endIndex);
+
+        pageContent += `
+            <div class="container page">
+                ${renderHeader(data)}
+                ${renderDetails(data)}
+                <table class="table-page ${pageIndex === totalPages - 1 ? 'last-page' : ''}">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Description <br>Part No.</th>
+                            <th>Delivery Date</th>
+                            <th>Qty</th>
+                            <th>Unit</th>
+                            <th>Unit Price</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        `;
+
+        // Add rows for this page
+        pageItems.forEach((item, index) => {
+            const rowNumber = startIndex + index + 1;
+            pageContent += `
                 <tr>
-                    <th style="border: 1px solid rgb(222, 222, 222); width: 33%;">Prepared</th>
-                    <th style="border: 1px solid rgb(222, 222, 222); width: 33%;">Checked</th>
-                    <th style="border: 1px solid rgb(222, 222, 222); width: 33%;">Approved</th>
+                    <td>${rowNumber}</td>
+                    <td>${item.part_name || ''} <br> ${item.part_number || ''}</td>
+                    <td>${item.delivery_date || ''}</td>
+                    <td>${item.quantity || ''}</td>
+                    <td>${item.unit || ''}</td>
+                    <td>${item.unit_price || ''}</td>
+                    <td>${item.amount || ''}</td>
                 </tr>
-            </thead>
-            <tbody>
+            `;
+        });
+
+        // If last page, add subtotal, PPN, total
+        if (pageIndex === totalPages -1) {
+            pageContent += `
                 <tr>
-                    <td style="border: 1px solid rgb(222, 222, 222); height: 100px; width: 22%;"></td>
-                    <td style="border: 1px solid rgb(222, 222, 222); width: 22%;"></td>
-                    <td style="border: 1px solid rgb(222, 222, 222); width: 22%;"></td>                                
+                    <th colspan="5"></th>
+                    <th style="text-align: right;">Subtotal</th>
+                    <th style="text-align: right;">${data.total_amount || ''}</th>
                 </tr>
                 <tr>
-                    <td style="border: 1px solid rgb(222, 222, 222); width: 33%; text-align: center;"></td>
-                    <td style="border: 1px solid rgb(222, 222, 222); width: 33%; text-align: center;">FADLI YUSRAL</td>
-                    <td style="border: 1px solid rgb(222, 222, 222); width: 33%; text-align: center;">MISBAHUL MUNIR</td>
+                    <th colspan="5"></th>
+                    <th style="text-align: right;">PPN 11%</th>
+                    <th style="text-align: right;">${data.ppn || ''}</th>
                 </tr>
                 <tr>
-                    <td style="border: 1px solid rgb(222, 222, 222); width: 33%; text-align: center;">Purchasing</td>
-                    <td style="border: 1px solid rgb(222, 222, 222); width: 33%; text-align: center;">Dept. Manager</td>
-                    <td style="border: 1px solid rgb(222, 222, 222); width: 33%; text-align: center;">President Director</td>
+                    <th colspan="5"></th>
+                    <th style="text-align: right;">Total</th>
+                    <th style="text-align: right;">${data.total || ''}</th>
                 </tr>
-            </tbody>
-        </table>
-        </div>`;
+            `;
+        }
+
+        // Close table
+        pageContent += `
+                    </tbody>
+                </table>
+        `;
+
+        // If last page, add footer
+        if (pageIndex === totalPages -1) {
+            pageContent += `
+                ${renderFooter(data)}
+            `;
+        }
+
+        pageContent += `
+            </div>
+        `;
+
+        // Add page break if not last page
+        if (pageIndex !== totalPages -1) {
+            pageContent += `
+                <div class="page-break"></div>
+            `;
+        }
     }
 
     return pageContent;
 }
 
+// Generate PDF
 function generatePDF(poNumber) {
     // Choose the element that our PDF will be generated from.
     const element = document.getElementById('page-content');
 
     // Define the options for the PDF generation
     const opt = {
-        margin:       [0, 2, 0, 2], // top, left, bottom, right
+        margin:       0, // top, left, bottom, right
         filename:     poNumber ? `PurchaseOrder_${poNumber}.pdf` : 'PurchaseOrder.pdf',
         image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2 }, // higher scale for better quality
-        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        html2canvas:  { scale: 2, useCORS: true }, // higher scale for better quality
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
     };
 
     // Generate the PDF and trigger the download
@@ -620,7 +680,7 @@ function generatePDF(poNumber) {
 function renderPurchaseOrder(data) {
     if (!data) {
         console.error("No data to render");
-        document.getElementById('page-content').innerHTML = "<p>No purchase order data found please logout.</p>";
+        document.getElementById('page-content').innerHTML = "<p>No purchase order data found. Please try again.</p>";
         return;
     }
 
@@ -631,11 +691,11 @@ function renderPurchaseOrder(data) {
     document.getElementById('page-content').innerHTML = pageContent;
 
     // Add page numbers
-    const containers = document.querySelectorAll('.container');
-    containers.forEach((container, index) => {
-        const pageNumberElement = container.querySelector('.page-number');
+    const pages = document.querySelectorAll('.page');
+    pages.forEach((page, index) => {
+        const pageNumberElement = page.querySelector('.page-number');
         if (pageNumberElement) {
-            pageNumberElement.textContent = `Page ${index + 1}/${containers.length}`;
+            pageNumberElement.textContent = `Page ${index + 1} of ${pages.length}`;
         }
     });
 

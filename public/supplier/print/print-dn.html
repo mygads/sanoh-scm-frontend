@@ -20,7 +20,6 @@
         .container {
             width: 210mm;
             height: auto;
-            max-width: 200mm;
             padding: 20px;
             background-color: #fff; /* Latar belakang putih */
             box-sizing: border-box;
@@ -31,6 +30,7 @@
             display: flex;
             justify-content: space-between; /* Atur elemen dalam header */
             align-items: center;
+            margin-top: 20px;
             margin-bottom: 20px;
             border: 1px solid #000; /* Border di sekitar header */
             padding: 10px;
@@ -280,12 +280,12 @@
             @page {
                 margin-left: 15mm;
                 margin-right: 15mm;
-                margin-top: 10mm;
                 margin-bottom: 10mm;
             }
 
             .header {
                 display: table-header-group;
+                padding-top: 0px;
             }
 
             body, .container {
@@ -314,7 +314,6 @@
                 page-break-before: always;
             }
 
-            /* Fix note and signature at the footer of the last page */
             .note, .signature-section {
                 position: absolute;
                 bottom: 0;
@@ -465,20 +464,20 @@
     }
 
     function renderHeader(header) {
-        return `
-            <div class="header">
-                <div class="logo">
-                    <img src="../../assets/logo-sanoh.png" alt="Sanoh Logo">
-                </div>
-                <div class="company-info">
-                    <p><b>PT. SANOH INDONESIA</b> <br>Jl. Inti II, Blok C-4 No.10, Kawasan Industri Hyundai, Cikarang, Kab. Bekasi<br>
-                        Phone +62 21 89907963</p>
-                </div>
-                <div class="delivery-note">
-                    <h3>DELIVERY NOTE<br><span id="dnNumber">${header.dn_number || 'N/A'}</span></h3>
-                </div>
+    return `
+        <header class="header">
+            <div class="logo">
+                <img src="../../assets/logo-sanoh.png" alt="Sanoh Logo">
             </div>
-        `;
+            <div class="company-info">
+                <p><b>PT. SANOH INDONESIA</b> <br>Jl. Inti II, Blok C-4 No.10, Kawasan Industri Hyundai, Cikarang, Kab. Bekasi<br>
+                    Phone +62 21 89907963</p>
+            </div>
+            <div class="delivery-note">
+                <h3>DELIVERY NOTE<br><span id="dnNumber">${header.dn_number || 'N/A'}</span></h3>
+            </div>
+        </header>
+    `;
     }
 
     function renderDetails(header) {
@@ -579,23 +578,18 @@
     function renderTable(data, items) {
         let pageContent = '';
         const header = data || {};
-        let rowsPerPage = 20;
+        const rowsPerPage = 20;
+        const totalPages = Math.ceil(items.length / rowsPerPage) || 1; // Ensure at least one page
 
-        console.log('API Response:', data);
-
-        items.forEach((item, index) => {
-            // Cek jika ini adalah awal dari halaman baru
-            if (index % rowsPerPage === 0) {
-                if (index !== 0) {
-                    // Tutup tabel dan tambahkan page break
-                    pageContent += `</tbody></table><div class="page-break"></div>`;
-                }
-                // Tambahkan header, detail, dan buka tabel baru
-                pageContent += `
+        // If no items, handle accordingly
+        if (items.length === 0) {
+            pageContent += `
+                <div class="page">
                     ${renderHeader(header)}
                     ${renderDetails(header)}
-                    <table>
+                    <table class="table-page last-page">
                         <thead>
+                            <!-- Table headers here -->
                             <tr>
                                 <th id="no-1" rowspan="2">No.</th>
                                 <th id="supplier-part-no-1" colspan="1">Supplier Part No.</th>
@@ -613,68 +607,92 @@
                             </tr>
                         </thead>
                         <tbody>
-                `;
-            }
-
-            // Menambahkan item ke tabel
-            pageContent += `
-                <tr>
-                    <td>${index + 1}</td>
-                    <td><b>${item.supplier_part_number || 'N/A'}</b><br>${item.internal_part_number || 'N/A'}</td>
-                    <td>${item.part_name || 'N/A'}</td>
-                    <td>${item.pcs_per_kamban || '0'}</td>
-                    <td>${item.no_of_kamban || '0'}</td>
-                    <td>${item.total_quantity || '0'}</td>
-                    <td>${item.qty_confirm || ''}</td>
-                    <td>${item.confirmation_sanoh || ''}</td>
-                    <td>${item.box_quantity || '0'}</td>
-                </tr>
+                            <tr><td colspan="9">No items found</td></tr>
+                        </tbody>
+                    </table>
+                    ${renderSignatureSection()}
+                </div>
             `;
-        });
+        } else {
+            // Loop over each page
+            for (let pageIndex = 0; pageIndex < totalPages; pageIndex++) {
+                const startIndex = pageIndex * rowsPerPage;
+                const endIndex = Math.min(startIndex + rowsPerPage, items.length);
+                const pageItems = items.slice(startIndex, endIndex);
 
-        // Tutup tabel terakhir
-        if (items.length > 0) {
-            pageContent += `</tbody></table>`;
-        }
+                pageContent += `
+                    <div class="page">
+                        ${renderHeader(header)}
+                        ${renderDetails(header)}
+                        <table class="table-page ${pageIndex === totalPages - 1 ? 'last-page' : ''}">
+                            <thead>
+                                <tr>
+                                    <th id="no-1" rowspan="2">No.</th>
+                                    <th id="supplier-part-no-1" colspan="1">Supplier Part No.</th>
+                                    <th id="part-name-1" rowspan="2">Part Name</th>
+                                    <th id="pcs-kbn-1" rowspan="2">Pcs/Kbn</th>
+                                    <th id="no-of-kbn-1" rowspan="2">No of Kbn</th>
+                                    <th id="total-qty-1" rowspan="2">Total Qty</th>
+                                    <th id="confirmation-1" colspan="2">Confirmation</th>
+                                    <th id="box-qty-1" rowspan="2">Box Qty</th>
+                                </tr>
+                                <tr>
+                                    <th id="internal-part-no-1">Internal Part No.</th>
+                                    <th id="supp-1">Supp.</th>
+                                    <th id="sanoh-1">Sanoh</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
 
-        // Jika tidak ada item, tampilkan pesan kosong
-        if (items.length === 0) {
-            pageContent = `
-                ${renderHeader(header)}
-                ${renderDetails(header)}
-                <table>
-                    <thead>
+                // Add rows for this page
+                pageItems.forEach((item, index) => {
+                    const rowNumber = startIndex + index + 1;
+                    pageContent += `
                         <tr>
-                            <th id="no-1" rowspan="2">No.</th>
-                            <th id="supplier-part-no-1" colspan="1">Supplier Part No.</th>
-                            <th id="part-name-1" rowspan="2">Part Name</th>
-                            <th id="pcs-kbn-1" rowspan="2">Pcs/Kbn</th>
-                            <th id="no-of-kbn-1" rowspan="2">No of Kbn</th>
-                            <th id="total-qty-1" rowspan="2">Total Qty</th>
-                            <th id="confirmation-1" colspan="2">Confirmation</th>
-                            <th id="box-qty-1" rowspan="2">Box Qty</th>
+                            <td>${rowNumber}</td>
+                            <td><b>${item.supplier_part_number || 'N/A'}</b><br>${item.internal_part_number || 'N/A'}</td>
+                            <td>${item.part_name || 'N/A'}</td>
+                            <td>${item.pcs_per_kamban || '0'}</td>
+                            <td>${item.no_of_kamban || '0'}</td>
+                            <td>${item.total_quantity || '0'}</td>
+                            <td>${item.qty_confirm || ''}</td>
+                            <td>${item.confirmation_sanoh || ''}</td>
+                            <td>${item.box_quantity || '0'}</td>
                         </tr>
-                        <tr>
-                            <th id="internal-part-no-1">Internal Part No.</th>
-                            <th id="supp-1">Supp.</th>
-                            <th id="sanoh-1">Sanoh</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td colspan="9">No items found</td></tr>
-                    </tbody>
-                </table>`;
-        }
+                    `;
+                });
 
-        // Tambahkan note dan signature section hanya pada halaman terakhir
-        pageContent += renderSignatureSection();
+                // If this is the last page, close the table
+                if (pageIndex === totalPages - 1) {
+                    pageContent += `
+                            </tbody>
+                        </table>
+                        ${renderSignatureSection()}
+                    </div>
+                    `;
+                } else {
+                    // If not the last page, don't close the table body
+                    pageContent += `
+                            </tbody>
+                        </table>
+                    </div>
+                    `;
+                }
+
+                // Add page break if not the last page
+                if (pageIndex !== totalPages - 1) {
+                    pageContent += `<div class="page-break"></div>`;
+                }
+            }
+        }
 
         return pageContent;
     }
 
     // Function to render the Delivery Note
     function renderDeliveryNote(data) {
-        const items = data.detail; // Accessing the 'detail' field for items
+        const items = data.detail || []; // Ensure items is an array
         const pageContent = `
             <div class="container">
                 ${renderTable(data, items)}
@@ -689,7 +707,7 @@
         const element = document.getElementById('page-content');
 
         const opt = {
-            margin:       [0, 2, 0, 2], // top, left, bottom, right
+            margin:       0, // top, left, bottom, right
             filename:     dnNumber ? `DeliveryNote_${dnNumber}.pdf` : 'DeliveryNote.pdf',
             image:        { type: 'jpeg', quality: 0.98 },
             html2canvas:  { scale: 2 },
@@ -697,7 +715,7 @@
         };
 
         html2pdf().set(opt).from(element).save().then(() => {
-            // window.history.back();
+            window.history.back();
         });
     }
 
