@@ -131,7 +131,7 @@
             word-wrap: break-word;
             white-space: normal;
             text-align: center;
-            font-size: 7px; /* Ukuran font diubah menjadi 7px */
+            font-size: 10px; /* Ukuran font diubah menjadi 7px */
         }
     
         th {
@@ -413,7 +413,7 @@ function concatAddress(address) {
 // Render table content for the purchase order
 function renderTable(data, items) {
     let pageContent = '';
-    let rowsPerPage = 11;
+    let rowsPerPage = 20;
     var subtotal = 0;
 
     items.forEach((item, index) => {
@@ -612,7 +612,7 @@ function generatePDF(poNumber) {
 
     // Generate the PDF and trigger the download
     html2pdf().set(opt).from(element).save().then(() => {
-        window.history.back();
+        // window.history.back();
     });
 }
 

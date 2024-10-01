@@ -22,7 +22,6 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            page-break-after: always;
         }
 
         .header-text {
@@ -565,7 +564,7 @@
         const element = document.getElementById('page-content');
 
         const opt = {
-            margin:       0, // No margins
+            margin:       0.1, // No margins
             filename:     'Labels.pdf',
             image:        { type: 'jpeg', quality: 0.98 },
             html2canvas:  { scale: 2 },
@@ -573,7 +572,7 @@
         };
 
         html2pdf().set(opt).from(element).save().then(() => {
-            window.history.back();
+            // window.history.back();
         });
     }
     </script>
