@@ -279,7 +279,7 @@
     $(supplierSelect).on('change', async function (event) {
       const selectedSupplierId = $(this).val();
       console.log('Supplier dipilih:', selectedSupplierId);
-      // displayNotification(`Waiting to get PO data for supplier ${selectedSupplierId}`, 'warning');
+      displayNotification(`Waiting to get PO data for supplier ${selectedSupplierId}`, 'warning');
 
       if (selectedSupplierId) {
         localStorage.setItem('selectedSupplierId', selectedSupplierId); // Store selectedSupplierId in localStorage
@@ -297,6 +297,7 @@
 
   // Fungsi untuk mengambil data supplier
   async function fetchSuppliers() {
+    // displayNotification('Waiting get data Supplier from server','warning')
     const token = localStorage.getItem('accessToken');
     if (!token) {
       console.error('No access token found');
@@ -387,88 +388,90 @@
 
   // Function to fetch purchase order based on supplier
   async function fetchPurchaseOrder(selectedSupplierId) {
-  const token = localStorage.getItem('accessToken');
-  if (!token) {
-    console.error('No access token found for fetching purchase orders');
-    displayNotification('No access token found. Please login again.', 'error');
-    return;
-  }
+    // displayNotification('Waiting get data PO from server','warning')
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      console.error('No access token found for fetching purchase orders');
+      displayNotification('No access token found. Please login again.', 'error');
+      return;
+    }
 
-  const url = `${APIindexpoheader3}/${selectedSupplierId}`;
-  // console.log('Fetching URL:', url);
+    const url = `${APIindexpoheader3}/${selectedSupplierId}`;
+    // console.log('Fetching URL:', url);
 
-  try {
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-    });
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
 
-    console.log('Response status:', response.status);
+      console.log('Response status:', response.status);
 
-    // Check if response is OK (status code in the range 200-299)
-    if (response) {
-      let data;
-      try {
-        data = await response.json();
-      } catch (jsonError) {
-        console.error('Error parsing JSON:', jsonError);
-        displayNotification('Error parsing response data', 'error');
-        return;
-      }
+      // Check if response is OK (status code in the range 200-299)
+      if (response) {
+        let data;
+        try {
+          data = await response.json();
+        } catch (jsonError) {
+          console.error('Error parsing JSON:', jsonError);
+          displayNotification('Error parsing response data', 'error');
+          return;
+        }
 
-      // console.log('Response data:', data);
+        // console.log('Response data:', data);
 
-      if (data && data.status) {
-        displayNotification(data.message, 'success');
+        if (data && data.status) {
+          displayNotification(data.message, 'success');
 
-        if (Array.isArray(data.data) && data.data.length > 0) {
-          let purchaseOrder = data.data.map(po => ({
-            noPO: po.po_no ? po.po_no.toString() : 'N/A',
-            poDate: po.po_date || '-',
-            planDelivery: po.planned_receipt_date || '-',
-            poRevision: po.po_revision_no || '-',
-            note: po.note || '-',
-            status: po.po_status || '-',
-            response: po.response || 'No Action',
-          }));
+          if (Array.isArray(data.data) && data.data.length > 0) {
+            let purchaseOrder = data.data.map(po => ({
+              noPO: po.po_no ? po.po_no.toString() : 'N/A',
+              poDate: po.po_date || '-',
+              planDelivery: po.planned_receipt_date || '-',
+              poRevision: po.po_revision_no || '-',
+              note: po.note || '-',
+              status: po.po_status || '-',
+              response: po.response || 'No Action',
+              reason : po.reason,
+            }));
 
-          filteredData = [...purchaseOrder];
-          originalData = [...filteredData];
-          displayTableData(currentPage);
-          updatePagination();
+            filteredData = [...purchaseOrder];
+            originalData = [...filteredData];
+            displayTableData(currentPage);
+            updatePagination();
+          } else {
+            // When data.data is an empty array
+            filteredData = [];
+            originalData = [];
+            displayTableData(currentPage);
+            updatePagination();
+          }
         } else {
-          // When data.data is an empty array
+          // When data.status is false
+          displayNotification(data.message || 'Failed to fetch purchase orders', 'error');
           filteredData = [];
           originalData = [];
           displayTableData(currentPage);
           updatePagination();
         }
       } else {
-        // When data.status is false
-        displayNotification(data.message || 'Failed to fetch purchase orders', 'error');
-        filteredData = [];
-        originalData = [];
-        displayTableData(currentPage);
-        updatePagination();
+        // Handle non-OK HTTP statuses
+        const errorText = await response.text();
+        console.error('Error response:', errorText);
+        displayNotification(`Failed to fetch purchase orders: ${response.statusText}`, 'error');
       }
-    } else {
-      // Handle non-OK HTTP statuses
-      const errorText = await response.text();
-      console.error('Error response:', errorText);
-      displayNotification(`Failed to fetch purchase orders: ${response.statusText}`, 'error');
+    } catch (error) {
+      console.error('Fetch error:', error);
+      const tableBody = document.getElementById('table-body');
+      if (tableBody) {
+        tableBody.innerHTML = '<tr><td colspan="7" class="text-center text-red-500">Failed to fetch purchase orders. Please try again later.</td></tr>';
+      }
+      displayNotification(`Fetch error during purchase order retrieval: ${error.message}`, 'error');
     }
-  } catch (error) {
-    console.error('Fetch error:', error);
-    const tableBody = document.getElementById('table-body');
-    if (tableBody) {
-      tableBody.innerHTML = '<tr><td colspan="7" class="text-center text-red-500">Failed to fetch purchase orders. Please try again later.</td></tr>';
-    }
-    displayNotification(`Fetch error during purchase order retrieval: ${error.message}`, 'error');
   }
-}
 
 
   // Fungsi untuk menampilkan data tabel
@@ -476,8 +479,8 @@
     const tableBody = document.getElementById('table-body');
 
     if (!tableBody) {
-      console.error('Table body element not found!');
-      return;
+        console.error('Table body element not found!');
+        return;
     }
 
     tableBody.innerHTML = ''; // Clear the table before displaying new data
@@ -489,30 +492,59 @@
     console.log(`Displaying ${dataToShow.length} rows`);
 
     if (dataToShow.length === 0) {
-      tableBody.innerHTML = '<tr><td colspan="7" class="text-center">No PO data for this supplier</td></tr>';
-      return;
+        tableBody.innerHTML = '<tr><td colspan="7" class="text-center">No PO data for this supplier</td></tr>';
+        return;
     }
 
-    dataToShow.forEach(po => {
-      // console.log('Adding row for PO:', po.noPO);
-      const tableRow = document.createElement('tr');
-      tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
-      tableRow.innerHTML = `
-        <td class="px-2 py-4 text-center font-medium text-gray-900">
-          <a href="purchase-order-detail.html?noPO=${po.noPO}" class="text-blue-600 underline">${po.noPO}</a>
-        </td>
-        <td class="px-2 py-4 text-center">${po.poDate}</td>
-        <td class="px-2 py-4 text-center">${po.planDelivery}</td>
-        <td class="px-2 py-4 text-center">${po.poRevision}</td>
-        <td class="px-2 py-4 text-center">${po.note}</td>
-        <td class="px-2 py-4 text-center">${po.status}</td>
-        <td class="text-center ${po.response === 'Accepted' ? 'bg-green-400' : po.response === 'Declined' ? 'bg-red-500' : ''}">${po.response}</td>
-      `;
-      tableBody.appendChild(tableRow);
-    });
+    dataToShow.forEach((po, index) => {
+        const tableRow = document.createElement('tr');
+        tableRow.classList.add('odd:bg-white', 'even:bg-gray-50', 'border-b', 'dark:border-gray-100');
+        
+        let responseColumnContent = po.response;
+        
+        // Tambahkan icon message jika PO response adalah "Declined"
+        if (po.response === 'Declined' && po.reason) {
+            responseColumnContent = `
+                <span class="text-white">${po.response}</span>
+                <img id="reason-icon-${index}" src="../assets/icon_message.png" class="w-5 h-5 cursor-pointer" title="View reason">
+            `;
+        }
 
-    // console.log(`Displayed ${dataToShow.length} rows of data in the table`);
+        tableRow.innerHTML = `
+            <td class="px-2 py-4 text-center font-medium text-gray-900">
+                <a href="purchase-order-detail.html?noPO=${po.noPO}" class="text-blue-600 underline">${po.noPO}</a>
+            </td>
+            <td class="px-2 py-4 text-center">${po.poDate}</td>
+            <td class="px-2 py-4 text-center">${po.planDelivery}</td>
+            <td class="px-2 py-4 text-center">${po.poRevision}</td>
+            <td class="px-2 py-4 text-center">${po.note}</td>
+            <td class="px-2 py-4 text-center">${po.status}</td>
+            <td class="text-center ${po.response === 'Accepted' ? 'bg-green-400' : po.response === 'Declined' ? 'bg-red-500' : ''}">
+                <div class="flex gap-2 justify-center">
+                    ${responseColumnContent}
+                </div>
+            </td>
+        `;
+        tableBody.appendChild(tableRow);
+
+        // Tambahkan event listener untuk icon reason jika ada reason
+        if (po.response === 'Declined' && po.reason) {
+            const reasonIcon = document.getElementById(`reason-icon-${index}`);
+            reasonIcon.addEventListener('click', () => {
+                showReason(po.reason);
+            });
+        }
+    });
   }
+
+  function showReason(reason) {
+    Swal.fire({
+        title: 'Reason for Decline',
+        html: `<p style="border: 1px solid #ccc; padding: 10px; font-size: 12px; text-align: left;">${reason}</p>`,
+        icon: 'info'
+    });
+  }
+
 
   // Function to search table data
   function searchTableData() {
