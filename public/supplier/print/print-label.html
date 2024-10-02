@@ -10,6 +10,9 @@
     <style>
         body {
             font-family: "Poppins", sans-serif;
+        }
+
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -21,7 +24,6 @@
             flex-wrap: wrap;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
 
         .header-text {
@@ -45,12 +47,12 @@
         .label {
             width: 148.5mm; /* Half of A4 landscape width */
             height: 70mm; /* One-third of A4 landscape height */
-            border: 1px dashed rgb(144, 143, 143);
+            border: 1px dashed rgb(0, 0, 0);
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
             margin: 0;
-            padding: 0; /* Remove padding to eliminate free space */
+            padding: 0;
             page-break-inside: avoid;
         }
 
@@ -564,15 +566,17 @@
         const element = document.getElementById('page-content');
 
         const opt = {
-            margin:       0.1, // No margins
-            filename:     'Labels.pdf',
-            image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2 },
-            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape' }
+            margin: 0, // No margins
+            filename: 'Labels.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
         };
 
         html2pdf().set(opt).from(element).save().then(() => {
-            // window.history.back();
+            setTimeout(() => {
+                window.history.back();
+            }, 30000); // Delay of 30,000 milliseconds (30 seconds)
         });
     }
     </script>
