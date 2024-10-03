@@ -250,7 +250,7 @@
               deliveryNote = data.data.map(dn => ({
                   noDN: dn.no_dn ? dn.no_dn.toString() : '-',
                   noPO: dn.po_no ? dn.po_no.toString() : '-',
-                  createdDate: dn.created_date || '-',
+                  createdDate: dn.dn_created_date || '-',
                   planDNDate: dn.plan_delivery_date || '-',
                   statusDN: dn.status_desc || '-',
                   progress: dn.progress || '-',
