@@ -345,7 +345,7 @@
     // Function to fetch Delivery Note data using the noDN from the URL and token
     async function fetchDeliveryNoteData(noDN, token) {
         try {
-            const response = await fetch(`${API_dnViewSupplier}${noDN}`, {
+            const response = await fetch(`${APIdnViewWarehouse2}${noDN}`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,
