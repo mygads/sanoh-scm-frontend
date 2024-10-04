@@ -11,49 +11,52 @@
     <!-- Styles -->
     <style>
         body {
-            font-family: 'Poppins', sans-serif; /* Mengatur jenis font */
+            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f2f2f2; /* Warna latar belakang */
+            background-color: #f2f2f2;
         }
 
         .container {
             width: 210mm;
+            max-width: 100%;
+            min-height: 297mm;
             height: auto;
             padding: 20px;
-            background-color: #fff; /* Latar belakang putih */
+            background-color: #fff;
             box-sizing: border-box;
+            margin: 0 auto;
             position: relative;
         }
 
         .header {
             display: flex;
-            justify-content: space-between; /* Atur elemen dalam header */
+            justify-content: space-between;
             align-items: center;
-            margin-top: 20px;
-            margin-bottom: 20px;
-            border: 1px solid #000; /* Border di sekitar header */
+            border: 1px solid #000;
             padding: 10px;
+            background-color: #fff;
+            margin-bottom: 20px;
         }
 
         .logo {
-            width: 110px; /* Mengatur lebar logo */
-            margin-right: 10px; /* Jarak antara logo dan konten lain */
+            width: 110px;
+            margin-right: 10px;
         }
 
         .logo img {
-            width: 100%; /* Mengatur gambar agar sesuai dengan container logo */
+            width: 100%;
         }
 
         .company-info {
-            text-align: left; /* Menyelaraskan teks ke kiri */
-            flex-grow: 5; /* Memperluas agar mengisi ruang yang tersedia */
-            font-size: 9px; /* Ukuran font kecil untuk info perusahaan */
+            text-align: left;
+            flex-grow: 5;
+            font-size: 9px;
         }
 
         .delivery-note {
-            text-align: right; /* Menyelaraskan teks delivery note ke kanan */
-            font-size: 11px; /* Mengatur ukuran font */
+            text-align: right;
+            font-size: 11px;
         }
 
         .details {
@@ -128,7 +131,6 @@
             color: #000;        /* Warna hitam untuk angka */
         }
 
-        /* Styling untuk tabel */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -136,37 +138,27 @@
             font-size: 9px;
         }
 
-        /* Mengatur style untuk semua elemen th dan td */
         table, th, td {
             border: 0.5px solid #000;
             padding: 4px 8px;
             word-wrap: break-word;
         }
 
-        /* Styling untuk elemen thead */
         thead th {
-            text-align: center; /* Menyelaraskan teks di thead ke tengah */
-            vertical-align: middle; /* Menyelaraskan teks secara vertikal di tengah */
+            text-align: center;
+            vertical-align: middle;
             background-color: #ffffff;
             color: black;
         }
 
-        /* Styling umum untuk elemen td di tbody */
         tbody td {
-            text-align: center; /* Menyelaraskan teks di tengah secara default */
-            vertical-align: middle; /* Penyelarasan vertikal di tengah */
+            text-align: center;
+            vertical-align: middle;
         }
 
-        /* Styling khusus untuk kolom Supplier Part No., Internal Part No., dan Part Name di tbody */
-        tbody td:nth-child(2), /* Supplier Part No. */
-        tbody td:nth-child(3)  /* Part Name */
-        {
-            text-align: left; /* Menyelaraskan teks ke kiri */
-        }
-
-        /* Styling untuk membuat teks "Part Name" di thead tetap di tengah */
-        thead th:nth-child(3) {
-            text-align: center; /* Menyelaraskan teks di kolom "Part Name" pada thead ke tengah */
+        tbody td:nth-child(2),
+        tbody td:nth-child(3) {
+            text-align: left;
         }
 
         th {
@@ -181,149 +173,97 @@
             vertical-align: middle;
         }
 
-        /* Mengatur panjang kolom secara spesifik */
-        th:nth-child(1), /* No. */
+        th:nth-child(1),
         td:nth-child(1),
-        th:nth-child(4), /* Pcs/Kbn */
+        th:nth-child(4),
         td:nth-child(4),
-        th:nth-child(5), /* No of Kbn */
+        th:nth-child(5),
         td:nth-child(5),
-        th:nth-child(6), /* Total Qty */
+        th:nth-child(6),
         td:nth-child(6),
-        th:nth-child(7), /* Confirmation Supp. */
+        th:nth-child(7),
         td:nth-child(7),
-        th:nth-child(8), /* Confirmation Sanoh */
+        th:nth-child(8),
         td:nth-child(8),
-        th:nth-child(9), /* Box Qty */
+        th:nth-child(9),
         td:nth-child(9) {
-            width: 8%; /* Lebar yang sama untuk kolom No, Pcs/Kbn, No of Kbn, Total Qty, Confirmation Supp., Confirmation Sanoh, dan Box Qty */
+            width: 8%;
         }
 
-        th:nth-child(2), /* Supplier Part No. */
+        th:nth-child(2),
         td:nth-child(2) {
             text-align: center;
-            width: 35%; /* Lebar lebih besar untuk kolom Supplier Part No. */
+            width: 35%;
         }
 
-        th:nth-child(3), /* Part Name */
+        th:nth-child(3),
         td:nth-child(3) {
-            text-align: left; /* Menyelaraskan teks ke kiri untuk Part Name */
-            width: 30%; /* Lebar tetap untuk kolom Part Name */
+            text-align: center;
+            width: 30%;
         }
 
-        /* Note and signature styling */
         .note {
-            margin-bottom: 20px; /* Jarak di bawah catatan */
-            font-size: 10px; /* Mengatur ukuran font untuk catatan */
+            margin-bottom: 20px;
+            font-size: 10px;
         }
 
         .note p {
-            font-style: italic; /* Membuat teks miring */
-            font-size: 11px; /* Mengatur ukuran font untuk catatan */
-            line-height: 1.6; /* Jarak antar baris untuk keterbacaan */
+            font-style: italic;
+            font-size: 11px;
+            line-height: 1.6;
         }
 
         .signature-section {
             display: flex;
-            justify-content: space-between; /* Menyelaraskan bagian tanda tangan */
-            margin-top: 30px; /* Jarak di atas bagian tanda tangan */
+            justify-content: space-between;
+            margin-top: 30px;
         }
 
-        .signature-section .supplier, 
+        .signature-section .supplier,
         .signature-section .sanoh {
-            width: 48%; /* Mengatur lebar untuk bagian tanda tangan */
+            width: 48%;
         }
 
         .signature-section h3 {
-            text-align: left; /* Menyelaraskan judul tanda tangan ke kiri */
-            margin-bottom: 10px; /* Jarak di bawah judul tanda tangan */
-            font-size: 10px; /* Mengatur ukuran font untuk judul tanda tangan */
-            font-weight: bold; /* Membuat judul tanda tangan tebal */
+            text-align: left;
+            margin-bottom: 10px;
+            font-size: 10px;
+            font-weight: bold;
         }
 
         .signature-section table {
-            width: 100%; /* Tabel lebar penuh di bagian tanda tangan */
-            border-collapse: collapse; /* Menggabungkan border tabel */
-            height: 100px; /* Mengatur tinggi sel tanda tangan */
-            table-layout: fixed; /* Tata letak tabel tetap */
+            width: 100%;
+            border-collapse: collapse;
+            height: 100px;
+            table-layout: fixed;
         }
 
-        .signature-section th, 
+        .signature-section th,
         .signature-section td {
-            border: 1px solid black; /* Border untuk sel tabel tanda tangan */
-            padding: 4px; /* Padding untuk sel tanda tangan */
-            text-align: left; /* Menyelaraskan teks sel tanda tangan ke kiri */
-            vertical-align: top; /* Menyelaraskan teks tanda tangan ke atas */
-            font-size: 10px; /* Ukuran font kecil untuk sel tanda tangan */
-            height: 5px; /* Tinggi sel untuk bagian tanda tangan */
+            border: 1px solid black;
+            padding: 4px;
+            text-align: left;
+            vertical-align: top;
+            font-size: 10px;
+            height: 5px;
         }
 
         .signature-section th {
-            font-weight: bold; /* Header tabel tanda tangan tebal */
-            background-color: #ffffff; /* Latar belakang putih untuk header tanda tangan */
-            text-align: left; /* Menyelaraskan header tanda tangan ke kiri */
-            font-size: 10px; /* Ukuran font kecil untuk header tanda tangan */
-            padding: 4px; /* Padding untuk header tanda tangan */
+            font-weight: bold;
+            background-color: #ffffff;
+            text-align: left;
+            font-size: 10px;
+            padding: 4px;
         }
 
         .signature-section td p {
             margin: 0;
             padding: 0;
-            font-size: 10px; /* Ukuran font untuk konten tanda tangan */
+            font-size: 10px;
         }
 
         .signature-section td {
-            height: 50px; /* Tinggi sel untuk bagian tanda tangan */
-        }
-
-        @media print {
-            @page {
-                margin-left: 15mm;
-                margin-right: 15mm;
-                margin-bottom: 10mm;
-            }
-
-            .header {
-                display: table-header-group;
-                padding-top: 0px;
-            }
-
-            body, .container {
-                margin: 0;
-                padding: 0;
-                box-shadow: none;
-            }
-
-            .container {
-                width: auto;
-            }
-
-            table {
-                width: 100%;
-            }
-
-            thead {
-                display: table-header-group;
-            }
-
-            tfoot {
-                display: table-footer-group;
-            }
-
-            .page-break {
-                page-break-before: always;
-            }
-
-            .note, .signature-section {
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                right: 0;
-            }
-        }
-
-        .page-break {
-            page-break-before: always;
+            height: 50px;
         }
     </style>
 
@@ -334,11 +274,14 @@
     <div class="container">
         <div id="page-content"></div>
     </div>
-        <!-- Page Content Container -->
-    
+    <!-- Page Content Container -->
+
+    <!-- Include html2pdf.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
 
+    <!-- Include your API script if needed -->
     <script src="../../api.js"></script>
+    <!-- Include your custom script if needed -->
     <script src="../../script.js"></script>
 
     <script>
@@ -390,7 +333,6 @@
         });
     }
 
-
     function getQueryParams() {
         const params = new URLSearchParams(window.location.search);
         const noDN = params.get('noDN');  // Retrieve noDN from the URL
@@ -403,10 +345,10 @@
     // Function to fetch Delivery Note data using the noDN from the URL and token
     async function fetchDeliveryNoteData(noDN, token) {
         try {
-            const response = await fetch(`${API_dnViewSupplier}${noDN}`, {
+            const response = await fetch(`${APIdnViewWarehouse2}${noDN}`, {
                 method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${token}`,  // Kirim token dalam header
+                    'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
                 },
             });
@@ -464,20 +406,20 @@
     }
 
     function renderHeader(header) {
-    return `
-        <header class="header">
-            <div class="logo">
-                <img src="../../assets/logo-sanoh.png" alt="Sanoh Logo">
-            </div>
-            <div class="company-info">
-                <p><b>PT. SANOH INDONESIA</b> <br>Jl. Inti II, Blok C-4 No.10, Kawasan Industri Hyundai, Cikarang, Kab. Bekasi<br>
-                    Phone +62 21 89907963</p>
-            </div>
-            <div class="delivery-note">
-                <h3>DELIVERY NOTE<br><span id="dnNumber">${header.dn_number || 'N/A'}</span></h3>
-            </div>
-        </header>
-    `;
+        return `
+            <header class="header">
+                <div class="logo">
+                    <img src="../../assets/logo-sanoh.png" alt="Sanoh Logo">
+                </div>
+                <div class="company-info">
+                    <p><b>PT. SANOH INDONESIA</b> <br>Jl. Inti II, Blok C-4 No.10, Kawasan Industri Hyundai, Cikarang, Kab. Bekasi<br>
+                        Phone +62 21 89907963</p>
+                </div>
+                <div class="delivery-note">
+                    <h3>DELIVERY NOTE<br><span id="dnNumber">${header.dn_number || 'N/A'}</span></h3>
+                </div>
+            </header>
+        `;
     }
 
     function renderDetails(header) {
@@ -502,7 +444,7 @@
                         <strong>Planned Received Date</strong> <span id="plannedReceivedDate">: ${header.planned_receipt_date || 'N/A'}</span>
                     </div>
                     <div class="detail-item">
-                        <strong>Actual Received Date</strong> <span id="actualReceivedDate">: ${header.actual_received_date || '_______________'}</span>
+                        <strong>Actual Received Date</strong> <span id="actualReceivedDate">: _______________</span>
                     </div>
                     <div class="detail-item">
                         <div class="total-box">
@@ -515,7 +457,7 @@
         `;
     }
 
-    function renderSignatureSection() {
+    function renderSignatureSection(header) {
         return `
             <div class="note">
                 <p><b>NOTE: </b> <br> 1. Untuk penggunaan PO Number pada Surat Jalan Supplier, harap mengikuti PO Number di atas<br>
@@ -575,53 +517,18 @@
         `;
     }
 
-    function renderTable(data, items) {
+    function renderTable(header, items) {
         let pageContent = '';
-        const header = data || {};
         const rowsPerPage = 20;
-        const totalPages = Math.ceil(items.length / rowsPerPage) || 1; // Ensure at least one page
+        const totalPages = Math.ceil(items.length / rowsPerPage) || 1;
 
-        // If no items, handle accordingly
-        if (items.length === 0) {
+        for (let pageIndex = 0; pageIndex < totalPages; pageIndex++) {
+            const startIndex = pageIndex * rowsPerPage;
+            const endIndex = Math.min(startIndex + rowsPerPage, items.length);
+            const pageItems = items.slice(startIndex, endIndex);
+
             pageContent += `
-                <div class="page">
-                    ${renderHeader(header)}
-                    ${renderDetails(header)}
-                    <table class="table-page last-page">
-                        <thead>
-                            <!-- Table headers here -->
-                            <tr>
-                                <th id="no-1" rowspan="2">No.</th>
-                                <th id="supplier-part-no-1" colspan="1">Supplier Part No.</th>
-                                <th id="part-name-1" rowspan="2">Part Name</th>
-                                <th id="pcs-kbn-1" rowspan="2">Pcs/Kbn</th>
-                                <th id="no-of-kbn-1" rowspan="2">No of Kbn</th>
-                                <th id="total-qty-1" rowspan="2">Total Qty</th>
-                                <th id="confirmation-1" colspan="2">Confirmation</th>
-                                <th id="box-qty-1" rowspan="2">Box Qty</th>
-                            </tr>
-                            <tr>
-                                <th id="internal-part-no-1">Internal Part No.</th>
-                                <th id="supp-1">Supp.</th>
-                                <th id="sanoh-1">Sanoh</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr><td colspan="9">No items found</td></tr>
-                        </tbody>
-                    </table>
-                    ${renderSignatureSection()}
-                </div>
-            `;
-        } else {
-            // Loop over each page
-            for (let pageIndex = 0; pageIndex < totalPages; pageIndex++) {
-                const startIndex = pageIndex * rowsPerPage;
-                const endIndex = Math.min(startIndex + rowsPerPage, items.length);
-                const pageItems = items.slice(startIndex, endIndex);
-
-                pageContent += `
-                    <div class="page">
+                    <div class="container">
                         ${renderHeader(header)}
                         ${renderDetails(header)}
                         <table class="table-page ${pageIndex === totalPages - 1 ? 'last-page' : ''}">
@@ -643,7 +550,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                `;
+                    `;
 
                 // Add rows for this page
                 pageItems.forEach((item, index) => {
@@ -663,39 +570,36 @@
                     `;
                 });
 
-                // If this is the last page, close the table
-                if (pageIndex === totalPages - 1) {
-                    pageContent += `
+                pageContent += `
                             </tbody>
                         </table>
-                        ${renderSignatureSection()}
-                    </div>
-                    `;
-                } else {
-                    // If not the last page, don't close the table body
+                `;
+
+                if (pageIndex === totalPages -1) {
                     pageContent += `
-                            </tbody>
-                        </table>
-                    </div>
+                        ${renderSignatureSection(header)}
                     `;
                 }
 
-                // Add page break if not the last page
+                pageContent += `
+                    </div>
+                `;
+
                 if (pageIndex !== totalPages - 1) {
                     pageContent += `<div class="page-break"></div>`;
                 }
             }
-        }
 
         return pageContent;
     }
+    
 
     // Function to render the Delivery Note
-    function renderDeliveryNote(data) {
-        const items = data.detail || []; // Ensure items is an array
+    function renderDeliveryNote(header) {
+        const items = header.detail || [];
         const pageContent = `
             <div class="container">
-                ${renderTable(data, items)}
+                ${renderTable(header, items)}
             </div>
         `;
 
@@ -707,11 +611,12 @@
         const element = document.getElementById('page-content');
 
         const opt = {
-            margin:       0, // top, left, bottom, right
+            margin:       0,
             filename:     dnNumber ? `DeliveryNote_${dnNumber}.pdf` : 'DeliveryNote.pdf',
             image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2 },
-            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            html2canvas:  { scale: 2, useCORS: true },
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
         };
 
         html2pdf().set(opt).from(element).save().then(() => {
