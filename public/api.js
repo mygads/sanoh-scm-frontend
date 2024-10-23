@@ -46,7 +46,10 @@ APIindexpoheader3 = API + `/indexpoheader3`;
 APIpohistory3 = API + `/pohistory3`;
 APIpoViewPurchasing3 = API + `/pohview3/`
 API_SyncPurchasing = API + `/syncPurchasing`;
-
+API_IndexForecast = API + `/purchasing/indexforecast`;
+API_GetForecastFile = API + `/purchasing/getforecast/file/`;
+API_UploadForecastFile = API + `/purchasing/createforecast`;
+API_DeleteForecastFile = API + `/purchasing/deleteforecast/`;
 
 // warehouse
 APIpartner2 = API + `/partner2`;
@@ -71,3 +74,5 @@ API_indexDNDetailUpdateSupplier = API + `/updatedndetail1`;
 API_poViewSupplier = API + `/pohview1/`;
 API_dnViewSupplier = API + `/dnhview1/`;
 API_labelViewSupplier = API + `/lbview1/`;
+API_IndexForecastSupplier = API + `/supplier/indexforecast`;
+API_GetForecastFileSupplier = API + `/supplier/getforecast/file/`;
