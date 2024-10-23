@@ -99,22 +99,22 @@
 
             <!-- Performance Report -->
             <li>
-              <a href="performance-report.html" class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50 active">
+              <a href="performance-report.html" class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
                 <img loading="lazy" src="../assets/icon_performance_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-5
-                aspect-square icon-performance-active" />
+                aspect-square" />
                 <span class="self-strech text-sm">Performance Report</span>
               </a>
             </li>
 
             <!-- Forecast -->
             <li>
-              <a href="forecast.html"
-                class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950">
-                <img loading="lazy" src="../assets/icon_performance_default.svg" alt="Forecast"
-                  class="object-contain shrink-0 self-stretch my-auto w-4 aspect-square" />
-                <span class="self-strech text-sm">Forecast</span>
-              </a>
-            </li>
+                <a href="forecast.html"
+                  class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-blue-950 active">
+                  <img loading="lazy" src="../assets/icon_performance_default.svg" alt="Forecast"
+                    class="object-contain shrink-0 self-stretch my-auto w-5 aspect-square icon-performance-active" />
+                  <span class="self-strech text-sm">Forecast</span>
+                </a>
+              </li>
           </ul>
 
           <!-- User and Logout Section at the Bottom -->
@@ -176,11 +176,9 @@
                   <th scope="col" class="xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs py-3 text-center border-b border-b-gray-400 cursor-pointer " data-sort="no">
                     No
                   </th>
-                  <th scope="col" class="xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs py-3 text-center border-b border-b-gray-400 cursor-pointer" data-sort="periode" onclick="sortTable(1)">
-                   Periode
-                    <img loading="lazy" src="../assets/icon_sort.svg" alt=""
-                    class="xl:w-3 lg:w-3 md:w-2 sm:w-2 w-2 inline-block text-gray-600" />
-                    <span class="sort-indicator"></span>
+                  <th scope="col" class="xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs py-3 text-center border-b border-b-gray-400 cursor-pointer"">
+                   Description
+                    
                   </th>
                   <th scope="col" class="xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs py-3 text-center border-b border-b-gray-400 cursor-pointer" data-sort="filename">
                     FIle Name
@@ -275,23 +273,24 @@ document.addEventListener('DOMContentLoaded', () => {
       displayTableData(currentPage);
       updatePagination();
     } else {
-      displayNotification('Silakan pilih periode.','warning');
+        fetchPerformanceReport(bpcode);            
+        displayNotification('Silakan pilih periode.','warning');
     }
   });
 
 });
 
 async function fetchPerformanceReport(bpCode, selectedMonth = null) {
-  // displayNotification("Waiting get data from server",'warning')
+//   displayNotification("Waiting get data from server",'warning')
   const token = localStorage.getItem('accessToken');
 
   if (!bpCode) {
-    displayNotification('Supplier belum dipilih.','warning');
+    displayNotification('Expired token please relogin','warning');
     return;
   }
 
   try {
-    const response = await fetch(`${API_indexPerformanceReportSupplier}/${bpCode}`, {
+    const response = await fetch(`${API_IndexForecastSupplier}/${bpCode}`, {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
@@ -306,19 +305,21 @@ async function fetchPerformanceReport(bpCode, selectedMonth = null) {
     // console.log('Data listing report:', result);
 
     if (result.success) {
-      // displayNotification(result.message,'success')
+    //   displayNotification(result.message,'success')
       originalData = result.data.map(item => ({
         no: item.po_listing_no,
-        periode: formatDate(item.date),
+        description: item.description,
         upload_at: item.upload_at,
+        searchMount: formatDate(item.upload_at),
         filedata: item.file,
         attachedFile: item.file
       }));
 
       if (selectedMonth) {
         // Filter data berdasarkan bulan yang dipilih
+        
         filteredData = originalData.filter(row => {
-          const rowMonth = row.periode.slice(0, 7); // Ambil bagian YYYY-MM dari tanggal
+          const rowMonth = row.searchMount.slice(0, 7); // Ambil bagian YYYY-MM dari tanggal
           return rowMonth === selectedMonth;
         });
       } else {
@@ -396,13 +397,9 @@ function displayTableData(page) {
     // Pisahkan angka dan nama file dengan memanfaatkan split dan slice
     const fileName = row.filedata.split('_').slice(1).join('_');
 
-    // Konversi periode ke format "Month YYYY"
-    const periodDate = new Date(row.periode);
-    const formattedPeriod = periodDate.toLocaleString('en-US', { month: 'long', year: 'numeric' });
-
     tableRow.innerHTML = `
       <td class="px-2 py-4 text-center font-medium text-gray-900">${rowNumber}</td>
-      <td class="px-2 py-4 text-center">${formattedPeriod}</td>
+      <td class="px-2 py-4 text-center">${row.description}</td>
       <td class="px-1 py-4 w-[30%] text-center">${fileName}</td>          
       <td class="px-1 py-2 text-center flex items-center justify-center">
         <a href="${APIreadfile}${row.attachedFile}" download>

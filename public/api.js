@@ -74,5 +74,5 @@ API_indexDNDetailUpdateSupplier = API + `/updatedndetail1`;
 API_poViewSupplier = API + `/pohview1/`;
 API_dnViewSupplier = API + `/dnhview1/`;
 API_labelViewSupplier = API + `/lbview1/`;
-API_IndexForecastSupplier = API + `/supplier/indexforecast`;
+API_IndexForecastSupplier = API + `/supplier/forecast/index`;
 API_GetForecastFileSupplier = API + `/supplier/getforecast/file/`;
