@@ -384,11 +384,15 @@
       const supplierId = localStorage.getItem('selectedSupplierId');
 
       if (selectedMonth) {
-        await fetchForecast(supplierId, selectedMonth);  // Panggil fetchForecast dengan parameter bulan yang dipilih
+        filteredData = originalData.filter(row => {
+          const rowMonth = row.upload_at.substring(0, 7); // Ambil bagian YYYY-MM dari tanggal
+          return rowMonth === selectedMonth;
+        });
+
         displayTableData(currentPage);
         updatePagination();
       } else {
-        alert('Silakan pilih periode.');
+        await fetchForecast(supplierId);
       }
     });
 
@@ -448,12 +452,12 @@
     const token = localStorage.getItem('accessToken');
 
     if (!supplierId) {
-      alert('Supplier belum dipilih.');
+      displayNotification('Supplier belum dipilih.', 'warning');
       return;
     }
 
     try {
-      const response = await fetch(`${APIindexlistingreport}/${supplierId}`, {
+      const response = await fetch(`${API_IndexForecast}${supplierId}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -465,11 +469,11 @@
       }
 
       const result = await response.json();
-      console.log('Data listing report:', result); // Debugging
+      console.log('Data forecast:', result); // Debugging
 
-      if (result.success) {
+      if (result) {
         originalData = result.data.map(item => ({
-          no: item.forecast_no,
+          no: item.forecast_id,
           description: item.description,
           attachedFile: item.file,
           filedata: item.file,
@@ -492,11 +496,11 @@
         updatePagination();
       } else {
         console.error('Gagal mengambil data:', result.message);
-        alert(`Gagal mengambil data: ${result.message}`);
+        displayNotification(`Gagal mengambil data: ${result.message}`, 'error');
       }
     } catch (error) {
       console.error('Error fetching data:', error);
-      alert(`Error fetching data: ${error.message}`);
+      displayNotification(`Error fetching data: ${error.message}`, 'error');
     }
   }
 
@@ -535,6 +539,33 @@
     }
   }
 
+  // Fungsi untuk menghapus file berdasarkan forecast_id
+  async function deleteFile(forecastId) {
+    const token = localStorage.getItem('accessToken');
+
+    try {
+      const response = await fetch(`${API_DeleteForecastFile}${forecastId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      const result = await response.json();
+      if (response.ok && result.status) {
+        displayNotification('File berhasil dihapus!', 'success');
+        await fetchForecast(localStorage.getItem('selectedSupplierId')); // Refresh data setelah delete
+        displayTableData(currentPage); // Perbarui tampilan tabel
+      } else {
+        displayNotification(`Error: ${result.message}`);
+      }
+    } catch (error) {
+      console.error('Error deleting file:', error);
+      displayNotification(`Error deleting file: ${error.message}`);
+    }
+  }
+
 
   function getFileIcon(filename) {
     const extension = filename.split('.').pop().toLowerCase(); // Get the file extension
@@ -559,12 +590,44 @@
     }
   }
 
+  // Memperbaiki fungsi get file dengan menambahkan token
+  async function downloadFile(attachedFile) {
+    const token = localStorage.getItem('accessToken');
+
+    try {
+      const response = await fetch(`${API_GetForecastFile}${attachedFile}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Gagal mengunduh file.');
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = attachedFile;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Error saat mendownload file:', error);
+      displayNotification(`Error saat mendownload file: ${error.message}`, 'error');
+    }
+  }
+
 
   function formatDate(dateString) {
     const date = new Date(dateString);
     return date.toISOString().split('T')[0]; // Format to YYYY-MM-DD
   }
 
+    // Fungsi untuk menampilkan data tabel
   function displayTableData(page) {
     const tableBody = document.getElementById('table-body-detail');
     if (!tableBody) {
@@ -587,18 +650,53 @@
       const fileName = row.filedata.split('_').slice(1).join('_');
 
       tableRow.innerHTML = `
-          <td class="px-2 py-4 text-center font-medium text-gray-900">${rowNumber}</td>
-          <td class="px-2 py-4 w-[40%] text-center">${row.description}</td>
-          <td class="px-1 py-4 w-[20%] text-center">${fileName}</td>          
-          <td class="px-1 py-2 text-center flex items-center justify-center">
-            <a href="${APIreadfile}${row.attachedFile}" download>
+          <td class="px-2 py-2 text-center font-medium text-gray-900">${rowNumber}</td>
+          <td class="px-2 py-2 text-center">${row.description}</td>
+          <td class="px-1 py-2 text-center">${fileName}</td>          
+          <td class="px-2 py-2 text-center flex items-center justify-center">
+            <button onclick="downloadFile('${row.attachedFile}')" class=" px-2 py-1 hover:scale-110">
               ${getFileIcon(row.attachedFile)}
-            </a>
+            </button>
           </td>
-          <td class="px-2 py-4 text-center">${row.upload_at}</td>
-          <td class="px-2 py-4 text-center">${row.deleted}</td>
+          <td class="px-2 py-2 text-center">${row.upload_at}</td>
+          <td class="px-2 py-2 text-center">
+            <!-- Tombol Delete -->
+            <button class="delete-btn px-3 py-1 bg-red-500 text-white hover:bg-red-700 hover:scale-120 rounded-xl" data-forecast-id="${row.no}">
+              Delete
+            </button>
+          </td>
         `;
       tableBody.appendChild(tableRow);
+    });
+
+    // Tambahkan event listener untuk tombol delete
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+    deleteButtons.forEach(button => {
+      button.addEventListener('click', async () => {
+        const forecastId = button.getAttribute('data-forecast-id');
+
+        // Tampilkan SweetAlert untuk konfirmasi delete
+        const result = await Swal.fire({
+          title: 'Are you sure?',
+          text: 'This action cannot be undone.',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Yes, delete it!',
+          cancelButtonText: 'Cancel'
+        });
+
+        // Jika user mengonfirmasi, panggil fungsi deleteFile
+        if (result.isConfirmed) {
+          await deleteFile(forecastId);
+          Swal.fire(
+            'Deleted!',
+            'File has been deleted.',
+            'success'
+          );
+        }
+      });
     });
   }
 
@@ -614,15 +712,15 @@
 
   function validateForm(file, desc, supplierId) {
     if (!file) {
-      alert('Silakan pilih file untuk diunggah.');
+      displayNotification('Silakan pilih file untuk diunggah.','error');
       return false;
     }
     if (!desc) {
-      alert('Silakan masukkan desc.');
+      displayNotification('Silakan masukkan desc.','error');
       return false;
     }
     if (!supplierId) {
-      alert('Silakan pilih supplier.');
+      displayNotification('Silakan pilih supplier.','error');
       return false;
     }
     return true;
