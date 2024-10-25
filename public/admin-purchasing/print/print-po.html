@@ -35,7 +35,7 @@
         }
     
         .logo img {
-            width: 300px;
+            width: 275px;
         }
     
         .company-info {
@@ -241,7 +241,7 @@
         }
     
         .terms div {
-            margin-bottom: 5px;
+            margin-bottom: 0px;
         }
 
         .garis-vertical {
@@ -548,17 +548,17 @@ function renderFooter(data) {
                     <tbody>
                         <tr>
                             <td style="border: 1px solid rgb(222, 222, 222); height: 100px;">
-                                <img src="../../assets/Deniar.png" alt="Description" style="width: 100%; height: 100%;">
+                                <img src="../../assets/Deniar.png" alt="Description" style="width: 70%; height: 100%;">
                             </td>
                             <td style="border: 1px solid rgb(222, 222, 222);">
-                                <img src="../../assets/Pak Fadli (2).png" alt="Description" style="width: 100%; height: auto;">
+                                <img src="../../assets/Pak Fadli (2).png" alt="Description" style="width: 70%; height: auto;">
                             </td>
                             <td style="border: 1px solid rgb(222, 222, 222);">
-                                <img src="../../assets/Black and White0004.png" alt="Description" style="width: 100%; height: auto;">
+                                <img src="../../assets/Black and White0004.png" alt="Description" style="width: 70%; height: auto;">
                             </td>                                
                         </tr>
                         <tr>
-                            <td style="border: 1px solid rgb(222, 222, 222); text-align: center;"></td>
+                            <td style="border: 1px solid rgb(222, 222, 222); text-align: center;">DENIAR F</td>
                             <td style="border: 1px solid rgb(222, 222, 222); text-align: center;">FADLI YUSRAL</td>
                             <td style="border: 1px solid rgb(222, 222, 222); text-align: center;">MISBAHUL MUNIR</td>
                         </tr>
@@ -571,6 +571,7 @@ function renderFooter(data) {
                 </table>
             </div>
         </div>
+        <div class="garis-vertical"></div>
     `;
 }
 
@@ -580,35 +581,39 @@ function renderTable(data, items) {
     const rowsPerPage = 20;
     const totalPages = Math.ceil(items.length / rowsPerPage) || 1;
 
+    // Render header and details once at the beginning
+    pageContent += `
+        <div class="container page">
+            ${renderHeader(data)}
+            ${renderDetails(data)}
+    `;
+
     for (let pageIndex = 0; pageIndex < totalPages; pageIndex++) {
         const startIndex = pageIndex * rowsPerPage;
         const endIndex = Math.min(startIndex + rowsPerPage, items.length);
         const pageItems = items.slice(startIndex, endIndex);
 
         pageContent += `
-            <div class="container page">
-                ${renderHeader(data)}
-                ${renderDetails(data)}
-                <table class="table-page ${pageIndex === totalPages - 1 ? 'last-page' : ''}">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Description <br>Part No.</th>
-                            <th>Delivery Date</th>
-                            <th>Qty</th>
-                            <th>Unit</th>
-                            <th>Unit Price</th>
-                            <th>Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            <table class="table-page ${pageIndex === totalPages - 1 ? 'last-page' : ''}">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Description <br>Part No.</th>
+                        <th>Delivery Date</th>
+                        <th>Qty</th>
+                        <th>Unit</th>
+                        <th>Unit Price</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
         `;
 
         // Add rows for this page
         let totalQuantity = 0;
         pageItems.forEach((item, index) => {
             const rowNumber = startIndex + index + 1;
-            totalQuantity += item.quantity || 0; // Sum the quantity
+            totalQuantity += item.quantity || 0;
             pageContent += `
                 <tr>
                     <td>${rowNumber}</td>
@@ -623,7 +628,7 @@ function renderTable(data, items) {
         });
 
         // If last page, add subtotal, PPN, total
-        if (pageIndex === totalPages -1) {
+        if (pageIndex === totalPages - 1) {
             pageContent += `
                 <tr>
                     <th colspan="3" style="text-align: right;">Subtotal</th>
@@ -634,14 +639,14 @@ function renderTable(data, items) {
                 </tr>
                 <tr>
                     <th colspan="3" style="text-align: right;">PPN 11%</th>
-                     <th></th>
+                    <th></th>
                     <th></th>
                     <th></th>
                     <th style="text-align: right;">${data.ppn || ''}</th>
                 </tr>
                 <tr>
                     <th colspan="3" style="text-align: right;">Total</th>
-                     <th></th>
+                    <th></th>
                     <th></th>
                     <th></th>
                     <th style="text-align: right;">${data.total || ''}</th>
@@ -651,28 +656,23 @@ function renderTable(data, items) {
 
         // Close table
         pageContent += `
-                    </tbody>
-                </table>
-        `;
-
-        // If last page, add footer
-        if (pageIndex === totalPages -1) {
-            pageContent += `
-                ${renderFooter(data)}
-            `;
-        }
-
-        pageContent += `
-            </div>
+                </tbody>
+            </table>
         `;
 
         // Add page break if not last page
-        if (pageIndex !== totalPages -1) {
+        if (pageIndex !== totalPages - 1) {
             pageContent += `
                 <div class="page-break"></div>
             `;
         }
     }
+
+    // Close the container div and add footer only once at the end
+    pageContent += `
+            ${renderFooter(data)}
+        </div>
+    `;
 
     return pageContent;
 }
