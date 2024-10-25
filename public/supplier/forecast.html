@@ -399,8 +399,8 @@ function displayTableData(page) {
 
     tableRow.innerHTML = `
       <td class="px-2 py-4 text-center font-medium text-gray-900">${rowNumber}</td>
-      <td class="px-2 py-4 text-center">${row.description}</td>
-      <td class="px-1 py-4 w-[30%] text-center">${fileName}</td>          
+      <td class="px-2 py-4 max-w-[40%] w-[40%] text-center">${row.description}</td>
+      <td class="px-1 py-4 max-w-[25%] w-[25%] text-center">${fileName}</td>          
       <td class="px-1 py-2 text-center flex items-center justify-center">
         <a href="${APIreadfile}${row.attachedFile}" download>
           ${getFileIcon(row.attachedFile)}
