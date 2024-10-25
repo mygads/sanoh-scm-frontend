@@ -100,7 +100,7 @@
             <!-- Performance Report -->
             <li>
               <a href="performance-report.html" class="flex gap-4 items-center p-2 mt-4 w-full cursor-pointer pointer-events-auto hover:bg-blue-800 hover:bg-opacity-5 hover:border-l-8 hover:border-solid hover:border-blue-950 hover:border-opacity-50">
-                <img loading="lazy" src="../assets/icon_performance_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-5
+                <img loading="lazy" src="../assets/icon_performance_default.svg" alt="" class="object-contain shrink-0 self-stretch my-auto w-4
                 aspect-square" />
                 <span class="self-strech text-sm">Performance Report</span>
               </a>
@@ -173,7 +173,7 @@
             <table class="w-full text-[11px] text-left text-gray-700 dark:text-gray-700">
               <thead class="text-[14px] text-gray-700">
                 <tr>
-                  <th scope="col" class="xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs py-3 text-center border-b border-b-gray-400 cursor-pointer " data-sort="no">
+                  <th scope="col" class="xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs py-3 px-4 text-center border-b border-b-gray-400 cursor-pointer " data-sort="no">
                     No
                   </th>
                   <th scope="col" class="xl:text-sm lg:text-xs md:text-xs sm:text-xs text-xs py-3 text-center border-b border-b-gray-400 cursor-pointer"">
@@ -252,45 +252,41 @@ cekToken();
 
 document.addEventListener('DOMContentLoaded', () => {
   adjustRowsPerPage();
-  if(bpCode){
-    fetchPerformanceReport(bpCode);
-    displayTableData(currentPage);
-    updatePagination();
-  }
+  fetchForecast();
+  displayTableData(currentPage);
+  updatePagination();
 
   window.addEventListener('resize', () => {
     adjustRowsPerPage();
-    fetchPerformanceReport(bpcode);
     displayTableData(currentPage);
     updatePagination();
   });
 
+  // Fungsi untuk pencarian berdasarkan bulan
   document.getElementById('search-button').addEventListener('click', async () => {
     const selectedMonth = document.getElementById('month-input').value;
-    
+
     if (selectedMonth) {
-      await fetchPerformanceReport(bpCode, selectedMonth);  // Panggil fetchPerformanceReport dengan parameter bulan yang dipilih
+      filteredData = originalData.filter(row => {
+        const rowMonth = row.upload_at.substring(0, 7); // Ambil bagian YYYY-MM dari tanggal
+        return rowMonth === selectedMonth;
+      });
+
       displayTableData(currentPage);
       updatePagination();
     } else {
-        fetchPerformanceReport(bpcode);            
-        displayNotification('Silakan pilih periode.','warning');
+      await fetchForecast();
     }
   });
 
 });
 
-async function fetchPerformanceReport(bpCode, selectedMonth = null) {
+async function fetchForecast(selectedMonth = null) {
 //   displayNotification("Waiting get data from server",'warning')
   const token = localStorage.getItem('accessToken');
 
-  if (!bpCode) {
-    displayNotification('Expired token please relogin','warning');
-    return;
-  }
-
   try {
-    const response = await fetch(`${API_IndexForecastSupplier}/${bpCode}`, {
+    const response = await fetch(API_IndexForecastSupplier, {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
@@ -304,10 +300,10 @@ async function fetchPerformanceReport(bpCode, selectedMonth = null) {
     const result = await response.json();
     // console.log('Data listing report:', result);
 
-    if (result.success) {
+    if (result) {
     //   displayNotification(result.message,'success')
       originalData = result.data.map(item => ({
-        no: item.po_listing_no,
+        no: item.forecast_id,
         description: item.description,
         upload_at: item.upload_at,
         searchMount: formatDate(item.upload_at),
@@ -316,27 +312,53 @@ async function fetchPerformanceReport(bpCode, selectedMonth = null) {
       }));
 
       if (selectedMonth) {
-        // Filter data berdasarkan bulan yang dipilih
-        
-        filteredData = originalData.filter(row => {
-          const rowMonth = row.searchMount.slice(0, 7); // Ambil bagian YYYY-MM dari tanggal
-          return rowMonth === selectedMonth;
-        });
+        filteredData = originalData.filter(row => row.searchMonth === selectedMonth);
       } else {
-        filteredData = [...originalData]; // Jika tidak ada bulan yang dipilih, tampilkan semua data
+        filteredData = [...originalData];
       }
+
       // Urutkan data berdasarkan 'upload_at' secara menurun (terbaru duluan)
       filteredData.sort((a, b) => new Date(b.upload_at) - new Date(a.upload_at));
 
       displayTableData(currentPage);
       updatePagination();
     } else {
-      console.error('Gagal mengambil data:', result.message);
-      displayNotification(`Gagal mengambil data: ${result.message}`,'error');
+      console.error('Error get data:', result.message);
+      displayNotification(`Error get data: ${result.message}`,'error');
     }
   } catch (error) {
     console.error('Error fetching data:', error);
     displayNotification(`Error fetching data: ${error.message}`,'error');
+  }
+}
+
+async function downloadFile(attachedFile) {
+  const token = localStorage.getItem('accessToken');
+
+  try {
+    const response = await fetch(`${API_GetForecastFileSupplier}${attachedFile}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error('Gagal mengunduh file.');
+    }
+
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = attachedFile;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+  } catch (error) {
+    console.error('Error saat mendownload file:', error);
+    Swal.fire('Error', 'Gagal mengunduh file.', 'error');
   }
 }
 
@@ -398,13 +420,13 @@ function displayTableData(page) {
     const fileName = row.filedata.split('_').slice(1).join('_');
 
     tableRow.innerHTML = `
-      <td class="px-2 py-4 text-center font-medium text-gray-900">${rowNumber}</td>
-      <td class="px-2 py-4 max-w-[40%] w-[40%] text-center">${row.description}</td>
-      <td class="px-1 py-4 max-w-[25%] w-[25%] text-center">${fileName}</td>          
-      <td class="px-1 py-2 text-center flex items-center justify-center">
-        <a href="${APIreadfile}${row.attachedFile}" download>
+      <td class="px-2 py-3 text-center font-medium text-gray-900">${rowNumber}</td>
+      <td class="px-2 py-3 max-w-[40%] w-[40%] text-center">${row.description}</td>
+      <td class="px-1 py-3 max-w-[25%] w-[25%] text-center">${fileName}</td>          
+      <td class="px-2 py-3 text-center flex items-center justify-center">
+        <button onclick="downloadFile('${row.attachedFile}')" class=" px-2 py-1 hover:scale-110">
           ${getFileIcon(row.attachedFile)}
-        </a>
+        </button>
       </td>
       <td class="px-2 py-4 text-center">${row.upload_at}</td>
     `;
@@ -412,15 +434,6 @@ function displayTableData(page) {
   });
 }
 
-//function adjustRowsPerPage() {
-  //if (window.innerHeight < 768) {
-    //rowsPerPage = 7; // Atur menjadi 3 jika ukuran layar < 768
-  //} else if (window.innerHeight < 1280) {
-    //rowsPerPage = 8; // Atur menjadi 4 jika ukuran layar >= 768
-  //} else {
-   // rowsPerPage = 9;
-  //}
-//}
 
 </script>
 
